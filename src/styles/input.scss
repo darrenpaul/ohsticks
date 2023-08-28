@@ -1,0 +1,49 @@
+//     dark:text-white dark:border-gray-600 dark:focus:border-blue-500  peer
+
+input {
+	/* SIZE */
+	@apply w-full;
+	/* MARGINS AND PADDING */
+	@apply px-2.5 pb-2.5 pt-4;
+	/* LAYOUT */
+	@apply block;
+	/* BORDERS */
+	@apply rounded-lg border;
+	/* COLORS */
+	@apply text-gray-900 bg-transparent border-gray-300;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+	@apply focus:outline-none focus:ring-0 focus:border-blue-600;
+}
+
+select {
+	/* SIZE */
+	@apply w-full h-full;
+	/* MARGINS AND PADDING */
+	@apply px-1 pb-2.5 pt-4;
+	/* LAYOUT */
+	@apply block;
+	/* BORDERS */
+	@apply rounded-lg border;
+	/* COLORS */
+	@apply text-gray-900 bg-transparent border-gray-300;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+	@apply focus:outline-none focus:ring-0 focus:border-blue-600;
+}
+
+.floating-label {
+	/* SIZE */
+	/* MARGINS AND PADDING */
+	@apply px-2;
+	/* LAYOUT */
+	@apply absolute transform -translate-y-4 scale-75 top-2 z-10 origin-[0] left-1;
+	/* BORDERS */
+	/* COLORS */
+	@apply bg-white text-gray-500;
+	/* TEXT */
+	@apply text-sm;
+	/* ANIMATION AND EFFECTS */
+	@apply duration-300;
+	@apply peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4;
+}

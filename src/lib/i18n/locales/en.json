@@ -1,0 +1,137 @@
+{
+	"page": {
+		"home": {
+			"popularProducts": "Popular Products"
+		},
+		"products": {
+			"viewing": "Viewing"
+		},
+		"about": {
+			"title": "About",
+			"nav": "About"
+		},
+		"contact": {
+			"title": "Contact",
+			"nav": "Contact Us"
+		}
+	},
+	"form": {
+		"createProduct": {
+			"name": {
+				"label": "Name",
+				"placeholder": "Enter product name"
+			},
+			"slug": {
+				"label": "Slug"
+			},
+			"categories": {
+				"label": "Categories",
+				"placeholder": "Enter product categories",
+				"hint": "Enter product categories separated by commas"
+			},
+			"description": {
+				"label": "Description",
+				"placeholder": "Enter product description"
+			},
+			"purchasePrice": {
+				"label": "Purchase Price",
+				"placeholder": "Enter product purchase price"
+			},
+			"markupPercentage": {
+				"label": "Markup Percentage",
+				"placeholder": "Enter product markup percentage"
+			},
+			"price": {
+				"label": "Price"
+			},
+			"quantity": {
+				"label": "Quantity",
+				"placeholder": "Enter product quantity"
+			},
+			"visible": {
+				"label": "Visible"
+			},
+			"featureImage": {
+				"label": "Feature Image"
+			},
+			"productImages": {
+				"label": "Product Images"
+			}
+		},
+		"checkout": {
+			"email": {
+				"label": "Email",
+				"placeholder": "Enter emails address"
+			},
+			"country": {
+				"label": "Country",
+				"placeholder": "Select country"
+			},
+			"firstName": {
+				"label": "First Name",
+				"placeholder": "Enter first name"
+			},
+			"lastName": {
+				"label": "Last Name",
+				"placeholder": "Enter last name"
+			},
+			"address1": {
+				"label": "Address 1",
+				"placeholder": "Enter address"
+			},
+			"address2": {
+				"label": "Address 2",
+				"placeholder": "Enter address"
+			},
+			"city": {
+				"label": "City",
+				"placeholder": "Enter city"
+			},
+			"province": {
+				"label": "Province",
+				"placeholder": "Select province"
+			},
+			"postalCode": {
+				"label": "Postal Code",
+				"placeholder": "Enter postal code"
+			},
+			"contact": {
+				"label": "Contact"
+			},
+			"shippingAddress": {
+				"label": "Shipping Address"
+			},
+			"submit": {
+				"label": "Checkout"
+			},
+			"continueShopping": {
+				"label": "Continue Shopping"
+			}
+		},
+		"login": {
+			"title": "Log into your account",
+			"description": "Create an account to expedite future checkouts, track order history & receive emails, discounts, & special offers.",
+			"email": {
+				"label": "Email",
+				"placeholder": "Enter emails address"
+			},
+			"password": {
+				"label": "Password",
+				"placeholder": "Enter password"
+			},
+			"submit": {
+				"label": "Login"
+			}
+		}
+	},
+	"component": {
+		"productList": {
+			"allProducts": "All Products"
+		},
+		"cartMenu": {
+			"yourCart": "Your Cart",
+			"total": "Total",
+			"checkout": "Checkout"
+		}
+	}
+}
