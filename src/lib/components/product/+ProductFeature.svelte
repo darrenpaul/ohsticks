@@ -5,6 +5,7 @@
 	import { addToCart } from "$lib/stores/cartStore";
 	import { productsRoute } from "$lib/constants/routes/productRoute";
 	import { getContext } from "svelte";
+	import { _ as trans } from "svelte-i18n";
 
 	const cartState = getContext("cartState");
 
@@ -22,9 +23,9 @@
 	<div class="--content">
 		<div class="--header">
 			<h1>{product.name}</h1>
-
-			<Rating />
 		</div>
+
+		<Rating />
 
 		<p>
 			{product.price}
@@ -32,12 +33,12 @@
 
 		<p>{product.description}</p>
 
-		<button on:click={handleAddToCart} class="--add-to-cart-button">Add To Cart</button>
-
-		<p>SKU: 123 (FAKE)</p>
+		<button on:click={handleAddToCart} class="--add-to-cart-button">
+			{$trans("component.productFeature.addToCart.label")}
+		</button>
 
 		<p>
-			Categories:
+			{$trans("component.productFeature.categories.label")}
 
 			{#each product.categories as category}
 				<a href={`${productsRoute.path}/${category}`}>{category}</a>

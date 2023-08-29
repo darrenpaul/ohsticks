@@ -40,11 +40,24 @@
 	.crumbs {
 		/* SIZE */
 		/* MARGINS AND PADDING */
+		@apply py-8;
 		/* LAYOUT */
 		@apply flex gap-4;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
+
+		p,
+		a {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			@apply text-sm text-gray-600;
+			/* ANIMATION AND EFFECTS */
+		}
 	}
 </style>

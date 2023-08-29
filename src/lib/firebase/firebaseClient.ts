@@ -9,18 +9,26 @@ import {
 	type User
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { writable, derived, get } from "svelte/store";
-
+import { writable } from "svelte/store";
+import {
+	PUBLIC_FIREBASE_API_KEY,
+	PUBLIC_FIREBASE_APP_ID,
+	PUBLIC_FIREBASE_AUTH_DOMAIN,
+	PUBLIC_FIREBASE_MEASUREMENT_ID,
+	PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+	PUBLIC_FIREBASE_PROJECT_ID,
+	PUBLIC_FIREBASE_STORAGE_BUCKET
+} from "$env/static/public";
 export const productStorageBucket = "product";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyCkLf1J0EyimgsXAeLtR2gvNkib8HawPoU",
-	authDomain: "ecommerce-test-14b66.firebaseapp.com",
-	projectId: "ecommerce-test-14b66",
-	storageBucket: "ecommerce-test-14b66.appspot.com",
-	messagingSenderId: "364179887226",
-	appId: "1:364179887226:web:d20c114fcf4546b24917c3",
-	measurementId: "G-Y6TXJ9VR31"
+	apiKey: PUBLIC_FIREBASE_API_KEY,
+	authDomain: PUBLIC_FIREBASE_AUTH_DOMAIN,
+	projectId: PUBLIC_FIREBASE_PROJECT_ID,
+	storageBucket: PUBLIC_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+	appId: PUBLIC_FIREBASE_APP_ID,
+	measurementId: PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase

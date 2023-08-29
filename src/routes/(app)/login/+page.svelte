@@ -27,9 +27,9 @@
 <div class="login-page">
 	<form class="--form" on:submit|preventDefault={handleFormSubmit}>
 		<div class="--header">
-			<h1>{$trans("form.login.title")}</h1>
+			<h1>{$trans("form.login.title.label")}</h1>
 
-			<p>{$trans("form.login.description")}</p>
+			<p>{$trans("form.login.description.label")}</p>
 		</div>
 
 		<!-- EMAIL -->
@@ -64,7 +64,7 @@
 	</form>
 
 	<button class="link-button" on:click={handleForgotPassword}
-		>{$trans("form.login.submit.label")}
+		>{$trans("form.login.forgotPassword.label")}
 	</button>
 </div>
 
