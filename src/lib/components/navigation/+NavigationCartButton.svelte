@@ -3,13 +3,16 @@
 	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
 	import { cart } from "$lib/stores/cartStore";
 	import type { CartItem } from "$lib/types/cart";
+	import { browser } from "$app/environment";
+	import { sumArrayNumbers } from "$lib/utils/maths";
 
 	const cartState = getContext("cartState");
-	let cartQuantity = 0;
+	let cartQuantity: number = 0;
 
 	$: {
-		if ($cart && $cart?.cartItems) {
-			cartQuantity = $cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity) || 0;
+		if (browser && $cart && $cart?.cartItems) {
+			cartQuantity =
+				sumArrayNumbers($cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity)) || 0;
 		}
 	}
 
