@@ -69,29 +69,5 @@
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 		}
-
-		.--button-wrapper {
-			/* SIZE */
-			@apply w-full;
-			/* MARGINS AND PADDING */
-			/* LAYOUT */
-			@apply flex items-center justify-center;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-			button {
-				/* SIZE */
-				/* MARGINS AND PADDING */
-				@apply py-4 px-8;
-				/* LAYOUT */
-				/* BORDERS */
-				@apply rounded-full;
-				/* COLORS */
-				@apply bg-black text-white;
-				/* TEXT */
-				/* ANIMATION AND EFFECTS */
-			}
-		}
 	}
 </style>
