@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { Product } from "$lib/types/product";
+	import type { Image, Product } from "$lib/types/product";
 
 	export let product: Product;
 
-	let imageSelection = [] as string[];
-	let activeImage = "";
+	let imageSelection: Image[] = [];
+	let activeImage: Image;
 
 	$: {
-		imageSelection = [product.featureImage, ...product.images] as string[];
+		imageSelection = [product.featureImage, ...product.images] as Image[];
 		activeImage = product.featureImage;
 	}
 </script>
@@ -18,7 +18,7 @@
 			<button on:click={() => (activeImage = productImage)} class="block w-24 h-24">
 				<img
 					class={activeImage === productImage ? "--image-active" : "--image"}
-					src={productImage}
+					src={productImage.src}
 					alt={product.name}
 				/>
 			</button>
@@ -26,7 +26,7 @@
 	</div>
 
 	<div>
-		<img class="--active-image" src={activeImage} alt={product.name} />
+		<img class="--active-image" src={activeImage.src} alt={product.name} />
 	</div>
 </div>
 

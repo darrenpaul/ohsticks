@@ -14,6 +14,7 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute.js";
 	import { productsRoute } from "$lib/constants/routes/productRoute.js";
 	import type { Link } from "$lib/types/link";
+	import { MetaTags } from "svelte-meta-tags";
 
 	let carousel; // for calling methods of the carousel instance
 
@@ -30,11 +31,13 @@
 	export let data;
 	let product: Product;
 	let relatedProducts: Product[];
+	let pageUrl = "";
 
 	$: {
 		if (data.body.product) {
 			product = data.body.product;
 			relatedProducts = data.body.relatedProducts as Product[];
+			pageUrl = `${$page.url}`;
 		}
 	}
 </script>
@@ -62,6 +65,34 @@
 		</div>
 	</ContainWidth>
 </div>
+
+<MetaTags
+	title={product.meta?.title}
+	titleTemplate={product.meta?.title}
+	description={product.meta?.description}
+	canonical={pageUrl}
+	openGraph={{
+		title: product.meta?.title,
+		description: product.meta?.description,
+		url: pageUrl,
+		type: "website",
+		images: product.images.map((image) => ({
+			url: image,
+			width: 800,
+			height: 600,
+			alt: product.name
+		}))
+	}}
+	twitter={{
+		handle: "",
+		site: pageUrl,
+		cardType: "summary_large_image",
+		title: product.meta?.title,
+		description: product.meta?.description,
+		image: product.featureImage,
+		imageAlt: product.name
+	}}
+/>
 
 <style lang="scss">
 	.product-page {

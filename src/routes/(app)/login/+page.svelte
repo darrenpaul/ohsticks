@@ -63,8 +63,8 @@
 		<button class="submit-button">{$trans("form.login.submit.label")}</button>
 	</form>
 
-	<button class="link-button" on:click={handleForgotPassword}
-		>{$trans("form.login.forgotPassword.label")}
+	<button class="link-button" on:click={handleForgotPassword}>
+		{$trans("form.login.forgotPassword.label")}
 	</button>
 </div>
 

@@ -12,6 +12,18 @@
 	@apply drop-shadow;
 }
 
+.slim-button {
+	@extend .submit-button;
+	/* SIZE */
+	/* MARGINS AND PADDING */
+	@apply py-1 px-8;
+	/* LAYOUT */
+	/* BORDERS */
+	/* COLORS */
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+}
+
 .link-button {
 	@apply w-full h-full;
 	/* SIZE */

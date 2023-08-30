@@ -9,7 +9,7 @@
 
 <div class="product-list-card">
 	<a href={`${productRoute.path}/${product.slug}`}>
-		<img src={product.featureImage} alt="Preview" />
+		<img src={product.featureImage.src} alt="Preview" />
 
 		<div class="--content">
 			<p class="--title">{product.name}</p>

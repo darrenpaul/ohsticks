@@ -41,6 +41,21 @@
 				"label": "Description",
 				"placeholder": "Enter product description"
 			},
+			"contentSection": {
+				"label": "Content Section",
+				"title": {
+					"label": " Title"
+				},
+				"content": {
+					"label": " Content"
+				},
+				"create": {
+					"label": "Create"
+				},
+				"delete": {
+					"label": "Delete"
+				}
+			},
 			"purchasePrice": {
 				"label": "Purchase Price",
 				"placeholder": "Enter product purchase price"
@@ -64,6 +79,18 @@
 			},
 			"productImages": {
 				"label": "Product Images"
+			},
+			"meteTitle": {
+				"label": "Meta Title"
+			},
+			"metaDescription": {
+				"label": "Meta Description"
+			},
+			"metaKeywords": {
+				"label": "Meta Keywords"
+			},
+			"generateSeo": {
+				"label": "Generate SEO"
 			}
 		},
 		"checkout": {

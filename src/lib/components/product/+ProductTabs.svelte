@@ -17,13 +17,6 @@
 		</button>
 
 		<button
-			class={`${activeTab === 1 ? "--tab-button-active" : "--tab-button"}`}
-			on:click={() => (activeTab = 1)}
-		>
-			{$trans("component.productTabs.specifications.label")}
-		</button>
-
-		<button
 			class={`${activeTab === 2 ? "--tab-button-active" : "--tab-button"}`}
 			on:click={() => (activeTab = 2)}
 		>
@@ -34,16 +27,19 @@
 	<div class="--tabs">
 		{#if activeTab === 0}
 			<div class="--tab">
-				<p>{product.description}</p>
+				{#if product?.contentSections}
+					{#each product.contentSections as contentSection}
+						<div class="--content">
+							<h4>{contentSection.subheading}</h4>
+							<p>{contentSection.content}</p>
+						</div>
+					{/each}
+				{/if}
 			</div>
 		{:else if activeTab === 1}
 			<div class="--tab">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi mollitia a quaerat pariatur
-				incidunt rerum earum at eum fugit, nesciunt, quam enim vel autem tenetur. Natus minima
-				excepturi mollitia quia.
+				<div class="--tab">Some Reviews</div>
 			</div>
-		{:else if activeTab === 2}
-			<div class="--tab">Some Reviews</div>
 		{/if}
 	</div>
 </section>
@@ -92,6 +88,37 @@
 				@apply text-black;
 				/* TEXT */
 				/* ANIMATION AND EFFECTS */
+			}
+		}
+
+		.--tabs {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+
+			.--tab {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				/* ANIMATION AND EFFECTS */
+
+				.--content {
+					/* SIZE */
+					/* MARGINS AND PADDING */
+					@apply mb-8;
+					/* LAYOUT */
+					/* BORDERS */
+					/* COLORS */
+					/* TEXT */
+					/* ANIMATION AND EFFECTS */
+				}
 			}
 		}
 	}

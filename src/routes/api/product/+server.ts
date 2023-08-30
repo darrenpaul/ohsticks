@@ -17,13 +17,15 @@ export const POST = async ({ request }) => {
 		slug,
 		categories,
 		description,
+		contentSections,
 		purchasePrice,
 		markupPercentage,
 		price,
 		quantity,
 		visible,
 		featureImage,
-		images
+		images,
+		meta
 	} = await request.json();
 
 	if (!accessToken) {
@@ -51,13 +53,15 @@ export const POST = async ({ request }) => {
 		slug,
 		categories,
 		description,
+		contentSections,
 		purchasePrice,
 		markupPercentage,
 		price,
 		quantity,
 		visible,
 		featureImage,
-		images
+		images,
+		meta
 	});
 
 	return new Response(
