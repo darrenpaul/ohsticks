@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { CartItem } from "$lib/types/cart";
+	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
 	let totalPrice: string;
 
@@ -22,11 +23,11 @@
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>
-			<p>{cartItem.price}</p>
+			<p>{addCurrencySymbol(cartItem.price)}</p>
 		</div>
 	</div>
 
-	<p>{totalPrice}</p>
+	<p>{addCurrencySymbol(totalPrice)}</p>
 </div>
 
 <style lang="scss">
@@ -78,6 +79,7 @@
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
+			@apply drop-shadow;
 		}
 
 		.--product-details {

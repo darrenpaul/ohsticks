@@ -27,7 +27,7 @@
 <style lang="scss">
 	.checkout-page {
 		/* SIZE */
-		@apply p-8;
+		@apply h-[100dvh];
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
 		@apply grid grid-cols-2 gap-8;

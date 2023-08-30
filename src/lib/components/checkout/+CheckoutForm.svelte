@@ -40,6 +40,8 @@
 </script>
 
 <form on:submit={handleSubmit} class="checkout-form">
+	<h1 class="--title">{$trans("site.brandName")}</h1>
+
 	<h4>{$trans("form.checkout.contact.label")}</h4>
 
 	<!-- EMAIL -->
@@ -198,12 +200,26 @@
 	.checkout-form {
 		/* SIZE */
 		/* MARGINS AND PADDING */
+		@apply p-8;
 		/* LAYOUT */
 		/* BORDERS */
+		@apply border-r border-gray-300;
 		/* COLORS */
+		@apply bg-white;
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
 
+		.--title {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply mb-8;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			@apply text-center;
+			/* ANIMATION AND EFFECTS */
+		}
 		.--input-group {
 			/* SIZE */
 			/* MARGINS AND PADDING */

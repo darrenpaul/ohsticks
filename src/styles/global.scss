@@ -1,4 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;700&display=swap");
 @import "typography.scss";
 @import "button.scss";
 @import "input.scss";
+
+* {
+	/* SIZE */
+	/* MARGINS AND PADDING */
+	/* LAYOUT */
+	/* BORDERS */
+	/* COLORS */
+	/* TEXT */
+	@apply font-mukta;
+	/* ANIMATION AND EFFECTS */
+}

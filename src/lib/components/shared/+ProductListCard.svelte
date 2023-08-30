@@ -2,6 +2,7 @@
 	import Rating from "$lib/components/shared/+Rating.svelte";
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import type { Product } from "$lib/types/product";
+	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
 	export let product: Product;
 </script>
@@ -11,10 +12,11 @@
 		<img src={product.featureImage} alt="Preview" />
 
 		<div class="--content">
-			<p>{product.name}</p>
-			<p>€{product.price}</p>
+			<p class="--title">{product.name}</p>
 
-			<Rating />
+			<p class="--price">{addCurrencySymbol(product.price)}</p>
+
+			<!-- <Rating /> -->
 		</div>
 	</a>
 </div>
@@ -35,12 +37,15 @@
 			/* SIZE */
 			@apply w-full h-[270px];
 			/* MARGINS AND PADDING */
+			@apply mb-4;
 			/* LAYOUT */
 			@apply object-cover;
 			/* BORDERS */
+			@apply rounded-md;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
+			@apply drop-shadow;
 		}
 
 		.--content {
@@ -52,6 +57,27 @@
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
+
+			.--title {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				/* ANIMATION AND EFFECTS */
+			}
+
+			.--price {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				@apply font-bold;
+				/* ANIMATION AND EFFECTS */
+			}
 		}
 	}
 </style>

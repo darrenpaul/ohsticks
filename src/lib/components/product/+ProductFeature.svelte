@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { Product } from "$lib/types/product";
-	import Rating from "$lib/components/shared/+Rating.svelte";
+	// import Rating from "$lib/components/shared/+Rating.svelte";
 	import ProductFeatureImageSelect from "./+ProductFeatureImageSelect.svelte";
 	import { addToCart } from "$lib/stores/cartStore";
-	import { productsRoute } from "$lib/constants/routes/productRoute";
 	import { getContext } from "svelte";
 	import { _ as trans } from "svelte-i18n";
+	import ProductFeatureCategories from "./+ProductFeatureCategories.svelte";
+	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
 	const cartState = getContext("cartState");
 
@@ -22,28 +23,24 @@
 
 	<div class="--content">
 		<div class="--header">
-			<h1>{product.name}</h1>
+			<h1 class="--title">{product.name}</h1>
 		</div>
 
-		<Rating />
+		<!-- <Rating /> -->
 
-		<p>
-			{product.price}
+		<p class="--price">
+			{addCurrencySymbol(product.price)}
 		</p>
 
-		<p>{product.description}</p>
+		<p class="--description">{product.description}</p>
 
-		<button on:click={handleAddToCart} class="--add-to-cart-button">
-			{$trans("component.productFeature.addToCart.label")}
-		</button>
+		<div>
+			<button class="submit-button" on:click={handleAddToCart}>
+				{$trans("component.productFeature.addToCart.label")}
+			</button>
+		</div>
 
-		<p>
-			{$trans("component.productFeature.categories.label")}
-
-			{#each product.categories as category}
-				<a href={`${productsRoute.path}/${category}`}>{category}</a>
-			{/each}
-		</p>
+		<ProductFeatureCategories {product} />
 	</div>
 </section>
 
@@ -51,7 +48,7 @@
 	.product-feature {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply mx-auto;
+		@apply mx-auto pb-16;
 		/* LAYOUT */
 		@apply grid grid-cols-2 gap-8;
 		/* BORDERS */
@@ -80,15 +77,36 @@
 				/* ANIMATION AND EFFECTS */
 			}
 
-			.--add-to-cart-button {
+			.--title {
 				/* SIZE */
 				/* MARGINS AND PADDING */
-				@apply px-6 py-4;
 				/* LAYOUT */
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
-				@apply bg-black text-white;
+				@apply text-xl;
+				/* ANIMATION AND EFFECTS */
+			}
+
+			.--price {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				@apply text-3xl font-bold;
+				/* ANIMATION AND EFFECTS */
+			}
+
+			.--description {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				@apply text-sm;
 				/* ANIMATION AND EFFECTS */
 			}
 		}

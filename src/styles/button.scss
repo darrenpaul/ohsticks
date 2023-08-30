@@ -1,14 +1,15 @@
 .submit-button {
 	/* SIZE */
-	@apply w-full;
 	/* MARGINS AND PADDING */
 	@apply py-4 px-8;
 	/* LAYOUT */
 	/* BORDERS */
+	@apply rounded-md;
 	/* COLORS */
 	@apply bg-black text-white;
 	/* TEXT */
 	/* ANIMATION AND EFFECTS */
+	@apply drop-shadow;
 }
 
 .link-button {

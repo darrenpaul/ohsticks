@@ -3,7 +3,7 @@
 	import { adminRole } from "$lib/constants/roles";
 	import randomString from "$lib/utils/randomString";
 	import { uploadImage } from "$lib/firebase/firebaseImageUtils";
-	import slugString from "$lib/utils/slugString";
+	import { slugString } from "$lib/utils/slugString";
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { error } from "@sveltejs/kit";
 

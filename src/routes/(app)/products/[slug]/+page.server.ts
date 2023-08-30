@@ -6,7 +6,6 @@ const table = "product";
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-	console.log("load ~ params:", params);
 	const db = getFirestore(app);
 	const tableCollection = collection(db, table);
 

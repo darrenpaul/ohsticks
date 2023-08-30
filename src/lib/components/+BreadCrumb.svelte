@@ -4,32 +4,14 @@
 	import type { Link } from "$lib/types/link";
 	import capitalizeWords from "$lib/utils/capitalizeWords";
 
-	let crumbs: Link[];
-
-	$: {
-		crumbs = createCrumbs();
-	}
-
-	const createCrumbs = () => {
-		const slugs = $page.url.pathname.split("/").filter((crumb) => crumb !== "");
-
-		const preparedCrumbs = slugs.map((slug, index) => {
-			return {
-				label: capitalizeWords(slug),
-				name: slug,
-				path: index < slugs.length - 1 ? `/${slug}` : undefined
-			};
-		});
-
-		return [homeRoute, ...preparedCrumbs] as Link[];
-	};
+	export let crumbs: Link[];
 </script>
 
 <div class="crumbs">
 	{#each crumbs as crumb, index}
 		{#if index < crumbs.length - 1}
 			<a href={crumb.path}>{crumb.label}</a>
-			<p>/</p>
+			<small>/</small>
 		{:else}
 			<p>{crumb.label}</p>
 		{/if}
@@ -42,7 +24,7 @@
 		/* MARGINS AND PADDING */
 		@apply py-8;
 		/* LAYOUT */
-		@apply flex gap-4;
+		@apply flex gap-2;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
@@ -57,6 +39,17 @@
 			/* COLORS */
 			/* TEXT */
 			@apply text-sm text-gray-600;
+			/* ANIMATION AND EFFECTS */
+		}
+
+		small {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			@apply text-xs text-gray-600;
 			/* ANIMATION AND EFFECTS */
 		}
 	}

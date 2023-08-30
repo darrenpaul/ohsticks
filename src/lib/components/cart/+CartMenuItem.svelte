@@ -2,6 +2,7 @@
 	import type { CartItem } from "$lib/types/cart";
 	import BinIcon from "$lib/components/icons/+BinIcon.svelte";
 	import { removeFromCart } from "$lib/stores/cartStore";
+	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
 	let totalPrice: string;
 
@@ -24,7 +25,7 @@
 	</div>
 
 	<div class="--group">
-		<p>{totalPrice}</p>
+		<p>{addCurrencySymbol(totalPrice)}</p>
 
 		<button class="--delete-button" on:click={() => removeFromCart(cartItem)}>
 			<BinIcon />
@@ -98,6 +99,7 @@
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
+			@apply drop-shadow;
 		}
 
 		.--product-details {

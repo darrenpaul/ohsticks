@@ -45,6 +45,7 @@
 	.checkout-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */
+		@apply p-8;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

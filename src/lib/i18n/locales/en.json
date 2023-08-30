@@ -1,7 +1,15 @@
 {
+	"site": {
+		"brandName": "WIEN"
+	},
 	"page": {
 		"home": {
 			"popularProducts": "Popular Products"
+		},
+		"product": {
+			"relatedProducts": {
+				"label": "Related Products"
+			}
 		},
 		"products": {
 			"viewing": "Viewing"
@@ -147,6 +155,17 @@
 			"yourCart": "Your Cart",
 			"total": "Total",
 			"checkout": "Checkout"
+		},
+		"productTabs": {
+			"description": {
+				"label": "Description"
+			},
+			"specifications": {
+				"label": "Specifications"
+			},
+			"reviews": {
+				"label": "Reviews"
+			}
 		}
 	}
 }

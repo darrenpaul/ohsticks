@@ -45,7 +45,7 @@
 	</div>
 
 	<div class="--copyright-wrapper">
-		<p>Copyright © 2019 EngoTheme</p>
+		<p>Copyright © 2023 WIEN</p>
 
 		<div>
 			<a> Privacy Policy</a>

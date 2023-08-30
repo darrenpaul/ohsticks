@@ -8,6 +8,7 @@
 	import CartMenuItem from "./+CartMenuItem.svelte";
 	import { getContext } from "svelte";
 	import { checkoutRoute } from "$lib/constants/routes/checkoutRoute";
+	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
 	const cartState = getContext("cartState");
 
@@ -60,8 +61,8 @@
 			<div class="--total-wrapper">
 				<p>{$trans("component.cartMenu.total")}</p>
 
-				<p>
-					{totalPrice}
+				<p class="--price">
+					{addCurrencySymbol(totalPrice)}
 				</p>
 			</div>
 
@@ -161,7 +162,7 @@
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
-				@apply flex-grow;
+				@apply flex-grow flex flex-col gap-4 p-4;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
@@ -181,6 +182,7 @@
 					/* SIZE */
 					@apply w-full h-[46px];
 					/* MARGINS AND PADDING */
+					@apply px-4;
 					/* LAYOUT */
 					@apply flex items-center justify-between;
 					/* BORDERS */
@@ -188,6 +190,17 @@
 					@apply bg-white;
 					/* TEXT */
 					/* ANIMATION AND EFFECTS */
+
+					.--price {
+						/* SIZE */
+						/* MARGINS AND PADDING */
+						/* LAYOUT */
+						/* BORDERS */
+						/* COLORS */
+						/* TEXT */
+						@apply font-bold;
+						/* ANIMATION AND EFFECTS */
+					}
 				}
 
 				.--checkout-button {

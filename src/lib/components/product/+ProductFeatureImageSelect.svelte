@@ -2,17 +2,26 @@
 	import type { Product } from "$lib/types/product";
 
 	export let product: Product;
+
+	let imageSelection = [product.featureImage, ...product.images] as string[];
+	let activeImage = product.featureImage;
 </script>
 
 <div class="product-feature-image-select">
 	<div class="--thumbnail-images">
-		{#each [product.featureImage, ...product.images] as productImage}
-			<img class="--image" src={productImage} alt="apples" />
+		{#each imageSelection as productImage}
+			<button on:click={() => (activeImage = productImage)} class="block w-24 h-24">
+				<img
+					class={activeImage === productImage ? "--image-active" : "--image"}
+					src={productImage}
+					alt={product.name}
+				/>
+			</button>
 		{/each}
 	</div>
 
 	<div>
-		<img class="--active-image" src={product.featureImage} alt="apples" />
+		<img class="--active-image" src={activeImage} alt={product.name} />
 	</div>
 </div>
 
@@ -30,8 +39,9 @@
 		.--thumbnail-images {
 			/* SIZE */
 			/* MARGINS AND PADDING */
+			@apply mr-2;
 			/* LAYOUT */
-			@apply flex-shrink-0;
+			@apply flex-shrink-0 flex flex-col gap-2;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -44,6 +54,19 @@
 				/* LAYOUT */
 				@apply object-cover;
 				/* BORDERS */
+				@apply rounded-md;
+				/* COLORS */
+				/* TEXT */
+				/* ANIMATION AND EFFECTS */
+				@apply shadow;
+			}
+			.--image-active {
+				@extend .--image;
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				@apply border border-black;
 				/* COLORS */
 				/* TEXT */
 				/* ANIMATION AND EFFECTS */
@@ -56,6 +79,7 @@
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
 			/* BORDERS */
+			@apply rounded-md;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */

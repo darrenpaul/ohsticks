@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Product } from "$lib/types/product";
-	import Rating from "$lib/components/shared/+Rating.svelte";
-	import ProductFeatureImageSelect from "./+ProductFeatureImageSelect.svelte";
-	import { cart, addToCart } from "$lib/stores/cartStore";
+	import { _ as trans } from "svelte-i18n";
 
 	let activeTab = 0;
 
@@ -11,9 +9,26 @@
 
 <section class="product-tabs">
 	<div class="--tab-buttons">
-		<button on:click={() => (activeTab = 0)}>Description</button>
-		<button on:click={() => (activeTab = 1)}>Specifications</button>
-		<button on:click={() => (activeTab = 2)}>Reviews</button>
+		<button
+			class={`${activeTab === 0 ? "--tab-button-active" : "--tab-button"}`}
+			on:click={() => (activeTab = 0)}
+		>
+			{$trans("component.productTabs.description.label")}
+		</button>
+
+		<button
+			class={`${activeTab === 1 ? "--tab-button-active" : "--tab-button"}`}
+			on:click={() => (activeTab = 1)}
+		>
+			{$trans("component.productTabs.specifications.label")}
+		</button>
+
+		<button
+			class={`${activeTab === 2 ? "--tab-button-active" : "--tab-button"}`}
+			on:click={() => (activeTab = 2)}
+		>
+			{$trans("component.productTabs.reviews.label")}
+		</button>
 	</div>
 
 	<div class="--tabs">
@@ -34,47 +49,48 @@
 </section>
 
 <style lang="scss">
-	.product-feature {
+	.product-tabs {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply mx-auto;
+		@apply px-8 mb-16;
 		/* LAYOUT */
-		@apply grid grid-cols-2 gap-8;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
 
-		.--content {
+		.--tab-buttons {
 			/* SIZE */
+			@apply w-full;
 			/* MARGINS AND PADDING */
+			@apply py-16;
 			/* LAYOUT */
-			@apply flex flex-col gap-4;
+			@apply flex justify-center items-center gap-8;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 
-			.--header {
+			.--tab-button {
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
-				@apply flex items-center justify-between;
 				/* BORDERS */
 				/* COLORS */
+				@apply text-gray-400;
 				/* TEXT */
+				@apply text-2xl font-bold;
 				/* ANIMATION AND EFFECTS */
 			}
-
-			.--add-to-cart-button {
+			.--tab-button-active {
+				@extend .--tab-button;
 				/* SIZE */
 				/* MARGINS AND PADDING */
-				@apply px-6 py-4;
 				/* LAYOUT */
 				/* BORDERS */
 				/* COLORS */
+				@apply text-black;
 				/* TEXT */
-				@apply bg-black text-white;
 				/* ANIMATION AND EFFECTS */
 			}
 		}
