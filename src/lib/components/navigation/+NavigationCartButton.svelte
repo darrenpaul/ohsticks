@@ -14,7 +14,7 @@
 	}
 
 	const openCart = () => {
-		if ($cart && $cart?.cartItems.length > 0) {
+		if ($cart && $cart?.cartItems?.length > 0) {
 			cartState.set(true);
 		}
 	};

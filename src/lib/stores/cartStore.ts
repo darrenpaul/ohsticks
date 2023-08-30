@@ -30,8 +30,6 @@ handleStoreFetch();
 export const addToCart = async (product: Product) => {
 	const cartKey = localStorage.getItem(storageKey);
 
-	console.log(get(cart));
-
 	const currentCartItems = get(cart).cartItems || [];
 
 	const cartItems = [

@@ -17,10 +17,12 @@
 
 	$: {
 		if (browser) {
-			totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
-			totalPrice = sumArrayNumbers(
-				$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
-			);
+			if ($cart && $cart?.cartItems) {
+				totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
+				totalPrice = sumArrayNumbers(
+					$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
+				);
+			}
 		}
 	}
 
