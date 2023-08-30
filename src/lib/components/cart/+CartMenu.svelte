@@ -3,12 +3,12 @@
 	import { _ as trans } from "svelte-i18n";
 	import { cart } from "$lib/stores/cartStore";
 	import { sumArrayNumbers } from "$lib/utils/maths";
-	import type { Product } from "$lib/types/product";
 	import { browser } from "$app/environment";
 	import CartMenuItem from "./+CartMenuItem.svelte";
 	import { getContext } from "svelte";
 	import { checkoutRoute } from "$lib/constants/routes/checkoutRoute";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import type { CartItem } from "$lib/types/cart";
 
 	const cartState = getContext("cartState");
 
@@ -17,9 +17,9 @@
 
 	$: {
 		if (browser) {
-			totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: Product) => item.quantity));
+			totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
 			totalPrice = sumArrayNumbers(
-				$cart?.cartItems.map((item: Product) => item.price * item.quantity)
+				$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
 			);
 		}
 	}

@@ -9,7 +9,6 @@
 	let navigationFixed: boolean = false;
 
 	$: {
-		console.log($page);
 		if (scrollYPosition > 40) {
 			navigationFixed = true;
 		} else {

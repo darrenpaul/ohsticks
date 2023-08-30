@@ -1,7 +1,7 @@
 import { get, writable } from "svelte/store";
 import { browser } from "$app/environment";
 import type { Product } from "$lib/types/product";
-import type { CartItem } from "$lib/types/cart";
+import type { Cart, CartItem } from "$lib/types/cart";
 
 const storageKey = "cartKey";
 
@@ -21,13 +21,16 @@ const handleStoreFetch = async () => {
 		localStorage.removeItem(storageKey);
 	}
 
-	return jsonData;
+	cart.set(jsonData);
 };
 
-export const cart = writable(await handleStoreFetch());
+export const cart = writable({} as Cart);
+handleStoreFetch();
 
 export const addToCart = async (product: Product) => {
 	const cartKey = localStorage.getItem(storageKey);
+
+	console.log(get(cart));
 
 	const currentCartItems = get(cart).cartItems || [];
 

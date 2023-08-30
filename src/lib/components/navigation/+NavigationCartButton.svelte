@@ -1,16 +1,29 @@
 <script lang="ts">
 	import { getContext } from "svelte";
 	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
+	import { cart } from "$lib/stores/cartStore";
+	import type { CartItem } from "$lib/types/cart";
 
 	const cartState = getContext("cartState");
+	let cartQuantity = 0;
+
+	$: {
+		if ($cart && $cart?.cartItems) {
+			cartQuantity = $cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity) || 0;
+		}
+	}
 
 	const openCart = () => {
-		cartState.set(true);
+		if ($cart && $cart?.cartItems.length > 0) {
+			cartState.set(true);
+		}
 	};
 </script>
 
 <button class="navigation-cart-button" on:click={openCart}>
-	<p class="--quantity">5</p>
+	{#if cartQuantity > 0}
+		<p class="--quantity">{cartQuantity}</p>
+	{/if}
 	<CartIcon />
 </button>
 

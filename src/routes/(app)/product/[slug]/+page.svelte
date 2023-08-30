@@ -15,8 +15,6 @@
 	import { productsRoute } from "$lib/constants/routes/productRoute.js";
 	import type { Link } from "$lib/types/link";
 
-	console.log();
-
 	let carousel; // for calling methods of the carousel instance
 
 	let crumbs: Link[] = [
@@ -25,7 +23,7 @@
 		{
 			label: capitalizeWords(normalizeSlugString($page.params.slug)),
 			name: normalizeSlugString($page.params.slug),
-			path: undefined
+			path: ""
 		}
 	];
 
@@ -36,7 +34,7 @@
 	$: {
 		if (data.body.product) {
 			product = data.body.product;
-			relatedProducts = data.body.relatedProducts;
+			relatedProducts = data.body.relatedProducts as Product[];
 		}
 	}
 </script>

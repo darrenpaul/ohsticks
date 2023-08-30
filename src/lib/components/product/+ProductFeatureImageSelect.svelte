@@ -3,8 +3,13 @@
 
 	export let product: Product;
 
-	let imageSelection = [product.featureImage, ...product.images] as string[];
-	let activeImage = product.featureImage;
+	let imageSelection = [] as string[];
+	let activeImage = "";
+
+	$: {
+		imageSelection = [product.featureImage, ...product.images] as string[];
+		activeImage = product.featureImage;
+	}
 </script>
 
 <div class="product-feature-image-select">
