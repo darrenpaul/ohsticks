@@ -134,6 +134,17 @@
 					/* TEXT */
 					/* ANIMATION AND EFFECTS */
 
+					.--close-button {
+						/* SIZE */
+						@apply w-full h-full;
+						/* MARGINS AND PADDING */
+						/* LAYOUT */
+						@apply grid place-items-center;
+						/* BORDERS */
+						/* COLORS */
+						/* TEXT */
+						/* ANIMATION AND EFFECTS */
+					}
 					p {
 						/* SIZE */
 						/* MARGINS AND PADDING */
@@ -164,11 +175,18 @@
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
-				@apply flex-grow flex flex-col gap-4 p-4 overflow-scroll;
+				@apply flex-grow flex flex-col gap-4 p-4 overflow-y-scroll;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
 				/* ANIMATION AND EFFECTS */
+
+				/* Chrome, Safari and Opera */
+				&::-webkit-scrollbar {
+					display: none;
+				}
+				-ms-overflow-style: none; /* IE and Edge */
+				scrollbar-width: none; /* Firefox */
 			}
 
 			.--footer {

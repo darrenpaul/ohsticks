@@ -1,4 +1,17 @@
 <script lang="ts">
+	import { _ as trans } from "svelte-i18n";
+	import FooterNewsletter from "$lib/components/footer/+FooterNewsletter.svelte";
+
+	let newsletterEmail: string = "";
+
+	const handleNewsletterSubmit = async () => {
+		await fetch("/api/newsletter", {
+			method: "POST",
+			body: JSON.stringify({
+				email: "drobertpaul@gmail.com"
+			})
+		});
+	};
 </script>
 
 <footer>
@@ -15,26 +28,24 @@
 		<div class="--row">
 			<h3>Shop</h3>
 
-			<a>Our Stores</a>
-			<a>Cart</a>
-			<a>My Account</a>
-			<a>Wishlist</a>
+			<a href="/">Our Stores</a>
+			<a href="/">Cart</a>
+			<a href="/">My Account</a>
+			<a href="/">Wishlist</a>
 		</div>
 
 		<div class="--row">
 			<h3>Help</h3>
 
-			<a>Contact</a>
-			<a>FAQ's</a>
-			<a>Returns</a>
-			<a>Shipping</a>
-			<a>Guides</a>
+			<a href="/">Contact</a>
+			<a href="/">FAQ's</a>
+			<a href="/">Returns</a>
+			<a href="/">Shipping</a>
+			<a href="/">Guides</a>
 		</div>
 
 		<div class="--row">
-			<h3>Newsletter</h3>
-
-			<input placeholder="your@email.com" />
+			<FooterNewsletter />
 
 			<small>
 				I want emails from Minim with products information, promotions, advertisements. I can
@@ -45,11 +56,11 @@
 	</div>
 
 	<div class="--copyright-wrapper">
-		<p>Copyright © 2023 WIEN</p>
+		<p>{$trans("site.copyright")}</p>
 
 		<div>
-			<a> Privacy Policy</a>
-			<a> Terms Of Service</a>
+			<a href="/">Privacy Policy</a>
+			<a href="/">Terms Of Service</a>
 		</div>
 	</div>
 </footer>

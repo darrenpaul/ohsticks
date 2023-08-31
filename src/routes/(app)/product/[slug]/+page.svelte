@@ -3,6 +3,7 @@
 	import ProductFeature from "$lib/components/product/+ProductFeature.svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import type { Product } from "$lib/types/product";
+	import type { Link } from "$lib/types/link";
 	import ProductTabs from "$lib/components/product/+ProductTabs.svelte";
 	import Carousel from "svelte-carousel";
 	import { browser } from "$app/environment";
@@ -13,7 +14,6 @@
 	import { normalizeSlugString } from "$lib/utils/slugString";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
-	import type { Link } from "$lib/types/link";
 	import { MetaTags } from "svelte-meta-tags";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
@@ -89,9 +89,9 @@
 		url: pageUrl,
 		type: "website",
 		images: product.images.map((image) => ({
-			url: image,
+			url: image.src,
 			width: 800,
-			height: 600,
+			height: 800,
 			alt: product.name
 		}))
 	}}

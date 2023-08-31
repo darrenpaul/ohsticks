@@ -1,6 +1,7 @@
 {
 	"site": {
-		"brandName": "WIEN"
+		"brandName": "WIEN",
+		"copyright": "© 2023 Wien. All Rights Reserved."
 	},
 	"page": {
 		"home": {
@@ -164,6 +165,29 @@
 			"forgotPassword": {
 				"label": "Forgot Password?"
 			}
+		},
+		"contact": {
+			"title": {
+				"label": "Send us a message"
+			},
+			"description": {
+				"label": "Reach out for inquiries, collaborations, or any questions you may have. "
+			},
+			"name": {
+				"label": "Name"
+			},
+			"email": {
+				"label": "Email"
+			},
+			"subject": {
+				"label": "Subject"
+			},
+			"message": {
+				"label": "Message"
+			},
+			"submit": {
+				"label": "Submit"
+			}
 		}
 	},
 	"component": {
@@ -203,6 +227,11 @@
 			},
 			"account": {
 				"label": "Account"
+			}
+		},
+		"footer": {
+			"newsletter": {
+				"label": "Newsletter Sign-up"
 			}
 		}
 	}

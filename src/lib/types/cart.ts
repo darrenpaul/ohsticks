@@ -1,9 +1,10 @@
+import type { Image } from "$lib/types/product";
 export type CartItem = {
 	id: string;
 	name: string;
 	price: string;
 	quantity: number;
-	image: string;
+	image: Image;
 };
 
 export type Cart = {

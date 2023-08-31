@@ -24,6 +24,18 @@
 	/* ANIMATION AND EFFECTS */
 }
 
+.floating-button {
+	/* SIZE */
+	/* MARGINS AND PADDING */
+	@apply p-4;
+	/* LAYOUT */
+	@apply absolute top-1/2 right-0 -translate-y-1/2;
+	/* BORDERS */
+	/* COLORS */
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+}
+
 .link-button {
 	@apply w-full h-full;
 	/* SIZE */

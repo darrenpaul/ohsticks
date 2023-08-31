@@ -15,7 +15,7 @@
 
 <div class="cart-menu-item">
 	<div class="--group">
-		<img class="--image" src={cartItem.image} alt={cartItem.name} />
+		<img class="--image" src={cartItem.image.src} alt={cartItem.name} />
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>

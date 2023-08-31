@@ -9,15 +9,16 @@
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import { _ as trans } from "svelte-i18n";
-	import CaretRightIcon from "../icons/+CaretRightIcon.svelte";
+	import CaretRightIcon from "$lib/components/icons/+CaretRightIcon.svelte";
+	import { contactRoute } from "$lib/constants/routes/contactRoute";
 
 	let scrollYPosition: number;
 	let navigationFixed: boolean = false;
 
 	let mobileMenuOpen: boolean = false;
 
-	let links = [homeRoute, collectionAllRoute];
-	let linksMobile = [homeRoute, collectionAllRoute];
+	let links = [homeRoute, collectionAllRoute, contactRoute];
+	let linksMobile = [homeRoute, collectionAllRoute, contactRoute];
 
 	$: {
 		// if (scrollYPosition > 80) {
@@ -217,7 +218,7 @@
 
 					.--link-mobile-inner {
 						/* SIZE */
-						@apply h-full;
+						@apply h-[58px];
 						/* MARGINS AND PADDING */
 						@apply pl-4;
 						/* LAYOUT */
