@@ -27,6 +27,7 @@
 			method: "POST"
 		});
 		const jsonData = await response.json();
+		console.log("handleSeoGenerate ~ jsonData:", jsonData);
 
 		parseData(jsonData.choices[0].message.content);
 	};
@@ -35,7 +36,7 @@
 		const gptData = JSON.parse(input);
 
 		productDescription = gptData.productDescription;
-		productContentSections = gptData.contentSections;
+		productContentSections = gptData.contentSections || [];
 		metaTitle = gptData.metaTitle;
 		metaDescription = gptData.metaDescription;
 		metaKeywords = gptData.broadMatchKeywords.join(", ");

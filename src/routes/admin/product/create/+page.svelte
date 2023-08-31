@@ -75,8 +75,8 @@
 				price,
 				quantity,
 				visible,
-				featureImage: featureImageUrl,
-				images: imagesUrl,
+				featureImage: { src: featureImageUrl, alt: `${name} feature image` },
+				images: imagesUrl.map((url) => ({ src: url, alt: `${name} image` })),
 				meta: {
 					title: metaTitle,
 					description: metaDescription

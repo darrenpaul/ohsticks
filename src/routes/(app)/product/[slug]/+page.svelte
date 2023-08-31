@@ -13,7 +13,7 @@
 	import capitalizeWords from "$lib/utils/capitalizeWords";
 	import { normalizeSlugString } from "$lib/utils/slugString";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
-	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
+	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import { MetaTags } from "svelte-meta-tags";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
@@ -22,7 +22,7 @@
 
 	let crumbs: Link[] = [
 		homeRoute,
-		collectionRoute,
+		collectionAllRoute,
 		{
 			label: capitalizeWords(normalizeSlugString($page.params.slug)),
 			name: normalizeSlugString($page.params.slug),
