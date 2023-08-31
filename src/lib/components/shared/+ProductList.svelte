@@ -2,6 +2,7 @@
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
 	import { _ as trans } from "svelte-i18n";
 	import type { Product } from "$lib/types/product";
+	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 
 	export let title = "Product List";
 	export let products: Product[];
@@ -17,7 +18,9 @@
 	</div>
 
 	<div class="--button-wrapper">
-		<button>{$trans("component.productList.allProducts")}</button>
+		<a class="submit-button" href={collectionAllRoute.path}>
+			{$trans("component.productList.allProducts")}
+		</a>
 	</div>
 </div>
 
@@ -26,7 +29,7 @@
 		/* SIZE */
 		@apply w-full;
 		/* MARGINS AND PADDING */
-		@apply px-2 mx-auto;
+		@apply px-2 mx-auto mb-16;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -67,18 +70,6 @@
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
-			button {
-				/* SIZE */
-				/* MARGINS AND PADDING */
-				@apply py-4 px-8;
-				/* LAYOUT */
-				/* BORDERS */
-				@apply rounded-full;
-				/* COLORS */
-				@apply bg-black text-white;
-				/* TEXT */
-				/* ANIMATION AND EFFECTS */
-			}
 		}
 	}
 </style>

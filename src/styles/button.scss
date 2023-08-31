@@ -4,12 +4,25 @@
 	@apply py-4 px-8;
 	/* LAYOUT */
 	/* BORDERS */
-	@apply rounded-md;
+	@apply border rounded-md;
 	/* COLORS */
 	@apply bg-black text-white;
 	/* TEXT */
 	/* ANIMATION AND EFFECTS */
 	@apply drop-shadow;
+}
+
+.outline-button {
+	@extend .submit-button;
+	/* SIZE */
+	/* MARGINS AND PADDING */
+	/* LAYOUT */
+	/* BORDERS */
+	@apply border;
+	/* COLORS */
+	@apply bg-white text-black border-black;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
 }
 
 .slim-button {

@@ -69,7 +69,7 @@
 	footer {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply pt-24;
+		@apply pt-24 px-4;
 		/* LAYOUT */
 		@apply grid;
 		/* BORDERS */
@@ -85,7 +85,7 @@
 			/* MARGINS AND PADDING */
 			@apply mx-auto pb-10;
 			/* LAYOUT */
-			@apply grid grid-cols-4 gap-4;
+			@apply flex flex-col-reverse md:grid grid-cols-4 gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -109,7 +109,7 @@
 			/* MARGINS AND PADDING */
 			@apply mx-auto;
 			/* LAYOUT */
-			@apply flex items-center justify-between;
+			@apply flex flex-col-reverse md:flex-row items-center justify-between;
 			/* BORDERS */
 			@apply border-t border-gray-200;
 			/* COLORS */

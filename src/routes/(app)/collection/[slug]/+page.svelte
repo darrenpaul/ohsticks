@@ -22,7 +22,7 @@
 	}
 </script>
 
-<div class="product-list">
+<div class="collection-page">
 	<h2 class="--heading">
 		{capitalizeWords($page.params.slug)}
 	</h2>
@@ -35,11 +35,11 @@
 </div>
 
 <style lang="scss">
-	.product-list {
+	.collection-page {
 		/* SIZE */
 		@apply w-fit max-w-[1495px];
 		/* MARGINS AND PADDING */
-		@apply mx-auto;
+		@apply mx-auto pt-1;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -61,9 +61,9 @@
 		.--list {
 			/* SIZE */
 			/* MARGINS AND PADDING */
-			@apply mb-16;
+			@apply px-4 mb-16;
 			/* LAYOUT */
-			@apply grid grid-cols-5 gap-8;
+			@apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

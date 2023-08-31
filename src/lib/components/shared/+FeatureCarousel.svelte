@@ -11,9 +11,9 @@
 <style lang="scss">
 	.home-feature-carousel {
 		/* SIZE */
-		@apply w-full h-[600px];
+		@apply w-full sm:max-h-[600px];
 		/* MARGINS AND PADDING */
-		@apply mt-16;
+		@apply mt-5 sm:mt-20;
 		/* LAYOUT */
 		@apply grid items-center justify-center overflow-hidden;
 		/* BORDERS */

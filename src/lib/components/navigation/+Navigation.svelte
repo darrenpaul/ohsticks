@@ -39,6 +39,8 @@
 				<MenuClosedIcon />
 			</button>
 
+			<a href={homeRoute.path}>{$trans("site.brandName")}</a>
+
 			<div class="--links">
 				<NavigationCartButton />
 
@@ -50,7 +52,7 @@
 			<div class="--mobile-menu">
 				<div class="--header">
 					<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)} class="--menu-button">
-						<MenuOpenIcon fill="fill-white" /> {$trans("component.navigation.menu.label")}</button
+						<MenuOpenIcon fill="fill-white" />{$trans("component.navigation.menu.label")}</button
 					>
 					<button class="--account-button">{$trans("component.navigation.account.label")}</button>
 				</div>
