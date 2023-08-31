@@ -37,7 +37,7 @@
 <style lang="scss">
 	.product-list {
 		/* SIZE */
-		@apply max-w-[1495px];
+		@apply w-fit max-w-[1495px];
 		/* MARGINS AND PADDING */
 		@apply mx-auto;
 		/* LAYOUT */

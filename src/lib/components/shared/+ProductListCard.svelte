@@ -35,7 +35,7 @@
 
 		img {
 			/* SIZE */
-			@apply w-full h-[270px];
+			@apply w-full h-full max-w-[270px] max-h-[270px];
 			/* MARGINS AND PADDING */
 			@apply mb-4;
 			/* LAYOUT */

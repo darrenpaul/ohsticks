@@ -9,18 +9,20 @@
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
 	import { _ as trans } from "svelte-i18n";
 	import { page } from "$app/stores";
-	import capitalizeWords from "$lib/utils/capitalizeWords.js";
-	import { normalizeSlugString } from "$lib/utils/slugString.js";
-	import { homeRoute } from "$lib/constants/routes/homeRoute.js";
-	import { productsRoute } from "$lib/constants/routes/productRoute.js";
+	import capitalizeWords from "$lib/utils/capitalizeWords";
+	import { normalizeSlugString } from "$lib/utils/slugString";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import type { Link } from "$lib/types/link";
 	import { MetaTags } from "svelte-meta-tags";
+	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
+	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 
 	let carousel; // for calling methods of the carousel instance
 
 	let crumbs: Link[] = [
 		homeRoute,
-		productsRoute,
+		collectionRoute,
 		{
 			label: capitalizeWords(normalizeSlugString($page.params.slug)),
 			name: normalizeSlugString($page.params.slug),
@@ -56,11 +58,21 @@
 			<h2 class="--heading">{$trans("page.product.relatedProducts.label")}</h2>
 
 			{#if browser}
-				<Carousel particlesToShow={3} particlesToScroll={2} arrows={false}>
-					{#each relatedProducts as product}
-						<ProductListCard {product} />
-					{/each}
-				</Carousel>
+				<MobileOnly>
+					<Carousel particlesToShow={1} particlesToScroll={1} arrows={false}>
+						{#each relatedProducts as product}
+							<ProductListCard {product} />
+						{/each}
+					</Carousel>
+				</MobileOnly>
+
+				<DesktopOnly>
+					<Carousel particlesToShow={3} particlesToScroll={2} arrows={false}>
+						{#each relatedProducts as product}
+							<ProductListCard {product} />
+						{/each}
+					</Carousel>
+				</DesktopOnly>
 			{/if}
 		</div>
 	</ContainWidth>

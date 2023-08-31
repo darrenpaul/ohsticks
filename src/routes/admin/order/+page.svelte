@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { user } from "$lib/firebase/firebaseClient";
-	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute.js";
+	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute";
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { error } from "@sveltejs/kit";
 	import { onMount } from "svelte";

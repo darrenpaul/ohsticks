@@ -7,7 +7,9 @@ export default {
 				mukta: ["Mukta", "sans-serif"]
 			},
 			zIndex: {
-				"cart-menu": "100"
+				navigation: "100",
+				"mobile-menu": "200",
+				"cart-menu": "300"
 			}
 		}
 	},

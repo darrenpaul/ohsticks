@@ -35,7 +35,7 @@
 		/* SIZE */
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
-		@apply flex;
+		@apply flex flex-col-reverse xl:flex-row gap-2;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
@@ -44,9 +44,8 @@
 		.--thumbnail-images {
 			/* SIZE */
 			/* MARGINS AND PADDING */
-			@apply mr-2;
 			/* LAYOUT */
-			@apply flex-shrink-0 flex flex-col gap-2;
+			@apply flex-shrink-0 flex flex-row xl:flex-col gap-2;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -54,7 +53,7 @@
 
 			.--image {
 				/* SIZE */
-				@apply w-24 h-24;
+				@apply h-24;
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
 				@apply object-cover;
@@ -80,7 +79,7 @@
 
 		.--active-image {
 			/* SIZE */
-			@apply w-full h-[480px];
+			@apply w-full lg:max-h-[480px];
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
 			/* BORDERS */

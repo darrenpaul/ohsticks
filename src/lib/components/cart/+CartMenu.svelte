@@ -101,7 +101,7 @@
 
 		.--menu {
 			/* SIZE */
-			@apply w-[417px] h-[100dvh];
+			@apply w-full max-w-[417px] h-[100dvh];
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
 			@apply fixed top-0 right-0 flex flex-col;
@@ -116,7 +116,7 @@
 				@apply w-full h-[46px];
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
-				@apply flex items-center justify-between;
+				@apply flex-shrink-0 flex items-center justify-between;
 				/* BORDERS */
 				/* COLORS */
 				@apply bg-white;
@@ -128,7 +128,7 @@
 					@apply w-[46px] h-full;
 					/* MARGINS AND PADDING */
 					/* LAYOUT */
-					@apply grid place-items-center;
+					@apply flex-shrink-0 grid place-items-center;
 					/* BORDERS */
 					/* COLORS */
 					/* TEXT */
@@ -164,7 +164,7 @@
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
-				@apply flex-grow flex flex-col gap-4 p-4;
+				@apply flex-grow flex flex-col gap-4 p-4 overflow-scroll;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */

@@ -2,8 +2,8 @@
 	import { shippingCountries } from "$lib/constants/shippingCountries";
 	import { _ as trans } from "svelte-i18n";
 	import { cart } from "$lib/stores/cartStore";
-	import { productsRoute } from "$lib/constants/routes/productRoute";
-	import ArrowLeftIcon from "../icons/+ArrowLeftIcon.svelte";
+	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
+	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
 
 	let email: string = "";
 	let country: string = "";
@@ -188,7 +188,7 @@
 	</div>
 
 	<div class="--group-2">
-		<a class="link-button" href={`${productsRoute.path}/all`}>
+		<a class="link-button" href={`${collectionRoute.path}/all`}>
 			<ArrowLeftIcon />
 			{$trans("form.checkout.continueShopping.label")}
 		</a>

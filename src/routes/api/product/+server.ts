@@ -3,7 +3,7 @@ import { error, type HttpError } from "@sveltejs/kit";
 import { adminRole } from "$lib/constants/roles";
 import { app } from "$lib/firebase/firebaseClient";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import type { Product } from "$lib/types/product.js";
+import type { Product } from "$lib/types/product";
 
 const table = "product";
 

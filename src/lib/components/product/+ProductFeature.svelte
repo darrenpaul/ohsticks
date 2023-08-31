@@ -50,7 +50,7 @@
 		/* MARGINS AND PADDING */
 		@apply mx-auto pb-16;
 		/* LAYOUT */
-		@apply grid grid-cols-2 gap-8;
+		@apply grid grid-cols-1 md:grid-cols-2 gap-8;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */

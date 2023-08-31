@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Product } from "$lib/types/product";
-	import { productsRoute } from "$lib/constants/routes/productRoute";
+	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import { _ as trans } from "svelte-i18n";
 
 	export let product: Product;
@@ -13,10 +13,10 @@
 
 	{#each product.categories as category, index}
 		{#if index < product.categories.length - 1}
-			<a href={`${productsRoute.path}/${category}`}>{category}</a>
+			<a href={`${collectionRoute.path}/${category}`}>{category}</a>
 			<small>,</small>
 		{:else}
-			<a href={`${productsRoute.path}/${category}`}>{category}</a>
+			<a href={`${collectionRoute.path}/${category}`}>{category}</a>
 		{/if}
 	{/each}
 </div>

@@ -193,6 +193,17 @@
 			"reviews": {
 				"label": "Reviews"
 			}
+		},
+		"navigation": {
+			"menu": {
+				"label": "Menu"
+			},
+			"login": {
+				"label": "Login"
+			},
+			"account": {
+				"label": "Account"
+			}
 		}
 	}
 }

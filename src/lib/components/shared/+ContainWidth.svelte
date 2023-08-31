@@ -20,9 +20,9 @@
 
 		.--inner {
 			/* SIZE */
-			@apply max-w-[1170px];
+			@apply w-full max-w-[1170px];
 			/* MARGINS AND PADDING */
-			@apply mx-auto;
+			@apply mx-auto px-4;
 			/* LAYOUT */
 			/* BORDERS */
 			/* COLORS */

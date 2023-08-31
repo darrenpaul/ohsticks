@@ -24,7 +24,9 @@
 <style lang="scss">
 	.product-list {
 		/* SIZE */
+		@apply w-full;
 		/* MARGINS AND PADDING */
+		@apply px-2 mx-auto;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -48,7 +50,7 @@
 			/* MARGINS AND PADDING */
 			@apply mb-16;
 			/* LAYOUT */
-			@apply grid grid-cols-4 gap-8;
+			@apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
