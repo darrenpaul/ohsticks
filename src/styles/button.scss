@@ -3,11 +3,13 @@
 	/* MARGINS AND PADDING */
 	@apply py-4 px-8;
 	/* LAYOUT */
+	@apply block;
 	/* BORDERS */
 	@apply border rounded-md;
 	/* COLORS */
 	@apply bg-black text-white;
 	/* TEXT */
+	@apply text-center;
 	/* ANIMATION AND EFFECTS */
 	@apply drop-shadow;
 }

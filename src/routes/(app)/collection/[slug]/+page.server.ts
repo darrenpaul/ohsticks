@@ -1,6 +1,6 @@
 import { app } from "$lib/firebase/firebaseClient";
 import type { Product } from "$lib/types/product";
-import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const table = "product";
 

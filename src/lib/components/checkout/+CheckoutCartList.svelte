@@ -4,7 +4,7 @@
 </script>
 
 <div class="checkout-cart-list">
-	{#if $cart?.cartItems.length > 0}
+	{#if $cart && $cart?.cartItems?.length > 0}
 		{#each $cart.cartItems as cartItem}
 			<CheckoutCartItem {cartItem} />
 		{/each}

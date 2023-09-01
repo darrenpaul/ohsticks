@@ -32,10 +32,16 @@
 			cart: $cart
 		};
 
-		await fetch("/api/checkout", {
+		const checkoutResponse = await fetch("/api/checkout", {
 			method: "POST",
 			body: JSON.stringify(order)
 		});
+
+		const checkoutData = await checkoutResponse.json();
+
+		if (checkoutData.sessionUrl) {
+			window.location = checkoutData.sessionUrl;
+		}
 	};
 </script>
 
@@ -192,7 +198,8 @@
 			<ArrowLeftIcon />
 			{$trans("form.checkout.continueShopping.label")}
 		</a>
-		<button class="submit-button">{$trans("form.checkout.submit.label")}</button>
+
+		<button class="submit-button">{$trans("form.checkout.continueToPayment.label")}</button>
 	</div>
 </form>
 

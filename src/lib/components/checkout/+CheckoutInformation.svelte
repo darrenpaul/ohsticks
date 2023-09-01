@@ -12,7 +12,7 @@
 	let total: string;
 
 	$: {
-		if (browser) {
+		if (browser && $cart && $cart?.cartItems?.length > 0) {
 			cartItemsTotal = sumArrayNumbers(
 				$cart.cartItems.map((item: Product) => Number(item.price) * item.quantity)
 			).toFixed(2);
@@ -37,8 +37,6 @@
 	<p>subtotal:{cartItemsTotal}</p>
 	<p>shipping:{shipping}</p>
 	<p>total:{total}</p>
-
-	<button class="submit-button" on:click={addPromo}>checkout</button>
 </div>
 
 <style lang="scss">

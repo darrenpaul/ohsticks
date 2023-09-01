@@ -17,7 +17,7 @@
 <footer>
 	<div class="--top-section">
 		<div class="--row">
-			<h3>WIEN</h3>
+			<h3>{$trans("site.brandName")}</h3>
 			<p>
 				WE ARE EAGER TO HELP YOU TO MAKE YOUR HOUSE MORE BEAUTIFUL, MORE LIVABLE WITH AN AFFORDABLE
 				PRICE & GOOD QUALITY OF FURNITURES.

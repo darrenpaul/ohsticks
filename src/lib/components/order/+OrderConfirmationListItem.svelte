@@ -4,26 +4,26 @@
 
 	let totalPrice: string;
 
-	export let cartItem: CartItem;
+	export let item: CartItem;
 
 	$: {
-		totalPrice = (Number(cartItem.price) * cartItem.quantity).toFixed(2);
+		totalPrice = (Number(item.price) * item.quantity).toFixed(2);
 	}
 </script>
 
 <div class="checkout-cart-item">
 	<div class="--group">
 		<div class="relative">
-			<img class="--image" src={cartItem.image.src} alt={cartItem.name} />
+			<img class="--image" src={item.image.src} alt={item.name} />
 
 			<div class="--quantity-wrapper">
-				<p>{cartItem.quantity}</p>
+				<p>{item.quantity}</p>
 			</div>
 		</div>
 
 		<div class="--product-details">
-			<p>{cartItem.name}</p>
-			<p>{addCurrencySymbol(cartItem.price)}</p>
+			<p>{item.name}</p>
+			<p>{addCurrencySymbol(item.price)}</p>
 		</div>
 	</div>
 

@@ -1,7 +1,7 @@
 {
 	"site": {
-		"brandName": "WIEN",
-		"copyright": "© 2023 Wien. All Rights Reserved."
+		"brandName": "OhSticks",
+		"copyright": "© 2023 OhSticks. All Rights Reserved."
 	},
 	"page": {
 		"home": {
@@ -22,6 +22,30 @@
 		"contact": {
 			"title": "Contact",
 			"nav": "Contact Us"
+		},
+		"order": {
+			"orderConfirmation": {
+				"label": "Order Confirmation"
+			},
+			"order": {
+				"label": "Order: #{orderId}"
+			},
+			"thankYou": {
+				"label": "Thank You {name}!"
+			},
+			"orderUpdates": {
+				"label": "Order Updates",
+				"description": "We'll send updates to {email} when your order is processed, shipped, and delivered."
+			},
+			"shippingAddress": {
+				"label": "Shipping Address"
+			},
+			"continueShopping": {
+				"label": "Continue Shopping"
+			},
+			"yourOrder": {
+				"label": "Your Order"
+			}
 		}
 	},
 	"form": {
@@ -137,11 +161,11 @@
 			"shippingAddress": {
 				"label": "Shipping Address"
 			},
-			"submit": {
-				"label": "Checkout"
-			},
 			"continueShopping": {
 				"label": "Continue Shopping"
+			},
+			"continueToPayment": {
+				"label": "Continue to Payment"
 			}
 		},
 		"login": {
@@ -171,7 +195,7 @@
 				"label": "Send us a message"
 			},
 			"description": {
-				"label": "Reach out for inquiries, collaborations, or any questions you may have. "
+				"label": "Reach out for inquiries, collaborations, or any questions you may have."
 			},
 			"name": {
 				"label": "Name"

@@ -4,6 +4,7 @@
 	import "../styles/app.css";
 	import "../styles/global.scss";
 	import { browser } from "$app/environment";
+	import AuthCheck from "$lib/components/+AuthCheck.svelte";
 
 	export const load = async () => {
 		if (browser) {
@@ -16,5 +17,7 @@
 {#if $isLoading}
 	Please wait...
 {:else}
-	<slot />
+	<AuthCheck>
+		<slot />
+	</AuthCheck>
 {/if}

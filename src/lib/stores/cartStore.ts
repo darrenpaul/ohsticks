@@ -36,6 +36,7 @@ export const addToCart = async (product: Product) => {
 		{
 			id: product.id,
 			name: product.name,
+			description: product.description,
 			quantity: 1,
 			price: product.price,
 			image: product.featureImage

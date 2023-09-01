@@ -78,7 +78,7 @@
 <DesktopOnly>
 	<header class={navigationFixed ? "fixed" : "block"}>
 		<div class="--inner">
-			<h2>WIEN</h2>
+			<h2>{$trans("site.brandName")}</h2>
 
 			<div class="--links">
 				{#each links as link}

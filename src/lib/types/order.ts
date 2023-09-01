@@ -1,6 +1,6 @@
-import type { Product } from "./product";
+import type { Image, Product } from "./product";
 
-export type Order = {
+export type NewOrder = {
 	customer: Customer;
 	shippingAddress: IngAddress;
 	billingAddress: IngAddress;
@@ -13,6 +13,29 @@ export type Order = {
 	status: string;
 	createdAt: string;
 	updatedAt: string;
+};
+
+export type Order = {
+	id: string;
+	customer: Customer;
+	shippingAddress: IngAddress;
+	billingAddress: IngAddress;
+	items: Product[];
+	paymentMethod: string;
+	shippingMethod: string;
+	shippingCost: number;
+	tax: number;
+	total: number;
+	status: string;
+};
+
+export type OrderItem = {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+	quantity: number;
+	image: Image;
 };
 
 export type IngAddress = {
