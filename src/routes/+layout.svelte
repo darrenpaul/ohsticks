@@ -1,10 +1,9 @@
 <script>
-	import { locale, waitLocale, isLoading } from "svelte-i18n";
-
 	import "../styles/app.css";
 	import "../styles/global.scss";
+	import { locale, waitLocale, isLoading } from "svelte-i18n";
 	import { browser } from "$app/environment";
-	import AuthCheck from "$lib/components/+AuthCheck.svelte";
+	import GoogleTagManager from "$lib/components/+GoogleTagManager.svelte";
 
 	export const load = async () => {
 		if (browser) {
@@ -14,10 +13,10 @@
 	};
 </script>
 
+<GoogleTagManager />
+
 {#if $isLoading}
 	Please wait...
 {:else}
-	<AuthCheck>
-		<slot />
-	</AuthCheck>
+	<slot />
 {/if}

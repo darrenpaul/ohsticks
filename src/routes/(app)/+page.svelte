@@ -6,13 +6,17 @@
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 
 	export let data;
+	console.log("data:", data);
 </script>
 
 <div class="home-page">
 	<ContainWidth background="bg-transparent">
 		<FeatureCarousel />
 
-		<ProductList title={$trans("page.home.popularProducts")} products={data.body.products} />
+		<ProductList
+			title={$trans("page.home.popularProducts")}
+			products={data.body.pageData.featureCarousel}
+		/>
 
 		<SideBySideImage />
 	</ContainWidth>
