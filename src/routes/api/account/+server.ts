@@ -2,7 +2,7 @@ import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { error, type HttpError } from "@sveltejs/kit";
 import { adminRole, userRole } from "$lib/constants/roles";
 import { app } from "$lib/firebase/firebaseClient";
-import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import type { FirebaseError } from "firebase-admin";
 
 const table = "user";
