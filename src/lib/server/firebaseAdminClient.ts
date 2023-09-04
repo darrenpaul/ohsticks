@@ -10,7 +10,7 @@ try {
 		credential: firebaseAdmin.credential.cert({
 			projectId: PUBLIC_FIREBASE_PROJECT_ID,
 			clientEmail: FIREBASE_CLIENT_EMAIL,
-			privateKey: FIREBASE_PRIVATE_KEY
+			privateKey: FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
 		}),
 		storageBucket: PUBLIC_FIREBASE_STORAGE_BUCKET
 	});
