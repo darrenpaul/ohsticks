@@ -1,24 +1,21 @@
-import { app } from "$lib/firebase/firebaseClient";
 import type { Product } from "$lib/types/product";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-
-const table = "product";
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }) {
-	const db = getFirestore(app);
-	const tableCollection = collection(db, table);
+export async function load({ params, fetch }) {
+	const slug = params.slug;
 
-	const productsSnapshot = await getDocs(tableCollection);
-	const products = productsSnapshot.docs.map((doc) => ({
-		id: doc.id,
-		...doc.data()
-	})) as Product[];
+	const response = await fetch("/api/product", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 
-	const filteredProducts =
-		params.slug === "all"
-			? products
-			: products.filter((product) => product?.categories.includes(params.slug));
+	const products = await response.json();
+
+	const filteredProducts = products.filter(
+		(product: Product) => slug === "all" || product.categories.includes(slug)
+	);
 
 	if (products.length === 0) {
 		return {

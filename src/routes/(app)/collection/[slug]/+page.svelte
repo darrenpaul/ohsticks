@@ -1,14 +1,6 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
-	import BreadCrumb from "$lib/components/+BreadCrumb.svelte";
-	import ProductFeature from "$lib/components/product/+ProductFeature.svelte";
-	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import type { Product } from "$lib/types/product";
-	import ProductTabs from "$lib/components/product/+ProductTabs.svelte";
-	import Carousel from "svelte-carousel";
-	import { browser } from "$app/environment";
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
-	import ProductList from "$lib/components/shared/+ProductList.svelte";
 	import { page } from "$app/stores";
 	import capitalizeWords from "$lib/utils/capitalizeWords";
 

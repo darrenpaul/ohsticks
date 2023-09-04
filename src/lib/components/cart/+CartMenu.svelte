@@ -13,7 +13,7 @@
 	const cartState = getContext("cartState");
 
 	let totalQuantity = 0;
-	let totalPrice = 0;
+	let totalPrice = "0.00";
 
 	$: {
 		if (browser) {
@@ -21,7 +21,7 @@
 				totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
 				totalPrice = sumArrayNumbers(
 					$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
-				);
+				).toFixed(2);
 			}
 		}
 	}

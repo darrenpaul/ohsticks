@@ -2,13 +2,7 @@
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
-	let totalPrice: string;
-
 	export let cartItem: CartItem;
-
-	$: {
-		totalPrice = (Number(cartItem.price) * cartItem.quantity).toFixed(2);
-	}
 </script>
 
 <div class="checkout-cart-item">
@@ -23,11 +17,9 @@
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>
-			<p>{addCurrencySymbol(cartItem.price)}</p>
+			<p class="--price">{addCurrencySymbol(cartItem.price)}</p>
 		</div>
 	</div>
-
-	<p>{addCurrencySymbol(totalPrice)}</p>
 </div>
 
 <style lang="scss">
@@ -45,7 +37,7 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply flex items-center gap-4;
+			@apply flex-shrink-0 flex items-center gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -56,7 +48,7 @@
 			/* SIZE */
 			@apply w-6 h-6;
 			/* MARGINS AND PADDING */
-			@apply p-4;
+			@apply p-2 md:p-4;
 			/* LAYOUT */
 			@apply absolute top-0 right-0 flex items-center justify-center translate-x-2 -translate-y-2;
 			/* BORDERS */
@@ -70,10 +62,10 @@
 
 		.--image {
 			/* SIZE */
-			@apply w-24 h-24;
+			@apply w-20 h-20 md:w-24 md:h-24;
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply object-cover;
+			@apply flex-shrink-0 object-cover;
 			/* BORDERS */
 			@apply rounded-3xl;
 			/* COLORS */
@@ -91,6 +83,17 @@
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
+
+			.--price {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				@apply font-bold;
+				/* ANIMATION AND EFFECTS */
+			}
 		}
 	}
 </style>

@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				mukta: ["Mukta", "sans-serif"]
+				poppins: ["Poppins", "sans-serif"]
 			},
 			zIndex: {
 				navigation: "100",

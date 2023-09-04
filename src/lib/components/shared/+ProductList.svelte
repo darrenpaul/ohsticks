@@ -4,7 +4,7 @@
 	import type { Product } from "$lib/types/product";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 
-	export let title = "Product List";
+	export let title: string = "Product List";
 	export let products: Product[];
 </script>
 

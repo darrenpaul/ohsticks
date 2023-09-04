@@ -37,6 +37,26 @@
 			{$trans("component.footer.newsletter.label")}
 		</label>
 
-		<button class="floating-button"><SendMessageIcon /></button>
+		<button class="floating-button">
+			<SendMessageIcon />
+		</button>
 	</div>
 </form>
+
+<small>
+	{$trans("component.footer.newsletter.description")}
+</small>
+
+<style lang="scss">
+	small {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		@apply text-gray-500;
+		/* TEXT */
+		@apply text-xs;
+		/* ANIMATION AND EFFECTS */
+	}
+</style>

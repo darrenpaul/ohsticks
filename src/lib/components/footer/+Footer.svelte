@@ -1,57 +1,50 @@
 <script lang="ts">
 	import { _ as trans } from "svelte-i18n";
 	import FooterNewsletter from "$lib/components/footer/+FooterNewsletter.svelte";
+	import Socials from "$lib/components/shared/+Socials.svelte";
+	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
+	import { accountRoute } from "$lib/constants/routes/accountRoute";
+	import { contactRoute } from "$lib/constants/routes/contactRoute";
 
-	let newsletterEmail: string = "";
+	const shopLinks = [collectionAllRoute, accountRoute];
 
-	const handleNewsletterSubmit = async () => {
-		await fetch("/api/newsletter", {
-			method: "POST",
-			body: JSON.stringify({
-				email: "drobertpaul@gmail.com"
-			})
-		});
-	};
+	const helpLinks = [contactRoute];
 </script>
 
 <footer>
 	<div class="--top-section">
+		<!-- BRAND -->
 		<div class="--row">
 			<h3>{$trans("site.brandName")}</h3>
-			<p>
-				WE ARE EAGER TO HELP YOU TO MAKE YOUR HOUSE MORE BEAUTIFUL, MORE LIVABLE WITH AN AFFORDABLE
-				PRICE & GOOD QUALITY OF FURNITURES.
+
+			<p class="--company-description">
+				{$trans("component.footer.companyDescription.label")}
 			</p>
-			<p>Socials</p>
+
+			<Socials />
 		</div>
 
+		<!-- SHOP -->
 		<div class="--row">
-			<h3>Shop</h3>
+			<h3>{$trans("component.footer.shop.label")}</h3>
 
-			<a href="/">Our Stores</a>
-			<a href="/">Cart</a>
-			<a href="/">My Account</a>
-			<a href="/">Wishlist</a>
+			{#each shopLinks as link}
+				<a href={link.path}>{link.label}</a>
+			{/each}
 		</div>
 
+		<!-- HELP -->
 		<div class="--row">
 			<h3>Help</h3>
 
-			<a href="/">Contact</a>
-			<a href="/">FAQ's</a>
-			<a href="/">Returns</a>
-			<a href="/">Shipping</a>
-			<a href="/">Guides</a>
+			{#each helpLinks as link}
+				<a href={link.path}>{link.label}</a>
+			{/each}
 		</div>
 
+		<!-- NEWSLETTER -->
 		<div class="--row">
 			<FooterNewsletter />
-
-			<small>
-				I want emails from Minim with products information, promotions, advertisements. I can
-				unsubscribe any time using the unsubscribe at the end of all emails. Contact Minim here.
-				Read our Privacy Policy.
-			</small>
 		</div>
 	</div>
 
@@ -96,10 +89,22 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply flex flex-col;
+			@apply flex flex-col gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--company-description {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			@apply text-gray-500;
+			/* TEXT */
+			@apply text-sm;
 			/* ANIMATION AND EFFECTS */
 		}
 

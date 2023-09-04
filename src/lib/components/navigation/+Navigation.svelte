@@ -11,6 +11,7 @@
 	import { _ as trans } from "svelte-i18n";
 	import CaretRightIcon from "$lib/components/icons/+CaretRightIcon.svelte";
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
+	import hr from "date-fns/locale/hr";
 
 	let scrollYPosition: number;
 	let navigationFixed: boolean = false;
@@ -78,7 +79,9 @@
 <DesktopOnly>
 	<header class={navigationFixed ? "fixed" : "block"}>
 		<div class="--inner">
-			<h2>{$trans("site.brandName")}</h2>
+			<a href={homeRoute.path}>
+				<h2>{$trans("site.brandName")}</h2>
+			</a>
 
 			<div class="--links">
 				{#each links as link}

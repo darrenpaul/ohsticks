@@ -7,23 +7,15 @@ import type { FirebaseError } from "firebase-admin";
 
 const table = "user";
 
-// CREATE
-/** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
-	const {
-		firstName,
-		LastName,
-		emailAddress,
-		phoneNumber,
-		billingAddress,
-		shippingAddress,
-		password
-	} = await request.json();
-
-	let userRecord;
-
+const createAuthenticationUser = async ({
+	emailAddress,
+	phoneNumber,
+	password,
+	firstName,
+	LastName
+}) => {
 	try {
-		userRecord = await adminAuth.createUser({
+		return await adminAuth.createUser({
 			email: emailAddress,
 			emailVerified: false,
 			phoneNumber: phoneNumber,
@@ -40,32 +32,37 @@ export const POST = async ({ request }) => {
 			message: knownError.message
 		});
 	}
+};
+
+// CREATE
+/** @type {import('./$types').RequestHandler} */
+export const POST = async ({ request }) => {
+	const { firstName, LastName, emailAddress, phoneNumber, shippingAddress, password } =
+		await request.json();
+
+	const userRecord = await createAuthenticationUser({
+		emailAddress,
+		phoneNumber,
+		password,
+		firstName,
+		LastName
+	});
 
 	const userUID = userRecord.uid;
 
 	try {
-		const db = getFirestore(app);
-		const documentReference = doc(db, table, userUID);
-		const tableSnapshot = await getDoc(documentReference);
-		if (tableSnapshot.exists()) {
-			throw error(409, {
-				message: "User already exists"
-			});
-		}
-
 		await adminDB.collection(table).doc(userUID).set({
 			firstName,
 			LastName,
 			emailAddress,
 			phoneNumber,
-			billingAddress,
 			shippingAddress,
 			role: userRole
 		});
 
-		adminAuth.setCustomUserClaims(userUID, { role: "user" });
-		// Change to admin when needed
 		// adminAuth.setCustomUserClaims(userUID, { role: "user" });
+		// Change to admin when needed
+		// adminAuth.setCustomUserClaims(userUID, { role: "admin" });
 
 		return new Response();
 	} catch (errorResponse: unknown) {

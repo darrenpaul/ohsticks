@@ -27,10 +27,10 @@
 <style lang="scss">
 	.checkout-page {
 		/* SIZE */
-		@apply h-[100dvh];
+		@apply min-h-[100dvh];
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
-		@apply grid grid-cols-2 gap-8;
+		@apply flex flex-col md:grid grid-cols-2 gap-8;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */

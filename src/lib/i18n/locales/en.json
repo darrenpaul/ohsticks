@@ -3,9 +3,15 @@
 		"brandName": "OhSticks",
 		"copyright": "© 2023 OhSticks. All Rights Reserved."
 	},
+	"socials": {
+		"facebook": { "url": "https://www.facebook.com/ohsticks", "label": "Facebook" },
+		"instagram": { "url": "https://www.instagram.com/ohsticks", "label": "Instagram" },
+		"pinterest": { "url": "https://www.pinterest.com/ohsticks", "label": "Pinterest" }
+	},
 	"page": {
 		"home": {
-			"popularProducts": "Popular Products"
+			"popularProducts": "Popular Products",
+			"featuredProducts": "Featured Products"
 		},
 		"product": {
 			"relatedProducts": {
@@ -45,6 +51,17 @@
 			},
 			"yourOrder": {
 				"label": "Your Order"
+			}
+		},
+		"checkout": {
+			"subtotal": {
+				"label": "Subtotal"
+			},
+			"shipping": {
+				"label": "Shipping"
+			},
+			"total": {
+				"label": "Total"
 			}
 		}
 	},
@@ -255,7 +272,14 @@
 		},
 		"footer": {
 			"newsletter": {
-				"label": "Newsletter Sign-up"
+				"label": "Newsletter Sign-up",
+				"description": "I want emails from OhSticks with products information, promotions, advertisements. I can unsubscribe any time using the unsubscribe at the end of all emails."
+			},
+			"companyDescription": {
+				"label": "We are a vibrant sticker company rooted in Vienna, Austria. Our passion lies in creating and curating trendy, eye-catching sticker designs that speak to your style and imagination."
+			},
+			"shop": {
+				"label": "Shop"
 			}
 		}
 	}

@@ -39,7 +39,7 @@
 		productContentSections = gptData.contentSections || [];
 		metaTitle = gptData.metaTitle;
 		metaDescription = gptData.metaDescription;
-		metaKeywords = gptData.broadMatchKeywords.join(", ");
+		metaKeywords = gptData.keywords.join(", ");
 	};
 </script>
 

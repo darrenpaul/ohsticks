@@ -15,12 +15,16 @@
 
 <div class="cart-menu-item">
 	<div class="--group">
-		<img class="--image" src={cartItem.image.src} alt={cartItem.name} />
+		<div class="relative">
+			<img class="--image" src={cartItem.image.src} alt={cartItem.name} />
+
+			<div class="--quantity-wrapper">
+				<p>{cartItem.quantity}</p>
+			</div>
+		</div>
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>
-
-			<p>QTY: {cartItem.quantity}</p>
 		</div>
 	</div>
 
@@ -110,6 +114,22 @@
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--quantity-wrapper {
+			/* SIZE */
+			@apply w-6 h-6;
+			/* MARGINS AND PADDING */
+			@apply p-2 md:p-4;
+			/* LAYOUT */
+			@apply absolute top-0 right-0 flex items-center justify-center translate-x-2 -translate-y-2;
+			/* BORDERS */
+			@apply rounded-full;
+			/* COLORS */
+			@apply bg-slate-600 text-white;
+			/* TEXT */
+			@apply font-bold;
 			/* ANIMATION AND EFFECTS */
 		}
 	}

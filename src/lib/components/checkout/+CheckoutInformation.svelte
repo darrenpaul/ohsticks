@@ -1,24 +1,8 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
 	import { getContext } from "svelte";
-	import CheckoutCartList from "./+CheckoutCartList.svelte";
-	import { cart } from "$lib/stores/cartStore";
-	import { browser } from "$app/environment";
-	import { sumArrayNumbers } from "$lib/utils/maths";
-	import type { Product } from "$lib/types/product";
-
-	let cartItemsTotal: string;
-	let shipping: string = "100.00";
-	let total: string;
-
-	$: {
-		if (browser && $cart && $cart?.cartItems?.length > 0) {
-			cartItemsTotal = sumArrayNumbers(
-				$cart.cartItems.map((item: Product) => Number(item.price) * item.quantity)
-			).toFixed(2);
-			total = (Number(cartItemsTotal) + Number(shipping)).toFixed(2);
-		}
-	}
+	import CheckoutCartList from "$lib/components/checkout/+CheckoutCartList.svelte";
+	import CheckoutCouponCode from "$lib/components/checkout/+CheckoutCouponCode.svelte";
+	import CheckoutTotals from "$lib/components/checkout/+CheckoutTotals.svelte";
 
 	// Retrieve user store from context
 	const user = getContext("user");
@@ -33,17 +17,16 @@
 <div class="checkout-information">
 	<CheckoutCartList />
 
-	<p>coupon code</p>
-	<p>subtotal:{cartItemsTotal}</p>
-	<p>shipping:{shipping}</p>
-	<p>total:{total}</p>
+	<CheckoutCouponCode />
+
+	<CheckoutTotals />
 </div>
 
 <style lang="scss">
 	.checkout-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply p-8;
+		@apply p-2 md:p-8;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

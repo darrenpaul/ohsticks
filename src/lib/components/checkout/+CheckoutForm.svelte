@@ -193,7 +193,7 @@
 		</div>
 	</div>
 
-	<div class="--group-2">
+	<div class="--button-group">
 		<a class="link-button" href={`${collectionRoute.path}/all`}>
 			<ArrowLeftIcon />
 			{$trans("form.checkout.continueShopping.label")}
@@ -207,10 +207,10 @@
 	.checkout-form {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply p-8;
+		@apply p-2 md:p-8;
 		/* LAYOUT */
 		/* BORDERS */
-		@apply border-r border-gray-300;
+		@apply border-0 md:border-r border-gray-300;
 		/* COLORS */
 		@apply bg-white;
 		/* TEXT */
@@ -243,7 +243,7 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply grid grid-cols-2 gap-4;
+			@apply grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -254,7 +254,18 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply grid grid-cols-3 gap-4;
+			@apply grid grid-cols-1 gap-0 lg:grid-cols-3 md:gap-4;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--button-group {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply flex flex-col-reverse gap-0 md:grid-cols-2 md:gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

@@ -4,19 +4,18 @@
 	import ProductList from "$lib/components/shared/+ProductList.svelte";
 	import SideBySideImage from "$lib/components/shared/+SideBySideImage.svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
+	import type { Product } from "$lib/types/product.js";
 
 	export let data;
-	console.log("data:", data);
+
+	let products: Product[] = data.body.products;
 </script>
 
 <div class="home-page">
 	<ContainWidth background="bg-transparent">
 		<FeatureCarousel />
 
-		<ProductList
-			title={$trans("page.home.popularProducts")}
-			products={data.body.pageData.featureCarousel}
-		/>
+		<ProductList title={$trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
 
 		<SideBySideImage />
 	</ContainWidth>

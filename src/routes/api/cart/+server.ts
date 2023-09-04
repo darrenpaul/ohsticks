@@ -2,7 +2,7 @@ import { adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
 import type { CartItem, CartResponse } from "$lib/types/cart";
 
-const table = "cartGuest";
+const table = "cart";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */

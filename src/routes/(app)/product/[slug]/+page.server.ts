@@ -5,22 +5,21 @@ import { getFirestore, collection, getDocs, query, where } from "firebase/firest
 const table = "product";
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }) {
-	const db = getFirestore(app);
-	const tableCollection = collection(db, table);
+export async function load({ params, fetch }) {
+	const slug = params.slug;
 
-	const tableQuery = query(tableCollection, where("slug", "==", params.slug));
-	const productSnapshot = await getDocs(tableQuery);
+	const response = await fetch("/api/product", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 
-	const product = productSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Product);
+	const products = await response.json();
 
-	const relatedProductsSnapshot = await getDocs(tableCollection);
-	const relatedProducts = relatedProductsSnapshot.docs.map((doc) => ({
-		id: doc.id,
-		...doc.data()
-	}));
+	const product = products.find((product: Product) => product.slug === slug);
 
-	if (product.length === 0) {
+	if (!product) {
 		return {
 			status: 404,
 			body: {
@@ -31,6 +30,6 @@ export async function load({ params }) {
 
 	return {
 		status: 200,
-		body: { product: product[0], relatedProducts }
+		body: { product: product, relatedProducts: products }
 	};
 }
