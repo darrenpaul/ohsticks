@@ -37,15 +37,13 @@ const createAuthenticationUser = async ({
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }) => {
-	const { firstName, LastName, emailAddress, phoneNumber, shippingAddress, password } =
-		await request.json();
+	const { firstName, lastName, emailAddress, shippingAddress, password } = await request.json();
 
 	const userRecord = await createAuthenticationUser({
 		emailAddress,
-		phoneNumber,
 		password,
 		firstName,
-		LastName
+		LastName: lastName
 	});
 
 	const userUID = userRecord.uid;
@@ -53,19 +51,19 @@ export const POST = async ({ request }) => {
 	try {
 		await adminDB.collection(table).doc(userUID).set({
 			firstName,
-			LastName,
+			lastName,
 			emailAddress,
-			phoneNumber,
 			shippingAddress,
 			role: userRole
 		});
 
-		// adminAuth.setCustomUserClaims(userUID, { role: "user" });
+		adminAuth.setCustomUserClaims(userUID, { role: "user" });
 		// Change to admin when needed
 		// adminAuth.setCustomUserClaims(userUID, { role: "admin" });
 
 		return new Response();
 	} catch (errorResponse: unknown) {
+		console.log(errorResponse);
 		const knownError = errorResponse as HttpError;
 		throw error(knownError.status, {
 			message: knownError.body.message

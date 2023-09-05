@@ -1,30 +1,15 @@
 import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { error, type HttpError } from "@sveltejs/kit";
-import { auth } from "$lib/firebase/firebaseClient";
-import randomString from "$lib/utils/randomString.js";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { adminRole } from "$lib/constants/roles";
+import { app, db } from "$lib/firebase/firebaseClient";
+import { getFirestore, collection, getDocs, where, query, documentId } from "firebase/firestore";
 
 const table = "order";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, fetch }) => {
+export const POST = async ({ request }) => {
 	const { customer, shippingAddress, billingAddress, items, paymentMethod } = await request.json();
-	const accessToken = request.headers.get("x-access-token");
-
-	if (!accessToken) {
-		await fetch("/api/account", {
-			method: "POST",
-			body: JSON.stringify({
-				firstName: customer.firstName,
-				lastName: customer.lastName,
-				emailAddress: customer.email,
-				password: randomString(20, false),
-				shippingAddress: shippingAddress
-			})
-		});
-		await sendPasswordResetEmail(auth, customer.email);
-	}
 
 	const orderReference = await adminDB.collection(table).doc();
 

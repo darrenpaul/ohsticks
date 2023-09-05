@@ -5,9 +5,10 @@
 	import { sumArrayNumbers } from "$lib/utils/maths";
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import { shippingRate } from "$lib/constants/shippingCountries";
 
 	let cartItemsTotal: string;
-	let shipping: string = "2.00";
+	let shipping: string = shippingRate.toFixed(2);
 	let total: string;
 
 	$: {

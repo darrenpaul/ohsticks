@@ -12,25 +12,30 @@
 	import ProductCreateContentSections from "$lib/components/admin/product/+ProductCreateContentSections.svelte";
 	import type { ContentSection } from "$lib/types/product";
 
-	let name = "";
-	let slug = "";
-	let categories = "";
-	let description = "";
-	let contentSections: ContentSection[] = [];
-	let purchasePrice: number;
-	let markupPercentage = 25;
+	export let data;
+	let product = data.body.product;
+
+	let productId = product.id;
+	let name = product.name;
+	let slug = product.slug;
+	let categories = product.categories.join(", ");
+	let description = product.description;
+	let contentSections: ContentSection[] = product.contentSections;
+	let purchasePrice: number = Number(product.purchasePrice);
+	let markupPercentage = Number(product.markupPercentage);
 	let price: string;
 	let quantity = 10;
-	let visible = false;
+	let visible = product.visible;
 	let featureImage;
+	let featureImageUrl = product.featureImage;
 	let productImages;
+	let productImagesUrls = product.images.map((image) => image);
 
-	let metaTitle = "";
-	let metaDescription = "";
+	let metaTitle = product.meta.title;
+	let metaDescription = product.meta.description;
 
 	$: {
 		price = Number(purchasePrice * (1 + markupPercentage / 100)).toFixed(2);
-		slug = slugString(name);
 		// Summer 2021, shirt, model 02, red, small = SM21-SH-M02-RD-S-001
 	}
 
@@ -56,15 +61,25 @@
 		if (!role || role !== adminRole) {
 			return error(401, "Unauthorized");
 		}
-		const featureImageUrl = await handleImageUpload(featureImage);
-		const imagePromises = productImages.map((image) => handleImageUpload(image));
-		const imagesUrl = await Promise.all(imagePromises);
+
+		console.log(featureImage);
+		console.log(productImages);
+		if (featureImage) {
+			featureImageUrl = await handleImageUpload(featureImage);
+		}
+
+		if (productImages) {
+			const imagePromises = productImages.map((image) => handleImageUpload(image));
+			productImagesUrls = await Promise.all(imagePromises);
+		}
+
 		const response = await fetch("/api/admin/product", {
-			method: "POST",
+			method: "PUT",
 			headers: {
 				"x-access-token": accessToken
 			},
 			body: JSON.stringify({
+				id: productId,
 				name,
 				slug,
 				categories: categories.split(",").map((category) => category.trim()),
@@ -75,8 +90,8 @@
 				price,
 				quantity,
 				visible,
-				featureImage: { src: featureImageUrl, alt: `${name} feature image` },
-				images: imagesUrl.map((url) => ({ src: url, alt: `${name} image` })),
+				featureImage: { src: featureImageUrl.src, alt: `${name} feature image` },
+				images: productImagesUrls.map((url) => ({ src: url.src, alt: `${name} image` })),
 				meta: {
 					title: metaTitle,
 					description: metaDescription
@@ -84,14 +99,14 @@
 			})
 		});
 		if (response.ok) {
-			alert("Product created");
+			alert("Product updated");
 			return;
 		}
-		[...imagesUrl, featureImageUrl].forEach((image) => deleteImage(image));
+		[...productImagesUrls, featureImageUrl].forEach((image) => deleteImage(image));
 	};
 </script>
 
-<p>Create Product</p>
+<p>Edit Product</p>
 
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
 	<!-- NAME -->
@@ -191,7 +206,7 @@
 	<!-- VISIBLE -->
 	<div class="--input-group">
 		<label for="visible">{$trans("form.createProduct.visible.label")}</label>
-		<input type="checkbox" id="visible" name="visible" bind:value={visible} />
+		<input type="checkbox" id="visible" name="visible" bind:value={visible} checked={visible} />
 	</div>
 
 	<!-- FEATURE IMAGE -->
@@ -199,6 +214,7 @@
 		<ImageUploadInput
 			elementId="featureImage"
 			label={$trans("form.createProduct.featureImage.label")}
+			imagePreviews={[featureImageUrl.src]}
 			bind:images={featureImage}
 		/>
 	</div>
@@ -209,6 +225,7 @@
 			elementId="productImages"
 			label={$trans("form.createProduct.productImages.label")}
 			multiple={true}
+			imagePreviews={productImagesUrls.map((image) => image.src)}
 			bind:images={productImages}
 		/>
 	</div>
@@ -221,7 +238,7 @@
 		bind:metaDescription
 	/>
 
-	<button>Create</button>
+	<button>Update</button>
 </form>
 
 <style lang="scss">

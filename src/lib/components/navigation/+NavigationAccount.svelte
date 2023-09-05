@@ -1,16 +1,23 @@
 <script lang="ts">
-	import { adminProductRoute } from "$lib/constants/routes/admin/adminProductRoute";
-	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
+	import { page } from "$app/stores";
+	import { contactRoute } from "$lib/constants/routes/contactRoute";
 	import { logoutUser } from "$lib/firebase/firebaseClient";
-	import { adminPageRoute } from "$lib/constants/routes/admin/adminPageRoute";
+	import { accountRoute } from "$lib/constants/routes/accountRoute";
+
+	let links = [homeRoute, accountRoute, collectionAllRoute, contactRoute];
 </script>
 
 <nav>
 	<div class="--links">
-		<a href={adminProductRoute.path}>{adminProductRoute.label}</a>
-		<a href={adminOrderRoute.path}>{adminOrderRoute.label}</a>
-		<a href={adminPageRoute.path}>{adminPageRoute.label}</a>
+		{#each links as link}
+			<a class={$page.url.pathname === link.path ? "--active" : ""} href={link.path}>
+				{link.label}
+			</a>
+		{/each}
 	</div>
+
 	<button on:click={logoutUser}>Logout</button>
 </nav>
 

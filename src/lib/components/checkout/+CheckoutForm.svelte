@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { shippingCountries } from "$lib/constants/shippingCountries";
+	import { getStatesOfCountry, shippingCountries } from "$lib/constants/shippingCountries";
 	import { _ as trans } from "svelte-i18n";
 	import { cart } from "$lib/stores/cartStore";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
+	import type { IState } from "country-state-city/lib/interface.d.ts";
+	import { user } from "$lib/firebase/firebaseClient";
 
+	let emailInputDisabled = false;
 	let email: string = "";
 	let country: string = "";
 	let firstName: string = "";
@@ -14,11 +17,15 @@
 	let city: string = "";
 	let province: string = "";
 	let postalCode: string = "";
-
-	let selectableProvinces: string[] = [];
+	let selectableProvinces: IState[] = [];
+	let paymentMethod = "stripe";
 
 	$: {
-		selectableProvinces = shippingCountries.find((c) => c.code === country)?.provinces ?? [];
+		selectableProvinces = getStatesOfCountry(country);
+		if ($user?.email) {
+			email = $user.email;
+			emailInputDisabled = true;
+		}
 	}
 
 	const handleSubmit = async (event: Event) => {
@@ -29,11 +36,23 @@
 
 		const order = {
 			...values,
+			paymentMethod,
 			cart: $cart
 		};
 
+		const accessToken = await $user?.getIdToken();
+
+		const headers = {
+			"Content-Type": "application/json"
+		};
+
+		if (accessToken) {
+			headers["x-access-token"] = accessToken;
+		}
+
 		const checkoutResponse = await fetch("/api/checkout", {
 			method: "POST",
+			headers,
 			body: JSON.stringify(order)
 		});
 
@@ -53,12 +72,13 @@
 	<!-- EMAIL -->
 	<div class="--input-group mb-8">
 		<input
-			class="peer"
+			class={email ? "" : "peer"}
 			type="email"
 			id="email"
 			name="email"
 			bind:value={email}
 			placeholder=""
+			disabled={emailInputDisabled}
 			required
 		/>
 		<label class="floating-label" for="email">{$trans("form.checkout.email.label")}</label>
@@ -74,7 +94,7 @@
 			</option>
 
 			{#each shippingCountries as country}
-				<option value={country.code}>{country.name}</option>
+				<option value={country.isoCode}>{country.name}</option>
 			{/each}
 		</select>
 
@@ -85,7 +105,7 @@
 		<!-- FIRST NAME -->
 		<div class="--input-group">
 			<input
-				class="peer"
+				class={firstName ? "" : "peer"}
 				type="text"
 				id="firstName"
 				name="firstName"
@@ -100,7 +120,7 @@
 		<!-- LAST NAME -->
 		<div class="--input-group">
 			<input
-				class="peer"
+				class={lastName ? "" : "peer"}
 				type="text"
 				id="lastName"
 				name="lastName"
@@ -115,7 +135,7 @@
 	<!-- ADDRESS 1 -->
 	<div class="--input-group">
 		<input
-			class="peer"
+			class={address1 ? "" : "peer"}
 			type="text"
 			id="address1"
 			name="address1"
@@ -129,7 +149,7 @@
 	<!-- ADDRESS 2 -->
 	<div class="--input-group">
 		<input
-			class="peer"
+			class={address2 ? "" : "peer"}
 			type="text"
 			id="address2"
 			name="address2"
@@ -143,7 +163,7 @@
 		<!-- CITY -->
 		<div class="--input-group">
 			<input
-				class="peer"
+				class={city ? "" : "peer"}
 				type="text"
 				id="city"
 				name="city"
@@ -157,7 +177,7 @@
 		<!-- PROVINCE -->
 		<div class="--input-group">
 			<select
-				class="peer"
+				class={province ? "" : "peer"}
 				id="province"
 				name="province"
 				bind:value={province}
@@ -169,7 +189,7 @@
 				</option>
 
 				{#each selectableProvinces as province}
-					<option value={province.code}>{province.name}</option>
+					<option value={province.isoCode}>{province.name}</option>
 				{/each}
 			</select>
 
@@ -179,7 +199,7 @@
 		<!-- POSTAL CODE -->
 		<div class="--input-group">
 			<input
-				class="peer"
+				class={postalCode ? "" : "peer"}
 				type="text"
 				id="postalCode"
 				name="postalCode"
@@ -187,9 +207,9 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="postalCode"
-				>{$trans("form.checkout.postalCode.label")}</label
-			>
+			<label class="floating-label" for="postalCode">
+				{$trans("form.checkout.postalCode.label")}
+			</label>
 		</div>
 	</div>
 

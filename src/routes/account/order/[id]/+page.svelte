@@ -26,7 +26,7 @@
 			return error(401, "Unauthorized");
 		}
 
-		const response = await fetch(`/api/order?id=${$page.params.slug}`, {
+		const response = await fetch(`/api/order?id=${$page.params.id}`, {
 			method: "GET",
 			headers: {
 				"x-access-token": accessToken
@@ -34,7 +34,10 @@
 		});
 
 		if (response.ok) {
-			order = await response.json();
+			const jsonData = await response.json();
+			if (jsonData.order) {
+				order = jsonData.order;
+			}
 		} else {
 			return error(response.status, "Order not found");
 		}
@@ -51,7 +54,7 @@
 			<div class="--information">
 				<OrderConfirmationHeader {order} />
 
-				<OrderConfirmationUpdates />
+				<OrderConfirmationUpdates {order} />
 
 				<OrderConfirmationShipping {order} />
 

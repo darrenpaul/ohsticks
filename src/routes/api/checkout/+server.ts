@@ -1,4 +1,7 @@
 // CREATE
+
+import { created } from "$lib/constants/orderUpdate.js";
+
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ fetch: eventFetch, request }) => {
 	const {
@@ -11,6 +14,7 @@ export const POST = async ({ fetch: eventFetch, request }) => {
 		city,
 		province,
 		postalCode,
+		paymentMethod,
 		cart
 	} = await request.json();
 
@@ -36,7 +40,8 @@ export const POST = async ({ fetch: eventFetch, request }) => {
 			zip: postalCode,
 			country
 		},
-		status: "pending",
+		status: created,
+		paymentMethod,
 		items: cart.cartItems
 	};
 

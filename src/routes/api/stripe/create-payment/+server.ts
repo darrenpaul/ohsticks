@@ -40,6 +40,7 @@ export const POST = async ({ request }) => {
 		line_items: [...lineItems],
 		client_reference_id: order.id,
 		mode: "payment",
+		customer_email: order.customer.email,
 		success_url: `${YOUR_DOMAIN}/checkout/processing?${stripeUrlParams.join("&")}&status=success`,
 		cancel_url: `${YOUR_DOMAIN}/checkout/processing?${stripeUrlParams.join("&")}&status=failed`
 	});

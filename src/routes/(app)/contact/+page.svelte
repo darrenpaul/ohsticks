@@ -101,7 +101,7 @@
 		/* SIZE */
 		@apply w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-16 mx-auto;
+		@apply mt-40 mx-auto;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -128,12 +128,12 @@
 				/* TEXT */
 			}
 
-			.input-group {
+			button {
 				/* SIZE */
+				@apply w-full;
 				/* MARGINS AND PADDING */
 				@apply mb-4;
 				/* LAYOUT */
-				@apply relative flex flex-col;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */

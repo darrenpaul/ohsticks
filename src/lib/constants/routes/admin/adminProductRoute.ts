@@ -11,3 +11,9 @@ export const adminProductCreateRoute = {
 	name: "product-create",
 	label: "Product Create"
 };
+
+export const adminProductEditRoute = {
+	path: `${adminProductRoute.path}/edit`,
+	name: "product-edit",
+	label: "Product Edit"
+};

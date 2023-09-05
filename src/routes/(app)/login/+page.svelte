@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { goto, afterNavigate } from "$app/navigation";
 	import { browser } from "$app/environment";
 	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
 	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { _ as trans } from "svelte-i18n";
+	import { base } from "$app/paths";
+	import { page } from "$app/stores";
+	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
 
+	let previousPage: string = base;
 	let email = "";
 	let password = "";
-
-	const handleForgotPassword = () => {
-		console.log("forgot password");
-	};
 
 	const handleFormSubmit = async () => {
 		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
@@ -19,9 +19,17 @@
 
 	$: {
 		if (browser && $user) {
-			goto(homeRoute.path, { replaceState: true });
+			if (previousPage === $page.url.pathname) {
+				goto(homeRoute.path, { replaceState: true });
+			} else {
+				goto(previousPage, { replaceState: true });
+			}
 		}
 	}
+
+	afterNavigate(({ from }) => {
+		previousPage = from?.url.pathname || previousPage;
+	});
 </script>
 
 <div class="login-page">
@@ -33,9 +41,9 @@
 		</div>
 
 		<!-- EMAIL -->
-		<div class="--input-group mb-8">
+		<div class="input-group">
 			<input
-				class="peer"
+				class={email ? "" : "peer"}
 				type="email"
 				id="email"
 				name="email"
@@ -47,9 +55,9 @@
 		</div>
 
 		<!-- PASSWORD -->
-		<div class="--input-group mb-8">
+		<div class="input-group">
 			<input
-				class="peer"
+				class={password ? "" : "peer"}
 				type="password"
 				id="password"
 				name="password"
@@ -63,9 +71,17 @@
 		<button class="submit-button">{$trans("form.login.submit.label")}</button>
 	</form>
 
-	<button class="link-button" on:click={handleForgotPassword}>
-		{$trans("form.login.forgotPassword.label")}
-	</button>
+	<div class="--link-wrapper">
+		<a class="outline-button" href={registerRoute.path}>
+			{$trans("form.login.createAccount.label")}
+		</a>
+	</div>
+
+	<div class="--link-wrapper">
+		<a href={forgotPasswordRoute.path}>
+			{$trans("form.login.forgotPassword.label")}
+		</a>
+	</div>
 </div>
 
 <style lang="scss">
@@ -73,7 +89,7 @@
 		/* SIZE */
 		@apply w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-16 mx-auto;
+		@apply mt-40 mx-auto;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -100,39 +116,29 @@
 				/* TEXT */
 			}
 
-			.--input-group {
+			button {
 				/* SIZE */
+				@apply w-full;
 				/* MARGINS AND PADDING */
 				@apply mb-4;
 				/* LAYOUT */
-				@apply relative flex flex-col;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
 				/* ANIMATION AND EFFECTS */
 			}
+		}
 
-			.--group-2 {
-				/* SIZE */
-				/* MARGINS AND PADDING */
-				/* LAYOUT */
-				@apply grid grid-cols-2 gap-4;
-				/* BORDERS */
-				/* COLORS */
-				/* TEXT */
-				/* ANIMATION AND EFFECTS */
-			}
-
-			.--group-3 {
-				/* SIZE */
-				/* MARGINS AND PADDING */
-				/* LAYOUT */
-				@apply grid grid-cols-3 gap-4;
-				/* BORDERS */
-				/* COLORS */
-				/* TEXT */
-				/* ANIMATION AND EFFECTS */
-			}
+		.--link-wrapper {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply mb-4;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			@apply text-center;
+			/* ANIMATION AND EFFECTS */
 		}
 	}
 </style>

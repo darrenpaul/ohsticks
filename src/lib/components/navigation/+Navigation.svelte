@@ -11,7 +11,6 @@
 	import { _ as trans } from "svelte-i18n";
 	import CaretRightIcon from "$lib/components/icons/+CaretRightIcon.svelte";
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
-	import hr from "date-fns/locale/hr";
 
 	let scrollYPosition: number;
 	let navigationFixed: boolean = false;

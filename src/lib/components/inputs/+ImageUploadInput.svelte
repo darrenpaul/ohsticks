@@ -1,6 +1,5 @@
 <script lang="ts">
-	let imagePreviews = [];
-
+	export let imagePreviews = [];
 	export let elementId = "";
 	export let label = "";
 	export let multiple = false;

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import AuthCheck from "$lib/components/+AuthCheck.svelte";
-	import DashboardNavigation from "$lib/components/dashboard/+DashboardNavigation.svelte";
+	import NavigationAccount from "$lib/components/navigation/+NavigationAccount.svelte";
 </script>
 
 <AuthCheck>
-	<DashboardNavigation />
+	<NavigationAccount />
+
 	<slot />
 </AuthCheck>

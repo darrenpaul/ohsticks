@@ -1,22 +1,15 @@
-import { app } from "$lib/firebase/firebaseClient";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import type { Product } from "$lib/types/product";
+import { adminDB } from "$lib/server/firebaseAdminClient";
 
-const table = "pages";
+const table = "page";
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
 export const GET = async ({ url }) => {
-	const db = getFirestore(app);
-	const tableCollection = collection(db, table);
-	const tableSnapshot = await getDocs(tableCollection);
+	const tableSnapshot = await adminDB.collection(table).get();
 
-	const payload = (await tableSnapshot.docs.map((doc) => ({
-		id: doc.id,
-		...doc.data()
-	}))) as Product[];
+	const pageData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-	const jsonString = JSON.stringify(payload);
+	const jsonString = JSON.stringify(pageData);
 
 	return new Response(jsonString, {
 		headers: {

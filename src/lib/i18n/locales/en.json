@@ -51,6 +51,23 @@
 			},
 			"yourOrder": {
 				"label": "Your Order"
+			},
+			"processingStates": {
+				"created": {
+					"label": "Created"
+				},
+				"paid": {
+					"label": "Paid"
+				},
+				"processing": {
+					"label": "Processing"
+				},
+				"shipped": {
+					"label": "Shipped"
+				},
+				"delivered": {
+					"label": "Delivered"
+				}
 			}
 		},
 		"checkout": {
@@ -122,7 +139,7 @@
 			"productImages": {
 				"label": "Product Images"
 			},
-			"meteTitle": {
+			"metaTitle": {
 				"label": "Meta Title"
 			},
 			"metaDescription": {
@@ -205,6 +222,52 @@
 			},
 			"forgotPassword": {
 				"label": "Forgot Password?"
+			},
+			"createAccount": {
+				"label": "Create Account"
+			}
+		},
+		"register": {
+			"title": {
+				"label": "Create an account"
+			},
+			"description": {
+				"label": "Create an account to expedite future checkouts, track order history & receive emails, discounts, & special offers."
+			},
+			"email": {
+				"label": "Email"
+			},
+			"phoneNumber": {
+				"label": "Phone Number"
+			},
+			"firstName": {
+				"label": "First Name"
+			},
+			"lastName": {
+				"label": "Last Name"
+			},
+			"password": {
+				"label": "Password"
+			},
+			"submit": {
+				"label": "Register"
+			},
+			"login": {
+				"label": "Login"
+			}
+		},
+		"forgotPassword": {
+			"title": {
+				"label": "Forgot Password?"
+			},
+			"description": {
+				"label": "Enter your email address below and we'll send you a link to reset your password."
+			},
+			"email": {
+				"label": "Email"
+			},
+			"submit": {
+				"label": "Reset"
 			}
 		},
 		"contact": {
@@ -228,6 +291,45 @@
 			},
 			"submit": {
 				"label": "Submit"
+			}
+		},
+		"createPage": {
+			"name": {
+				"label": "Name",
+				"placeholder": "Enter product name"
+			},
+			"slug": {
+				"label": "Slug"
+			},
+			"metaTitle": {
+				"label": "Meta Title"
+			},
+			"metaDescription": {
+				"label": "Meta Description"
+			},
+			"openGraphTitle": {
+				"label": "Open Graph Title"
+			},
+			"openGraphDescription": {
+				"label": "Open Graph Description"
+			},
+			"openGraphType": {
+				"label": "Open Graph Type"
+			},
+			"imageSource": {
+				"label": "Image Source"
+			},
+			"imageAlt": {
+				"label": "Image Alt"
+			},
+			"twitterTitle": {
+				"label": "Twitter Title"
+			},
+			"twitterDescription": {
+				"label": "Twitter Description"
+			},
+			"twitterCard": {
+				"label": "Twitter Card"
 			}
 		}
 	},

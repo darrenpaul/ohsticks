@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { page } from "$app/stores";
+	import { accountOrderRoute } from "$lib/constants/routes/accountRoute";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 
 	const updateOrderStatus = async () => {
@@ -14,7 +15,7 @@
 		const { status } = await orderResponse.json();
 
 		if (status === "paid") {
-			window.location.replace("/order");
+			window.location.replace(`${accountOrderRoute.path}/${orderId}`);
 		} else {
 			window.location.replace(homeRoute.path);
 		}

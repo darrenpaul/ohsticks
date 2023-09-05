@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { adminProductCreateRoute } from "$lib/constants/routes/admin/adminProductRoute";
+	import {
+		adminProductCreateRoute,
+		adminProductEditRoute
+	} from "$lib/constants/routes/admin/adminProductRoute";
 	import { user } from "$lib/firebase/firebaseClient";
 	import type { Product } from "$lib/types/product";
 	import { error } from "@sveltejs/kit";
@@ -19,8 +22,6 @@
 				"x-access-token": accessToken
 			}
 		});
-
-		console;
 
 		products = await response.json();
 	});
@@ -44,7 +45,11 @@
 		{#if products}
 			{#each products as product}
 				<tr>
-					<td>{product.name}</td>
+					<td>
+						<a href={`${adminProductEditRoute.path}/${product.id}`}>
+							{product.name}
+						</a>
+					</td>
 					<td>{product.price}</td>
 					<td>{product.quantity}</td>
 					<td>
