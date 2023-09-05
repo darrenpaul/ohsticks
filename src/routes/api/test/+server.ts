@@ -1,8 +1,5 @@
 import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { error, type HttpError } from "@sveltejs/kit";
-import { adminRole } from "$lib/constants/roles";
-import { app, db } from "$lib/firebase/firebaseClient";
-import { getFirestore, collection, getDocs, where, query, documentId } from "firebase/firestore";
 
 const table = "order";
 

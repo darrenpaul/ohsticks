@@ -1,8 +1,6 @@
 import type { OrderItem } from "$lib/types/order.js";
 import Stripe from "stripe";
-import { STRIPE_SECRET_KEY } from "$env/static/private";
-
-const YOUR_DOMAIN = "http://127.0.0.1:5173";
+import { STRIPE_SECRET_KEY, STRIPE_REDIRECT_DOMAIN } from "$env/static/private";
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
 	apiVersion: "2020-08-27",
@@ -41,8 +39,12 @@ export const POST = async ({ request }) => {
 		client_reference_id: order.id,
 		mode: "payment",
 		customer_email: order.customer.email,
-		success_url: `${YOUR_DOMAIN}/checkout/processing?${stripeUrlParams.join("&")}&status=success`,
-		cancel_url: `${YOUR_DOMAIN}/checkout/processing?${stripeUrlParams.join("&")}&status=failed`
+		success_url: `${STRIPE_REDIRECT_DOMAIN}/checkout/processing?${stripeUrlParams.join(
+			"&"
+		)}&status=success`,
+		cancel_url: `${STRIPE_REDIRECT_DOMAIN}/checkout/processing?${stripeUrlParams.join(
+			"&"
+		)}&status=failed`
 	});
 
 	return new Response(JSON.stringify({ sessionUrl: session.url }), {
