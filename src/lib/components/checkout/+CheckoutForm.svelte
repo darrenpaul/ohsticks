@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { getStatesOfCountry, shippingCountries } from "$lib/constants/shippingCountries";
+	import { shippingCountries } from "$lib/constants/shippingCountries";
 	import { _ as trans } from "svelte-i18n";
 	import { cart } from "$lib/stores/cartStore";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
-	import type { IState } from "country-state-city/lib/interface.d.ts";
 	import { user } from "$lib/firebase/firebaseClient";
 	import CheckoutShippingMethod from "./+CheckoutShippingMethod.svelte";
 	import { getContext } from "svelte";
@@ -24,7 +23,7 @@
 	let city: string = "";
 	let province: string = "";
 	let postalCode: string = "";
-	let selectableProvinces: IState[] = [];
+	let selectableProvinces: { name: string; isoCode: string }[] = [];
 	let shippingMethod: ShippingMethod;
 	let paymentMethod = "stripe";
 
@@ -35,7 +34,8 @@
 	}
 
 	$: {
-		selectableProvinces = getStatesOfCountry(country);
+		selectableProvinces = shippingCountries.find((item) => item.isoCode === country)?.states || [];
+
 		if ($user?.email) {
 			email = $user.email;
 			emailInputDisabled = true;

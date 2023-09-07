@@ -111,10 +111,11 @@ export const GET = async ({ request, url, fetch }) => {
 			cartItems.concat(mergedCartItems);
 
 			const cartReference = await adminDB.collection(table).doc(cartData.id);
-			cartReference.set({ cartItems, expiration, userId: decodedIdToken.uid });
-			await fetch("/api/cart", {
-				method: "DELETE",
-				body: JSON.stringify({ id: cartKey })
+			cartReference.set({
+				id: cartReference.id,
+				cartItems,
+				expiration,
+				userId: decodedIdToken.uid
 			});
 		}
 	}

@@ -29,6 +29,7 @@ export const fetchUserCart = async (accessToken: string) => {
 	if (!browser) return;
 
 	const cartKey = localStorage.getItem(storageKey);
+	localStorage.removeItem(storageKey);
 
 	const headers = new Headers();
 	headers.append("x-access-token", accessToken);
@@ -39,8 +40,6 @@ export const fetchUserCart = async (accessToken: string) => {
 	});
 
 	const cartData = await cartResponse.json();
-
-	// localStorage.removeItem(storageKey);
 
 	cart.set(cartData);
 };
