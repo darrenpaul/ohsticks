@@ -1,15 +1,29 @@
 <script lang="ts">
-	import CheckoutCartList from "$lib/components/checkout/+CheckoutCartList.svelte";
-	import CheckoutCouponCode from "$lib/components/checkout/+CheckoutCouponCode.svelte";
-	import CheckoutTotals from "$lib/components/checkout/+CheckoutTotals.svelte";
+	import { onMount } from "svelte";
+
+	let CheckoutCartListComponent;
+	let CheckoutCouponCodeComponent;
+	let CheckoutTotalsComponent;
+
+	onMount(async () => {
+		CheckoutCartListComponent = (await import("$lib/components/checkout/+CheckoutCartList.svelte"))
+			.default;
+
+		CheckoutCouponCodeComponent = (
+			await import("$lib/components/checkout/+CheckoutCouponCode.svelte")
+		).default;
+
+		CheckoutTotalsComponent = (await import("$lib/components/checkout/+CheckoutTotals.svelte"))
+			.default;
+	});
 </script>
 
 <div class="checkout-information">
-	<CheckoutCartList />
+	<svelte:component this={CheckoutCartListComponent} />
 
-	<CheckoutCouponCode />
+	<svelte:component this={CheckoutCouponCodeComponent} />
 
-	<CheckoutTotals />
+	<svelte:component this={CheckoutTotalsComponent} />
 </div>
 
 <style lang="scss">

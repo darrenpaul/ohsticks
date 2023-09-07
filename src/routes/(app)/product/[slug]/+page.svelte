@@ -5,7 +5,6 @@
 	import type { Product } from "$lib/types/product";
 	import type { Link } from "$lib/types/link";
 	import ProductTabs from "$lib/components/product/+ProductTabs.svelte";
-	import Carousel from "svelte-carousel";
 	import { browser } from "$app/environment";
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
 	import { _ as trans } from "svelte-i18n";
@@ -14,11 +13,18 @@
 	import { normalizeSlugString } from "$lib/utils/slugString";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
-	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
-	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";
+	import { onMount } from "svelte";
 
-	let carousel; // for calling methods of the carousel instance
+	let CarouselComponent;
+	let MobileOnlyComponent;
+	let DesktopOnlyComponent;
+
+	onMount(async () => {
+		MobileOnlyComponent = (await import("$lib/components/shared/+MobileOnly.svelte")).default;
+		DesktopOnlyComponent = (await import("$lib/components/shared/+DesktopOnly.svelte")).default;
+		CarouselComponent = (await import("svelte-carousel")).default;
+	});
 
 	let crumbs: Link[] = [
 		homeRoute,
@@ -56,21 +62,31 @@
 			<h2 class="--heading">{$trans("page.product.relatedProducts.label")}</h2>
 
 			{#if browser}
-				<MobileOnly>
-					<Carousel particlesToShow={1} particlesToScroll={1} arrows={false}>
+				<svelte:component this={MobileOnlyComponent}>
+					<svelte:component
+						this={CarouselComponent}
+						particlesToShow={1}
+						particlesToScroll={1}
+						arrows={false}
+					>
 						{#each relatedProducts as product}
 							<ProductListCard {product} />
 						{/each}
-					</Carousel>
-				</MobileOnly>
+					</svelte:component>
+				</svelte:component>
 
-				<DesktopOnly>
-					<Carousel particlesToShow={3} particlesToScroll={2} arrows={false}>
+				<svelte:component this={DesktopOnlyComponent}>
+					<svelte:component
+						this={CarouselComponent}
+						particlesToShow={3}
+						particlesToScroll={2}
+						arrows={false}
+					>
 						{#each relatedProducts as product}
 							<ProductListCard {product} />
 						{/each}
-					</Carousel>
-				</DesktopOnly>
+					</svelte:component>
+				</svelte:component>
 			{/if}
 		</div>
 	</ContainWidth>

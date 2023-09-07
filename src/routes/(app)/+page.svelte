@@ -7,7 +7,6 @@
 	import type { Product } from "$lib/types/product.js";
 	import { page } from "$app/stores";
 	import { MetaTags } from "svelte-meta-tags";
-	import { shippingCountries } from "$lib/constants/shippingCountries.js";
 
 	export let data;
 

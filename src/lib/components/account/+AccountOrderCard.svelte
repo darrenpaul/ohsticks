@@ -9,8 +9,8 @@
 	export let order: Order;
 </script>
 
-<tr class="">
-	<td class="">
+<tr>
+	<td>
 		<a href={`${accountOrderRoute.path}/${order.id}`}>
 			{order.id}
 		</a>
@@ -25,15 +25,3 @@
 		</a>
 	</td>
 </tr>
-
-<style lang="scss">
-	.account-order-card {
-		/* SIZE */
-		/* MARGINS AND PADDING */
-		/* LAYOUT */
-		/* BORDERS */
-		/* COLORS */
-		/* TEXT */
-		/* ANIMATION AND EFFECTS */
-	}
-</style>
