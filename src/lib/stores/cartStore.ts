@@ -1,17 +1,18 @@
 import { get, writable } from "svelte/store";
 import { browser } from "$app/environment";
 import type { Product } from "$lib/types/product";
-import type { Cart, CartItem } from "$lib/types/cart";
+import type { Cart, CartGuest, CartItem } from "$lib/types/cart";
 
 const storageKey = "cartKey";
 
-const handleStoreFetch = async () => {
+export const fetchGuestCart = async () => {
 	if (!browser) return;
+
 	const cartKey = localStorage.getItem(storageKey);
 
 	if (!cartKey) return [];
 
-	const response = await fetch(`/api/cart?cartKey=${cartKey}`, {
+	const response = await fetch(`/api/cart-guest?cartKey=${cartKey}`, {
 		method: "GET"
 	});
 
@@ -24,10 +25,29 @@ const handleStoreFetch = async () => {
 	cart.set(jsonData);
 };
 
-export const cart = writable({} as Cart);
-handleStoreFetch();
+export const fetchUserCart = async (accessToken: string) => {
+	if (!browser) return;
 
-export const addToCart = async (product: Product) => {
+	const cartKey = localStorage.getItem(storageKey);
+
+	const headers = new Headers();
+	headers.append("x-access-token", accessToken);
+
+	const cartResponse = await fetch(`/api/cart?cartKey=${cartKey}`, {
+		headers,
+		method: "GET"
+	});
+
+	const cartData = await cartResponse.json();
+
+	// localStorage.removeItem(storageKey);
+
+	cart.set(cartData);
+};
+
+export const cart = writable({} as Cart | CartGuest);
+
+export const addToCart = async (product: Product, accessToken: string | null) => {
 	const cartKey = localStorage.getItem(storageKey);
 
 	const currentCartItems = get(cart).cartItems || [];
@@ -49,8 +69,15 @@ export const addToCart = async (product: Product) => {
 		cartItems
 	};
 
+	const headers = new Headers();
+
+	if (accessToken) {
+		headers.append("x-access-token", accessToken);
+	}
+
 	const response = await fetch("/api/cart", {
 		method: "POST",
+		headers,
 		body: JSON.stringify(payload)
 	});
 

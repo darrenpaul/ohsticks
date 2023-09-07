@@ -3,16 +3,18 @@ import { error, type HttpError } from "@sveltejs/kit";
 import { auth } from "$lib/firebase/firebaseClient";
 import randomString from "$lib/utils/randomString.js";
 import { sendPasswordResetEmail } from "firebase/auth";
+import type { OrderItem } from "$lib/types/order.js";
+import { sumArrayNumbers } from "$lib/utils/maths.js";
 
 const table = "order";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, fetch }) => {
-	const { customer, shippingAddress, billingAddress, items, paymentMethod } = await request.json();
-	const accessToken = request.headers.get("x-access-token");
+	const { customer, shippingAddress, billingAddress, items, paymentMethod, shippingMethod } =
+		await request.json();
 
-	if (!accessToken) {
+	await adminAuth.getUserByEmail(customer.email).catch(async () => {
 		await fetch("/api/account", {
 			method: "POST",
 			body: JSON.stringify({
@@ -24,26 +26,37 @@ export const POST = async ({ request, fetch }) => {
 			})
 		});
 		await sendPasswordResetEmail(auth, customer.email);
-	}
+	});
 
 	const orderReference = await adminDB.collection(table).doc();
 
-	orderReference.set({
+	const subtotal = sumArrayNumbers(
+		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
+	).toFixed(2);
+
+	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
+
+	const timestamp = new Date();
+
+	const payload = {
 		customer,
 		shippingAddress,
 		billingAddress,
 		paymentMethod,
-		items
-	});
+		items,
+		subtotal,
+		shippingMethod,
+		total,
+		createdAt: timestamp,
+		updatedAt: timestamp
+	};
+
+	orderReference.set(payload);
 
 	return new Response(
 		JSON.stringify({
 			id: orderReference.id,
-			customer,
-			shippingAddress,
-			billingAddress,
-			paymentMethod,
-			items
+			...payload
 		}),
 		{
 			headers: {
@@ -143,8 +156,11 @@ export const PUT = async ({ request, url, fetch }) => {
 
 	const status = stripeData.payment_status;
 
+	const timestamp = new Date();
+
 	await adminDB.collection(table).doc(orderId).update({
-		status
+		status,
+		updatedAt: timestamp
 	});
 
 	return new Response(JSON.stringify({ status }), {

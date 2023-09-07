@@ -68,6 +68,27 @@
 				"delivered": {
 					"label": "Delivered"
 				}
+			},
+			"orderId": {
+				"label": "Order ID"
+			},
+			"shippingAddress": {
+				"label": "Shipping Address"
+			},
+			"amount": {
+				"label": "Amount"
+			},
+			"orderDate": {
+				"label": "Order Date"
+			},
+			"status": {
+				"label": "Status"
+			},
+			"action": {
+				"label": "Action"
+			},
+			"view": {
+				"label": "View"
 			}
 		},
 		"checkout": {
@@ -200,6 +221,9 @@
 			},
 			"continueToPayment": {
 				"label": "Continue to Payment"
+			},
+			"shippingMethod": {
+				"label": "Shipping Method"
 			}
 		},
 		"login": {

@@ -3,7 +3,7 @@
 import { created } from "$lib/constants/orderUpdate.js";
 
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ fetch: eventFetch, request }) => {
+export const POST = async ({ fetch, request }) => {
 	const {
 		email,
 		country,
@@ -15,6 +15,7 @@ export const POST = async ({ fetch: eventFetch, request }) => {
 		province,
 		postalCode,
 		paymentMethod,
+		shippingMethod,
 		cart
 	} = await request.json();
 
@@ -42,17 +43,18 @@ export const POST = async ({ fetch: eventFetch, request }) => {
 		},
 		status: created,
 		paymentMethod,
+		shippingMethod,
 		items: cart.cartItems
 	};
 
-	const orderResponse = await eventFetch("/api/order", {
+	const orderResponse = await fetch("/api/order", {
 		method: "POST",
 		body: JSON.stringify(payload)
 	});
 
 	const order = await orderResponse.json();
 
-	const stripeResponse = await eventFetch("/api/stripe/create-payment", {
+	const stripeResponse = await fetch("/api/stripe/create-payment", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"

@@ -6,9 +6,10 @@ export type NewOrder = {
 	billingAddress: IngAddress;
 	items: Product[];
 	paymentMethod: string;
-	shippingMethod: string;
+	shippingMethod: ShippingMethod;
 	shippingCost: number;
 	tax: number;
+	subtotal: number;
 	total: number;
 	status: string;
 	createdAt: string;
@@ -22,11 +23,14 @@ export type Order = {
 	billingAddress: IngAddress;
 	items: Product[];
 	paymentMethod: string;
-	shippingMethod: string;
+	shippingMethod: ShippingMethod;
 	shippingCost: number;
 	tax: number;
+	subtotal: number;
 	total: number;
 	status: string;
+	createdAt: string;
+	updatedAt: string;
 };
 
 export type OrderItem = {
@@ -52,4 +56,11 @@ export type Customer = {
 	lastName: string;
 	email: string;
 	phone: string;
+};
+
+export type ShippingMethod = {
+	id: string;
+	label: string;
+	description: string;
+	price: number;
 };

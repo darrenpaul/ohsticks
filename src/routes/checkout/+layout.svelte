@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
-	import Navigation from "$lib/components/navigation/+Navigation.svelte";
-	import Footer from "$lib/components/footer/+Footer.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
 	import "$lib/i18n"; // Import to initialize. Important :)
 	import { locale, waitLocale, isLoading } from "svelte-i18n";
 
@@ -12,8 +9,6 @@
 		}
 		await waitLocale();
 	};
-
-	$user;
 </script>
 
 {#if $isLoading}

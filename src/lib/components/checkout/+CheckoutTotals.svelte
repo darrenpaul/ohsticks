@@ -5,18 +5,28 @@
 	import { sumArrayNumbers } from "$lib/utils/maths";
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
-	import { shippingRate } from "$lib/constants/shippingCountries";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
+	import type { ShippingMethod } from "$lib/types/order";
 
+	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
+
+	let shippingPrice: string = "0.00";
 	let cartItemsTotal: string;
-	let shipping: string = shippingRate.toFixed(2);
 	let total: string;
+
+	if (browser) {
+		shippingMethodState.subscribe((value) => {
+			shippingPrice = value.price.toFixed(2);
+		});
+	}
 
 	$: {
 		if (browser && $cart && $cart?.cartItems?.length > 0) {
 			cartItemsTotal = sumArrayNumbers(
 				$cart.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
 			).toFixed(2);
-			total = (Number(cartItemsTotal) + Number(shipping)).toFixed(2);
+			total = (Number(cartItemsTotal) + Number(shippingPrice)).toFixed(2);
 		}
 	}
 </script>
@@ -31,7 +41,7 @@
 	<!-- SHIPPING -->
 	<div class="--group">
 		<p>{$trans("page.checkout.shipping.label")}</p>
-		<p>{addCurrencySymbol(shipping)}</p>
+		<p>{addCurrencySymbol(shippingPrice)}</p>
 	</div>
 
 	<!-- TOTAL -->

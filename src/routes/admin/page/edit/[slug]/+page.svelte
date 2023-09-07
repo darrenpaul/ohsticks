@@ -14,7 +14,6 @@
 
 	export let data;
 	let page = data.body.page;
-	console.log("page:", page);
 
 	let name = page?.name || "";
 	let slug = page?.slug || "";

@@ -19,6 +19,7 @@ import {
 	PUBLIC_FIREBASE_PROJECT_ID,
 	PUBLIC_FIREBASE_STORAGE_BUCKET
 } from "$env/static/public";
+import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
 export const productStorageBucket = "product";
 
 const firebaseConfig = {
@@ -60,10 +61,14 @@ const userStore = () => {
 	const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
 		unsubscribe = onAuthStateChanged(auth, async (user) => {
 			const token = await user?.getIdToken();
+
+			// If there is not user logged in set the store to null
 			if (!token) {
 				set(null);
+				fetchGuestCart();
 				return;
 			}
+
 			const roleResponse = await fetch("/api/user-role", {
 				method: "POST",
 				body: JSON.stringify({ accessToken: token })
@@ -74,6 +79,8 @@ const userStore = () => {
 			userWithRole.role = role;
 
 			set(userWithRole);
+
+			fetchUserCart(token);
 		});
 
 		return () => unsubscribe();

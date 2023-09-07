@@ -13,5 +13,3 @@ export const austria = {
 };
 
 export const shippingCountries = [austria, southAfrica];
-
-export const shippingRate = 3.0;

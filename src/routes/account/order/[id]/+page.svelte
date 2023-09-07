@@ -16,6 +16,7 @@
 	import OrderConfirmationShipping from "$lib/components/order/+OrderConfirmationShipping.svelte";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import OrderConfirmationList from "$lib/components/order/+OrderConfirmationList.svelte";
+	import OrderConfirmationTotals from "$lib/components/order/+OrderConfirmationTotals.svelte";
 
 	let order: Order;
 
@@ -65,7 +66,11 @@
 				</div>
 			</div>
 
-			<OrderConfirmationList items={order.items} />
+			<div class="--items">
+				<OrderConfirmationList items={order.items} />
+
+				<OrderConfirmationTotals {order} />
+			</div>
 		</div>
 	{/if}
 </ContainWidth>
@@ -114,6 +119,17 @@
 					/* ANIMATION AND EFFECTS */
 				}
 			}
+		}
+
+		.--items {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply flex flex-col gap-8;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
 		}
 	}
 </style>

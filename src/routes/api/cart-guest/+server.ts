@@ -2,16 +2,12 @@ import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
 import type { CartItem, CartResponse } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
-import { mergeCartItems } from "$lib/utils/cartHelpers.js";
-import { cart } from "$lib/stores/cartStore.js";
 
 const table = "cart";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }) => {
-	const accessToken = request.headers.get("x-access-token");
-
 	const { cartKey, cartItems } = await request.json();
 
 	const mergedCartItems: {
@@ -35,25 +31,14 @@ export const POST = async ({ request }) => {
 			? await adminDB.collection(table).doc()
 			: await adminDB.collection(table).doc(cartKey);
 
-	const payload = {
+	cartReference.set({
 		cartItems: newCartItems,
 		expiration
-	};
+	});
 
-	if (accessToken) {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-		if (!decodedIdToken) {
-			throw error(401, {
-				message: "unauthorized"
-			});
-		}
+	// const cartData = (await adminDB.collection(table).doc(cartReference.id).get()).data();
 
-		payload["userId"] = decodedIdToken.uid;
-	}
-
-	cartReference.set(payload);
-
-	const jsonString = JSON.stringify({ id: cartReference.id, ...payload });
+	const jsonString = JSON.stringify({ id: cartReference.id, cartItems: newCartItems });
 
 	return new Response(jsonString, {
 		headers: {
@@ -64,32 +49,23 @@ export const POST = async ({ request }) => {
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url, fetch }) => {
+export const GET = async ({ request, url }) => {
 	const accessToken = request.headers.get("x-access-token");
 	const cartKey = url.searchParams.get("cartKey");
 
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
+	if (!cartKey) {
+		return new Response(
+			String({
+				status: 200
+			})
+		);
 	}
 
-	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	if (!decodedIdToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
+	const cartData = await adminDB.collection(table).doc(cartKey).get();
 
-	const tableSnapshot = await adminDB
-		.collection(table)
-		.where("userId", "==", decodedIdToken.uid)
-		.get();
-
-	const carts: CartResponse[] = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-	if (carts.length === 0) {
+	if (!cartData.exists) {
 		const jsonString = JSON.stringify({});
+
 		return new Response(jsonString, {
 			headers: {
 				"Content-Type": "application/json"
@@ -97,30 +73,26 @@ export const GET = async ({ request, url, fetch }) => {
 		});
 	}
 
-	const cartData: CartResponse = carts[0];
-	const { expiration, cartItems } = cartData;
+	const { cartItems, userId, expiration } = cartData.data() as CartResponse;
 
-	// Fetch cart from cartKey
-	if (cartKey) {
-		const guestCartReference = await adminDB.collection(table).doc(cartKey).get();
-		const guestCartData = guestCartReference.data() as CartResponse;
+	if (userId && !accessToken) {
+		throw error(401, {
+			message: "unauthorized"
+		});
+	}
 
-		if (guestCartData) {
-			const { cartItems: guestCartItems } = guestCartData;
-			const mergedCartItems: CartItem[] = mergeCartItems([...cartItems, ...guestCartItems]);
-			cartItems.concat(mergedCartItems);
-
-			const cartReference = await adminDB.collection(table).doc(cartData.id);
-			cartReference.set({ cartItems, expiration, userId: decodedIdToken.uid });
-			await fetch("/api/cart", {
-				method: "DELETE",
-				body: JSON.stringify({ id: cartKey })
+	if (userId && accessToken) {
+		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+		if (decodedIdToken.uid !== userId) {
+			throw error(401, {
+				message: "unauthorized"
 			});
 		}
 	}
 
 	const expirationDate = new Date(expiration.seconds * 1000);
 	if (isAfter(new Date(), new Date(expirationDate))) {
+		await adminDB.collection(table).doc(cartKey).delete();
 		const jsonString = JSON.stringify({});
 
 		return new Response(jsonString, {

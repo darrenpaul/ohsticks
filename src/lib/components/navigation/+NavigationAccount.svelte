@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
-	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import { page } from "$app/stores";
-	import { contactRoute } from "$lib/constants/routes/contactRoute";
 	import { logoutUser } from "$lib/firebase/firebaseClient";
 	import { accountRoute } from "$lib/constants/routes/accountRoute";
 
-	let links = [homeRoute, accountRoute, collectionAllRoute, contactRoute];
+	let links = [homeRoute, accountRoute];
 </script>
 
 <nav>
@@ -18,7 +16,7 @@
 		{/each}
 	</div>
 
-	<button on:click={logoutUser}>Logout</button>
+	<button class="--logout-button" on:click={logoutUser}>Logout</button>
 </nav>
 
 <style lang="scss">
@@ -31,9 +29,10 @@
 		@apply flex items-center justify-between;
 		/* BORDERS */
 		/* COLORS */
-		@apply bg-slate-400;
+		@apply bg-black;
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
+		@apply shadow;
 
 		.--links {
 			/* SIZE */
@@ -43,7 +42,19 @@
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
-			/* ANIMATION AND EFFECTS */
+			@apply text-white
+			/* ANIMATION AND EFFECTS */;
+		}
+
+		.--logout-button {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			@apply text-white
+			/* ANIMATION AND EFFECTS */;
 		}
 	}
 </style>

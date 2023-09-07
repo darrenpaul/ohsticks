@@ -2,6 +2,9 @@ import type { OrderItem } from "$lib/types/order.js";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, STRIPE_REDIRECT_DOMAIN } from "$env/static/private";
 
+// DOCUMENTATION
+// https://stripe.com/docs/api/checkout/sessions
+
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
 	apiVersion: "2020-08-27",
 	appInfo: {
@@ -39,6 +42,11 @@ export const POST = async ({ request }) => {
 		client_reference_id: order.id,
 		mode: "payment",
 		customer_email: order.customer.email,
+		shipping_options: [
+			{
+				shipping_rate: order.shippingMethod.id
+			}
+		],
 		success_url: `${STRIPE_REDIRECT_DOMAIN}/checkout/processing?${stripeUrlParams.join(
 			"&"
 		)}&status=success`,

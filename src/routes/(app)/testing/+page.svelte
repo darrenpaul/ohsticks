@@ -1,10 +1,9 @@
 <script lang="ts">
 	const handleForgotPassword = async () => {
-		const response = await fetch("/api/test", {
-			method: "GET"
+		const response = await fetch("/api/admin/test-mail", {
+			method: "POST"
 		});
-
-		const jsonData = await response.json();
+		console.log("handleForgotPassword ~ response:", response);
 	};
 </script>
 

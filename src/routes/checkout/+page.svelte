@@ -5,14 +5,13 @@
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
+	import { standardShipping } from "$lib/constants/shippingMethods";
 
-	// Create a store and update it when necessary...
-	const user = writable();
-	$: user.set({ name: "pandas" });
+	const shippingMethod = writable();
+	$: shippingMethod.set(standardShipping);
 
-	// ...and add it to the context for child components to access
 	if (browser) {
-		setContext("user", user);
+		setContext("shippingMethod", shippingMethod);
 	}
 </script>
 

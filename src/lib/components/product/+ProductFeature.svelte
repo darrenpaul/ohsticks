@@ -7,13 +7,15 @@
 	import { _ as trans } from "svelte-i18n";
 	import ProductFeatureCategories from "./+ProductFeatureCategories.svelte";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import { user } from "$lib/firebase/firebaseClient";
 
 	const cartState = getContext("cartState");
 
 	export let product: Product;
 
-	const handleAddToCart = () => {
-		addToCart(product);
+	const handleAddToCart = async () => {
+		const accessToken = await $user?.getIdToken();
+		addToCart(product, accessToken);
 		cartState.set(true);
 	};
 </script>

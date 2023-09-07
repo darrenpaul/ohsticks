@@ -35,7 +35,7 @@ const eCommerceProduct = (searchPrompt: string) => {
 		"In this task, you will craft a compelling product description for an e-commerce item that I will provide",
 		"Your goal is to create three unique content sections for the product description, each focusing on a different set of relevant keywords, be sure to give this the key contentSections.",
 		"Be sure to label each section with an eye-catching subheading that accurately summarizes its content.",
-		"The content sections should be a key value pair with the key being the subheading and the value being the content.",
+		"The content sections should be a array of key value pairs of subheading and content.",
 		"Your product description should be keyword-rich, informative, and engaging, with a word count of under 1000 words",
 		"Your objective is to use emotional language and creative reasoning to persuade potential buyers to purchase the product",
 		"Once you have written the product description, please create a bulleted list of 5 possible H1 headings for the product page",

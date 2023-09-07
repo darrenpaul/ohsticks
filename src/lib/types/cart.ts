@@ -8,13 +8,20 @@ export type CartItem = {
 	image: Image;
 };
 
+export type CartGuest = {
+	id: string;
+	cartItems: CartItem[];
+};
+
 export type Cart = {
 	id: string;
+	userId: string;
 	cartItems: CartItem[];
 };
 
 export type CartResponse = {
 	id: string;
-	cartItems: Cart[];
+	userId: string;
+	cartItems: CartItem[];
 	expiration: { seconds: number };
 };

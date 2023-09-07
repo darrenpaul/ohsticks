@@ -6,6 +6,13 @@
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
 	import type { IState } from "country-state-city/lib/interface.d.ts";
 	import { user } from "$lib/firebase/firebaseClient";
+	import CheckoutShippingMethod from "./+CheckoutShippingMethod.svelte";
+	import { getContext } from "svelte";
+	import { browser } from "$app/environment";
+	import type { Writable } from "svelte/store";
+	import type { ShippingMethod } from "$lib/types/order";
+
+	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
 	let emailInputDisabled = false;
 	let email: string = "";
@@ -18,7 +25,14 @@
 	let province: string = "";
 	let postalCode: string = "";
 	let selectableProvinces: IState[] = [];
+	let shippingMethod: ShippingMethod;
 	let paymentMethod = "stripe";
+
+	if (browser) {
+		shippingMethodState.subscribe((value) => {
+			shippingMethod = value;
+		});
+	}
 
 	$: {
 		selectableProvinces = getStatesOfCountry(country);
@@ -36,23 +50,17 @@
 
 		const order = {
 			...values,
+			email,
 			paymentMethod,
+			shippingMethod: shippingMethod,
 			cart: $cart
 		};
 
-		const accessToken = await $user?.getIdToken();
-
-		const headers = {
-			"Content-Type": "application/json"
-		};
-
-		if (accessToken) {
-			headers["x-access-token"] = accessToken;
-		}
-
 		const checkoutResponse = await fetch("/api/checkout", {
 			method: "POST",
-			headers,
+			headers: {
+				"Content-Type": "application/json"
+			},
 			body: JSON.stringify(order)
 		});
 
@@ -212,6 +220,9 @@
 			</label>
 		</div>
 	</div>
+
+	<!-- SHIPPING METHOD -->
+	<CheckoutShippingMethod />
 
 	<div class="--button-group">
 		<a class="link-button" href={`${collectionRoute.path}/all`}>
