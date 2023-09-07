@@ -2,19 +2,23 @@
 	import { _ as trans } from "svelte-i18n";
 	import { user } from "$lib/firebase/firebaseClient";
 	import { error } from "@sveltejs/kit";
-	import type { ContentSection } from "$lib/types/product";
+	import type { ContentSection, Image } from "$lib/types/product";
 	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
 
+	export let name: string;
 	export let searchKeywords = "";
 	export let productDescription = "";
 	export let productContentSections: ContentSection[] = [];
 	export let metaTitle = "";
 	export let metaDescription = "";
 	export let metaKeywords = "";
-	export let openGraphImages = [];
-	export let twitterImage;
+	export let openGraphImages: Image[] = [];
+	export let twitterImage: Image[] = [];
+
+	let isFetching = false;
 
 	const handleSeoGenerate = async () => {
+		isFetching = true;
 		const accessToken = await $user?.getIdToken();
 		if (!accessToken) {
 			return error(401, "Unauthorized");
@@ -32,6 +36,8 @@
 		const jsonData = await response.json();
 
 		parseData(jsonData.choices[0].message.content);
+
+		isFetching = false;
 	};
 
 	const parseData = (input: string) => {
@@ -49,9 +55,29 @@
 	<div class="--header">
 		<h4>{$trans("form.createProduct.seo.label")}</h4>
 
-		<button class="slim-button" on:click|preventDefault={handleSeoGenerate}>
+		<button
+			class={`slim-button ${isFetching ? "animate-bounce" : ""}`}
+			on:click|preventDefault={handleSeoGenerate}
+		>
 			{$trans("form.createProduct.generateSeo.label")}
 		</button>
+	</div>
+
+	<!-- SEARCH PROMPT -->
+	<div class="input-group">
+		<input
+			class={searchKeywords ? "" : "peer"}
+			id="searchKeywords"
+			name="searchKeywords"
+			type="text"
+			bind:value={searchKeywords}
+			placeholder=""
+			required
+		/>
+
+		<label class="floating-label" for="searchKeywords">
+			{$trans("form.createProduct.searchKeywords.label")}
+		</label>
 	</div>
 
 	<!-- TITLE -->
@@ -109,6 +135,7 @@
 		<ImageUploadInput
 			elementId="twitterImage"
 			label={$trans("form.createProduct.twitterImage.label")}
+			{name}
 			bind:images={twitterImage}
 		/>
 		<small>1200x675</small>
@@ -119,6 +146,7 @@
 		<ImageUploadInput
 			elementId="openGraphImages"
 			label={$trans("form.createProduct.openGraphImages.label")}
+			{name}
 			multiple={true}
 			bind:images={openGraphImages}
 		/>

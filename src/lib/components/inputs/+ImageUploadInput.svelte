@@ -1,20 +1,28 @@
 <script lang="ts">
-	export let imagePreviews = [];
+	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
+	import type { Image } from "$lib/types/product";
+	import { getImageMeta, handleImageUpload } from "$lib/utils/imageProcessing";
+
+	export let name = "";
 	export let elementId = "";
 	export let label = "";
 	export let multiple = false;
-	export let images;
+	export let images: Image[] = [];
 
-	const onImagesToUpload = (event) => {
+	const onImageDelete = async (imageSrc: string) => {
+		await deleteImage(imageSrc);
+		images = images.filter((image) => image.src !== imageSrc);
+	};
+
+	const onImagesToUpload = async (event) => {
 		const imageFiles = [...event.target.files];
-		if (!multiple) {
-			images = imageFiles[0];
-			imagePreviews = [window.URL.createObjectURL(imageFiles[0])];
-			return;
-		}
 
-		images = imageFiles;
-		imagePreviews = imageFiles.map((image) => window.URL.createObjectURL(image));
+		const imagePromises = imageFiles.map((image) => handleImageUpload(name, image));
+		const uploadedImageUrls = await Promise.all(imagePromises);
+		const imagesMeta = await Promise.all(
+			uploadedImageUrls.map(async (url) => await getImageMeta(url))
+		);
+		images = imagesMeta;
 	};
 </script>
 
@@ -30,16 +38,11 @@
 	on:change={(event) => onImagesToUpload(event)}
 />
 
-{#each imagePreviews as image}
-	<img src={image} alt="Preview" />
+{#each images as image}
+	<div>
+		<img src={image.src} alt={image.alt} />
+		<button on:click|preventDefault={() => onImageDelete(image.src)} class="slim-button">
+			Delete
+		</button>
+	</div>
 {/each}
-
-<style lang="scss">
-	/* SIZE */
-	/* MARGINS AND PADDING */
-	/* LAYOUT */
-	/* BORDERS */
-	/* COLORS */
-	/* TEXT */
-	/* ANIMATION AND EFFECTS */
-</style>

@@ -1,59 +1,42 @@
 <script lang="ts">
-	import { user, productStorageBucket } from "$lib/firebase/firebaseClient";
-	import { adminRole } from "$lib/constants/roles";
-	import randomString from "$lib/utils/randomString";
-	import { deleteImage, uploadImage } from "$lib/firebase/firebaseImageUtils";
-	import { slugString } from "$lib/utils/slugString";
-	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
-	import { error } from "@sveltejs/kit";
+	import { user } from "$lib/firebase/firebaseClient";
+	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
 	import { _ as trans } from "svelte-i18n";
 	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
 	import ProductCreateSeoForm from "$lib/components/admin/product/+ProductCreateSeoForm.svelte";
 	import ProductCreateContentSections from "$lib/components/admin/product/+ProductCreateContentSections.svelte";
-	import type { ContentSection } from "$lib/types/product";
+	import type { ContentSection, Image } from "$lib/types/product";
+	import ProductCreateInformation from "$lib/components/admin/product/+ProductCreateInformation.svelte";
+	import ProductCreatePrice from "$lib/components/admin/product/+ProductCreatePrice.svelte";
+	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
+	import { adminRole } from "$lib/constants/roles";
+	import { error } from "@sveltejs/kit";
 
 	export let data;
 	let product = data.body.product;
 
-	let productId = product.id;
-	let name = product.name;
-	let slug = product.slug;
-	let categories = product.categories.join(", ");
-	let description = product.description;
-	let contentSections: ContentSection[] = product.contentSections;
-	let purchasePrice: number = Number(product.purchasePrice);
-	let markupPercentage = Number(product.markupPercentage);
-	let price: string;
-	let quantity = 10;
-	let visible = product.visible;
-	let featureImage;
-	let featureImageUrl = product.featureImage;
-	let productImages;
-	let productImagesUrls = product.images.map((image) => image);
+	let name = product?.name || "";
+	let slug = product?.slug || "";
+	let categories = product?.categories.join(", ") || "";
+	let description = product?.description || "";
+	let contentSections: ContentSection[] = product?.contentSections || [];
+	let purchasePrice: number = product?.purchasePrice || 0;
+	let markupPercentage = product?.markupPercentage || 25;
+	let price: string = product?.price || "";
+	let quantity = product?.quantity || 10;
+	let visible = product?.visible || false;
+	let featureImage: Image[] = [product?.featureImage] || [];
+	let productImages: Image[] = product?.images || [];
 
-	let metaTitle = product.meta.title;
-	let metaDescription = product.meta.description;
-
-	$: {
-		price = Number(purchasePrice * (1 + markupPercentage / 100)).toFixed(2);
-		// Summer 2021, shirt, model 02, red, small = SM21-SH-M02-RD-S-001
-	}
-
-	const handleImageUpload = async (imageFile: File) => {
-		const slug = slugString(name);
-		const imageType = imageFile.type.split("/")[1];
-		const imageName = `${slug}-${randomString(5, true)}.${imageType}`;
-
-		return await uploadImage({
-			bucketName: productStorageBucket,
-			collectionName: slug,
-			imageName,
-			imageFile: imageFile
-		});
-	};
+	let metaTitle = product?.meta?.title || "";
+	let metaDescription = product?.meta?.description || "";
+	let metaKeywords = product?.meta?.keywords || "";
+	let twitterImage: Image[] = [product?.meta?.twitter?.image] || [];
+	let openGraphImages: Image[] = product?.meta?.openGraph?.images || [];
 
 	const handleFormSubmit = async () => {
 		const accessToken = await $user?.getIdToken();
+
 		if (!accessToken) {
 			return error(401, "Unauthorized");
 		}
@@ -62,22 +45,12 @@
 			return error(401, "Unauthorized");
 		}
 
-		if (featureImage) {
-			featureImageUrl = await handleImageUpload(featureImage);
-		}
-
-		if (productImages) {
-			const imagePromises = productImages.map((image) => handleImageUpload(image));
-			productImagesUrls = await Promise.all(imagePromises);
-		}
-
 		const response = await fetch("/api/admin/product", {
 			method: "PUT",
 			headers: {
 				"x-access-token": accessToken
 			},
 			body: JSON.stringify({
-				id: productId,
 				name,
 				slug,
 				categories: categories.split(",").map((category) => category.trim()),
@@ -88,106 +61,51 @@
 				price,
 				quantity,
 				visible,
-				featureImage: { src: featureImageUrl.src, alt: `${name} feature image` },
-				images: productImagesUrls.map((url) => ({ src: url.src, alt: `${name} image` })),
+				featureImage: featureImage[0] || "",
+				images: productImages,
 				meta: {
 					title: metaTitle,
-					description: metaDescription
+					description: metaDescription,
+					keywords: metaKeywords,
+					twitter: {
+						card: "summary_large_image",
+						site: "@site",
+						title: metaTitle,
+						description: metaDescription,
+						image: twitterImage[0] || ""
+					},
+					openGraph: {
+						title: metaTitle,
+						description: metaDescription,
+						type: "product",
+						images: openGraphImages
+					}
 				}
 			})
 		});
 		if (response.ok) {
-			alert("Product updated");
+			alert("Product created");
 			return;
 		}
-		[...productImagesUrls, featureImageUrl].forEach((image) => deleteImage(image));
+
+		[...featureImage, ...productImages, ...openGraphImages, ...twitterImage].forEach((image) =>
+			deleteImage(image.src)
+		);
 	};
 </script>
 
-<p>Edit Product</p>
+<p>Update Product</p>
 
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
-	<!-- NAME -->
-	<div class="--input-group">
-		<input
-			class="peer"
-			id="name"
-			name="name"
-			type="text"
-			bind:value={name}
-			placeholder=""
-			required
-		/>
-
-		<label class="floating-label" for="name">{$trans("form.createProduct.name.label")}</label>
-	</div>
-	<p>{$trans("form.createProduct.slug.label")}</p>
-	<p id="slug">{slug}</p>
-
-	<!-- CATEGORIES -->
-	<div class="--input-group">
-		<input
-			class="peer"
-			id="categories"
-			name="categories"
-			type="text"
-			bind:value={categories}
-			placeholder=""
-		/>
-		<label class="floating-label" for="categories">
-			{$trans("form.createProduct.categories.label")}
-		</label>
-	</div>
-
-	<!-- DESCRIPTION -->
-	<div class="--input-group">
-		<textarea
-			class={description ? "" : "peer"}
-			id="description"
-			name="description"
-			bind:value={description}
-			placeholder=""
-		/>
-		<label class="floating-label" for="description">
-			{$trans("form.createProduct.description.label")}
-		</label>
-	</div>
+	<ProductCreateInformation bind:name bind:slug bind:categories bind:description />
 
 	<!-- CONTENT SECTIONS -->
 	<ProductCreateContentSections bind:contentSections />
 
-	<!--PURCHASE PRICE  -->
-	<div class="--input-group">
-		<input
-			class="peer"
-			id="purchasePrice"
-			name="purchasePrice"
-			type="text"
-			bind:value={purchasePrice}
-			placeholder=""
-		/>
-
-		<label class="floating-label" for="purchasePrice">
-			{$trans("form.createProduct.purchasePrice.label")}
-		</label>
-	</div>
-
-	<!-- MARK UP PERCENTAGE -->
-	<div class="--input-group">
-		<label for="markupPercentage"
-			>{$trans("form.createProduct.markupPercentage.label")} {markupPercentage}%</label
-		>
-		<input type="range" min="0" max="100" id="markupPercentage" bind:value={markupPercentage} />
-	</div>
-
-	<!-- PRICE -->
-	<div class="--input-group">
-		<label for="price">{$trans("form.createProduct.price.label")}</label>
-		<p id="price">{price}</p>
-	</div>
+	<ProductCreatePrice bind:purchasePrice bind:markupPercentage bind:price />
 
 	<!-- QUANTITY -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class="peer"
 			id="quantity"
@@ -202,39 +120,44 @@
 	</div>
 
 	<!-- VISIBLE -->
-	<div class="--input-group">
+	<div class="input-group">
 		<label for="visible">{$trans("form.createProduct.visible.label")}</label>
-		<input type="checkbox" id="visible" name="visible" bind:value={visible} checked={visible} />
+		<input type="checkbox" id="visible" name="visible" bind:checked={visible} />
 	</div>
 
-	<!-- FEATURE IMAGE -->
-	<div class="--input-group">
-		<ImageUploadInput
-			elementId="featureImage"
-			label={$trans("form.createProduct.featureImage.label")}
-			imagePreviews={[featureImageUrl.src]}
-			bind:images={featureImage}
+	{#if name}
+		<!-- FEATURE IMAGE -->
+		<div class="input-group">
+			<ImageUploadInput
+				elementId="featureImage"
+				label={$trans("form.createProduct.featureImage.label")}
+				{name}
+				bind:images={featureImage}
+			/>
+		</div>
+
+		<!-- IMAGES -->
+		<div class="input-group">
+			<ImageUploadInput
+				elementId="productImages"
+				label={$trans("form.createProduct.productImages.label")}
+				multiple={true}
+				{name}
+				bind:images={productImages}
+			/>
+		</div>
+
+		<ProductCreateSeoForm
+			searchKeywords={name}
+			bind:productDescription={description}
+			bind:productContentSections={contentSections}
+			bind:metaTitle
+			bind:metaDescription
+			bind:metaKeywords
+			bind:twitterImage
+			bind:openGraphImages
 		/>
-	</div>
-
-	<!-- IMAGES -->
-	<div class="--input-group">
-		<ImageUploadInput
-			elementId="productImages"
-			label={$trans("form.createProduct.productImages.label")}
-			multiple={true}
-			imagePreviews={productImagesUrls.map((image) => image.src)}
-			bind:images={productImages}
-		/>
-	</div>
-
-	<ProductCreateSeoForm
-		searchKeywords={name}
-		bind:productDescription={description}
-		bind:productContentSections={contentSections}
-		bind:metaTitle
-		bind:metaDescription
-	/>
+	{/if}
 
 	<button>Update</button>
 </form>
@@ -250,17 +173,6 @@
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
-		.--input-group {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mb-4;
-			/* LAYOUT */
-			@apply relative flex flex-col;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
 
 		button {
 			/* SIZE */

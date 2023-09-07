@@ -180,6 +180,9 @@
 			},
 			"openGraphImages": {
 				"label": "Open Graph Images"
+			},
+			"searchKeywords": {
+				"label": "Prompt Search Keywords"
 			}
 		},
 		"checkout": {
