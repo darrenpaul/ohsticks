@@ -15,3 +15,22 @@ export const handleImageUpload = async (name: string, imageFile: File) => {
 		imageFile: imageFile
 	});
 };
+
+export const getImageMeta = async (url: string) => {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => resolve({ src: img.src, width: img.width, height: img.height });
+		img.onerror = () => reject();
+		img.src = url;
+	});
+	const img = new Image();
+	img.src = url;
+	// Wait for the image to load
+	img.onload = () => {
+		// Get the width and height of the image
+		const width = img.width;
+		const height = img.height;
+
+		return { width, height };
+	};
+};

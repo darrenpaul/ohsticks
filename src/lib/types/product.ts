@@ -16,6 +16,8 @@ export type Product = {
 export type Image = {
 	alt: string;
 	src: string;
+	width: number;
+	height: number;
 };
 
 export type meta = {

@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { getImageMeta } from "$lib/utils/imageProcessing";
+
 	const handleForgotPassword = async () => {
-		const response = await fetch("/api/admin/test-mail", {
-			method: "POST"
-		});
-		console.log("handleForgotPassword ~ response:", response);
+		const imageUrl =
+			"https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/product%2Fsteam-punk-pumpkin-sticker%2Fsteam-punk-pumpkin-sticker-vuxwf.jpeg?alt=media&token=7bc908cb-64e1-4cf5-9f82-d4bf07cb299d";
+		const apples = await getImageMeta(imageUrl);
+		console.log("handleForgotPassword ~ apples:", apples);
 	};
 </script>
 

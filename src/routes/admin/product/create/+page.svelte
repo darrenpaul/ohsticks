@@ -10,7 +10,7 @@
 	import ProductCreateSeoForm from "$lib/components/admin/product/+ProductCreateSeoForm.svelte";
 	import ProductCreateContentSections from "$lib/components/admin/product/+ProductCreateContentSections.svelte";
 	import type { ContentSection } from "$lib/types/product";
-	import { handleImageUpload } from "$lib/utils/imageProcessing";
+	import { getImageMeta, handleImageUpload } from "$lib/utils/imageProcessing";
 
 	let name = "";
 	let slug = "";
@@ -52,6 +52,15 @@
 		const twitterImageUrl = await handleImageUpload(name, twitterImage);
 		const openGraphImagePromises = openGraphImages.map((image) => handleImageUpload(name, image));
 		const openGraphImagesUrl = await Promise.all(openGraphImagePromises);
+
+		const openGraphImageObjects = await Promise.all(
+			openGraphImagesUrl.map(async (url) => await getImageMeta(url))
+		);
+
+		const openGraphImageObjectsWithAlt = openGraphImageObjects.map((image) => ({
+			...image,
+			alt: name
+		}));
 		const response = await fetch("/api/admin/product", {
 			method: "POST",
 			headers: {
@@ -85,7 +94,7 @@
 						title: metaTitle,
 						description: metaDescription,
 						type: "product",
-						images: openGraphImagesUrl.map((url) => ({ url, alt: name }))
+						images: openGraphImageObjectsWithAlt
 					}
 				}
 			})

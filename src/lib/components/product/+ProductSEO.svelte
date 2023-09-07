@@ -9,7 +9,9 @@
 	let pageUrl = "";
 	let openGraphImages = product.meta.openGraph?.images.map((image) => ({
 		url: image.src,
-		alt: product.name
+		alt: product.name,
+		width: image.width,
+		height: image.height
 	}));
 	let jsonLdImages = [product.featureImage, ...product.images].map((image) => image.src);
 
