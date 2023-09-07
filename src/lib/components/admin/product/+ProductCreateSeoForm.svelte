@@ -30,7 +30,6 @@
 			method: "POST"
 		});
 		const jsonData = await response.json();
-		console.log("handleSeoGenerate ~ jsonData:", jsonData);
 
 		parseData(jsonData.choices[0].message.content);
 	};

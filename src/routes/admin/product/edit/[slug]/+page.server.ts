@@ -15,8 +15,6 @@ export async function load({ params, fetch }) {
 
 	const product = products.find((product: Product) => product.id === slug);
 
-	console.log(product);
-
 	if (!product) {
 		return {
 			status: 404,

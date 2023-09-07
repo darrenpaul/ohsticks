@@ -62,8 +62,6 @@
 			return error(401, "Unauthorized");
 		}
 
-		console.log(featureImage);
-		console.log(productImages);
 		if (featureImage) {
 			featureImageUrl = await handleImageUpload(featureImage);
 		}

@@ -8,7 +8,6 @@ import type { Product } from "$lib/types/product";
 const table = "product";
 
 const updateProduct = async (product: Product) => {
-	console.log("updating product", product.id);
 	return await adminDB.collection(table).doc(product.id).update(product);
 };
 

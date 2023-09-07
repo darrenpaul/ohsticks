@@ -38,8 +38,6 @@
 		if (data.body.product) {
 			product = data.body.product;
 			relatedProducts = data.body.relatedProducts as Product[];
-
-			console.log("product:", product);
 		}
 	}
 </script>
