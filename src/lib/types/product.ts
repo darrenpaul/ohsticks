@@ -19,9 +19,26 @@ export type Image = {
 };
 
 export type meta = {
-	title: string;
-	description: string;
+	twitter: Twitter;
 	keywords: string;
+	description: string;
+	title: string;
+	openGraph: OpenGraph;
+};
+
+export type OpenGraph = {
+	description: string;
+	title: string;
+	type: string;
+	images: Image[];
+};
+
+export type Twitter = {
+	image: string;
+	site: string;
+	description: string;
+	title: string;
+	card: string;
 };
 
 export type ContentSection = {

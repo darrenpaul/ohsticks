@@ -7,7 +7,7 @@
 	export let product: Product;
 
 	let pageUrl = "";
-	let openGraphImages = product.meta?.openGraph.images.map((image) => ({
+	let openGraphImages = product.meta.openGraph?.images.map((image) => ({
 		url: image.src,
 		alt: product.name
 	}));
@@ -36,7 +36,7 @@
 		cardType: "summary_large_image",
 		title: product.meta?.title,
 		description: product.meta?.description,
-		image: product.meta?.twitter.image,
+		image: product.meta.twitter?.image,
 		imageAlt: product.name
 	}}
 />

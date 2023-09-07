@@ -14,7 +14,6 @@
 	import { normalizeSlugString } from "$lib/utils/slugString";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
-	import { MetaTags, JsonLd } from "svelte-meta-tags";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";

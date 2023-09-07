@@ -51,7 +51,7 @@
 		const imagesUrl = await Promise.all(imagePromises);
 		const twitterImageUrl = await handleImageUpload(name, twitterImage);
 		const openGraphImagePromises = openGraphImages.map((image) => handleImageUpload(name, image));
-		const openGraphImagesUrl = await Promise.all(imagePromises);
+		const openGraphImagesUrl = await Promise.all(openGraphImagePromises);
 		const response = await fetch("/api/admin/product", {
 			method: "POST",
 			headers: {
@@ -68,8 +68,8 @@
 				price,
 				quantity,
 				visible,
-				featureImage: { src: featureImageUrl, alt: `${name} feature image` },
-				images: imagesUrl.map((url) => ({ src: url, alt: `${name} image` })),
+				featureImage: { src: featureImageUrl, alt: name },
+				images: imagesUrl.map((url) => ({ src: url, alt: name })),
 				meta: {
 					title: metaTitle,
 					description: metaDescription,
@@ -85,7 +85,7 @@
 						title: metaTitle,
 						description: metaDescription,
 						type: "product",
-						images: openGraphImagesUrl.map((url) => ({ src: url, alt: `${name} image` }))
+						images: openGraphImagesUrl.map((url) => ({ url, alt: name }))
 					}
 				}
 			})
