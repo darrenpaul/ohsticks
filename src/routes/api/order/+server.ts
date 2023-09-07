@@ -21,7 +21,7 @@ export const POST = async ({ request, fetch }) => {
 				firstName: customer.firstName,
 				lastName: customer.lastName,
 				emailAddress: customer.email,
-				password: randomString(20, false),
+				password: randomString(20, false, true),
 				shippingAddress: shippingAddress
 			})
 		});

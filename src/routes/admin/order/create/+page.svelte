@@ -1,12 +1,4 @@
 <script lang="ts">
-	import { user, productStorageBucket } from "$lib/firebase/firebaseClient";
-	import { adminRole } from "$lib/constants/roles";
-	import randomString from "$lib/utils/randomString";
-	import { uploadImage } from "$lib/firebase/firebaseImageUtils";
-	import { slugString } from "$lib/utils/slugString";
-	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
-	import { error } from "@sveltejs/kit";
-
 	let customer = "asdasdas";
 	let shippingAddress = "asdasdas";
 	let billingAddress = "asdasdas";

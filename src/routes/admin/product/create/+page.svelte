@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { user, productStorageBucket } from "$lib/firebase/firebaseClient";
+	import { user } from "$lib/firebase/firebaseClient";
 	import { adminRole } from "$lib/constants/roles";
-	import randomString from "$lib/utils/randomString";
-	import { deleteImage, uploadImage } from "$lib/firebase/firebaseImageUtils";
+	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
 	import { slugString } from "$lib/utils/slugString";
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { error } from "@sveltejs/kit";
@@ -11,6 +10,7 @@
 	import ProductCreateSeoForm from "$lib/components/admin/product/+ProductCreateSeoForm.svelte";
 	import ProductCreateContentSections from "$lib/components/admin/product/+ProductCreateContentSections.svelte";
 	import type { ContentSection } from "$lib/types/product";
+	import { handleImageUpload } from "$lib/utils/imageProcessing";
 
 	let name = "";
 	let slug = "";
@@ -27,25 +27,15 @@
 
 	let metaTitle = "";
 	let metaDescription = "";
+	let metaKeywords = "";
+	let twitterImage;
+	let openGraphImages = [];
 
 	$: {
 		price = Number(purchasePrice * (1 + markupPercentage / 100)).toFixed(2);
 		slug = slugString(name);
 		// Summer 2021, shirt, model 02, red, small = SM21-SH-M02-RD-S-001
 	}
-
-	const handleImageUpload = async (imageFile: File) => {
-		const slug = slugString(name);
-		const imageType = imageFile.type.split("/")[1];
-		const imageName = `${slug}-${randomString(5, true)}.${imageType}`;
-
-		return await uploadImage({
-			bucketName: productStorageBucket,
-			collectionName: slug,
-			imageName,
-			imageFile: imageFile
-		});
-	};
 
 	const handleFormSubmit = async () => {
 		const accessToken = await $user?.getIdToken();
@@ -56,9 +46,12 @@
 		if (!role || role !== adminRole) {
 			return error(401, "Unauthorized");
 		}
-		const featureImageUrl = await handleImageUpload(featureImage);
-		const imagePromises = productImages.map((image) => handleImageUpload(image));
+		const featureImageUrl = await handleImageUpload(name, featureImage);
+		const imagePromises = productImages.map((image) => handleImageUpload(name, image));
 		const imagesUrl = await Promise.all(imagePromises);
+		const twitterImageUrl = await handleImageUpload(name, twitterImage);
+		const openGraphImagePromises = openGraphImages.map((image) => handleImageUpload(name, image));
+		const openGraphImagesUrl = await Promise.all(imagePromises);
 		const response = await fetch("/api/admin/product", {
 			method: "POST",
 			headers: {
@@ -79,7 +72,21 @@
 				images: imagesUrl.map((url) => ({ src: url, alt: `${name} image` })),
 				meta: {
 					title: metaTitle,
-					description: metaDescription
+					description: metaDescription,
+					keywords: metaKeywords,
+					twitter: {
+						card: "summary_large_image",
+						site: "@site",
+						title: metaTitle,
+						description: metaDescription,
+						image: twitterImageUrl
+					},
+					openGraph: {
+						title: metaTitle,
+						description: metaDescription,
+						type: "product",
+						images: openGraphImagesUrl.map((url) => ({ src: url, alt: `${name} image` }))
+					}
 				}
 			})
 		});
@@ -87,7 +94,9 @@
 			alert("Product created");
 			return;
 		}
-		[...imagesUrl, featureImageUrl].forEach((image) => deleteImage(image));
+		[...imagesUrl, ...openGraphImagesUrl, twitterImageUrl, featureImageUrl].forEach((image) =>
+			deleteImage(image)
+		);
 	};
 </script>
 
@@ -95,7 +104,7 @@
 
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
 	<!-- NAME -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class="peer"
 			id="name"
@@ -112,7 +121,7 @@
 	<p id="slug">{slug}</p>
 
 	<!-- CATEGORIES -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class="peer"
 			id="categories"
@@ -127,7 +136,7 @@
 	</div>
 
 	<!-- DESCRIPTION -->
-	<div class="--input-group">
+	<div class="input-group">
 		<textarea
 			class={description ? "" : "peer"}
 			id="description"
@@ -144,7 +153,7 @@
 	<ProductCreateContentSections bind:contentSections />
 
 	<!--PURCHASE PRICE  -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class="peer"
 			id="purchasePrice"
@@ -160,7 +169,7 @@
 	</div>
 
 	<!-- MARK UP PERCENTAGE -->
-	<div class="--input-group">
+	<div class="input-group">
 		<label for="markupPercentage"
 			>{$trans("form.createProduct.markupPercentage.label")} {markupPercentage}%</label
 		>
@@ -168,13 +177,13 @@
 	</div>
 
 	<!-- PRICE -->
-	<div class="--input-group">
+	<div class="input-group">
 		<label for="price">{$trans("form.createProduct.price.label")}</label>
 		<p id="price">{price}</p>
 	</div>
 
 	<!-- QUANTITY -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class="peer"
 			id="quantity"
@@ -189,13 +198,13 @@
 	</div>
 
 	<!-- VISIBLE -->
-	<div class="--input-group">
+	<div class="input-group">
 		<label for="visible">{$trans("form.createProduct.visible.label")}</label>
-		<input type="checkbox" id="visible" name="visible" bind:value={visible} />
+		<input type="checkbox" id="visible" name="visible" bind:checked={visible} />
 	</div>
 
 	<!-- FEATURE IMAGE -->
-	<div class="--input-group">
+	<div class="input-group">
 		<ImageUploadInput
 			elementId="featureImage"
 			label={$trans("form.createProduct.featureImage.label")}
@@ -204,7 +213,7 @@
 	</div>
 
 	<!-- IMAGES -->
-	<div class="--input-group">
+	<div class="input-group">
 		<ImageUploadInput
 			elementId="productImages"
 			label={$trans("form.createProduct.productImages.label")}
@@ -219,6 +228,9 @@
 		bind:productContentSections={contentSections}
 		bind:metaTitle
 		bind:metaDescription
+		bind:metaKeywords
+		bind:twitterImage
+		bind:openGraphImages
 	/>
 
 	<button>Create</button>
@@ -235,17 +247,6 @@
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
-		.--input-group {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mb-4;
-			/* LAYOUT */
-			@apply relative flex flex-col;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
 
 		button {
 			/* SIZE */

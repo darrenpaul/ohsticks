@@ -7,10 +7,8 @@
 	export let product: Product;
 
 	let pageUrl = "";
-	let openGraphImages = [product.featureImage, ...product.images].map((image) => ({
+	let openGraphImages = product.meta?.openGraph.images.map((image) => ({
 		url: image.src,
-		width: 800,
-		height: 800,
 		alt: product.name
 	}));
 	let jsonLdImages = [product.featureImage, ...product.images].map((image) => image.src);
@@ -38,7 +36,7 @@
 		cardType: "summary_large_image",
 		title: product.meta?.title,
 		description: product.meta?.description,
-		image: product.featureImage.src,
+		image: product.meta?.twitter.image,
 		imageAlt: product.name
 	}}
 />

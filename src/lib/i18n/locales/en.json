@@ -171,6 +171,15 @@
 			},
 			"generateSeo": {
 				"label": "Generate SEO"
+			},
+			"seo": {
+				"label": "SEO"
+			},
+			"twitterImage": {
+				"label": "Twitter Image"
+			},
+			"openGraphImages": {
+				"label": "Open Graph Images"
 			}
 		},
 		"checkout": {

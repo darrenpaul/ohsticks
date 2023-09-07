@@ -1,10 +1,13 @@
-export default (length: number, onlyLowerCase: boolean) => {
+export default (length: number, onlyLowerCase: boolean, includeSymbols = false) => {
 	let result = "";
 
-	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-	const charactersLength = characters.length;
+	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	const symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+	const characterPool = includeSymbols ? characters + symbols : characters;
+	const charactersLength = characterPool.length;
 	for (let i = 0; i < length; i++) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		result += characterPool.charAt(Math.floor(Math.random() * charactersLength));
 	}
 
 	if (onlyLowerCase === true) {

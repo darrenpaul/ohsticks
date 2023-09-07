@@ -34,13 +34,13 @@
 	export let data;
 	let product: Product;
 	let relatedProducts: Product[];
-	let pageUrl = "";
 
 	$: {
 		if (data.body.product) {
 			product = data.body.product;
 			relatedProducts = data.body.relatedProducts as Product[];
-			pageUrl = `${$page.url}`;
+
+			console.log("product:", product);
 		}
 	}
 </script>

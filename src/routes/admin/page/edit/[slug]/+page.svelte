@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { user, productStorageBucket } from "$lib/firebase/firebaseClient";
 	import { adminRole } from "$lib/constants/roles";
-	import randomString from "$lib/utils/randomString";
 	import { deleteImage, uploadImage } from "$lib/firebase/firebaseImageUtils";
 	import { slugString } from "$lib/utils/slugString";
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";

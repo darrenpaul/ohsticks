@@ -30,22 +30,6 @@ const verifyAdmin = async (accessToken: string | null) => {
 export const POST = async ({ request }) => {
 	const accessToken = request.headers.get("x-access-token");
 
-	const {
-		name,
-		slug,
-		categories,
-		description,
-		contentSections,
-		purchasePrice,
-		markupPercentage,
-		price,
-		quantity,
-		visible,
-		featureImage,
-		images,
-		meta
-	} = await request.json();
-
 	if (!accessToken) {
 		throw error(401, {
 			message: "unauthorized"
@@ -66,7 +50,7 @@ export const POST = async ({ request }) => {
 		});
 	}
 
-	await adminDB.collection(table).doc().set({
+	const {
 		name,
 		slug,
 		categories,
@@ -80,6 +64,23 @@ export const POST = async ({ request }) => {
 		featureImage,
 		images,
 		meta
+	} = await request.json();
+
+	await adminDB.collection(table).doc().set({
+		name,
+		slug,
+		categories,
+		description,
+		contentSections,
+		purchasePrice,
+		markupPercentage,
+		price,
+		quantity,
+		visible,
+		featureImage,
+		images,
+		meta,
+		createdAt: new Date()
 	});
 
 	return new Response(
