@@ -14,9 +14,10 @@
 	import { normalizeSlugString } from "$lib/utils/slugString";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
-	import { MetaTags } from "svelte-meta-tags";
+	import { MetaTags, JsonLd } from "svelte-meta-tags";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
+	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";
 
 	let carousel; // for calling methods of the carousel instance
 
@@ -78,33 +79,7 @@
 	</ContainWidth>
 </div>
 
-<MetaTags
-	title={product.meta?.title}
-	titleTemplate={product.meta?.title}
-	description={product.meta?.description}
-	canonical={pageUrl}
-	openGraph={{
-		title: product.meta?.title,
-		description: product.meta?.description,
-		url: pageUrl,
-		type: "website",
-		images: product.images.map((image) => ({
-			url: image.src,
-			width: 800,
-			height: 800,
-			alt: product.name
-		}))
-	}}
-	twitter={{
-		handle: "",
-		site: pageUrl,
-		cardType: "summary_large_image",
-		title: product.meta?.title,
-		description: product.meta?.description,
-		image: product.featureImage,
-		imageAlt: product.name
-	}}
-/>
+<ProductSeo {product} />>
 
 <style lang="scss">
 	.product-page {
