@@ -54,23 +54,25 @@
 			"@type": "Brand",
 			name: $trans("site.brandName")
 		},
-		// review: {
-		// 	"@type": "Review",
-		// 	reviewRating: {
-		// 		"@type": "Rating",
-		// 		ratingValue: "4",
-		// 		bestRating: "5"
-		// 	},
-		// 	author: {
-		// 		"@type": "Person",
-		// 		name: "Fred Benson"
-		// 	}
-		// },
-		// aggregateRating: {
-		// 	"@type": "AggregateRating",
-		// 	ratingValue: "4.4",
-		// 	reviewCount: "89"
-		// },
+		review: [
+			// {
+			// 	"@type": "Review",
+			// 	reviewRating: {
+			// 		"@type": "Rating",
+			// 		ratingValue: "4",
+			// 		bestRating: "5"
+			// 	},
+			// 	author: {
+			// 		"@type": "Person",
+			// 		name: "Fred Benson"
+			// 	}
+			// }
+		],
+		aggregateRating: {
+			"@type": "AggregateRating",
+			ratingValue: "5",
+			reviewCount: "0"
+		},
 		offers: {
 			"@type": "Offer",
 			url: pageUrl,
