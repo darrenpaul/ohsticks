@@ -44,47 +44,49 @@
 	</ContainWidth>
 </div>
 
-<MetaTags
-	title={pageData.meta?.title}
-	titleTemplate={pageData.meta?.title}
-	description={pageData.meta?.description}
-	canonical={pageUrl}
-	openGraph={{
-		...pageData.meta.openGraph,
-		url: pageUrl
-	}}
-	twitter={{
-		...pageData.meta.twitter,
-		site: pageUrl
-	}}
-/>
+<svelte:head>
+	<MetaTags
+		title={pageData.meta?.title}
+		titleTemplate={pageData.meta?.title}
+		description={pageData.meta?.description}
+		canonical={pageUrl}
+		openGraph={{
+			...pageData.meta.openGraph,
+			url: pageUrl
+		}}
+		twitter={{
+			...pageData.meta.twitter,
+			site: pageUrl
+		}}
+	/>
 
-<JsonLd
-	schema={[
-		{
-			"@type": "WebSite",
-			mainEntityOfPage: {
-				"@type": "WebPage",
-				"@id": siteUrl
+	<JsonLd
+		schema={[
+			{
+				"@type": "WebSite",
+				mainEntityOfPage: {
+					"@type": "WebPage",
+					"@id": siteUrl
+				},
+				name: brandName,
+				url: siteUrl,
+				potentialAction: EXPLORE_ACTION
 			},
-			name: brandName,
-			url: siteUrl,
-			potentialAction: EXPLORE_ACTION
-		},
-		{
-			"@type": "LocalBusiness",
-			mainEntityOfPage: {
-				"@type": "WebPage",
-				"@id": siteUrl
-			},
-			name: brandName,
-			url: siteUrl,
-			logo: companyLogo,
-			description: "Business description",
-			image: pageData.meta.openGraph.images.map((image) => image.src)
-		}
-	]}
-/>
+			{
+				"@type": "LocalBusiness",
+				mainEntityOfPage: {
+					"@type": "WebPage",
+					"@id": siteUrl
+				},
+				name: brandName,
+				url: siteUrl,
+				logo: companyLogo,
+				description: "Business description",
+				image: pageData.meta.openGraph.images.map((image) => image.src)
+			}
+		]}
+	/>
+</svelte:head>
 
 <style lang="scss">
 	.home-page {
