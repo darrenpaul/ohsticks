@@ -3,7 +3,7 @@
 
 	export let twitterTitle = "";
 	export let twitterDescription = "";
-	export let twitterCard = "";
+	export let twitterCard = "summary_large_image";
 	export let twitterImage = "";
 	export let twitterImageAlt = "";
 </script>

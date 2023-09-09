@@ -21,7 +21,7 @@
 	let openGraphImages = [];
 	let twitterTitle = "";
 	let twitterDescription = "";
-	let twitterCard = "";
+	let twitterCard = "summary_large_image";
 	let twitterImage = "";
 	let twitterImageAlt = "";
 
