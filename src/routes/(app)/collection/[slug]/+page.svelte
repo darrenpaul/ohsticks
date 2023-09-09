@@ -3,14 +3,21 @@
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
 	import { page } from "$app/stores";
 	import capitalizeWords from "$lib/utils/capitalizeWords";
+	import { JsonLd, MetaTags } from "svelte-meta-tags";
+	import { productRoute } from "$lib/constants/routes/productRoute";
+	import { siteUrl } from "$lib/constants/site.js";
 
 	export let data;
+
 	let products: Product[];
+	let pageData = data.body.pageData.find((page) => page.slug === "collection");
+	let pageUrl = "";
 
 	$: {
 		if (data.body.products) {
 			products = data.body.products;
 		}
+		pageUrl = `${$page.url}`;
 	}
 </script>
 
@@ -25,6 +32,43 @@
 		{/each}
 	</div>
 </div>
+
+<MetaTags
+	title={pageData.meta?.title}
+	titleTemplate={pageData.meta?.title}
+	description={pageData.meta?.description}
+	canonical={pageUrl}
+	openGraph={{
+		...pageData.meta.openGraph,
+		url: pageUrl
+	}}
+	twitter={{
+		...pageData.meta.twitter,
+		site: pageUrl
+	}}
+/>
+
+<JsonLd
+	schema={[
+		{
+			"@type": "BreadcrumbList",
+			itemListElement: products.map((product, index) => ({
+				"@type": "ListItem",
+				position: index + 1,
+				name: product.name,
+				item: `${siteUrl}${productRoute.path}/${product.slug}`
+			}))
+		},
+		{
+			"@type": "ItemList",
+			itemListElement: products.map((product, index) => ({
+				"@type": "ListItem",
+				position: index + 1,
+				url: `${siteUrl}${productRoute.path}/${product.slug}`
+			}))
+		}
+	]}
+/>
 
 <style lang="scss">
 	.collection-page {

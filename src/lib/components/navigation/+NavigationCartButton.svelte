@@ -5,14 +5,18 @@
 	import type { CartItem } from "$lib/types/cart";
 	import { browser } from "$app/environment";
 	import { sumArrayNumbers } from "$lib/utils/maths";
+	import type { Writable } from "svelte/store";
 
-	const cartState = getContext("cartState");
+	const cartState: Writable<Boolean> = getContext("cartState");
 	let cartQuantity: number = 0;
 
 	$: {
-		if (browser && $cart && $cart?.cartItems) {
-			cartQuantity =
-				sumArrayNumbers($cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity)) || 0;
+		cartQuantity = 0;
+		if (browser && $cart) {
+			if ($cart?.cartItems) {
+				cartQuantity =
+					sumArrayNumbers($cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity)) || 0;
+			}
 		}
 	}
 

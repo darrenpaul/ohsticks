@@ -371,7 +371,7 @@
 	},
 	"component": {
 		"productList": {
-			"allProducts": "All Products"
+			"collection": "Collection"
 		},
 		"productFeature": {
 			"addToCart": {

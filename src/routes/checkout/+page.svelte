@@ -6,6 +6,8 @@
 	import { setContext } from "svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import { standardShipping } from "$lib/constants/shippingMethods";
+	import { checkoutEvent } from "$lib/utils/googleTagManager";
+	import { cart } from "$lib/stores/cartStore";
 
 	const shippingMethod = writable();
 	$: shippingMethod.set(standardShipping);
@@ -13,6 +15,16 @@
 	if (browser) {
 		setContext("shippingMethod", shippingMethod);
 	}
+
+	$: {
+		if (browser && $cart.cartItems?.length > 0) {
+			track();
+		}
+	}
+
+	const track = () => {
+		checkoutEvent($cart.cartItems);
+	};
 </script>
 
 <ContainWidth>

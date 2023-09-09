@@ -3,9 +3,14 @@
 	import { _ as trans } from "svelte-i18n";
 	import type { Product } from "$lib/types/product";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
 	export let title: string = "Product List";
 	export let products: Product[];
+
+	const track = () => {
+		dataLayer.push({ event: "viewAllProducts" });
+	};
 </script>
 
 <div class="product-list">
@@ -18,8 +23,10 @@
 	</div>
 
 	<div class="--button-wrapper">
-		<a class="submit-button" href={collectionAllRoute.path}>
-			{$trans("component.productList.allProducts")}
+		<a href={collectionAllRoute.path} on:click={track}>
+			<ButtonIcon>
+				{$trans("component.productList.collection")}
+			</ButtonIcon>
 		</a>
 	</div>
 </div>

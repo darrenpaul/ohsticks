@@ -3,6 +3,7 @@
 	import BinIcon from "$lib/components/icons/+BinIcon.svelte";
 	import { removeFromCart } from "$lib/stores/cartStore";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import { user } from "$lib/firebase/firebaseClient";
 
 	let totalPrice: string;
 
@@ -11,6 +12,11 @@
 	$: {
 		totalPrice = (Number(cartItem.price) * cartItem.quantity).toFixed(2);
 	}
+
+	const handleRemoveFromCart = async (cartItem: CartItem) => {
+		const accessToken = await $user?.getIdToken();
+		removeFromCart(cartItem, accessToken);
+	};
 </script>
 
 <div class="cart-menu-item">
@@ -31,7 +37,7 @@
 	<div class="--group">
 		<p>{addCurrencySymbol(totalPrice)}</p>
 
-		<button class="--delete-button" on:click={() => removeFromCart(cartItem)}>
+		<button class="--delete-button" on:click={() => handleRemoveFromCart(cartItem)}>
 			<BinIcon />
 		</button>
 	</div>

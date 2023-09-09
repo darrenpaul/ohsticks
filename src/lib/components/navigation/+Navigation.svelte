@@ -11,6 +11,7 @@
 	import { _ as trans } from "svelte-i18n";
 	import CaretRightIcon from "$lib/components/icons/+CaretRightIcon.svelte";
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
+	import BrandIcon from "$lib/components/icons/+BrandIcon.svelte";
 
 	let scrollYPosition: number;
 	let navigationFixed: boolean = false;
@@ -32,16 +33,23 @@
 
 <svelte:window bind:scrollY={scrollYPosition} />
 
+<!-- MOBILE NAVIGATION -->
 <MobileOnly>
 	<header>
 		<div class="--inner">
-			<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)}>
-				<MenuClosedIcon />
-			</button>
+			<div class="--menu-button-wrapper">
+				<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)}>
+					<MenuClosedIcon />
+				</button>
+			</div>
 
-			<a href={homeRoute.path}>{$trans("site.brandName")}</a>
+			<div class="--branding">
+				<a href={homeRoute.path}>
+					<BrandIcon />
+				</a>
+			</div>
 
-			<div class="--links">
+			<div class="--cart-account">
 				<NavigationCartButton />
 
 				<NavigationAccountButton />
@@ -52,8 +60,8 @@
 			<div class="--mobile-menu">
 				<div class="--header">
 					<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)} class="--menu-button">
-						<MenuOpenIcon fill="fill-white" />{$trans("component.navigation.menu.label")}</button
-					>
+						<MenuOpenIcon fill="fill-white" />{$trans("component.navigation.menu.label")}
+					</button>
 					<button class="--account-button">{$trans("component.navigation.account.label")}</button>
 				</div>
 
@@ -75,12 +83,15 @@
 	</header>
 </MobileOnly>
 
+<!-- DESKTOP NAVIGATION -->
 <DesktopOnly>
 	<header class={navigationFixed ? "fixed" : "block"}>
 		<div class="--inner">
-			<a href={homeRoute.path}>
-				<h2>{$trans("site.brandName")}</h2>
-			</a>
+			<div class="--branding">
+				<a href={homeRoute.path}>
+					<BrandIcon />
+				</a>
+			</div>
 
 			<div class="--links">
 				{#each links as link}
@@ -90,7 +101,7 @@
 				{/each}
 			</div>
 
-			<div class="--links">
+			<div class="--cart-account">
 				<NavigationCartButton />
 
 				<NavigationAccountButton />
@@ -120,7 +131,18 @@
 			/* MARGINS AND PADDING */
 			@apply mx-auto;
 			/* LAYOUT */
-			@apply flex items-center justify-between;
+			@apply flex justify-between items-center lg:grid grid-cols-3 place-items-center;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--branding {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply flex gap-6 self-center place-self-start;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -131,7 +153,7 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply flex gap-6;
+			@apply flex gap-6 self-center place-self-center;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -147,6 +169,28 @@
 				@apply font-bold;
 				/* ANIMATION AND EFFECTS */
 			}
+		}
+
+		.--menu-button-wrapper {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply flex gap-6 self-center place-self-start;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--cart-account {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply flex gap-6 self-center place-self-end;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
 		}
 
 		.--mobile-menu {

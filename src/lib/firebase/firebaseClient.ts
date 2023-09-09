@@ -19,7 +19,7 @@ import {
 	PUBLIC_FIREBASE_PROJECT_ID,
 	PUBLIC_FIREBASE_STORAGE_BUCKET
 } from "$env/static/public";
-import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
+import { clearCart, fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
 export const productStorageBucket = "product";
 
 const firebaseConfig = {
@@ -92,6 +92,7 @@ const userStore = () => {
 };
 export const user = userStore();
 
-export const logoutUser = () => {
+export const logoutUser = async () => {
+	await clearCart();
 	signOut(auth);
 };

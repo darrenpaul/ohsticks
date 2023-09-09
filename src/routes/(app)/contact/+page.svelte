@@ -1,10 +1,20 @@
 <script lang="ts">
 	import { _ as trans } from "svelte-i18n";
+	import { MetaTags } from "svelte-meta-tags";
+	import { page } from "$app/stores";
 
+	export let data;
+
+	let pageData = data.body.pageData.find((page) => page.slug === "contact");
+	let pageUrl = "";
 	let name = "";
 	let email = "";
 	let subject = "";
 	let message = "";
+
+	$: {
+		pageUrl = `${$page.url}`;
+	}
 
 	const handleFormSubmit = async (event: Event) => {
 		const form = event.target as HTMLFormElement;
@@ -95,6 +105,21 @@
 		<button class="submit-button">{$trans("form.contact.submit.label")}</button>
 	</form>
 </div>
+
+<MetaTags
+	title={pageData.meta?.title}
+	titleTemplate={pageData.meta?.title}
+	description={pageData.meta?.description}
+	canonical={pageUrl}
+	openGraph={{
+		...pageData.meta.openGraph,
+		url: pageUrl
+	}}
+	twitter={{
+		...pageData.meta.twitter,
+		site: pageUrl
+	}}
+/>
 
 <style lang="scss">
 	.contact-page {

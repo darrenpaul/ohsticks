@@ -6,6 +6,7 @@ export type CartItem = {
 	price: string;
 	quantity: number;
 	image: Image;
+	categories: string[];
 };
 
 export type CartGuest = {
@@ -24,4 +25,12 @@ export type CartResponse = {
 	userId: string;
 	cartItems: CartItem[];
 	expiration: { seconds: number };
+};
+
+export type CartUser = {
+	id: string;
+	userId: string;
+	cartItems: CartItem[];
+	expiration: { seconds: number };
+	createdAt: { seconds: number };
 };

@@ -6,7 +6,9 @@
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import type { Product } from "$lib/types/product.js";
 	import { page } from "$app/stores";
-	import { MetaTags } from "svelte-meta-tags";
+	import { JsonLd, MetaTags } from "svelte-meta-tags";
+	import { brandName, companyLogo, siteUrl } from "$lib/constants/site";
+	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute.js";
 
 	export let data;
 
@@ -18,6 +20,18 @@
 	$: {
 		pageUrl = `${$page.url}`;
 	}
+
+	type QueryAction = SearchAction & {
+		"query-input": string;
+	};
+
+	export const EXPLORE_ACTION: QueryAction = {
+		"@id": `${siteUrl}/${collectionAllRoute.path}`,
+		"@type": "SearchAction",
+		target: `${siteUrl}/${collectionRoute.path}/{search_term_string}`,
+		query: "required",
+		"query-input": "required name=search_term_string"
+	};
 </script>
 
 <div class="home-page">
@@ -43,6 +57,33 @@
 		...pageData.meta.twitter,
 		site: pageUrl
 	}}
+/>
+
+<JsonLd
+	schema={[
+		{
+			"@type": "WebSite",
+			mainEntityOfPage: {
+				"@type": "WebPage",
+				"@id": siteUrl
+			},
+			name: brandName,
+			url: siteUrl,
+			potentialAction: EXPLORE_ACTION
+		},
+		{
+			"@type": "LocalBusiness",
+			mainEntityOfPage: {
+				"@type": "WebPage",
+				"@id": siteUrl
+			},
+			name: brandName,
+			url: siteUrl,
+			logo: companyLogo,
+			description: "Business description",
+			image: pageData.meta.openGraph.images.map((image) => image.src)
+		}
+	]}
 />
 
 <style lang="scss">

@@ -10,6 +10,10 @@
 	import { browser } from "$app/environment";
 	import type { Writable } from "svelte/store";
 	import type { ShippingMethod } from "$lib/types/order";
+	import { checkoutEvent } from "$lib/utils/googleTagManager";
+	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
@@ -42,6 +46,11 @@
 		}
 	}
 
+	const trackContinueToPayment = () => {
+		const step = { step: 2, option: "continueToPayment" };
+		checkoutEvent($cart.cartItems, step);
+	};
+
 	const handleSubmit = async (event: Event) => {
 		const form = event.target as HTMLFormElement;
 
@@ -67,35 +76,44 @@
 		const checkoutData = await checkoutResponse.json();
 
 		if (checkoutData.sessionUrl) {
+			trackContinueToPayment();
 			window.location = checkoutData.sessionUrl;
 		}
 	};
 </script>
 
 <form on:submit={handleSubmit} class="checkout-form">
-	<h1 class="--title">{$trans("site.brandName")}</h1>
+	<div class="--branding">
+		<a href={homeRoute.path}>
+			<BrandPortraitIcon />
+		</a>
+	</div>
 
 	<h4>{$trans("form.checkout.contact.label")}</h4>
 
 	<!-- EMAIL -->
-	<div class="--input-group mb-8">
-		<input
-			class={email ? "" : "peer"}
-			type="email"
-			id="email"
-			name="email"
-			bind:value={email}
-			placeholder=""
-			disabled={emailInputDisabled}
-			required
-		/>
-		<label class="floating-label" for="email">{$trans("form.checkout.email.label")}</label>
+	<div class="input-group mb-8">
+		{#if emailInputDisabled === false}
+			<input
+				class={email ? "" : "peer"}
+				type="email"
+				id="email"
+				name="email"
+				bind:value={email}
+				placeholder=""
+				disabled={emailInputDisabled}
+				required
+			/>
+			<label class="floating-label" for="email">{$trans("form.checkout.email.label")}</label>
+		{:else}
+			<p>{email}</p>
+		{/if}
 	</div>
 
 	<h4>{$trans("form.checkout.shippingAddress.label")}</h4>
 
 	<!-- COUNTRY/REGION -->
-	<div class="--input-group">
+	<div class="input-group">
 		<select id="country" name="country" bind:value={country} placeholder="" required>
 			<option value={null} disabled selected>
 				{$trans("form.checkout.country.placeholder")}
@@ -111,7 +129,7 @@
 
 	<div class="--group-2">
 		<!-- FIRST NAME -->
-		<div class="--input-group">
+		<div class="input-group">
 			<input
 				class={firstName ? "" : "peer"}
 				type="text"
@@ -126,7 +144,7 @@
 		</div>
 
 		<!-- LAST NAME -->
-		<div class="--input-group">
+		<div class="input-group">
 			<input
 				class={lastName ? "" : "peer"}
 				type="text"
@@ -141,7 +159,7 @@
 	</div>
 
 	<!-- ADDRESS 1 -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class={address1 ? "" : "peer"}
 			type="text"
@@ -155,7 +173,7 @@
 	</div>
 
 	<!-- ADDRESS 2 -->
-	<div class="--input-group">
+	<div class="input-group">
 		<input
 			class={address2 ? "" : "peer"}
 			type="text"
@@ -169,7 +187,7 @@
 
 	<div class="--group-3">
 		<!-- CITY -->
-		<div class="--input-group">
+		<div class="input-group">
 			<input
 				class={city ? "" : "peer"}
 				type="text"
@@ -183,7 +201,7 @@
 		</div>
 
 		<!-- PROVINCE -->
-		<div class="--input-group">
+		<div class="input-group">
 			<select
 				class={province ? "" : "peer"}
 				id="province"
@@ -205,7 +223,7 @@
 		</div>
 
 		<!-- POSTAL CODE -->
-		<div class="--input-group">
+		<div class="input-group">
 			<input
 				class={postalCode ? "" : "peer"}
 				type="text"
@@ -230,7 +248,11 @@
 			{$trans("form.checkout.continueShopping.label")}
 		</a>
 
-		<button class="submit-button">{$trans("form.checkout.continueToPayment.label")}</button>
+		<button>
+			<ButtonIcon>
+				{$trans("form.checkout.continueToPayment.label")}
+			</ButtonIcon>
+		</button>
 	</div>
 </form>
 
@@ -247,23 +269,12 @@
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
 
-		.--title {
+		.--branding {
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			@apply mb-8;
 			/* LAYOUT */
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			@apply text-center;
-			/* ANIMATION AND EFFECTS */
-		}
-		.--input-group {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mb-4;
-			/* LAYOUT */
-			@apply relative flex flex-col;
+			@apply flex justify-center;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -274,7 +285,7 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4;
+			@apply grid grid-cols-2 gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
@@ -295,8 +306,9 @@
 		.--button-group {
 			/* SIZE */
 			/* MARGINS AND PADDING */
+			@apply mt-8 mx-auto;
 			/* LAYOUT */
-			@apply flex flex-col-reverse gap-0 md:grid-cols-2 md:gap-4;
+			@apply flex flex-col-reverse lg:flex-row justify-between items-center;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

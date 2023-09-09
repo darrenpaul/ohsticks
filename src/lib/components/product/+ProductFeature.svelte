@@ -8,8 +8,10 @@
 	import ProductFeatureCategories from "./+ProductFeatureCategories.svelte";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { user } from "$lib/firebase/firebaseClient";
+	import type { Writable } from "svelte/store";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
-	const cartState = getContext("cartState");
+	const cartState: Writable<Boolean> = getContext("cartState");
 
 	export let product: Product;
 
@@ -37,8 +39,10 @@
 		<p class="--description">{product.description}</p>
 
 		<div>
-			<button class="submit-button" on:click={handleAddToCart}>
-				{$trans("component.productFeature.addToCart.label")}
+			<button on:click={handleAddToCart}>
+				<ButtonIcon>
+					{$trans("component.productFeature.addToCart.label")}
+				</ButtonIcon>
 			</button>
 		</div>
 

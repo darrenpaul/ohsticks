@@ -3,12 +3,19 @@
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import type { Product } from "$lib/types/product";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import { productClickEvent } from "$lib/utils/googleTagManager";
+	import { page } from "$app/stores";
 
 	export let product: Product;
+
+	const track = (product) => {
+		const productUrl = `${$page.url.origin}${productRoute.path}/${product.slug}`;
+		productClickEvent(product, productUrl);
+	};
 </script>
 
 <div class="product-list-card">
-	<a href={`${productRoute.path}/${product.slug}`}>
+	<a href={`${productRoute.path}/${product.slug}`} on:click={() => track(product)}>
 		<img src={product.featureImage.src} alt="Preview" />
 
 		<div class="--content">

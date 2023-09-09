@@ -2,39 +2,50 @@ import { get, writable } from "svelte/store";
 import { browser } from "$app/environment";
 import type { Product } from "$lib/types/product";
 import type { Cart, CartGuest, CartItem } from "$lib/types/cart";
-
-const storageKey = "cartKey";
+import { addToCartEvent } from "$lib/utils/googleTagManager";
+import { cartGuestLocalStorageKey } from "$lib/constants/cart";
+import {
+	addToCartGuest,
+	addToCartUser,
+	removeFromCartGuest,
+	removeFromCartUser
+} from "$lib/utils/cartHelpers";
 
 export const fetchGuestCart = async () => {
 	if (!browser) return;
 
-	const cartKey = localStorage.getItem(storageKey);
+	const cartKey = localStorage.getItem(cartGuestLocalStorageKey);
 
 	if (!cartKey) return [];
 
-	const response = await fetch(`/api/cart-guest?cartKey=${cartKey}`, {
+	const headers = new Headers();
+	if (cartKey) {
+		headers.append("cart-key", cartKey);
+	}
+
+	const response = await fetch("/api/cart-guest", {
+		headers,
 		method: "GET"
 	});
 
-	const jsonData = await response.json();
+	const cartData = await response.json();
 
-	if (!jsonData.id) {
-		localStorage.removeItem(storageKey);
+	if (!cartData.cartKey) {
+		localStorage.removeItem(cartGuestLocalStorageKey);
 	}
 
-	cart.set(jsonData);
+	cart.set(cartData);
 };
 
 export const fetchUserCart = async (accessToken: string) => {
 	if (!browser) return;
 
-	const cartKey = localStorage.getItem(storageKey);
-	localStorage.removeItem(storageKey);
+	localStorage.removeItem(cartGuestLocalStorageKey);
 
 	const headers = new Headers();
 	headers.append("x-access-token", accessToken);
 
-	const cartResponse = await fetch(`/api/cart?cartKey=${cartKey}`, {
+	const cartResponse = await fetch("/api/cart", {
 		headers,
 		method: "GET"
 	});
@@ -44,71 +55,61 @@ export const fetchUserCart = async (accessToken: string) => {
 	cart.set(cartData);
 };
 
-export const cart = writable({} as Cart | CartGuest);
+export const cart = writable({} as Cart | CartGuest | null);
 
-export const addToCart = async (product: Product, accessToken: string | null) => {
-	const cartKey = localStorage.getItem(storageKey);
+export const clearCart = () => {
+	cart.set(null);
+};
 
-	const currentCartItems = get(cart).cartItems || [];
+export const addToCart = async (product: Product, accessToken: string | null | undefined) => {
+	addToCartEvent(product);
 
-	const cartItems = [
-		{
-			id: product.id,
-			name: product.name,
-			description: product.description,
-			quantity: 1,
-			price: product.price,
-			image: product.featureImage
-		},
-		...currentCartItems
-	];
-
-	const payload = {
-		cartKey,
-		cartItems
+	const cartItem: CartItem = {
+		id: product.id,
+		name: product.name,
+		description: product.description,
+		quantity: 1,
+		price: product.price.toString(),
+		image: product.featureImage,
+		categories: product.categories
 	};
 
-	const headers = new Headers();
-
 	if (accessToken) {
-		headers.append("x-access-token", accessToken);
-	}
-
-	const response = await fetch("/api/cart", {
-		method: "POST",
-		headers,
-		body: JSON.stringify(payload)
-	});
-
-	const jsonData = await response.json();
-
-	if (jsonData.id) {
-		localStorage.setItem(storageKey, jsonData.id);
-		cart.set(jsonData);
+		const cartData = await addToCartUser(cartItem, accessToken);
+		if (cartData) {
+			cart.set(cartData);
+		}
+	} else {
+		const cartData = await addToCartGuest(cartItem);
+		if (cartData) {
+			cart.set(cartData);
+		}
 	}
 };
 
-export const removeFromCart = async (cartItem: CartItem) => {
-	const cartKey = localStorage.getItem(storageKey);
+export const removeFromCart = async (product: Product, accessToken: string | null | undefined) => {
+	// TODO: Change to remove from cart event
+	// addToCartEvent(product);
 
-	const currentCartItems = get(cart).cartItems || [];
-
-	const cartItems = currentCartItems.filter((item: CartItem) => item.id !== cartItem.id);
-
-	const payload = {
-		cartKey,
-		cartItems
+	const cartItem: CartItem = {
+		id: product.id,
+		name: product.name,
+		description: product.description,
+		quantity: 1,
+		price: product.price.toString(),
+		image: product.featureImage,
+		categories: product.categories
 	};
 
-	const response = await fetch("/api/cart", {
-		method: "POST",
-		body: JSON.stringify(payload)
-	});
-
-	const jsonData = await response.json();
-
-	if (jsonData.id) {
-		localStorage.setItem(storageKey, jsonData.id);
-		cart.set(jsonData);
+	if (accessToken) {
+		const cartData = await removeFromCartUser(cartItem, accessToken);
+		if (cartData) {
+			cart.set(cartData);
+		}
+	} else {
+		const cartData = await removeFromCartGuest(cartItem);
+		if (cartData) {
+			cart.set(cartData);
+		}
 	}
 };

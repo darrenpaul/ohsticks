@@ -9,19 +9,25 @@
 	import { checkoutRoute } from "$lib/constants/routes/checkoutRoute";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import type { CartItem } from "$lib/types/cart";
+	import type { Writable } from "svelte/store";
 
-	const cartState = getContext("cartState");
+	const cartState: Writable<Boolean> = getContext("cartState");
 
 	let totalQuantity = 0;
 	let totalPrice = "0.00";
 
 	$: {
 		if (browser) {
-			if ($cart && $cart?.cartItems) {
-				totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
-				totalPrice = sumArrayNumbers(
-					$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
-				).toFixed(2);
+			if ($cart) {
+				if ($cart?.cartItems) {
+					totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
+					totalPrice = sumArrayNumbers(
+						$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
+					).toFixed(2);
+				} else {
+					totalQuantity = 0;
+					totalPrice = "0.00";
+				}
 			}
 		}
 	}

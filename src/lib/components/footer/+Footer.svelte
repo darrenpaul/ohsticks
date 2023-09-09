@@ -5,6 +5,8 @@
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import { accountRoute } from "$lib/constants/routes/accountRoute";
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
 
 	const shopLinks = [collectionAllRoute, accountRoute];
 
@@ -15,7 +17,9 @@
 	<div class="--top-section">
 		<!-- BRAND -->
 		<div class="--row">
-			<h3>{$trans("site.brandName")}</h3>
+			<a href={homeRoute.path}>
+				<BrandPortraitIcon />
+			</a>
 
 			<p class="--company-description">
 				{$trans("component.footer.companyDescription.label")}
