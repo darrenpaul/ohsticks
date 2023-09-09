@@ -6,7 +6,9 @@ const config = {
 	kit: {
 		adapter: adapter()
 	},
-	preprocess: vitePreprocess()
+	preprocess: vitePreprocess({
+		preserve: ["ld+json"]
+	})
 };
 
 export default config;
