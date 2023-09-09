@@ -1,6 +1,3 @@
-export const prerender = true;
-export const ssr = false;
-
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
 	const productResponse = await fetch("/api/product", {
