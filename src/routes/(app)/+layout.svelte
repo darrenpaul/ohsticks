@@ -49,7 +49,11 @@
 	<Footer />
 {/if}
 
-<MetaTags
+<svelte:head>
+	<title>{pageData.meta?.title}</title>
+</svelte:head>
+
+<!-- <MetaTags
 	title={pageData.meta?.title}
 	titleTemplate={pageData.meta?.title}
 	description={pageData.meta?.description}
@@ -62,7 +66,7 @@
 		...pageData.meta.twitter,
 		site: pageUrl
 	}}
-/>
+/> -->
 
 <JsonLd
 	schema={[
