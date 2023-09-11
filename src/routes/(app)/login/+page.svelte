@@ -8,6 +8,8 @@
 	import { base } from "$app/paths";
 	import { page } from "$app/stores";
 	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
 	let previousPage: string = base;
 	let email = "";
@@ -68,12 +70,18 @@
 			<label class="floating-label" for="email">{$trans("form.login.password.label")}</label>
 		</div>
 
-		<button class="submit-button">{$trans("form.login.submit.label")}</button>
+		<button>
+			<ButtonIcon>
+				{$trans("form.login.submit.label")}
+			</ButtonIcon>
+		</button>
 	</form>
 
 	<div class="--link-wrapper">
-		<a class="outline-button" href={registerRoute.path}>
-			{$trans("form.login.createAccount.label")}
+		<a href={registerRoute.path}>
+			<Button2Icon>
+				{$trans("form.login.createAccount.label")}
+			</Button2Icon>
 		</a>
 	</div>
 
@@ -87,9 +95,9 @@
 <style lang="scss">
 	.login-page {
 		/* SIZE */
-		@apply w-[400px];
+		@apply max-w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-40 mx-auto;
+		@apply mt-40 mx-auto px-4;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

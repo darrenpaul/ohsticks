@@ -46,8 +46,8 @@ export type IngAddress = {
 	address1: string;
 	address2: string;
 	city: string;
-	state: string;
-	zip: string;
+	province: string;
+	postalCode: string;
 	country: string;
 };
 

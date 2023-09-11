@@ -6,6 +6,8 @@
 	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { goto } from "$app/navigation";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
 	let firstName: string = "";
 	let lastName: string = "";
@@ -15,8 +17,8 @@
 		address1: "",
 		address2: "",
 		city: "",
-		state: "",
-		zip: "",
+		province: "",
+		postalCode: "",
 		country: ""
 	};
 
@@ -117,12 +119,18 @@
 			<label class="floating-label" for="email">{$trans("form.register.password.label")}</label>
 		</div>
 
-		<button class="submit-button">{$trans("form.register.submit.label")}</button>
+		<button>
+			<ButtonIcon>
+				{$trans("form.register.submit.label")}
+			</ButtonIcon>
+		</button>
 	</form>
 
 	<div class="--link-wrapper">
-		<a class="outline-button" href={loginRoute.path}>
-			{$trans("form.register.login.label")}
+		<a href={loginRoute.path}>
+			<Button2Icon>
+				{$trans("form.register.login.label")}
+			</Button2Icon>
 		</a>
 	</div>
 </div>
@@ -130,9 +138,9 @@
 <style lang="scss">
 	.register-page {
 		/* SIZE */
-		@apply w-[400px];
+		@apply max-w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-40 mx-auto;
+		@apply mt-40 mx-auto px-4;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

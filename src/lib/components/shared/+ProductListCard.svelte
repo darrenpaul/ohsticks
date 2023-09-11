@@ -42,7 +42,7 @@
 
 		img {
 			/* SIZE */
-			@apply w-full h-full max-w-[270px] max-h-[270px];
+			@apply max-w-[250px] max-h-[250px];
 			/* MARGINS AND PADDING */
 			@apply mb-4;
 			/* LAYOUT */
@@ -72,6 +72,7 @@
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
+				@apply truncate;
 				/* ANIMATION AND EFFECTS */
 			}
 

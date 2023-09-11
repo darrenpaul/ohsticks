@@ -32,7 +32,7 @@
 		</p>
 
 		<p>
-			{order?.shippingAddress?.zip}
+			{order?.shippingAddress?.postalCode}
 		</p>
 	</div>
 </div>

@@ -1,8 +1,6 @@
 import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { error, type HttpError } from "@sveltejs/kit";
-import { adminRole, userRole } from "$lib/constants/roles";
-import { app } from "$lib/firebase/firebaseClient";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { userRole } from "$lib/constants/roles";
 import type { FirebaseError } from "firebase-admin";
 
 const table = "user";
@@ -73,8 +71,7 @@ export const POST = async ({ request }) => {
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url }) => {
-	const id = url.searchParams.get("id");
+export const GET = async ({ request }) => {
 	const accessToken = request.headers.get("x-access-token");
 
 	if (!accessToken) {
@@ -83,31 +80,31 @@ export const GET = async ({ request, url }) => {
 		});
 	}
 
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-		if (decodedIdToken.role !== adminRole) {
-			throw error(401, {
-				message: "unauthorized"
-			});
-		}
-	} catch (errorResponse) {
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
+	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+
+	if (!decodedIdToken) {
+		throw error(401, {
+			message: "unauthorized"
 		});
 	}
 
-	const db = getFirestore(app);
-	const tableCollection = collection(db, table);
-	const tableSnapshot = await getDocs(tableCollection);
+	const tableSnapshot = await adminDB
+		.collection(table)
+		.where("emailAddress", "==", decodedIdToken.email)
+		.get();
 
-	let payload = await tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+	const userData = tableSnapshot.docs.map((doc) => ({
+		id: doc.id,
+		...doc.data()
+	}));
 
-	if (id) {
-		payload = payload.filter((item) => item.id === id);
+	if (userData.length === 0) {
+		throw error(404, {
+			message: "user not found"
+		});
 	}
 
-	const jsonString = JSON.stringify(payload);
+	const jsonString = JSON.stringify({ ...userData[0] });
 
 	return new Response(jsonString, {
 		headers: {
@@ -119,15 +116,8 @@ export const GET = async ({ request, url }) => {
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
 export const PUT = async ({ request }) => {
-	const {
-		firstName,
-		LastName,
-		emailAddress,
-		phoneNumber,
-		billingAddress,
-		shippingAddress,
-		password
-	} = await request.json();
+	const { firstName, lastName, country, address1, address2, city, province, postalCode } =
+		await request.json();
 	const accessToken = request.headers.get("x-access-token");
 
 	if (!accessToken) {
@@ -141,14 +131,21 @@ export const PUT = async ({ request }) => {
 
 		const id = decodedIdToken.uid;
 
+		adminAuth.updateUser(id, {
+			displayName: `${firstName} ${lastName}`
+		});
+
 		await adminDB.collection(table).doc(id).update({
 			firstName,
-			LastName,
-			emailAddress,
-			phoneNumber,
-			billingAddress,
-			shippingAddress,
-			password
+			lastName,
+			shippingAddress: {
+				country,
+				address1,
+				address2,
+				city,
+				province,
+				postalCode
+			}
 		});
 
 		return new Response(

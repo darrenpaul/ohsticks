@@ -1,7 +1,13 @@
 <script lang="ts">
+	import { auth, user } from "$lib/firebase/firebaseClient";
 	import { shippingCountries } from "$lib/constants/shippingCountries";
 	import { _ as trans } from "svelte-i18n";
+	import { updateProfile } from "firebase/auth";
+	import { onMount } from "svelte";
+	import { error } from "@sveltejs/kit";
 
+	let firstName: string = $user?.displayName?.split(" ")[0] ?? "";
+	let lastName: string = $user?.displayName?.split(" ")[1] ?? "";
 	let country: string = "";
 	let address1: string = "";
 	let address2: string = "";
@@ -10,39 +16,94 @@
 	let postalCode: string = "";
 	let selectableProvinces: { name: string; isoCode: string }[] = [];
 
+	onMount(async () => {
+		const accessToken = await $user?.getIdToken();
+
+		if (!accessToken) {
+			return error(401, "Unauthorized");
+		}
+
+		const response = await fetch("/api/account", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"x-access-token": accessToken
+			}
+		});
+
+		const userInformation = await response.json();
+
+		if (userInformation) {
+			country = userInformation.shippingAddress.country;
+			address1 = userInformation.shippingAddress.address1;
+			address2 = userInformation.shippingAddress.address2;
+			city = userInformation.shippingAddress.city;
+			province = userInformation.shippingAddress.province;
+			postalCode = userInformation.shippingAddress.postalCode;
+		}
+	});
+
 	$: {
 		selectableProvinces = shippingCountries.find((item) => item.isoCode === country)?.states || [];
 	}
 
 	const handleSubmit = async (event: Event) => {
-		// const form = event.target as HTMLFormElement;
-		// const formData = new FormData(form);
-		// const values = Object.fromEntries(formData.entries());
-		// const order = {
-		// 	...values,
-		// 	email,
-		// 	paymentMethod,
-		// 	shippingMethod: shippingMethod,
-		// 	cart: $cart
-		// };
-		// const checkoutResponse = await fetch("/api/checkout", {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json"
-		// 	},
-		// 	body: JSON.stringify(order)
-		// });
-		// const checkoutData = await checkoutResponse.json();
-		// if (checkoutData.sessionUrl) {
-		// 	trackContinueToPayment();
-		// 	window.location = checkoutData.sessionUrl;
-		// }
+		const form = event.target as HTMLFormElement;
+		const formData = new FormData(form);
+		const values = Object.fromEntries(formData.entries());
+		console.log("handleSubmit ~ values:", values);
+
+		const accessToken = await $user?.getIdToken();
+
+		if (!accessToken) {
+			return error(401, "Unauthorized");
+		}
+
+		await fetch("/api/account", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				"x-access-token": accessToken
+			},
+			body: JSON.stringify(values)
+		});
 	};
 </script>
 
-<form on:submit={handleSubmit} class="shipping-information">
+<form on:submit={handleSubmit} class="account-update-user-information">
+	<h4>{$trans("page.account.userInformation.label")}</h4>
+
+	<div class="--group-2">
+		<!-- FIRST NAME -->
+		<div class="input-group">
+			<input
+				class={firstName ? "" : "peer"}
+				type="text"
+				id="firstName"
+				name="firstName"
+				bind:value={firstName}
+				placeholder=""
+				required
+			/>
+			<label class="floating-label" for="firstName">{$trans("page.account.firstName.label")}</label>
+		</div>
+
+		<!-- LAST NAME -->
+		<div class="input-group">
+			<input
+				class={lastName ? "" : "peer"}
+				type="text"
+				id="lastName"
+				name="lastName"
+				bind:value={lastName}
+				placeholder=""
+				required
+			/>
+			<label class="floating-label" for="lastName">{$trans("page.account.lastName.label")}</label>
+		</div>
+	</div>
+
 	<h4>{$trans("page.account.shippingInformation.label")}</h4>
-	<h1>NOT DONE</h1>
 
 	<!-- COUNTRY/REGION -->
 	<div class="input-group">
@@ -142,13 +203,25 @@
 </form>
 
 <style lang="scss">
-	.shipping-information {
+	.account-update-user-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */
+		@apply mb-8;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
+
+		.--group-2 {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
 	}
 </style>

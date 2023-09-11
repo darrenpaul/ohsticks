@@ -4,27 +4,6 @@ import { adminRole } from "$lib/constants/roles";
 
 const table = "product";
 
-const verifyAdmin = async (accessToken: string | null) => {
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-		if (decodedIdToken.role !== adminRole) {
-			throw error(401, {
-				message: "unauthorized"
-			});
-		}
-	} catch (errorResponse) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-};
-
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }) => {

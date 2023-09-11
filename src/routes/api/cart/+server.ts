@@ -121,6 +121,14 @@ export const GET = async ({ request }) => {
 
 	const cartData = await getLatestCart(tableSnapshot);
 
+	if (!cartData) {
+		return new Response(JSON.stringify({}), {
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+	}
+
 	const { expiration, cartItems } = cartData;
 
 	// Delete Cart if expired

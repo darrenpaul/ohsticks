@@ -1,5 +1,4 @@
 import { adminDB } from "$lib/server/firebaseAdminClient";
-
 const table = "product";
 
 // LIST
@@ -12,6 +11,8 @@ export const GET = async () => {
 	// 	? await adminDB.collection(table).where("slug", "==", slug).where("visible", "==", true).get()
 	// 	: await adminDB.collection(table).where("visible", "==", true).get();
 	const products = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+	products.sort((a, b) => b.createdAt._seconds - a.createdAt._seconds);
 
 	return new Response(JSON.stringify(products), {
 		headers: {

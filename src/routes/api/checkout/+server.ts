@@ -30,7 +30,7 @@ export const POST = async ({ fetch, request }) => {
 			address2,
 			city,
 			state: province,
-			zip: postalCode,
+			postalCode,
 			country
 		},
 		billingAddress: {
@@ -38,7 +38,7 @@ export const POST = async ({ fetch, request }) => {
 			address2,
 			city,
 			state: province,
-			zip: postalCode,
+			postalCode,
 			country
 		},
 		status: created,
