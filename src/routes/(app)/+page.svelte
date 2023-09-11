@@ -17,8 +17,11 @@
 
 	let pageUrl = "";
 
+	let pageTitle = "";
+
 	$: {
 		pageUrl = `${$page.url}`;
+		pageTitle = pageData.meta?.title || "OhSticks Home";
 	}
 
 	type QueryAction = SearchAction & {
