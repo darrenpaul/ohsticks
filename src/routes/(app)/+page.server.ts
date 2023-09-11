@@ -23,6 +23,7 @@ export async function load({ fetch }) {
 
 	return {
 		products,
-		pageData
+		pageData,
+		title: "Home"
 	};
 }
