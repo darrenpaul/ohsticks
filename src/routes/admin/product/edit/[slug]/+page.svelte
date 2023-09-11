@@ -51,6 +51,7 @@
 				"x-access-token": accessToken
 			},
 			body: JSON.stringify({
+				id: product.id,
 				name,
 				slug,
 				categories: categories.split(",").map((category) => category.trim()),
@@ -83,8 +84,9 @@
 				}
 			})
 		});
+
 		if (response.ok) {
-			alert("Product created");
+			alert("Product Updated");
 			return;
 		}
 
@@ -95,7 +97,6 @@
 </script>
 
 <p>Update Product</p>
-
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
 	<ProductCreateInformation bind:name bind:slug bind:categories bind:description />
 
@@ -148,6 +149,7 @@
 		</div>
 
 		<ProductCreateSeoForm
+			{name}
 			searchKeywords={name}
 			bind:productDescription={description}
 			bind:productContentSections={contentSections}

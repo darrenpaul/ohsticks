@@ -36,7 +36,7 @@
 		/* SIZE */
 		@apply min-h-[100dvh];
 		/* MARGINS AND PADDING */
-		@apply mx-auto mt-20;
+		@apply mx-auto;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

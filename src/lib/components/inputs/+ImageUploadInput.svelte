@@ -11,7 +11,7 @@
 
 	const onImageDelete = async (imageSrc: string) => {
 		await deleteImage(imageSrc);
-		images = images.filter((image) => image.src !== imageSrc);
+		images = images.filter((image) => image?.src !== imageSrc);
 	};
 
 	const onImagesToUpload = async (event) => {
@@ -40,8 +40,8 @@
 
 {#each images as image}
 	<div>
-		<img src={image.src} alt={image.alt} />
-		<button on:click|preventDefault={() => onImageDelete(image.src)} class="slim-button">
+		<img src={image?.src} alt={image?.alt} />
+		<button on:click|preventDefault={() => onImageDelete(image?.src)} class="slim-button">
 			Delete
 		</button>
 	</div>

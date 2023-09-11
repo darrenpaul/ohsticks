@@ -31,7 +31,7 @@
 <style lang="scss">
 	.product-list-card {
 		/* SIZE */
-		@apply w-fit h-fit;
+		@apply w-fit h-full;
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
 		@apply grid items-center justify-center overflow-hidden;
@@ -66,13 +66,14 @@
 			/* ANIMATION AND EFFECTS */
 
 			.--title {
+				@apply w-3/4;
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
-				@apply truncate;
+				@apply text-center truncate text-ellipsis break-words;
 				/* ANIMATION AND EFFECTS */
 			}
 

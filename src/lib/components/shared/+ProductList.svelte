@@ -60,7 +60,8 @@
 			/* MARGINS AND PADDING */
 			@apply mb-16;
 			/* LAYOUT */
-			@apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8;
+			// @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8;
+			@apply flex flex-wrap justify-center gap-8;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

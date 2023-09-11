@@ -15,15 +15,14 @@
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";
 	import { onMount } from "svelte";
+	import Carousel from "svelte-carousel";
 
-	let CarouselComponent;
 	let MobileOnlyComponent;
 	let DesktopOnlyComponent;
 
 	onMount(async () => {
 		MobileOnlyComponent = (await import("$lib/components/shared/+MobileOnly.svelte")).default;
 		DesktopOnlyComponent = (await import("$lib/components/shared/+DesktopOnly.svelte")).default;
-		CarouselComponent = (await import("svelte-carousel")).default;
 	});
 
 	let crumbs: Link[] = [
@@ -63,29 +62,33 @@
 
 			{#if browser}
 				<svelte:component this={MobileOnlyComponent}>
-					<svelte:component
-						this={CarouselComponent}
+					<Carousel
 						particlesToShow={1}
 						particlesToScroll={1}
 						arrows={false}
+						autoplay
+						autoplayDuration={3000}
+						pauseOnFocus
 					>
 						{#each relatedProducts as product}
 							<ProductListCard {product} />
 						{/each}
-					</svelte:component>
+					</Carousel>
 				</svelte:component>
 
 				<svelte:component this={DesktopOnlyComponent}>
-					<svelte:component
-						this={CarouselComponent}
+					<Carousel
 						particlesToShow={3}
 						particlesToScroll={2}
 						arrows={false}
+						autoplay
+						autoplayDuration={3000}
+						pauseOnFocus
 					>
 						{#each relatedProducts as product}
 							<ProductListCard {product} />
 						{/each}
-					</svelte:component>
+					</Carousel>
 				</svelte:component>
 			{/if}
 		</div>
@@ -98,6 +101,7 @@
 	.product-page {
 		/* SIZE */
 		/* MARGINS AND PADDING */
+		@apply mt-20;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

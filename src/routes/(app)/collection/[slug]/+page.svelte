@@ -75,7 +75,7 @@
 		/* SIZE */
 		@apply w-fit max-w-[1495px];
 		/* MARGINS AND PADDING */
-		@apply mx-auto pt-1 px-0 sm:px-4;
+		@apply mx-auto pt-1 px-0 sm:px-4 mt-20;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -99,7 +99,8 @@
 			/* MARGINS AND PADDING */
 			@apply px-4 mb-16;
 			/* LAYOUT */
-			@apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8;
+			// @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8;
+			@apply flex flex-wrap justify-center gap-8;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

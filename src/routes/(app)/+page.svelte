@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ as trans } from "svelte-i18n";
-	import FeatureCarousel from "$lib/components/shared/+FeatureCarousel.svelte";
+	import Feature from "$lib/components/shared/+Feature.svelte";
 	import ProductList from "$lib/components/shared/+ProductList.svelte";
 	import SideBySideImage from "$lib/components/shared/+SideBySideImage.svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
@@ -35,9 +35,9 @@
 </script>
 
 <div class="home-page">
-	<ContainWidth background="bg-transparent">
-		<FeatureCarousel />
+	<Feature />
 
+	<ContainWidth background="bg-transparent">
 		<ProductList title={$trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
 
 		<SideBySideImage />
@@ -91,7 +91,6 @@
 		/* SIZE */
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
-		@apply grid items-center justify-center;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */

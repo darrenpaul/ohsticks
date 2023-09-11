@@ -26,7 +26,7 @@
 	</div>
 
 	<div>
-		<img class="--active-image" src={activeImage.src} alt={product.name} />
+		<img src={activeImage.src} alt={product.name} />
 	</div>
 </div>
 
@@ -75,18 +75,6 @@
 				/* TEXT */
 				/* ANIMATION AND EFFECTS */
 			}
-		}
-
-		.--active-image {
-			/* SIZE */
-			@apply w-full lg:max-h-[480px];
-			/* MARGINS AND PADDING */
-			/* LAYOUT */
-			/* BORDERS */
-			@apply rounded-md;
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
 		}
 	}
 </style>

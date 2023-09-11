@@ -4,6 +4,7 @@ import type { CartItem, CartUser } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
 import { mergeCartItems } from "$lib/utils/cartHelpers.js";
 import type { QuerySnapshot } from "firebase-admin/firestore";
+import type { Product } from "$lib/types/product.js";
 
 const table = "cart";
 
@@ -25,7 +26,29 @@ const getLatestCart = async (tableSnapshot: QuerySnapshot) => {
 		});
 	}
 
-	return cartData;
+	// Ensures the cart data always contains the latest product data
+	const productTableSnapshot = await adminDB.collection("product").get();
+	const products = productTableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+	const syncedWithProducts = cartData.cartItems.map((cartItem) => {
+		const product: Product = products.find((product) => product.id === cartItem.id) as Product;
+
+		if (!product) return undefined;
+
+		return {
+			...cartItem,
+			image: {
+				...product.featureImage
+			},
+			price: product.price,
+			name: product.name,
+			description: product.description,
+			id: product.id,
+			categories: product.categories
+		};
+	});
+	const removedUndefined = syncedWithProducts.filter((item) => item !== undefined);
+
+	return { ...cartData, cartItems: removedUndefined };
 };
 
 // ADD ITEM TO CART
