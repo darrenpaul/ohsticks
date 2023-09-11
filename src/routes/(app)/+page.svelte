@@ -47,7 +47,10 @@
 	</ContainWidth>
 </div>
 
-<MetaTags
+<svelte:head>
+	<title>{pageTitle}</title>
+</svelte:head>
+<!-- <MetaTags
 	title={pageData.meta?.title}
 	titleTemplate={pageData.meta?.title}
 	description={pageData.meta?.description}
@@ -60,7 +63,7 @@
 		...pageData.meta.twitter,
 		site: pageUrl
 	}}
-/>
+/> -->
 
 <JsonLd
 	schema={[
