@@ -17,11 +17,8 @@
 
 	let pageUrl = "";
 
-	let pageTitle = "";
-
 	$: {
 		pageUrl = `${$page.url}`;
-		pageTitle = pageData.meta?.title || "OhSticks Home";
 	}
 
 	type QueryAction = SearchAction & {
@@ -47,10 +44,7 @@
 	</ContainWidth>
 </div>
 
-<svelte:head>
-	<title>{pageTitle}</title>
-</svelte:head>
-<!-- <MetaTags
+<MetaTags
 	title={pageData.meta?.title}
 	titleTemplate={pageData.meta?.title}
 	description={pageData.meta?.description}
@@ -63,7 +57,7 @@
 		...pageData.meta.twitter,
 		site: pageUrl
 	}}
-/> -->
+/>
 
 <JsonLd
 	schema={[
