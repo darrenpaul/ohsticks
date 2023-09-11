@@ -22,6 +22,12 @@ export const accountRoute = {
 	label: "Account"
 };
 
+export const accountOrdersRoute = {
+	path: `${accountRoute.path}/orders`,
+	name: "account-orders",
+	label: "Orders"
+};
+
 export const accountOrderRoute = {
 	path: `${accountRoute.path}/order`,
 	name: "account-order",

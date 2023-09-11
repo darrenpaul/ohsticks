@@ -75,7 +75,7 @@
 		/* SIZE */
 		@apply w-fit max-w-[1495px];
 		/* MARGINS AND PADDING */
-		@apply mx-auto pt-1;
+		@apply mx-auto pt-1 px-0 sm:px-4;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

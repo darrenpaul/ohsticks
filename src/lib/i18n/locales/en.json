@@ -101,6 +101,62 @@
 			"total": {
 				"label": "Total"
 			}
+		},
+		"account": {
+			"orders": {
+				"label": "Orders"
+			},
+			"upcomingOrders": {
+				"label": "Upcoming Orders"
+			},
+			"pastOrders": {
+				"label": "Past Orders"
+			},
+			"firstName": {
+				"label": "First Name"
+			},
+			"lastName": {
+				"label": "Last Name"
+			},
+			"update": {
+				"label": "Update"
+			},
+			"userInformation": {
+				"label": "User Information"
+			},
+			"shippingInformation": {
+				"label": "Shipping Information"
+			},
+			"country": {
+				"label": "Country",
+				"placeholder": "Select country"
+			},
+			"address1": {
+				"label": "Address 1",
+				"placeholder": "Enter address"
+			},
+			"address2": {
+				"label": "Address 2",
+				"placeholder": "Enter address"
+			},
+			"city": {
+				"label": "City",
+				"placeholder": "Enter city"
+			},
+			"province": {
+				"label": "Province",
+				"placeholder": "Select province"
+			},
+			"postalCode": {
+				"label": "Postal Code",
+				"placeholder": "Enter postal code"
+			},
+			"currentPassword": {
+				"label": "Current Password"
+			},
+			"newPassword": {
+				"label": "New Password"
+			}
 		}
 	},
 	"form": {

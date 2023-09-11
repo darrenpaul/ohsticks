@@ -9,32 +9,40 @@
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { brandName, companyLogo, siteUrl } from "$lib/constants/site";
 	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute.js";
+	import { browser } from "$app/environment";
 
 	export let data;
+	console.log("data:", data.post.title);
+	// let products: Product[] = data.body.products;
 
-	let products: Product[] = data.body.products;
-	let pageData = data.body.pageData.find((page) => page.slug === "home");
+	// let pageData = $page.data.body.pageData.find((page) => page.slug === "home");
+	// console.log("pageData:", pageData);
+	// console.log("pageData:", pageData);
 
-	let pageUrl = "";
+	// let pageUrl = "";
 
-	$: {
-		pageUrl = `${$page.url}`;
-	}
+	// $: {
+	// 	pageUrl = `${$page.url}`;
+	// }
 
-	type QueryAction = SearchAction & {
-		"query-input": string;
-	};
+	// type QueryAction = SearchAction & {
+	// 	"query-input": string;
+	// };
 
-	export const EXPLORE_ACTION: QueryAction = {
-		"@id": `${siteUrl}/${collectionAllRoute.path}`,
-		"@type": "SearchAction",
-		target: `${siteUrl}/${collectionRoute.path}/{search_term_string}`,
-		query: "required",
-		"query-input": "required name=search_term_string"
-	};
+	// export const EXPLORE_ACTION: QueryAction = {
+	// 	"@id": `${siteUrl}/${collectionAllRoute.path}`,
+	// 	"@type": "SearchAction",
+	// 	target: `${siteUrl}/${collectionRoute.path}/{search_term_string}`,
+	// 	query: "required",
+	// 	"query-input": "required name=search_term_string"
+	// };
 </script>
 
-<div class="home-page">
+<svelte:head>
+	<title>{$page.data.post.title}</title>
+</svelte:head>
+
+<!-- <div class="home-page">
 	<ContainWidth background="bg-transparent">
 		<FeatureCarousel />
 
@@ -42,9 +50,9 @@
 
 		<SideBySideImage />
 	</ContainWidth>
-</div>
+</div> -->
 
-<MetaTags
+<!-- <MetaTags
 	title={pageData.meta?.title}
 	titleTemplate={pageData.meta?.title}
 	description={pageData.meta?.description}
@@ -84,7 +92,7 @@
 			image: pageData.meta.openGraph.images.map((image) => image.src)
 		}
 	]}
-/>
+/> -->
 
 <style lang="scss">
 	.home-page {

@@ -2,9 +2,9 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { page } from "$app/stores";
 	import { logoutUser } from "$lib/firebase/firebaseClient";
-	import { accountRoute } from "$lib/constants/routes/accountRoute";
+	import { accountOrdersRoute, accountRoute } from "$lib/constants/routes/accountRoute";
 
-	let links = [homeRoute, accountRoute];
+	let links = [homeRoute, accountRoute, accountOrdersRoute];
 </script>
 
 <nav>

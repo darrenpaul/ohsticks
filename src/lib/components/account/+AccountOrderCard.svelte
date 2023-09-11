@@ -2,7 +2,6 @@
 	import { accountOrderRoute } from "$lib/constants/routes/accountRoute";
 	import type { Order } from "$lib/types/order";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
-	import { sumArrayNumbers } from "$lib/utils/maths";
 	import { format } from "date-fns";
 	import { _ as trans } from "svelte-i18n";
 
@@ -18,7 +17,7 @@
 	<td class="text-center">{format(new Date(order.createdAt._seconds * 1000), "dd MMM, yyyy")}</td>
 	<td class="text-center">{order.shippingAddress.address1}</td>
 	<td class="text-center">{addCurrencySymbol(order?.total || "0.00")}</td>
-	<td class="text-center">{order.status}</td>
+	<td class="text-center uppercase font-bold">{order.status}</td>
 	<td class="text-center">
 		<a href={`${accountOrderRoute.path}/${order.id}`}>
 			<p>{$trans("page.order.view.label")}</p>
