@@ -4,6 +4,7 @@
 
 	export let name = "";
 	export let slug = "";
+	export let brand = "";
 	export let categories = "";
 	export let description = "";
 
@@ -22,6 +23,21 @@
 <p>{$trans("form.createProduct.slug.label")}</p>
 
 <p id="slug">{slug}</p>
+
+<!-- BRAND -->
+<div class="input-group">
+	<input
+		class="peer"
+		id="brand"
+		name="brand"
+		type="text"
+		bind:value={brand}
+		placeholder=""
+		required
+	/>
+
+	<label class="floating-label" for="name">{$trans("form.createProduct.brand.label")}</label>
+</div>
 
 <!-- CATEGORIES -->
 <div class="input-group">

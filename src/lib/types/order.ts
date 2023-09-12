@@ -3,7 +3,6 @@ import type { Image, Product } from "./product";
 export type NewOrder = {
 	customer: Customer;
 	shippingAddress: IngAddress;
-	billingAddress: IngAddress;
 	items: Product[];
 	paymentMethod: string;
 	shippingMethod: ShippingMethod;
@@ -20,8 +19,7 @@ export type Order = {
 	id: string;
 	customer: Customer;
 	shippingAddress: IngAddress;
-	billingAddress: IngAddress;
-	items: Product[];
+	items: OrderItem[];
 	paymentMethod: string;
 	shippingMethod: ShippingMethod;
 	shippingCost: number;
@@ -37,9 +35,12 @@ export type OrderItem = {
 	id: string;
 	name: string;
 	description: string;
+	slug: string;
+	brand: string;
 	price: number;
 	quantity: number;
 	image: Image;
+	categories: string[];
 };
 
 export type IngAddress = {

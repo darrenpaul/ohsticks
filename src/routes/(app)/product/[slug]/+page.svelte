@@ -16,6 +16,7 @@
 	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";
 	import { onMount } from "svelte";
 	import Carousel from "svelte-carousel";
+	import { viewItemEvent } from "$lib/utils/googleTagManager.js";
 
 	let MobileOnlyComponent;
 	let DesktopOnlyComponent;
@@ -43,8 +44,14 @@
 		if (data.body.product) {
 			product = data.body.product;
 			relatedProducts = data.body.relatedProducts as Product[];
+
+			track();
 		}
 	}
+
+	const track = () => {
+		viewItemEvent(product);
+	};
 </script>
 
 <div class="product-page">
@@ -70,8 +77,8 @@
 						autoplayDuration={3000}
 						pauseOnFocus
 					>
-						{#each relatedProducts as product}
-							<ProductListCard {product} />
+						{#each relatedProducts as product, index}
+							<ProductListCard {product} {index} />
 						{/each}
 					</Carousel>
 				</svelte:component>
@@ -85,8 +92,8 @@
 						autoplayDuration={3000}
 						pauseOnFocus
 					>
-						{#each relatedProducts as product}
-							<ProductListCard {product} />
+						{#each relatedProducts as product, index}
+							<ProductListCard {product} {index} />
 						{/each}
 					</Carousel>
 				</svelte:component>

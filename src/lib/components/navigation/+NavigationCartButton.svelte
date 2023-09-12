@@ -6,6 +6,7 @@
 	import { browser } from "$app/environment";
 	import { sumArrayNumbers } from "$lib/utils/maths";
 	import type { Writable } from "svelte/store";
+	import { viewCartEvent } from "$lib/utils/googleTagManager";
 
 	const cartState: Writable<Boolean> = getContext("cartState");
 	let cartQuantity: number = 0;
@@ -23,7 +24,13 @@
 	const openCart = () => {
 		if ($cart && $cart?.cartItems?.length > 0) {
 			cartState.set(true);
+
+			track();
 		}
+	};
+
+	const track = () => {
+		viewCartEvent($cart?.cartItems);
 	};
 </script>
 

@@ -42,6 +42,7 @@ const getLatestCart = async (tableSnapshot: QuerySnapshot) => {
 			price: product.price,
 			name: product.name,
 			description: product.description,
+			brand: product.brand,
 			id: product.id,
 			categories: product.categories
 		};
@@ -109,7 +110,7 @@ export const POST = async ({ request }) => {
 		expiration: addDays(new Date(), 7),
 		createdAt: new Date()
 	};
-	console.log("POST ~ payload:", payload);
+
 	await adminDB.collection(table).doc().set(payload);
 
 	return new Response(JSON.stringify(payload), {

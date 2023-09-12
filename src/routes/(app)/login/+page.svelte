@@ -15,10 +15,6 @@
 	let email = "";
 	let password = "";
 
-	const handleFormSubmit = async () => {
-		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
-	};
-
 	$: {
 		if (browser && $user) {
 			if (previousPage === $page.url.pathname) {
@@ -28,6 +24,14 @@
 			}
 		}
 	}
+
+	const handleFormSubmit = async () => {
+		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
+	};
+
+	const track = () => {
+		dataLayer.push({ event: "login" });
+	};
 
 	afterNavigate(({ from }) => {
 		previousPage = from?.url.pathname || previousPage;

@@ -157,6 +157,61 @@
 			"newPassword": {
 				"label": "New Password"
 			}
+		},
+		"admin": {
+			"readyToProcess": { "label": "Orders To Process" },
+			"readyToShip": { "label": "Orders to Ship" },
+			"shipped": { "label": "Orders Shipped" },
+			"delivered": {
+				"label": "Orders Delivered"
+			},
+			"selectStatusOption": { "label": "Select Status Option" },
+			"orderInformation": {
+				"label": "Order Information"
+			},
+			"orders": { "label": "Orders" },
+			"orderId": {
+				"label": "Order ID"
+			},
+			"orderStatus": {
+				"label": "Order Status"
+			},
+			"createdAt": {
+				"label": "Created At"
+			},
+			"updatedAt": {
+				"label": "Updated At"
+			},
+			"shippingInformation": {
+				"label": "Shipping Information"
+			},
+			"shippingAddress": {
+				"label": "Shipping Address"
+			},
+			"customerInformation": {
+				"label": "Customer Information"
+			},
+			"productId": {
+				"label": "Product Id"
+			},
+			"productName": {
+				"label": "Product Name"
+			},
+			"itemPrice": {
+				"label": "Item Price"
+			},
+			"total": {
+				"label": "Total"
+			},
+			"quantity": {
+				"label": "Quantity"
+			},
+			"shipping": {
+				"label": "Shipping"
+			},
+			"subtotal": {
+				"label": "Subtotal"
+			}
 		}
 	},
 	"form": {
@@ -167,6 +222,9 @@
 			},
 			"slug": {
 				"label": "Slug"
+			},
+			"brand": {
+				"label": "Brand"
 			},
 			"categories": {
 				"label": "Categories",

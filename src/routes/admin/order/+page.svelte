@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { user } from "$lib/firebase/firebaseClient";
-	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute";
-	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { error } from "@sveltejs/kit";
 	import { onMount } from "svelte";
-	import { adminRole } from "$lib/constants/roles";
+	import type { Order } from "$lib/types/order";
+	import AdminOrderList from "$lib/components/admin/order/+AdminOrderList.svelte";
+	import { _ as trans } from "svelte-i18n";
+	import { delivered, paid, processing, shipped } from "$lib/constants/orderUpdate";
+	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
+
+	export let orders: Order[];
 
 	onMount(async () => {
 		const accessToken = await $user?.getIdToken();
@@ -12,13 +16,8 @@
 		if (!accessToken) {
 			return error(401, "Unauthorized");
 		}
-		const { role } = await firebaseAuthenticateRole(accessToken);
 
-		if (!role || role !== adminRole) {
-			return error(401, "Unauthorized");
-		}
-
-		const response = await fetch("/api/order", {
+		const response = await fetch("/api/admin/order", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -26,14 +25,71 @@
 			}
 		});
 
-		data = await response.json();
+		orders = await response.json();
 	});
-
-	export let data;
 </script>
 
-<a href={adminOrderRoute.path}>Create Order</a>
+<ContainWidth background={"bg-white"}>
+	<div class="admin-order-page">
+		<h2 class="--title">{$trans("page.admin.orders.label")}</h2>
 
-<h2>Orders</h2>
+		{#if orders}
+			<div class="--order-list">
+				<AdminOrderList
+					title={$trans("page.admin.readyToProcess.label")}
+					orders={orders.filter((order) => order.status === paid)}
+				/>
 
-<p>{JSON.stringify(data)}</p>
+				<AdminOrderList
+					title={$trans("page.admin.readyToShip.label")}
+					orders={orders.filter((order) => order.status === processing)}
+				/>
+
+				<AdminOrderList
+					title={$trans("page.admin.shipped.label")}
+					orders={orders.filter((order) => order.status === shipped)}
+				/>
+
+				<AdminOrderList
+					title={$trans("page.admin.delivered.label")}
+					orders={orders.filter((order) => order.status === delivered)}
+				/>
+			</div>
+		{/if}
+	</div>
+</ContainWidth>
+
+<style lang="scss">
+	.admin-order-page {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		@apply mt-10;
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+
+		.--title {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply mb-4;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--order-list {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply flex flex-col gap-8;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+	}
+</style>

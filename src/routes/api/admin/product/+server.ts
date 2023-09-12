@@ -32,6 +32,7 @@ export const POST = async ({ request }) => {
 	const {
 		name,
 		slug,
+		brand,
 		categories,
 		description,
 		contentSections,
@@ -48,6 +49,7 @@ export const POST = async ({ request }) => {
 	await adminDB.collection(table).doc().set({
 		name,
 		slug,
+		brand,
 		categories,
 		description,
 		contentSections,
@@ -115,6 +117,7 @@ export const PUT = async ({ request }) => {
 		id,
 		name,
 		slug,
+		brand,
 		categories,
 		description,
 		contentSections,
@@ -131,6 +134,7 @@ export const PUT = async ({ request }) => {
 	await adminDB.collection(table).doc(id).update({
 		name,
 		slug,
+		brand,
 		categories,
 		description,
 		contentSections,

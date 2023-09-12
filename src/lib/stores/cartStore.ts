@@ -1,8 +1,8 @@
-import { get, writable } from "svelte/store";
+import { writable } from "svelte/store";
 import { browser } from "$app/environment";
 import type { Product } from "$lib/types/product";
 import type { Cart, CartGuest, CartItem } from "$lib/types/cart";
-import { addToCartEvent } from "$lib/utils/googleTagManager";
+import { addToCartEvent, removeFromCartEvent } from "$lib/utils/googleTagManager";
 import { cartGuestLocalStorageKey } from "$lib/constants/cart";
 import {
 	addToCartGuest,
@@ -68,6 +68,8 @@ export const addToCart = async (product: Product, accessToken: string | null | u
 		id: product.id,
 		name: product.name,
 		description: product.description,
+		brand: product.brand,
+		slug: product.slug,
 		quantity: 1,
 		price: product.price.toString(),
 		image: product.featureImage,
@@ -87,7 +89,11 @@ export const addToCart = async (product: Product, accessToken: string | null | u
 	}
 };
 
-export const removeFromCart = async (product: Product, accessToken: string | null | undefined) => {
+export const removeFromCart = async (
+	product: Product,
+	accessToken: string | null | undefined,
+	index = 0
+) => {
 	// TODO: Change to remove from cart event
 	// addToCartEvent(product);
 
@@ -95,11 +101,15 @@ export const removeFromCart = async (product: Product, accessToken: string | nul
 		id: product.id,
 		name: product.name,
 		description: product.description,
+		brand: product.brand,
+		slug: product.slug,
 		quantity: 1,
 		price: product.price.toString(),
 		image: product.featureImage,
 		categories: product.categories
 	};
+
+	removeFromCartEvent(cartItem, index);
 
 	if (accessToken) {
 		const cartData = await removeFromCartUser(cartItem, accessToken);

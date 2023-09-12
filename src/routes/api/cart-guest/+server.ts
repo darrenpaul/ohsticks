@@ -107,6 +107,7 @@ export const GET = async ({ request, url, fetch }) => {
 			price: product.price,
 			name: product.name,
 			description: product.description,
+			brand: product.brand,
 			id: product.id,
 			categories: product.categories
 		};

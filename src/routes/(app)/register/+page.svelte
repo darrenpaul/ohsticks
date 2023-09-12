@@ -22,6 +22,12 @@
 		country: ""
 	};
 
+	$: {
+		if (browser && $user) {
+			goto(homeRoute.path, { replaceState: true });
+		}
+	}
+
 	const handleFormSubmit = async () => {
 		const response = await fetch("/api/account", {
 			method: "POST",
@@ -39,15 +45,15 @@
 			throw new Error(message);
 		}
 
+		track();
+
 		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
 		alert("Account created successfully!");
 	};
 
-	$: {
-		if (browser && $user) {
-			goto(homeRoute.path, { replaceState: true });
-		}
-	}
+	const track = () => {
+		dataLayer.push({ event: "sign_up" });
+	};
 </script>
 
 <div class="register-page">

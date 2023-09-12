@@ -11,6 +11,7 @@ export type Product = {
 	featureImage: Image;
 	images: Image[];
 	meta: meta;
+	brand: string;
 };
 
 export type Image = {
@@ -62,4 +63,5 @@ export type ProductCreate = {
 	featureImage: string;
 	images: Image[];
 	meta: meta;
+	brand: string;
 };

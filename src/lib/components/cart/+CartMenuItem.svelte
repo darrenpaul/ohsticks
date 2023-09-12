@@ -8,6 +8,7 @@
 	let totalPrice: string;
 
 	export let cartItem: CartItem;
+	export let index: number = 0;
 
 	$: {
 		totalPrice = (Number(cartItem.price) * cartItem.quantity).toFixed(2);
@@ -15,7 +16,7 @@
 
 	const handleRemoveFromCart = async (cartItem: CartItem) => {
 		const accessToken = await $user?.getIdToken();
-		removeFromCart(cartItem, accessToken);
+		removeFromCart(cartItem, accessToken, index);
 	};
 </script>
 

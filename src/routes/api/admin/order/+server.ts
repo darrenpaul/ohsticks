@@ -3,8 +3,9 @@ import { error, type HttpError } from "@sveltejs/kit";
 import { auth } from "$lib/firebase/firebaseClient";
 import randomString from "$lib/utils/randomString.js";
 import { sendPasswordResetEmail } from "firebase/auth";
-import type { Order, OrderItem } from "$lib/types/order.js";
+import type { OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
+import { adminRole } from "$lib/constants/roles";
 
 const table = "order";
 
@@ -68,6 +69,7 @@ export const POST = async ({ request, fetch }) => {
 /** @type {import('./$types').RequestHandler} */
 export const GET = async ({ request, url }) => {
 	const accessToken = request.headers.get("x-access-token");
+	const orderId = url.searchParams.get("id");
 
 	if (!accessToken) {
 		throw error(401, {
@@ -75,107 +77,85 @@ export const GET = async ({ request, url }) => {
 		});
 	}
 
-	const orderId = url.searchParams.get("id");
+	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+	if (!decodedIdToken || decodedIdToken.role !== adminRole) {
+		throw error(401, {
+			message: "unauthorized"
+		});
+	}
 
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+	const tableSnapshot = await adminDB.collection(table).get();
+	const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-		const tableSnapshot = await adminDB
-			.collection(table)
-			.where("customer.email", "==", decodedIdToken.email)
-			.get();
+	if (orderId) {
+		const order = tableData.find((order) => order.id === orderId);
 
-		const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-		if (orderId) {
-			console.log("GET ~ orderId:", orderId);
-			const order = tableData.find((order) => order.id === orderId);
-
-			if (!order) {
-				throw error(404, {
-					message: "order not found"
-				});
-			}
-
-			const jsonString = JSON.stringify({ order });
-
-			return new Response(jsonString, {
-				headers: {
-					"Content-Type": "application/json"
-				}
+		if (!order) {
+			throw error(404, {
+				message: "order not found"
 			});
 		}
 
-		const orders = tableData;
-
-		const jsonString = JSON.stringify({ orders });
-
-		return new Response(jsonString, {
+		return new Response(JSON.stringify({ order }), {
 			headers: {
 				"Content-Type": "application/json"
 			}
 		});
-	} catch (errorResponse) {
-		console.log(errorResponse);
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
-		});
 	}
+
+	return new Response(JSON.stringify(tableData), {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request, url, fetch }) => {
-	const sessionId = url.searchParams.get("session_id");
-	const orderId = url.searchParams.get("order_id");
+export const PUT = async ({ url, fetch, request }) => {
+	const accessToken = request.headers.get("x-access-token");
+	const {
+		id,
+		customer,
+		shippingAddress,
+		items,
+		paymentMethod,
+		shippingMethod,
+		subtotal,
+		total,
+		createdAt,
+		status
+	} = await request.json();
 
-	if (!sessionId) {
-		return new Response(JSON.stringify({ error: "missing session_id" }), {
-			headers: {
-				"Content-Type": "application/json"
-			},
-			status: 400
+	if (!accessToken) {
+		throw error(401, {
+			message: "unauthorized"
 		});
 	}
-	if (!orderId) {
-		return new Response(JSON.stringify({ error: "missing order_id" }), {
-			headers: {
-				"Content-Type": "application/json"
-			},
-			status: 400
+
+	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+	if (!decodedIdToken || decodedIdToken.role !== adminRole) {
+		throw error(401, {
+			message: "unauthorized"
 		});
 	}
-
-	const stripeResponse = await fetch(`/api/stripe/retrieve-payment?session_id=${sessionId}`, {
-		method: "GET"
-	});
-
-	const stripeData = await stripeResponse.json();
-
-	const status = stripeData.payment_status;
 
 	const timestamp = new Date();
 
-	await adminDB.collection(table).doc(orderId).update({
+	await adminDB.collection(table).doc(id).update({
+		customer,
+		shippingAddress,
+		items,
+		paymentMethod,
+		shippingMethod,
+		subtotal,
+		total,
+		createdAt,
 		status,
 		updatedAt: timestamp
 	});
 
-	const tableSnapshot = await adminDB.collection(table).get();
-
-	const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-	const order: Order = tableData.find((order) => order.id === orderId) as Order;
-
-	return new Response(
-		JSON.stringify({ status, items: order.items, shippingMethod: order.shippingMethod }),
-		{
-			headers: {
-				"Content-Type": "application/json"
-			}
-		}
-	);
+	return new Response();
 };
 
 // DELETE

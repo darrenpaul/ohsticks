@@ -59,8 +59,8 @@
 
 		<div class="--list">
 			{#if $cart?.cartItems}
-				{#each $cart?.cartItems as cartItem (cartItem.id)}
-					<CartMenuItem {cartItem} />
+				{#each $cart?.cartItems as cartItem, index}
+					<CartMenuItem {cartItem} {index} />
 				{/each}
 			{/if}
 		</div>

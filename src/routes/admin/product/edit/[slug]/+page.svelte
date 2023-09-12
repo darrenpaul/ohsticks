@@ -11,12 +11,14 @@
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { adminRole } from "$lib/constants/roles";
 	import { error } from "@sveltejs/kit";
+	import { brandName } from "$lib/constants/site.js";
 
 	export let data;
 	let product = data.body.product;
 
 	let name = product?.name || "";
 	let slug = product?.slug || "";
+	let brand = product?.brand || brandName;
 	let categories = product?.categories.join(", ") || "";
 	let description = product?.description || "";
 	let contentSections: ContentSection[] = product?.contentSections || [];
@@ -54,6 +56,7 @@
 				id: product.id,
 				name,
 				slug,
+				brand,
 				categories: categories.split(",").map((category) => category.trim()),
 				description,
 				contentSections,
@@ -98,7 +101,7 @@
 
 <p>Update Product</p>
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
-	<ProductCreateInformation bind:name bind:slug bind:categories bind:description />
+	<ProductCreateInformation bind:name bind:slug bind:brand bind:categories bind:description />
 
 	<!-- CONTENT SECTIONS -->
 	<ProductCreateContentSections bind:contentSections />

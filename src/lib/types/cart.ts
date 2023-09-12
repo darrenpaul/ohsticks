@@ -3,6 +3,8 @@ export type CartItem = {
 	id: string;
 	name: string;
 	description: string;
+	slug: string;
+	brand: string;
 	price: string;
 	quantity: number;
 	image: Image;

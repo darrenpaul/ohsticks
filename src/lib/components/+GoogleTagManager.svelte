@@ -12,3 +12,16 @@
 		})(window, document, "script", "dataLayer", "GTM-N7QQ97Z8");
 	</script>
 </svelte:head>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+	<iframe
+		title="Google Tag Manager"
+		src="https://www.googletagmanager.com/ns.html?id=GTM-N7QQ97Z8"
+		height="0"
+		width="0"
+		style="display: none; visibility: hidden"
+	>
+	</iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->

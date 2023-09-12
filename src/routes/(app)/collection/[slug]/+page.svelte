@@ -6,6 +6,7 @@
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import { siteUrl } from "$lib/constants/site.js";
+	import { viewItemListEvent } from "$lib/utils/googleTagManager.js";
 
 	export let data;
 
@@ -16,9 +17,14 @@
 	$: {
 		if (data.body.products) {
 			products = data.body.products;
+			track();
 		}
 		pageUrl = `${$page.url}`;
 	}
+
+	const track = () => {
+		viewItemListEvent(products);
+	};
 </script>
 
 <div class="collection-page">
@@ -27,8 +33,8 @@
 	</h2>
 
 	<div class="--list">
-		{#each products as product}
-			<ProductListCard {product} />
+		{#each products as product, index}
+			<ProductListCard {product} {index} />
 		{/each}
 	</div>
 </div>

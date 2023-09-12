@@ -17,8 +17,8 @@
 	<h2 class="--heading">{title}</h2>
 
 	<div class="--list">
-		{#each products as product}
-			<ProductListCard {product} />
+		{#each products as product, index}
+			<ProductListCard {product} {index} />
 		{/each}
 	</div>
 

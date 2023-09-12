@@ -11,9 +11,11 @@
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { adminRole } from "$lib/constants/roles";
 	import { error } from "@sveltejs/kit";
+	import { brandName } from "$lib/constants/site";
 
 	let name: string;
 	let slug = "";
+	let brand = brandName;
 	let categories = "";
 	let description = "";
 	let contentSections: ContentSection[] = [];
@@ -50,6 +52,7 @@
 			body: JSON.stringify({
 				name,
 				slug,
+				brand,
 				categories: categories.split(",").map((category) => category.trim()),
 				description,
 				contentSections,
@@ -94,7 +97,7 @@
 <p>Create Product</p>
 
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
-	<ProductCreateInformation bind:name bind:slug bind:categories bind:description />
+	<ProductCreateInformation bind:name bind:slug bind:brand bind:categories bind:description />
 
 	<!-- CONTENT SECTIONS -->
 	<ProductCreateContentSections bind:contentSections />

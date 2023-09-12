@@ -33,14 +33,6 @@ export const POST = async ({ fetch, request }) => {
 			postalCode,
 			country
 		},
-		billingAddress: {
-			address1,
-			address2,
-			city,
-			state: province,
-			postalCode,
-			country
-		},
 		status: created,
 		paymentMethod,
 		shippingMethod,
