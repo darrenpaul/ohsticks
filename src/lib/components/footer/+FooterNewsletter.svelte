@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { _ as trans } from "svelte-i18n";
 	import SendMessageIcon from "$lib/components/icons/+SendMessageIcon.svelte";
+	import { newsletterSignupEvent } from "$lib/utils/googleTagManager";
 
 	let newsletterEmail: string = "";
 
@@ -16,6 +17,8 @@
 				...values
 			})
 		});
+
+		newsletterSignupEvent();
 
 		newsletterEmail = "";
 		form.reset();

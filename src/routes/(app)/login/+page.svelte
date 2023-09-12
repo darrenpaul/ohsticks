@@ -26,6 +26,7 @@
 	}
 
 	const handleFormSubmit = async () => {
+		track();
 		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
 	};
 

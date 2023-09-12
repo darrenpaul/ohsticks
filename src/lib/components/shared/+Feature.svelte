@@ -2,10 +2,6 @@
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import { _ as trans } from "svelte-i18n";
-
-	const track = () => {
-		dataLayer.push({ event: "viewAllProducts" });
-	};
 </script>
 
 <div class="feature">
@@ -22,7 +18,7 @@
 		</h2>
 
 		<div class="--button-wrapper">
-			<a href={collectionAllRoute.path} on:click={track}>
+			<a href={collectionAllRoute.path}>
 				<ButtonIcon>
 					{$trans("component.productList.collection")}
 				</ButtonIcon>

@@ -15,7 +15,13 @@ const formatProductCategories = (categories: string[]) => {
 	return grouped.reduce((a, b) => Object.assign(a, b), {});
 };
 
-const trackEvent = (event: string, eventData) => {
+const trackBasicEvent = (event: string) => {
+	dataLayer.push({
+		event: event
+	});
+};
+
+const trackEcommerceEvent = (event: string, eventData) => {
 	dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
 	dataLayer.push({
 		event: event,
@@ -46,7 +52,7 @@ export const addToCartEvent = (product: Product) => {
 		}
 	};
 
-	trackEvent("add_to_cart", eventData);
+	trackEcommerceEvent("add_to_cart", eventData);
 };
 
 export const removeFromCartEvent = (cartItem: CartItem, index: number) => {
@@ -72,7 +78,7 @@ export const removeFromCartEvent = (cartItem: CartItem, index: number) => {
 		}
 	};
 
-	trackEvent("remove_from_cart", eventData);
+	trackEcommerceEvent("remove_from_cart", eventData);
 };
 
 export const viewCartEvent = (cartItems: CartItem[]) => {
@@ -99,7 +105,7 @@ export const viewCartEvent = (cartItems: CartItem[]) => {
 		}
 	};
 
-	trackEvent("view_cart", eventData);
+	trackEcommerceEvent("view_cart", eventData);
 };
 
 export const selectItemEvent = (product: Product, index: number) => {
@@ -125,7 +131,7 @@ export const selectItemEvent = (product: Product, index: number) => {
 		}
 	};
 
-	trackEvent("select_item", eventData);
+	trackEcommerceEvent("select_item", eventData);
 };
 
 export const viewItemEvent = (product: Product) => {
@@ -151,7 +157,7 @@ export const viewItemEvent = (product: Product) => {
 		}
 	};
 
-	trackEvent("view_item", eventData);
+	trackEcommerceEvent("view_item", eventData);
 };
 
 export const viewItemListEvent = (products: Product[]) => {
@@ -175,7 +181,7 @@ export const viewItemListEvent = (products: Product[]) => {
 		}
 	};
 
-	trackEvent("view_item_list", eventData);
+	trackEcommerceEvent("view_item_list", eventData);
 };
 
 export const checkoutEvent = (cartItems: CartItem[]) => {
@@ -203,7 +209,7 @@ export const checkoutEvent = (cartItems: CartItem[]) => {
 		}
 	};
 
-	trackEvent("begin_checkout", eventData);
+	trackEcommerceEvent("begin_checkout", eventData);
 };
 
 export const purchaseEvent = (orderId: string, orderItems: OrderItem[], shipping: number) => {
@@ -234,5 +240,9 @@ export const purchaseEvent = (orderId: string, orderItems: OrderItem[], shipping
 		}
 	};
 
-	trackEvent("purchase", eventData);
+	trackEcommerceEvent("purchase", eventData);
+};
+
+export const newsletterSignupEvent = () => {
+	trackBasicEvent("newsletter_signup");
 };

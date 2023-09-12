@@ -7,10 +7,6 @@
 
 	export let title: string = "Product List";
 	export let products: Product[];
-
-	const track = () => {
-		dataLayer.push({ event: "viewAllProducts" });
-	};
 </script>
 
 <div class="product-list">
@@ -23,7 +19,7 @@
 	</div>
 
 	<div class="--button-wrapper">
-		<a href={collectionAllRoute.path} on:click={track}>
+		<a href={collectionAllRoute.path}>
 			<ButtonIcon>
 				{$trans("component.productList.collection")}
 			</ButtonIcon>
