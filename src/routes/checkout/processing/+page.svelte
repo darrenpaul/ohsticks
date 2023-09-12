@@ -24,6 +24,7 @@
 
 		if (status === "paid") {
 			track(orderId, items, Number(shippingMethod.price));
+
 			setTimeout(function () {
 				window.location.replace(`${accountOrderRoute.path}/${orderId}`);
 			}, 2000);

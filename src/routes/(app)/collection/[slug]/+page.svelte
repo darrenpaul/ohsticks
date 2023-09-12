@@ -7,6 +7,7 @@
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import { siteUrl } from "$lib/constants/site.js";
 	import { viewItemListEvent } from "$lib/utils/googleTagManager.js";
+	import { browser } from "$app/environment";
 
 	export let data;
 
@@ -17,7 +18,10 @@
 	$: {
 		if (data.body.products) {
 			products = data.body.products;
-			track();
+
+			if (browser) {
+				track();
+			}
 		}
 		pageUrl = `${$page.url}`;
 	}

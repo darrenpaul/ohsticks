@@ -45,7 +45,9 @@
 			product = data.body.product;
 			relatedProducts = data.body.relatedProducts as Product[];
 
-			track();
+			if (browser) {
+				track();
+			}
 		}
 	}
 
