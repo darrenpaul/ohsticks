@@ -6,6 +6,9 @@
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
 
+	/** @type {import('./$types').PageData} */
+	export let data;
+
 	const cartState = writable(false);
 
 	if (browser) {
@@ -13,7 +16,7 @@
 	}
 </script>
 
-{#if browser}
+{#if data}
 	<Navigation />
 
 	<div class="page">

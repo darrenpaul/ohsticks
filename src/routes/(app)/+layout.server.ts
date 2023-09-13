@@ -3,8 +3,8 @@ import { findCountryCurrency } from "$lib/constants/shippingCountries.js";
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, getClientAddress, cookies }) {
 	const clientAddress = getClientAddress();
-	console.log("load ~ clientAddress:", clientAddress);
 	// const clientAddress = "185.108.105.72";
+	console.log("load ~ clientAddress:", clientAddress);
 
 	let currency = cookies.get("currency");
 

@@ -6,8 +6,20 @@ const table = "product";
 /** @type {import('./$types').RequestHandler} */
 export const GET = async ({ url }) => {
 	const currency = url.searchParams.get("currency") || "eur";
+	const slug = url.searchParams.get("slug");
 
-	const tableSnapshot = await adminDB.collection(table).where("visible", "==", true).get();
+	let tableSnapshot;
+
+	if (slug) {
+		tableSnapshot = await adminDB
+			.collection(table)
+			.where("slug", "==", slug)
+			.where("visible", "==", true)
+			.get();
+	} else {
+		tableSnapshot = await adminDB.collection(table).where("visible", "==", true).get();
+	}
+
 	// const tableSnapshot = slug
 	// 	? await adminDB.collection(table).where("slug", "==", slug).where("visible", "==", true).get()
 	// 	: await adminDB.collection(table).where("visible", "==", true).get();
