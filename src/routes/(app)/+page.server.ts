@@ -4,19 +4,16 @@ import { findCountryCurrency } from "$lib/constants/shippingCountries.js";
 export async function load({ fetch, getClientAddress, cookies }) {
 	const clientAddress = getClientAddress();
 	// const clientAddress = "185.108.105.72";
-	let currency = cookies.get("currency");
 
-	if (!currency) {
-		console.log("load ~ currency:", currency);
-		const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
-		const { countryData } = await countryResponse.json();
-		const isoCode: string = countryData?.isoCode || "AT";
+	const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
+	const { countryData } = await countryResponse.json();
+	const isoCode: string = countryData?.isoCode || "AT";
 
-		const currencyCode = findCountryCurrency(isoCode);
-		console.log("load ~ countryData:", isoCode);
-		cookies.set("currency", currencyCode);
-		currency = currencyCode;
-	}
+	const currencyCode = findCountryCurrency(isoCode);
+	console.log("load ~ countryData:", isoCode);
+	cookies.set("currency", currencyCode);
+
+	const currency = currencyCode;
 
 	const queries = [{ key: "currency", value: currency }];
 	const queryString = queries.map((query) => `${query.key}=${query.value}`).join("&");
