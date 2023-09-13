@@ -3,13 +3,16 @@ import { findCountryCurrency } from "$lib/constants/shippingCountries.js";
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch, getClientAddress, cookies }) {
 	const clientAddress = getClientAddress();
+	console.log("load ~ clientAddress:", clientAddress);
 	// const clientAddress = "185.108.105.72";
 
 	const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
 	const { countryData } = await countryResponse.json();
 	const isoCode: string = countryData?.isoCode || "AT";
+	console.log("load ~ isoCode:", isoCode);
 
 	const currencyCode = findCountryCurrency(isoCode);
+	console.log("load ~ currencyCode:", currencyCode);
 	console.log("load ~ countryData:", isoCode);
 	cookies.set("currency", currencyCode);
 
