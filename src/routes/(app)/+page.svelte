@@ -10,7 +10,8 @@
 	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute.js";
 	import { trans } from "$lib/locales/translateCopy";
 
-	export let data;
+	export /** @type {import('./$types').PageData} */
+	let data;
 
 	let products: Product[] = data.products;
 	let pageData = data.pageData.find((page) => page.slug === "home");
