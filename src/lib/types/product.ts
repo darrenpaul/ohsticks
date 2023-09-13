@@ -118,7 +118,7 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			currencyPrice
 		} = product;
 
-		const productPrice = currencyPrice[currency] ? currencyPrice[currency].price : 99;
+		const productPrice = currencyPrice[currency].price;
 
 		const newProduct: Product = {
 			id,

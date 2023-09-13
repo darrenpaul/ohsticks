@@ -13,10 +13,10 @@ export default (value: number | string, currencyISO = "eur") => {
 		});
 	}
 
-	if (currencyISO === "zar") {
-		currencyFormatter = Intl.NumberFormat("en-ZA", {
+	if (currencyISO === "gbp") {
+		currencyFormatter = Intl.NumberFormat("en-GB", {
 			style: "currency",
-			currency: "ZAR"
+			currency: "GBP"
 		});
 	}
 
