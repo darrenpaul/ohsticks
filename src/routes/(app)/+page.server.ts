@@ -24,5 +24,3 @@ export async function load({ fetch }) {
 		title: "Home"
 	};
 }
-
-export const prerender = "auto";

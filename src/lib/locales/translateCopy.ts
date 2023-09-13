@@ -8,7 +8,7 @@ type Values = {
 	[key: string]: string | number;
 };
 
-export const trans = (key: string, values: Values) => {
+export const trans = (key: string, values: Values | null = null) => {
 	const translation = findTranslation(key);
 	if (!translation) return key;
 	return fillInValues(translation, values);
@@ -43,7 +43,7 @@ const digForTranslation = (keyPieces: string[], localeData: Data): string | unde
 	}
 };
 
-const fillInValues = (translation: string, values: Values) => {
+const fillInValues = (translation: string, values: Values | null) => {
 	let filledInTranslation: string = translation;
 	if (values) {
 		Object.entries(values).forEach(([key, value]) => {
