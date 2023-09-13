@@ -4,7 +4,12 @@ import type { Product } from "$lib/types/product";
 export async function load({ params, fetch }) {
 	const slug = params.slug;
 
-	const response = await fetch("/api/product", {
+	const queries = [{ key: "currency", value: "zar" }];
+	const queryString = queries.map((query) => `${query.key}=${query.value}`).join("&");
+
+	const url = `/api/product?${queryString}`;
+
+	const response = await fetch(url, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"

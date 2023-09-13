@@ -14,6 +14,25 @@ export type Product = {
 	brand: string;
 };
 
+export type ProductResponse = {
+	id: string;
+	name: string;
+	slug: string;
+	categories: string[];
+	description: string;
+	contentSections: ContentSection[];
+	price: number;
+	quantity: number;
+	visible: boolean;
+	featureImage: Image;
+	images: Image[];
+	meta: meta;
+	brand: string;
+	currencyPrice: CurrencyPrice;
+	updatedAt: number;
+	createdAt: number;
+};
+
 export type Image = {
 	alt: string;
 	src: string;
@@ -64,4 +83,58 @@ export type ProductCreate = {
 	images: Image[];
 	meta: meta;
 	brand: string;
+	currencyPrice: CurrencyPrice;
+};
+
+export type CurrencyPrice = {
+	[key: string]: Price;
+};
+
+export type Price = {
+	currency: string;
+	purchasePrice: number;
+	markupPercentage: number;
+	price: number;
+};
+
+export const createProducts = (products: ProductResponse[], currency = "eur") => {
+	products.sort((a, b) => b.createdAt - a.createdAt);
+
+	const cleanProducts = products.map((product) => {
+		const {
+			id,
+			name,
+			slug,
+			categories,
+			description,
+			contentSections,
+			quantity,
+			visible,
+			featureImage,
+			images,
+			meta,
+			brand,
+			currencyPrice
+		} = product;
+
+		const productPrice = currencyPrice[currency] ? currencyPrice[currency].price : 99;
+
+		return {
+			id,
+			name,
+			slug,
+			categories,
+			description,
+			contentSections,
+			quantity,
+			visible,
+			featureImage,
+			images,
+			meta,
+			brand,
+			price: productPrice
+		};
+	});
+
+	return cleanProducts;
 };

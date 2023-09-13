@@ -43,6 +43,7 @@
 	$: {
 		if (data.body.product) {
 			product = data.body.product;
+			console.log("product:", product);
 			relatedProducts = data.body.relatedProducts as Product[];
 
 			if (browser) {

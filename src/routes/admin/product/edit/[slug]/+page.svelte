@@ -25,6 +25,7 @@
 	let purchasePrice: number = product?.purchasePrice || 0;
 	let markupPercentage = product?.markupPercentage || 25;
 	let price: string = product?.price || "";
+	let currencyPrice = product?.currencyPrice || {};
 	let quantity = product?.quantity || 10;
 	let visible = product?.visible || false;
 	let featureImage: Image[] = [product?.featureImage] || [];
@@ -57,12 +58,10 @@
 				name,
 				slug,
 				brand,
-				categories: categories.split(",").map((category) => category.trim()),
+				categories: categories.split(",").map((category: string) => category.trim()),
 				description,
 				contentSections,
-				purchasePrice,
-				markupPercentage,
-				price,
+				currencyPrice,
 				quantity,
 				visible,
 				featureImage: featureImage[0] || "",
@@ -93,20 +92,21 @@
 			return;
 		}
 
-		[...featureImage, ...productImages, ...openGraphImages, ...twitterImage].forEach((image) =>
-			deleteImage(image.src)
-		);
+		// [...featureImage, ...productImages, ...openGraphImages, ...twitterImage].forEach((image) =>
+		// 	deleteImage(image.src)
+		// );
 	};
 </script>
 
 <p>Update Product</p>
+
 <form class="product-form" on:submit|preventDefault={handleFormSubmit}>
 	<ProductCreateInformation bind:name bind:slug bind:brand bind:categories bind:description />
 
 	<!-- CONTENT SECTIONS -->
 	<ProductCreateContentSections bind:contentSections />
 
-	<ProductCreatePrice bind:purchasePrice bind:markupPercentage bind:price />
+	<ProductCreatePrice bind:currencyPrice />
 
 	<!-- QUANTITY -->
 	<div class="input-group">

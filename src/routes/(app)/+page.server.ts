@@ -1,5 +1,6 @@
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ fetch }) {
+export async function load({ fetch, getClientAddress }) {
+	console.log("apples", getClientAddress());
 	const productResponse = await fetch("/api/product", {
 		method: "GET",
 		headers: {
@@ -20,7 +21,6 @@ export async function load({ fetch }) {
 
 	return {
 		products,
-		pageData,
-		title: "Home"
+		pageData
 	};
 }

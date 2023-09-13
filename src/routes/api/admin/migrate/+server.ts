@@ -1,8 +1,6 @@
 import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { error, type HttpError } from "@sveltejs/kit";
 import { adminRole } from "$lib/constants/roles";
-import { app } from "$lib/firebase/firebaseClient";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
 import type { Product } from "$lib/types/product";
 
 const table = "product";
@@ -36,33 +34,29 @@ export const PUT = async ({ request }) => {
 		});
 	}
 
-	// GET ALL PRODUCTS FROM FIRESTORE
-	const db = getFirestore(app);
-	const tableCollection = collection(db, table);
-	const tableSnapshot = await getDocs(tableCollection);
-
-	const payload = (await tableSnapshot.docs.map((doc) => ({
+	const tableSnapshot = await adminDB.collection(table).get();
+	const products: Product[] = tableSnapshot.docs.map((doc) => ({
 		id: doc.id,
 		...doc.data()
-	}))) as Product[];
+	})) as Product[];
 
-	const newProductStructure = payload.map((product: Product) => {
+	const newProductStructure = products.map((product: Product) => {
 		return {
 			...product,
-			featureImage: {
-				src: product.featureImage,
-				alt: "",
-				width: 800,
-				height: 800
-			},
-			images: product.images.map((image) => {
-				return {
-					src: image,
-					alt: "",
-					width: 800,
-					height: 800
-				};
-			})
+			currencyPrice: {
+				eur: {
+					currency: "eur",
+					purchasePrice: product.purchasePrice,
+					markupPercentage: product.markupPercentage,
+					price: product.price
+				},
+				zar: {
+					currency: "zar",
+					purchasePrice: product.purchasePrice * 10,
+					markupPercentage: product.markupPercentage,
+					price: product.price
+				}
+			}
 		};
 	});
 

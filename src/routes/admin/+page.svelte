@@ -9,7 +9,7 @@
 			return error(401, "Unauthorized");
 		}
 
-		await fetch("/api/migrate", {
+		await fetch("/api/admin/migrate", {
 			method: "PUT",
 			headers: {
 				"x-access-token": accessToken

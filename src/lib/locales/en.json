@@ -250,6 +250,12 @@
 					"label": "Delete"
 				}
 			},
+			"currencyPrices": {
+				"label": "Currency Prices"
+			},
+			"currency": {
+				"label": "Currency"
+			},
 			"purchasePrice": {
 				"label": "Purchase Price",
 				"placeholder": "Enter product purchase price"
@@ -297,6 +303,9 @@
 			},
 			"searchKeywords": {
 				"label": "Prompt Search Keywords"
+			},
+			"create": {
+				"label": "Create"
 			}
 		},
 		"checkout": {

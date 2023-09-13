@@ -51,7 +51,6 @@
 		const form = event.target as HTMLFormElement;
 		const formData = new FormData(form);
 		const values = Object.fromEntries(formData.entries());
-		console.log("handleSubmit ~ values:", values);
 
 		const accessToken = await $user?.getIdToken();
 
@@ -72,6 +71,9 @@
 
 <form on:submit={handleSubmit} class="account-update-user-information">
 	<h4>{trans("page.account.userInformation.label")}</h4>
+
+	<p>{$user?.email}</p>
+	<p>{$user?.role}</p>
 
 	<div class="--group-2">
 		<!-- FIRST NAME -->
