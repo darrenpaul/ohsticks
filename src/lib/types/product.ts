@@ -12,6 +12,7 @@ export type Product = {
 	images: Image[];
 	meta: meta;
 	brand: string;
+	currency: string;
 };
 
 export type ProductResponse = {
@@ -119,7 +120,7 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 
 		const productPrice = currencyPrice[currency] ? currencyPrice[currency].price : 99;
 
-		return {
+		const newProduct: Product = {
 			id,
 			name,
 			slug,
@@ -132,8 +133,10 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			images,
 			meta,
 			brand,
-			price: productPrice
+			price: productPrice,
+			currency: currencyPrice[currency].currency
 		};
+		return newProduct;
 	});
 
 	return cleanProducts;

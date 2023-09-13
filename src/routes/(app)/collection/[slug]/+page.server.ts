@@ -1,33 +1,37 @@
+import { findCountryCurrency } from "$lib/constants/shippingCountries";
 import type { Product } from "$lib/types/product";
 
-// import { adminDB } from "$lib/server/firebaseAdminClient";
-// export const prerender = true;
-// /** @type {import('./$types').EntryGenerator} */
-// export async function entries() {
-// 	// This is used to generate the static pages based all the categories in the database
-// 	const table = "product";
-// 	const tableSnapshot = await adminDB.collection(table).where("visible", "==", true).get();
-// 	const products: Product[] = tableSnapshot.docs.map((doc) => ({
-// 		id: doc.id,
-// 		...doc.data()
-// 	})) as Product[];
-// 	const categories = products.map((product) => product.categories).flat();
-// 	const removedDuplicates = [...new Set(categories)];
-// 	const entries = removedDuplicates.map((slug) => ({ slug: slug.replaceAll(" ", "-") }));
-
-// 	return [{ slug: "all" }, ...entries];
-// }
-
 /** @type {import('./$types').PageLoad} */
-export async function load({ params, fetch }) {
+export async function load({ params, fetch, cookies, getClientAddress }) {
 	const slug = params.slug;
 
-	const response = await fetch("/api/product", {
+	const clientAddress = getClientAddress();
+	// const clientAddress = "185.108.105.72";
+	let currency = cookies.get("currency");
+
+	if (!currency) {
+		console.log("load ~ currency:", currency);
+		const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
+		const { countryData } = await countryResponse.json();
+		const isoCode: string = countryData?.isoCode || "AT";
+
+		const currencyCode = findCountryCurrency(isoCode);
+		console.log("load ~ countryData:", isoCode);
+		cookies.set("currency", currencyCode);
+		currency = currencyCode;
+	}
+
+	const queries = [{ key: "currency", value: currency }];
+	const queryString = queries.map((query) => `${query.key}=${query.value}`).join("&");
+	const url = `/api/product?${queryString}`;
+
+	const response = await fetch(url, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		}
 	});
+
 	const products = await response.json();
 	const filteredProducts = products.filter(
 		(product: Product) => slug === "all" || product.categories.includes(slug)

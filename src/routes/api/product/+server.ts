@@ -5,7 +5,7 @@ const table = "product";
 // LIST
 /** @type {import('./$types').RequestHandler} */
 export const GET = async ({ url }) => {
-	const currency = url.searchParams.currency ? url.searchParams.get("currency") : "eur";
+	const currency = url.searchParams.get("currency") || "eur";
 
 	const tableSnapshot = await adminDB.collection(table).where("visible", "==", true).get();
 	// const tableSnapshot = slug

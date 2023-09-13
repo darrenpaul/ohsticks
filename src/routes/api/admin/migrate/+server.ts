@@ -46,15 +46,21 @@ export const PUT = async ({ request }) => {
 			currencyPrice: {
 				eur: {
 					currency: "eur",
-					purchasePrice: product.purchasePrice,
-					markupPercentage: product.markupPercentage,
-					price: product.price
+					purchasePrice: 1,
+					markupPercentage: 0.5,
+					price: Number(1 * (1 + 50 / 100)).toFixed(2)
+				},
+				usd: {
+					currency: "usd",
+					purchasePrice: 1,
+					markupPercentage: 0.5,
+					price: Number(1 * (1 + 50 / 100)).toFixed(2)
 				},
 				zar: {
 					currency: "zar",
-					purchasePrice: product.purchasePrice * 10,
-					markupPercentage: product.markupPercentage,
-					price: product.price
+					purchasePrice: 5,
+					markupPercentage: 100,
+					price: Number(5 * (1 + 100 / 100)).toFixed(2)
 				}
 			}
 		};

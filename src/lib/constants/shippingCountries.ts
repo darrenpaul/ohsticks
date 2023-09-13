@@ -61,6 +61,7 @@ const australia = {
 const austria = {
 	name: "Austria",
 	isoCode: "AT",
+	currency: "eur",
 	states: [
 		{
 			name: "Burgenland",
@@ -412,6 +413,7 @@ const saudiArabia = {
 const southAfrica = {
 	name: "South Africa",
 	isoCode: "ZA",
+	currency: "zar",
 	states: [
 		{
 			name: "Eastern Cape",
@@ -542,6 +544,7 @@ const sweden = {
 const unitedKingdom = {
 	name: "United Kingdom",
 	isoCode: "GB",
+	currency: "gbp",
 	states: [
 		{
 			name: "Aberdeen",
@@ -1537,6 +1540,7 @@ const unitedKingdom = {
 const unitedStates = {
 	name: "United States",
 	isoCode: "US",
+	currency: "usd",
 	states: [
 		{
 			name: "Alabama",
@@ -1814,6 +1818,14 @@ export const shippingCountries = [
 	// saudiArabia,
 	southAfrica,
 	// sweden,
-	unitedKingdom
-	// unitedStates
+	unitedKingdom,
+	unitedStates
 ];
+
+export const findCountryCurrency = (countryIsoCode: string) => {
+	const country = shippingCountries.find((country) => country.isoCode === countryIsoCode);
+	if (country) {
+		return country.currency;
+	}
+	return "eur";
+};
