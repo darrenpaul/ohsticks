@@ -127,7 +127,6 @@ export const PUT = async ({ request }) => {
 
 	await adminDB.collection(table).doc(id).update({
 		name,
-		name,
 		slug,
 		brand,
 		categories,
