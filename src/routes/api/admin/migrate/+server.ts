@@ -56,6 +56,12 @@ export const PUT = async ({ request }) => {
 					markupPercentage: 0.5,
 					price: Number(1 * (1 + 50 / 100)).toFixed(2)
 				},
+				gbp: {
+					currency: "gbp",
+					purchasePrice: 1,
+					markupPercentage: 0.5,
+					price: Number(1 * (1 + 50 / 100)).toFixed(2)
+				},
 				zar: {
 					currency: "zar",
 					purchasePrice: 5,
