@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ContentSection } from "$lib/types/product";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let contentSections: ContentSection[] = [];
 
@@ -21,10 +21,10 @@
 
 <div class="product-create-content-sections">
 	<div class="--header">
-		<h4>{$trans("form.createProduct.contentSection.label")}</h4>
+		<h4>{trans("form.createProduct.contentSection.label")}</h4>
 
 		<button on:click|preventDefault={onCreateContentSection} class="slim-button">
-			{$trans("form.createProduct.contentSection.create.label")}
+			{trans("form.createProduct.contentSection.create.label")}
 		</button>
 	</div>
 
@@ -40,7 +40,7 @@
 			/>
 
 			<label class="floating-label" for="contentSection-{index}">
-				{$trans("form.createProduct.contentSection.title.label")}
+				{trans("form.createProduct.contentSection.title.label")}
 			</label>
 		</div>
 
@@ -54,11 +54,11 @@
 			/>
 
 			<label class="floating-label" for="contentSection-{index}">
-				{$trans("form.createProduct.contentSection.content.label")}
+				{trans("form.createProduct.contentSection.content.label")}
 			</label>
 
 			<button class="slim-button" on:click|preventDefault={() => onDeleteContentSection(index)}>
-				{$trans("form.createProduct.contentSection.delete.label")}
+				{trans("form.createProduct.contentSection.delete.label")}
 			</button>
 		</div>
 	{/each}

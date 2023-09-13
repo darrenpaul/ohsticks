@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { auth } from "$lib/firebase/firebaseClient";
 	import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	let password: string = "";
 	let newPassword: string = "";
@@ -25,7 +25,7 @@
 </script>
 
 <form class="account-update-user-password" on:submit|preventDefault={handleFormSubmit}>
-	<h4>{$trans("page.account.userInformation.label")}</h4>
+	<h4>{trans("page.account.userInformation.label")}</h4>
 
 	<!-- FIRST NAME -->
 	<div class="input-group">
@@ -39,7 +39,7 @@
 			required
 		/>
 		<label class="floating-label" for="password"
-			>{$trans("page.account.currentPassword.label")}</label
+			>{trans("page.account.currentPassword.label")}</label
 		>
 	</div>
 
@@ -55,11 +55,11 @@
 			required
 		/>
 		<label class="floating-label" for="newPassword">
-			{$trans("page.account.newPassword.label")}
+			{trans("page.account.newPassword.label")}
 		</label>
 	</div>
 
-	<button class="slim-button">{$trans("page.account.update.label")}</button>
+	<button class="slim-button">{trans("page.account.update.label")}</button>
 </form>
 
 <style lang="scss">

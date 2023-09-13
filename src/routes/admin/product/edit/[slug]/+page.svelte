@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { user } from "$lib/firebase/firebaseClient";
 	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
 	import ProductCreateSeoForm from "$lib/components/admin/product/+ProductCreateSeoForm.svelte";
 	import ProductCreateContentSections from "$lib/components/admin/product/+ProductCreateContentSections.svelte";
@@ -119,13 +119,13 @@
 			placeholder=""
 		/>
 		<label class="floating-label" for="quantity">
-			{$trans("form.createProduct.quantity.label")}
+			{trans("form.createProduct.quantity.label")}
 		</label>
 	</div>
 
 	<!-- VISIBLE -->
 	<div class="input-group">
-		<label for="visible">{$trans("form.createProduct.visible.label")}</label>
+		<label for="visible">{trans("form.createProduct.visible.label")}</label>
 		<input type="checkbox" id="visible" name="visible" bind:checked={visible} />
 	</div>
 
@@ -134,7 +134,7 @@
 		<div class="input-group">
 			<ImageUploadInput
 				elementId="featureImage"
-				label={$trans("form.createProduct.featureImage.label")}
+				label={trans("form.createProduct.featureImage.label")}
 				{name}
 				bind:images={featureImage}
 			/>
@@ -144,7 +144,7 @@
 		<div class="input-group">
 			<ImageUploadInput
 				elementId="productImages"
-				label={$trans("form.createProduct.productImages.label")}
+				label={trans("form.createProduct.productImages.label")}
 				multiple={true}
 				{name}
 				bind:images={productImages}

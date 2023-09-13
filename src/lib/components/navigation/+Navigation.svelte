@@ -8,7 +8,7 @@
 	import MenuOpenIcon from "$lib/components/icons/+MenuOpenIcon.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import CaretRightIcon from "$lib/components/icons/+CaretRightIcon.svelte";
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
 	import BrandIcon from "$lib/components/icons/+BrandIcon.svelte";
@@ -60,9 +60,9 @@
 			<div class="--mobile-menu">
 				<div class="--header">
 					<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)} class="--menu-button">
-						<MenuOpenIcon fill="fill-white" />{$trans("component.navigation.menu.label")}
+						<MenuOpenIcon fill="fill-white" />{trans("component.navigation.menu.label")}
 					</button>
-					<button class="--account-button">{$trans("component.navigation.account.label")}</button>
+					<button class="--account-button">{trans("component.navigation.account.label")}</button>
 				</div>
 
 				<div class="--links-mobile">

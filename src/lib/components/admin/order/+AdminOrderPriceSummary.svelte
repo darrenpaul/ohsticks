@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import type { Order } from "$lib/types/order";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
@@ -8,21 +8,21 @@
 
 <div class="admin-order-price-summary">
 	<div class="--group">
-		<p>{$trans("page.admin.shipping.label")}</p>
+		<p>{trans("page.admin.shipping.label")}</p>
 		<p>
 			<b>{addCurrencySymbol(Number(order.shippingMethod.price).toFixed(2))}</b>
 		</p>
 	</div>
 
 	<div class="--group">
-		<p>{$trans("page.admin.subtotal.label")}</p>
+		<p>{trans("page.admin.subtotal.label")}</p>
 		<p>
 			<b>{addCurrencySymbol(order.subtotal)}</b>
 		</p>
 	</div>
 
 	<div class="--group --total">
-		<h3>{$trans("page.admin.total.label")}</h3>
+		<h3>{trans("page.admin.total.label")}</h3>
 		<h3>
 			<b>{addCurrencySymbol(order.total)}</b>
 		</h3>

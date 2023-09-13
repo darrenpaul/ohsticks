@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import FooterNewsletter from "$lib/components/footer/+FooterNewsletter.svelte";
 	import Socials from "$lib/components/shared/+Socials.svelte";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
@@ -22,7 +22,7 @@
 			</a>
 
 			<p class="--company-description">
-				{$trans("component.footer.companyDescription.label")}
+				{trans("component.footer.companyDescription.label")}
 			</p>
 
 			<Socials />
@@ -30,7 +30,7 @@
 
 		<!-- SHOP -->
 		<div class="--row">
-			<h3>{$trans("component.footer.shop.label")}</h3>
+			<h3>{trans("component.footer.shop.label")}</h3>
 
 			{#each shopLinks as link}
 				<a href={link.path}>{link.label}</a>
@@ -53,7 +53,7 @@
 	</div>
 
 	<div class="--copyright-wrapper">
-		<p>{$trans("site.copyright")}</p>
+		<p>{trans("site.copyright")}</p>
 
 		<div>
 			<a href="/">Privacy Policy</a>

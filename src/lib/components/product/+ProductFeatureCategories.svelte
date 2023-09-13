@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { Product } from "$lib/types/product";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let product: Product;
 </script>
 
 <div class="product-feature-categories">
 	<p class="--title">
-		{$trans("component.productFeature.categories.label")}:
+		{trans("component.productFeature.categories.label")}:
 	</p>
 
 	{#each product.categories as category, index}

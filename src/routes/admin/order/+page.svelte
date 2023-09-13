@@ -4,7 +4,7 @@
 	import { onMount } from "svelte";
 	import type { Order } from "$lib/types/order";
 	import AdminOrderList from "$lib/components/admin/order/+AdminOrderList.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { delivered, paid, processing, shipped } from "$lib/constants/orderUpdate";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 
@@ -31,27 +31,27 @@
 
 <ContainWidth background={"bg-white"}>
 	<div class="admin-order-page">
-		<h2 class="--title">{$trans("page.admin.orders.label")}</h2>
+		<h2 class="--title">{trans("page.admin.orders.label")}</h2>
 
 		{#if orders}
 			<div class="--order-list">
 				<AdminOrderList
-					title={$trans("page.admin.readyToProcess.label")}
+					title={trans("page.admin.readyToProcess.label")}
 					orders={orders.filter((order) => order.status === paid)}
 				/>
 
 				<AdminOrderList
-					title={$trans("page.admin.readyToShip.label")}
+					title={trans("page.admin.readyToShip.label")}
 					orders={orders.filter((order) => order.status === processing)}
 				/>
 
 				<AdminOrderList
-					title={$trans("page.admin.shipped.label")}
+					title={trans("page.admin.shipped.label")}
 					orders={orders.filter((order) => order.status === shipped)}
 				/>
 
 				<AdminOrderList
-					title={$trans("page.admin.delivered.label")}
+					title={trans("page.admin.delivered.label")}
 					orders={orders.filter((order) => order.status === delivered)}
 				/>
 			</div>

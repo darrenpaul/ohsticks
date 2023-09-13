@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { MetaTags } from "svelte-meta-tags";
 	import { page } from "$app/stores";
 
@@ -40,9 +40,9 @@
 <div class="contact-page">
 	<form class="--form" on:submit|preventDefault={handleFormSubmit}>
 		<div class="--header">
-			<h1>{$trans("form.contact.title.label")}</h1>
+			<h1>{trans("form.contact.title.label")}</h1>
 
-			<p>{$trans("form.contact.description.label")}</p>
+			<p>{trans("form.contact.description.label")}</p>
 		</div>
 
 		<div class="--group-2">
@@ -57,7 +57,7 @@
 					placeholder=""
 					required
 				/>
-				<label class="floating-label" for="name">{$trans("form.contact.name.label")}</label>
+				<label class="floating-label" for="name">{trans("form.contact.name.label")}</label>
 			</div>
 
 			<!-- EMAIL -->
@@ -71,7 +71,7 @@
 					placeholder=""
 					required
 				/>
-				<label class="floating-label" for="email">{$trans("form.contact.email.label")}</label>
+				<label class="floating-label" for="email">{trans("form.contact.email.label")}</label>
 			</div>
 		</div>
 
@@ -86,7 +86,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.contact.subject.label")}</label>
+			<label class="floating-label" for="email">{trans("form.contact.subject.label")}</label>
 		</div>
 
 		<!-- MESSAGE -->
@@ -99,10 +99,10 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.contact.message.label")}</label>
+			<label class="floating-label" for="email">{trans("form.contact.message.label")}</label>
 		</div>
 
-		<button class="submit-button">{$trans("form.contact.submit.label")}</button>
+		<button class="submit-button">{trans("form.contact.submit.label")}</button>
 	</form>
 </div>
 

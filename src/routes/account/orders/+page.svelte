@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AccountOrdersList from "$lib/components/account/+AccountOrderList.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { browser } from "$app/environment";
 	import { user } from "$lib/firebase/firebaseClient";
 	import type { Order } from "$lib/types/order";
@@ -36,16 +36,16 @@
 	}
 </script>
 
-<h1>{$trans("page.account.orders.label")}</h1>
+<h1>{trans("page.account.orders.label")}</h1>
 
 <div class="account-order-lists">
 	<AccountOrdersList
-		title={$trans("page.account.upcomingOrders.label")}
+		title={trans("page.account.upcomingOrders.label")}
 		orders={orders.filter((order) => order.status === paid)}
 	/>
 
 	<AccountOrdersList
-		title={$trans("page.account.pastOrders.label")}
+		title={trans("page.account.pastOrders.label")}
 		orders={orders.filter((order) => order.status === delivered)}
 	/>
 </div>

@@ -2,7 +2,7 @@
 	import type { Product } from "$lib/types/product";
 	import { page } from "$app/stores";
 	import { MetaTags, JsonLd } from "svelte-meta-tags";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let product: Product;
 
@@ -52,7 +52,7 @@
 		sku: product.id,
 		brand: {
 			"@type": "Brand",
-			name: $trans("site.brandName")
+			name: trans("site.brandName")
 		},
 		review: [
 			// {

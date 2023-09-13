@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { shippingCountries } from "$lib/constants/shippingCountries";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
@@ -89,7 +89,7 @@
 		</a>
 	</div>
 
-	<h4>{$trans("form.checkout.contact.label")}</h4>
+	<h4>{trans("form.checkout.contact.label")}</h4>
 
 	<!-- EMAIL -->
 	<div class="input-group mb-8">
@@ -104,19 +104,19 @@
 				disabled={emailInputDisabled}
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.checkout.email.label")}</label>
+			<label class="floating-label" for="email">{trans("form.checkout.email.label")}</label>
 		{:else}
 			<p>{email}</p>
 		{/if}
 	</div>
 
-	<h4>{$trans("form.checkout.shippingAddress.label")}</h4>
+	<h4>{trans("form.checkout.shippingAddress.label")}</h4>
 
 	<!-- COUNTRY/REGION -->
 	<div class="input-group">
 		<select id="country" name="country" bind:value={country} placeholder="" required>
 			<option value={null} disabled selected>
-				{$trans("form.checkout.country.placeholder")}
+				{trans("form.checkout.country.placeholder")}
 			</option>
 
 			{#each shippingCountries as country}
@@ -124,7 +124,7 @@
 			{/each}
 		</select>
 
-		<label class="floating-label" for="country">{$trans("form.checkout.country.label")}</label>
+		<label class="floating-label" for="country">{trans("form.checkout.country.label")}</label>
 	</div>
 
 	<div class="--group-2">
@@ -139,8 +139,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="firstName">{$trans("form.checkout.firstName.label")}</label
-			>
+			<label class="floating-label" for="firstName">{trans("form.checkout.firstName.label")}</label>
 		</div>
 
 		<!-- LAST NAME -->
@@ -154,7 +153,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="lastName">{$trans("form.checkout.lastName.label")}</label>
+			<label class="floating-label" for="lastName">{trans("form.checkout.lastName.label")}</label>
 		</div>
 	</div>
 
@@ -169,7 +168,7 @@
 			placeholder=""
 			required
 		/>
-		<label class="floating-label" for="address1">{$trans("form.checkout.address1.label")}</label>
+		<label class="floating-label" for="address1">{trans("form.checkout.address1.label")}</label>
 	</div>
 
 	<!-- ADDRESS 2 -->
@@ -182,7 +181,7 @@
 			bind:value={address2}
 			placeholder=""
 		/>
-		<label class="floating-label" for="address2">{$trans("form.checkout.address2.label")}</label>
+		<label class="floating-label" for="address2">{trans("form.checkout.address2.label")}</label>
 	</div>
 
 	<div class="--group-3">
@@ -197,7 +196,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="city">{$trans("form.checkout.city.label")}</label>
+			<label class="floating-label" for="city">{trans("form.checkout.city.label")}</label>
 		</div>
 
 		<!-- PROVINCE -->
@@ -211,7 +210,7 @@
 				required
 			>
 				<option value={null} disabled selected>
-					{$trans("form.checkout.province.placeholder")}
+					{trans("form.checkout.province.placeholder")}
 				</option>
 
 				{#each selectableProvinces as province}
@@ -219,7 +218,7 @@
 				{/each}
 			</select>
 
-			<label class="floating-label" for="province">{$trans("form.checkout.province.label")}</label>
+			<label class="floating-label" for="province">{trans("form.checkout.province.label")}</label>
 		</div>
 
 		<!-- POSTAL CODE -->
@@ -234,7 +233,7 @@
 				required
 			/>
 			<label class="floating-label" for="postalCode">
-				{$trans("form.checkout.postalCode.label")}
+				{trans("form.checkout.postalCode.label")}
 			</label>
 		</div>
 	</div>
@@ -245,12 +244,12 @@
 	<div class="--button-group">
 		<a class="link-button" href={`${collectionRoute.path}/all`}>
 			<ArrowLeftIcon />
-			{$trans("form.checkout.continueShopping.label")}
+			{trans("form.checkout.continueShopping.label")}
 		</a>
 
 		<button>
 			<ButtonIcon>
-				{$trans("form.checkout.continueToPayment.label")}
+				{trans("form.checkout.continueToPayment.label")}
 			</ButtonIcon>
 		</button>
 	</div>

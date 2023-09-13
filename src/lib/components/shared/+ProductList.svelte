@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import type { Product } from "$lib/types/product";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
@@ -21,7 +21,7 @@
 	<div class="--button-wrapper">
 		<a href={collectionAllRoute.path}>
 			<ButtonIcon>
-				{$trans("component.productList.collection")}
+				{trans("component.productList.collection")}
 			</ButtonIcon>
 		</a>
 	</div>

@@ -1,9 +1,7 @@
 <script lang="ts">
-	import "$lib/i18n"; // Import to initialize. Important :)
 	import { browser } from "$app/environment";
 	import Navigation from "$lib/components/navigation/+Navigation.svelte";
 	import Footer from "$lib/components/footer/+Footer.svelte";
-	import { isLoading } from "svelte-i18n";
 	import CartMenu from "$lib/components/cart/+CartMenu.svelte";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
@@ -15,9 +13,7 @@
 	}
 </script>
 
-{#if $isLoading}
-	Please wait...
-{:else}
+{#if browser}
 	<Navigation />
 
 	<div class="page">

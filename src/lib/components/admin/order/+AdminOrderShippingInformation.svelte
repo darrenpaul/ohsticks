@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import type { IngAddress, Order } from "$lib/types/order";
 	import { shippingCountries } from "$lib/constants/shippingCountries";
 
@@ -32,19 +32,19 @@
 
 <div class="admin-order-shipping-information">
 	<div class="--header">
-		<h3>{$trans("page.admin.shippingInformation.label")}</h3>
+		<h3>{trans("page.admin.shippingInformation.label")}</h3>
 
 		<h3>{order.shippingMethod.label}</h3>
 	</div>
 
-	<h4>{$trans("page.admin.shippingAddress.label")}</h4>
+	<h4>{trans("page.admin.shippingAddress.label")}</h4>
 
 	<form on:submit|preventDefault={() => {}} class="account-update-user-information">
 		<!-- COUNTRY/REGION -->
 		<div class="input-group">
 			<select id="country" name="country" bind:value={country} placeholder="" required>
 				<option value={null} disabled selected>
-					{$trans("page.account.country.placeholder")}
+					{trans("page.account.country.placeholder")}
 				</option>
 
 				{#each shippingCountries as country}
@@ -52,7 +52,7 @@
 				{/each}
 			</select>
 
-			<label class="floating-label" for="country">{$trans("page.account.country.label")}</label>
+			<label class="floating-label" for="country">{trans("page.account.country.label")}</label>
 		</div>
 
 		<!-- ADDRESS 1 -->
@@ -66,7 +66,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="address1">{$trans("page.account.address1.label")}</label>
+			<label class="floating-label" for="address1">{trans("page.account.address1.label")}</label>
 		</div>
 
 		<!-- ADDRESS 2 -->
@@ -79,7 +79,7 @@
 				bind:value={address2}
 				placeholder=""
 			/>
-			<label class="floating-label" for="address2">{$trans("page.account.address2.label")}</label>
+			<label class="floating-label" for="address2">{trans("page.account.address2.label")}</label>
 		</div>
 
 		<div class="--group-3">
@@ -94,7 +94,7 @@
 					placeholder=""
 					required
 				/>
-				<label class="floating-label" for="city">{$trans("page.account.city.label")}</label>
+				<label class="floating-label" for="city">{trans("page.account.city.label")}</label>
 			</div>
 
 			<!-- PROVINCE -->
@@ -108,7 +108,7 @@
 					required
 				>
 					<option value={null} disabled selected>
-						{$trans("page.account.province.placeholder")}
+						{trans("page.account.province.placeholder")}
 					</option>
 
 					{#each selectableProvinces as province}
@@ -116,7 +116,7 @@
 					{/each}
 				</select>
 
-				<label class="floating-label" for="province">{$trans("page.account.province.label")}</label>
+				<label class="floating-label" for="province">{trans("page.account.province.label")}</label>
 			</div>
 
 			<!-- POSTAL CODE -->
@@ -131,13 +131,13 @@
 					required
 				/>
 				<label class="floating-label" for="postalCode">
-					{$trans("page.account.postalCode.label")}
+					{trans("page.account.postalCode.label")}
 				</label>
 			</div>
 		</div>
 	</form>
 
-	<h4>{$trans("page.admin.customerInformation.label")}</h4>
+	<h4>{trans("page.admin.customerInformation.label")}</h4>
 	<p>{order.customer.firstName} {order.customer.lastName}</p>
 	<p>{order.customer.email}</p>
 </div>

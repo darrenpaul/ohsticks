@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 </script>
 
 <div class="feature">
@@ -20,7 +20,7 @@
 		<div class="--button-wrapper">
 			<a href={collectionAllRoute.path}>
 				<ButtonIcon>
-					{$trans("component.productList.collection")}
+					{trans("component.productList.collection")}
 				</ButtonIcon>
 			</a>
 		</div>

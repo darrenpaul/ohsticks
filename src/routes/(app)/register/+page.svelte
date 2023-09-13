@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 	import { browser } from "$app/environment";
 	import { user } from "$lib/firebase/firebaseClient";
@@ -59,9 +59,9 @@
 <div class="register-page">
 	<form class="--form" on:submit|preventDefault={handleFormSubmit}>
 		<div class="--header">
-			<h1>{$trans("form.register.title.label")}</h1>
+			<h1>{trans("form.register.title.label")}</h1>
 
-			<p>{$trans("form.register.description.label")}</p>
+			<p>{trans("form.register.description.label")}</p>
 		</div>
 
 		<div class="--group-2">
@@ -77,7 +77,7 @@
 					required
 				/>
 				<label class="floating-label" for="firstName"
-					>{$trans("form.register.firstName.label")}</label
+					>{trans("form.register.firstName.label")}</label
 				>
 			</div>
 
@@ -92,8 +92,7 @@
 					placeholder=""
 					required
 				/>
-				<label class="floating-label" for="lastName">{$trans("form.register.lastName.label")}</label
-				>
+				<label class="floating-label" for="lastName">{trans("form.register.lastName.label")}</label>
 			</div>
 		</div>
 
@@ -108,7 +107,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.register.email.label")}</label>
+			<label class="floating-label" for="email">{trans("form.register.email.label")}</label>
 		</div>
 
 		<!-- PASSWORD -->
@@ -122,12 +121,12 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.register.password.label")}</label>
+			<label class="floating-label" for="email">{trans("form.register.password.label")}</label>
 		</div>
 
 		<button>
 			<ButtonIcon>
-				{$trans("form.register.submit.label")}
+				{trans("form.register.submit.label")}
 			</ButtonIcon>
 		</button>
 	</form>
@@ -135,7 +134,7 @@
 	<div class="--link-wrapper">
 		<a href={loginRoute.path}>
 			<Button2Icon>
-				{$trans("form.register.login.label")}
+				{trans("form.register.login.label")}
 			</Button2Icon>
 		</a>
 	</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import AdminOrderItem from "./+AdminOrderItem.svelte";
 	import type { OrderItem } from "$lib/types/order";
 
@@ -11,12 +11,12 @@
 		<thead class="">
 			<tr class="--header">
 				<th scope="col" class="text-left">
-					{$trans("page.admin.productId.label")}
+					{trans("page.admin.productId.label")}
 				</th>
-				<th scope="col" class="">{$trans("page.admin.productName.label")}</th>
-				<th scope="col" class="">{$trans("page.admin.itemPrice.label")}</th>
-				<th scope="col" class="">{$trans("page.admin.quantity.label")}</th>
-				<th scope="col" class="text-right">{$trans("page.admin.total.label")}</th>
+				<th scope="col" class="">{trans("page.admin.productName.label")}</th>
+				<th scope="col" class="">{trans("page.admin.itemPrice.label")}</th>
+				<th scope="col" class="">{trans("page.admin.quantity.label")}</th>
+				<th scope="col" class="text-right">{trans("page.admin.total.label")}</th>
 			</tr>
 		</thead>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { auth } from "$lib/firebase/firebaseClient";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { sendPasswordResetEmail } from "firebase/auth";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 
@@ -16,9 +16,9 @@
 <div class="forgot-password-page">
 	<form class="--form" on:submit|preventDefault={handleFormSubmit}>
 		<div class="--header">
-			<h1>{$trans("form.forgotPassword.title.label")}</h1>
+			<h1>{trans("form.forgotPassword.title.label")}</h1>
 
-			<p>{$trans("form.forgotPassword.description.label")}</p>
+			<p>{trans("form.forgotPassword.description.label")}</p>
 		</div>
 
 		<!-- EMAIL -->
@@ -32,10 +32,10 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.forgotPassword.email.label")}</label>
+			<label class="floating-label" for="email">{trans("form.forgotPassword.email.label")}</label>
 		</div>
 
-		<button class="submit-button">{$trans("form.forgotPassword.submit.label")}</button>
+		<button class="submit-button">{trans("form.forgotPassword.submit.label")}</button>
 	</form>
 </div>
 

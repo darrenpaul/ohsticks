@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import OrderConfirmationListItem from "$lib/components/order/+OrderConfirmationListItem.svelte";
 
 	export let items;
 </script>
 
 <div class="order-confirmation-list">
-	<h2>{$trans("page.order.yourOrder.label")}</h2>
+	<h2>{trans("page.order.yourOrder.label")}</h2>
 
 	<div class="--list">
 		{#each items as item}

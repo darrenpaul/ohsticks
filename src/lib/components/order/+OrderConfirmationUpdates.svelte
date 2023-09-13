@@ -1,33 +1,33 @@
 <script lang="ts">
 	import { created, delivered, paid, processing, shipped } from "$lib/constants/orderUpdate";
 	import type { Order } from "$lib/types/order";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let order: Order;
 </script>
 
 <div class="order-confirmation-updates">
-	<h2>{$trans("page.order.orderUpdates.label")}</h2>
+	<h2>{trans("page.order.orderUpdates.label")}</h2>
 
 	<p>
-		{$trans("page.order.orderUpdates.description", { values: { email: order.customer.email } })}
+		{trans("page.order.orderUpdates.description", { email: order.customer.email })}
 	</p>
 
 	<div class="--processing-list">
 		<p class={order.status === created ? "font-bold" : ""}>
-			{$trans("page.order.processingStates.created.label")}
+			{trans("page.order.processingStates.created.label")}
 		</p>
 		<p class={order.status === paid ? "font-bold" : ""}>
-			{$trans("page.order.processingStates.paid.label")}
+			{trans("page.order.processingStates.paid.label")}
 		</p>
 		<p class={order.status === processing ? "font-bold" : ""}>
-			{$trans("page.order.processingStates.processing.label")}
+			{trans("page.order.processingStates.processing.label")}
 		</p>
 		<p class={order.status === shipped ? "font-bold" : ""}>
-			{$trans("page.order.processingStates.shipped.label")}
+			{trans("page.order.processingStates.shipped.label")}
 		</p>
 		<p class={order.status === delivered ? "font-bold" : ""}>
-			{$trans("page.order.processingStates.delivered.label")}
+			{trans("page.order.processingStates.delivered.label")}
 		</p>
 	</div>
 </div>

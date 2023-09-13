@@ -4,7 +4,7 @@
 	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
 	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { base } from "$app/paths";
 	import { page } from "$app/stores";
 	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
@@ -42,9 +42,9 @@
 <div class="login-page">
 	<form class="--form" on:submit|preventDefault={handleFormSubmit}>
 		<div class="--header">
-			<h1>{$trans("form.login.title.label")}</h1>
+			<h1>{trans("form.login.title.label")}</h1>
 
-			<p>{$trans("form.login.description.label")}</p>
+			<p>{trans("form.login.description.label")}</p>
 		</div>
 
 		<!-- EMAIL -->
@@ -58,7 +58,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.login.email.label")}</label>
+			<label class="floating-label" for="email">{trans("form.login.email.label")}</label>
 		</div>
 
 		<!-- PASSWORD -->
@@ -72,12 +72,12 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">{$trans("form.login.password.label")}</label>
+			<label class="floating-label" for="email">{trans("form.login.password.label")}</label>
 		</div>
 
 		<button>
 			<ButtonIcon>
-				{$trans("form.login.submit.label")}
+				{trans("form.login.submit.label")}
 			</ButtonIcon>
 		</button>
 	</form>
@@ -85,14 +85,14 @@
 	<div class="--link-wrapper">
 		<a href={registerRoute.path}>
 			<Button2Icon>
-				{$trans("form.login.createAccount.label")}
+				{trans("form.login.createAccount.label")}
 			</Button2Icon>
 		</a>
 	</div>
 
 	<div class="--link-wrapper">
 		<a href={forgotPasswordRoute.path}>
-			{$trans("form.login.forgotPassword.label")}
+			{trans("form.login.forgotPassword.label")}
 		</a>
 	</div>
 </div>

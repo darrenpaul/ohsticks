@@ -4,7 +4,7 @@
 	import type { ShippingMethod } from "$lib/types/order";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { getContext } from "svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import type { Writable } from "svelte/store";
 
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
@@ -26,7 +26,7 @@
 	};
 </script>
 
-<h4>{$trans("form.checkout.shippingMethod.label")}</h4>
+<h4>{trans("form.checkout.shippingMethod.label")}</h4>
 
 {#each shippingMethods as method}
 	<div class="shipping-method-radio">

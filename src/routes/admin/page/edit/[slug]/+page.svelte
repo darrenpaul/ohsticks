@@ -5,7 +5,7 @@
 	import { slugString } from "$lib/utils/slugString";
 	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { error } from "@sveltejs/kit";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	import PageCreateOpenGraph from "$lib/components/admin/product/+PageCreateOpenGraph.svelte";
 	import PageCreateMeta from "$lib/components/admin/product/+PageCreateMeta.svelte";
@@ -88,7 +88,7 @@
 			required
 		/>
 
-		<label class="floating-label" for="name">{$trans("form.createPage.name.label")}</label>
+		<label class="floating-label" for="name">{trans("form.createPage.name.label")}</label>
 	</div>
 
 	<!-- SLUG -->
@@ -103,7 +103,7 @@
 			required
 		/>
 
-		<label class="floating-label" for="slug">{$trans("form.createPage.slug.label")}</label>
+		<label class="floating-label" for="slug">{trans("form.createPage.slug.label")}</label>
 	</div>
 
 	<PageCreateMeta bind:metaTitle bind:metaDescription />

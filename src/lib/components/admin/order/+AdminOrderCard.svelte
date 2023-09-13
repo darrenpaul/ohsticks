@@ -3,7 +3,7 @@
 	import type { Order } from "$lib/types/order";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { format } from "date-fns";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let order: Order;
 </script>
@@ -20,7 +20,7 @@
 	<td class="text-center uppercase font-bold">{order.status}</td>
 	<td class="text-center">
 		<a href={`${adminOrderRoute.path}/${order.id}`}>
-			<p>{$trans("page.order.view.label")}</p>
+			<p>{trans("page.order.view.label")}</p>
 		</a>
 	</td>
 </tr>

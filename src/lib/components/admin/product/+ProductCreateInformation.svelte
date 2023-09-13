@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { slugString } from "$lib/utils/slugString";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let name = "";
 	export let slug = "";
@@ -17,10 +17,10 @@
 <div class="input-group">
 	<input class="peer" id="name" name="name" type="text" bind:value={name} placeholder="" required />
 
-	<label class="floating-label" for="name">{$trans("form.createProduct.name.label")}</label>
+	<label class="floating-label" for="name">{trans("form.createProduct.name.label")}</label>
 </div>
 
-<p>{$trans("form.createProduct.slug.label")}</p>
+<p>{trans("form.createProduct.slug.label")}</p>
 
 <p id="slug">{slug}</p>
 
@@ -36,7 +36,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="name">{$trans("form.createProduct.brand.label")}</label>
+	<label class="floating-label" for="name">{trans("form.createProduct.brand.label")}</label>
 </div>
 
 <!-- CATEGORIES -->
@@ -50,7 +50,7 @@
 		placeholder=""
 	/>
 	<label class="floating-label" for="categories">
-		{$trans("form.createProduct.categories.label")}
+		{trans("form.createProduct.categories.label")}
 	</label>
 </div>
 
@@ -64,6 +64,6 @@
 		placeholder=""
 	/>
 	<label class="floating-label" for="description">
-		{$trans("form.createProduct.description.label")}
+		{trans("form.createProduct.description.label")}
 	</label>
 </div>

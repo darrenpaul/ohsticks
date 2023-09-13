@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import SendMessageIcon from "$lib/components/icons/+SendMessageIcon.svelte";
 	import { newsletterSignupEvent } from "$lib/utils/googleTagManager";
 
@@ -37,7 +37,7 @@
 		/>
 
 		<label class="floating-label" for="email">
-			{$trans("component.footer.newsletter.label")}
+			{trans("component.footer.newsletter.label")}
 		</label>
 
 		<button class="floating-button">
@@ -47,7 +47,7 @@
 </form>
 
 <small>
-	{$trans("component.footer.newsletter.description")}
+	{trans("component.footer.newsletter.description")}
 </small>
 
 <style lang="scss">

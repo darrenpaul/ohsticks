@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let metaTitle = "";
 	export let metaDescription = "";
@@ -19,7 +19,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.metaTitle.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.metaTitle.label")}</label>
 </div>
 
 <!-- OPEN GRAPH DESCRIPTION -->
@@ -33,5 +33,5 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.metaDescription.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.metaDescription.label")}</label>
 </div>

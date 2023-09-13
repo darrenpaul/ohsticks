@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let twitterTitle = "";
 	export let twitterDescription = "";
@@ -22,7 +22,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.twitterTitle.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.twitterTitle.label")}</label>
 </div>
 
 <!-- TWITTER DESCRIPTION -->
@@ -37,7 +37,7 @@
 	/>
 
 	<label class="floating-label" for="slug">
-		{$trans("form.createPage.twitterDescription.label")}
+		{trans("form.createPage.twitterDescription.label")}
 	</label>
 </div>
 
@@ -53,7 +53,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.twitterCard.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.twitterCard.label")}</label>
 </div>
 
 <!-- TWITTER IMAGE -->
@@ -68,7 +68,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.imageSource.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.imageSource.label")}</label>
 </div>
 
 <!-- TWITTER IMAGE ALT -->
@@ -83,5 +83,5 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.imageAlt.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.imageAlt.label")}</label>
 </div>

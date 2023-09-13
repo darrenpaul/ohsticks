@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import CheckMarkIcon from "$lib/components/icons/+CheckMarkIcon.svelte";
 	import type { Order } from "$lib/types/order";
 
@@ -7,19 +7,19 @@
 </script>
 
 <div class="order-confirmation-header">
-	<h2 class="--heading">{$trans("page.order.orderConfirmation.label")}</h2>
+	<h2 class="--heading">{trans("page.order.orderConfirmation.label")}</h2>
 
 	<div class="--information">
 		<CheckMarkIcon width={48} height={48} />
 
 		<div>
 			<p class="--order-number">
-				{$trans("page.order.order.label", { values: { orderId: order.id } })}
+				{trans("page.order.order.label", { orderId: order.id })}
 			</p>
 
 			<p class="--thank-you">
-				{$trans("page.order.thankYou.label", {
-					values: { name: `${order.customer.firstName} ${order.customer.lastName}` }
+				{trans("page.order.thankYou.label", {
+					name: `${order.customer.firstName} ${order.customer.lastName}`
 				})}
 			</p>
 		</div>

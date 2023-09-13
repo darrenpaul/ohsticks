@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { auth, user } from "$lib/firebase/firebaseClient";
 	import { shippingCountries } from "$lib/constants/shippingCountries";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { updateProfile } from "firebase/auth";
 	import { onMount } from "svelte";
 	import { error } from "@sveltejs/kit";
@@ -71,7 +71,7 @@
 </script>
 
 <form on:submit={handleSubmit} class="account-update-user-information">
-	<h4>{$trans("page.account.userInformation.label")}</h4>
+	<h4>{trans("page.account.userInformation.label")}</h4>
 
 	<div class="--group-2">
 		<!-- FIRST NAME -->
@@ -85,7 +85,7 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="firstName">{$trans("page.account.firstName.label")}</label>
+			<label class="floating-label" for="firstName">{trans("page.account.firstName.label")}</label>
 		</div>
 
 		<!-- LAST NAME -->
@@ -99,17 +99,17 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="lastName">{$trans("page.account.lastName.label")}</label>
+			<label class="floating-label" for="lastName">{trans("page.account.lastName.label")}</label>
 		</div>
 	</div>
 
-	<h4>{$trans("page.account.shippingInformation.label")}</h4>
+	<h4>{trans("page.account.shippingInformation.label")}</h4>
 
 	<!-- COUNTRY/REGION -->
 	<div class="input-group">
 		<select id="country" name="country" bind:value={country} placeholder="" required>
 			<option value={null} disabled selected>
-				{$trans("page.account.country.placeholder")}
+				{trans("page.account.country.placeholder")}
 			</option>
 
 			{#each shippingCountries as country}
@@ -117,7 +117,7 @@
 			{/each}
 		</select>
 
-		<label class="floating-label" for="country">{$trans("page.account.country.label")}</label>
+		<label class="floating-label" for="country">{trans("page.account.country.label")}</label>
 	</div>
 
 	<!-- ADDRESS 1 -->
@@ -131,7 +131,7 @@
 			placeholder=""
 			required
 		/>
-		<label class="floating-label" for="address1">{$trans("page.account.address1.label")}</label>
+		<label class="floating-label" for="address1">{trans("page.account.address1.label")}</label>
 	</div>
 
 	<!-- ADDRESS 2 -->
@@ -144,7 +144,7 @@
 			bind:value={address2}
 			placeholder=""
 		/>
-		<label class="floating-label" for="address2">{$trans("page.account.address2.label")}</label>
+		<label class="floating-label" for="address2">{trans("page.account.address2.label")}</label>
 	</div>
 
 	<!-- CITY -->
@@ -158,7 +158,7 @@
 			placeholder=""
 			required
 		/>
-		<label class="floating-label" for="city">{$trans("page.account.city.label")}</label>
+		<label class="floating-label" for="city">{trans("page.account.city.label")}</label>
 	</div>
 
 	<!-- PROVINCE -->
@@ -172,7 +172,7 @@
 			required
 		>
 			<option value={null} disabled selected>
-				{$trans("page.account.province.placeholder")}
+				{trans("page.account.province.placeholder")}
 			</option>
 
 			{#each selectableProvinces as province}
@@ -180,7 +180,7 @@
 			{/each}
 		</select>
 
-		<label class="floating-label" for="province">{$trans("page.account.province.label")}</label>
+		<label class="floating-label" for="province">{trans("page.account.province.label")}</label>
 	</div>
 
 	<!-- POSTAL CODE -->
@@ -195,11 +195,11 @@
 			required
 		/>
 		<label class="floating-label" for="postalCode">
-			{$trans("page.account.postalCode.label")}
+			{trans("page.account.postalCode.label")}
 		</label>
 	</div>
 
-	<button class="slim-button">{$trans("page.account.update.label")}</button>
+	<button class="slim-button">{trans("page.account.update.label")}</button>
 </form>
 
 <style lang="scss">

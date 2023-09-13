@@ -4,7 +4,7 @@
 	import ProductFeatureImageSelect from "./+ProductFeatureImageSelect.svelte";
 	import { addToCart } from "$lib/stores/cartStore";
 	import { getContext } from "svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import ProductFeatureCategories from "./+ProductFeatureCategories.svelte";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { user } from "$lib/firebase/firebaseClient";
@@ -41,7 +41,7 @@
 		<div>
 			<button on:click={handleAddToCart}>
 				<ButtonIcon>
-					{$trans("component.productFeature.addToCart.label")}
+					{trans("component.productFeature.addToCart.label")}
 				</ButtonIcon>
 			</button>
 		</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let openGraphTitle = "";
 	export let openGraphDescription = "";
@@ -25,7 +25,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.openGraphTitle.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.openGraphTitle.label")}</label>
 </div>
 
 <!-- OPEN GRAPH DESCRIPTION -->
@@ -40,7 +40,7 @@
 	/>
 
 	<label class="floating-label" for="slug">
-		{$trans("form.createPage.openGraphDescription.label")}
+		{trans("form.createPage.openGraphDescription.label")}
 	</label>
 </div>
 
@@ -56,7 +56,7 @@
 		required
 	/>
 
-	<label class="floating-label" for="slug">{$trans("form.createPage.openGraphType.label")}</label>
+	<label class="floating-label" for="slug">{trans("form.createPage.openGraphType.label")}</label>
 </div>
 
 {#each openGraphImages as image, index}
@@ -72,7 +72,7 @@
 		/>
 
 		<label class="floating-label" for={`openGraphImageSource${index}`}>
-			{$trans("form.createPage.imageSource.label")}
+			{trans("form.createPage.imageSource.label")}
 		</label>
 	</div>
 
@@ -88,7 +88,7 @@
 		/>
 
 		<label class="floating-label" for={`openGraphImageAlt${index}`}>
-			{$trans("form.createPage.imageAlt.label")}
+			{trans("form.createPage.imageAlt.label")}
 		</label>
 	</div>
 {/each}

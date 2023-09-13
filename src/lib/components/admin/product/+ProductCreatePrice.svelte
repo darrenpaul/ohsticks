@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let purchasePrice: number;
 	export let markupPercentage = 25;
@@ -22,20 +22,20 @@
 	/>
 
 	<label class="floating-label" for="purchasePrice">
-		{$trans("form.createProduct.purchasePrice.label")}
+		{trans("form.createProduct.purchasePrice.label")}
 	</label>
 </div>
 
 <!-- MARK UP PERCENTAGE -->
 <div class="input-group">
 	<label for="markupPercentage"
-		>{$trans("form.createProduct.markupPercentage.label")} {markupPercentage}%</label
+		>{trans("form.createProduct.markupPercentage.label")} {markupPercentage}%</label
 	>
 	<input type="range" min="0" max="100" id="markupPercentage" bind:value={markupPercentage} />
 </div>
 
 <!-- PRICE -->
 <div class="input-group">
-	<label for="price">{$trans("form.createProduct.price.label")}</label>
+	<label for="price">{trans("form.createProduct.price.label")}</label>
 	<p id="price">{price}</p>
 </div>

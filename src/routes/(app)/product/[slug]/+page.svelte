@@ -7,7 +7,7 @@
 	import ProductTabs from "$lib/components/product/+ProductTabs.svelte";
 	import { browser } from "$app/environment";
 	import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { page } from "$app/stores";
 	import capitalizeWords from "$lib/utils/capitalizeWords";
 	import { normalizeSlugString } from "$lib/utils/slugString";
@@ -67,7 +67,7 @@
 		<ProductTabs {product} />
 
 		<div class="--carousel-wrapper">
-			<h2 class="--heading">{$trans("page.product.relatedProducts.label")}</h2>
+			<h2 class="--heading">{trans("page.product.relatedProducts.label")}</h2>
 
 			{#if browser}
 				<svelte:component this={MobileOnlyComponent}>

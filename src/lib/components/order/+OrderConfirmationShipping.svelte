@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import type { Order } from "$lib/types/order";
 
 	export let order: Order;
 </script>
 
 <div class="order-confirmation-shipping">
-	<h2>{$trans("page.order.shippingAddress.label")}</h2>
+	<h2>{trans("page.order.shippingAddress.label")}</h2>
 
 	<div>
 		<p>

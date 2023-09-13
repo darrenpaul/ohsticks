@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CrossIcon from "$lib/components/icons/+CrossIcon.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
 	import { sumArrayNumbers } from "$lib/utils/maths";
 	import { browser } from "$app/environment";
@@ -49,7 +49,7 @@
 			</div>
 
 			<div class="--center">
-				<p>{$trans("component.cartMenu.yourCart")}</p>
+				<p>{trans("component.cartMenu.yourCart")}</p>
 			</div>
 
 			<div class="--container">
@@ -67,7 +67,7 @@
 
 		<div class="--footer">
 			<div class="--total-wrapper">
-				<p>{$trans("component.cartMenu.total")}</p>
+				<p>{trans("component.cartMenu.total")}</p>
 
 				<p class="--price">
 					{addCurrencySymbol(totalPrice)}
@@ -75,7 +75,7 @@
 			</div>
 
 			<a href={checkoutRoute.path} class="--checkout-button">
-				{$trans("component.cartMenu.checkout")}
+				{trans("component.cartMenu.checkout")}
 			</a>
 		</div>
 	</div>

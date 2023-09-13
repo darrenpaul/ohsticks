@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
 	import { browser } from "$app/environment";
 	import { sumArrayNumbers } from "$lib/utils/maths";
@@ -34,19 +34,19 @@
 <div class="checkout-totals">
 	<!-- SUBTOTAL -->
 	<div class="--group">
-		<p>{$trans("page.checkout.subtotal.label")}</p>
+		<p>{trans("page.checkout.subtotal.label")}</p>
 		<p>{addCurrencySymbol(cartItemsTotal)}</p>
 	</div>
 
 	<!-- SHIPPING -->
 	<div class="--group">
-		<p>{$trans("page.checkout.shipping.label")}</p>
+		<p>{trans("page.checkout.shipping.label")}</p>
 		<p>{addCurrencySymbol(shippingPrice)}</p>
 	</div>
 
 	<!-- TOTAL -->
 	<div class="--group">
-		<p class="--total-text">{$trans("page.checkout.total.label")}</p>
+		<p class="--total-text">{trans("page.checkout.total.label")}</p>
 		<p class="--total-text">{addCurrencySymbol(total)}</p>
 	</div>
 </div>

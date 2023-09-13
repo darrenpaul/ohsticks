@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
 	import Feature from "$lib/components/shared/+Feature.svelte";
 	import ProductList from "$lib/components/shared/+ProductList.svelte";
 	import SideBySideImage from "$lib/components/shared/+SideBySideImage.svelte";
@@ -9,6 +8,7 @@
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { brandName, companyLogo, siteUrl } from "$lib/constants/site";
 	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute.js";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let data;
 
@@ -38,7 +38,7 @@
 	<Feature />
 
 	<ContainWidth background="bg-transparent">
-		<ProductList title={$trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
+		<ProductList title={trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
 
 		<SideBySideImage />
 	</ContainWidth>

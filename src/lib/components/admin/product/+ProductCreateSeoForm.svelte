@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import { user } from "$lib/firebase/firebaseClient";
 	import { error } from "@sveltejs/kit";
 	import type { ContentSection, Image } from "$lib/types/product";
@@ -53,13 +53,13 @@
 
 <div class="product-create-seo">
 	<div class="--header">
-		<h4>{$trans("form.createProduct.seo.label")}</h4>
+		<h4>{trans("form.createProduct.seo.label")}</h4>
 
 		<button
 			class={`slim-button ${isFetching ? "animate-bounce" : ""}`}
 			on:click|preventDefault={handleSeoGenerate}
 		>
-			{$trans("form.createProduct.generateSeo.label")}
+			{trans("form.createProduct.generateSeo.label")}
 		</button>
 	</div>
 
@@ -76,7 +76,7 @@
 		/>
 
 		<label class="floating-label" for="searchKeywords">
-			{$trans("form.createProduct.searchKeywords.label")}
+			{trans("form.createProduct.searchKeywords.label")}
 		</label>
 	</div>
 
@@ -93,7 +93,7 @@
 		/>
 
 		<label class="floating-label" for="metaTitle">
-			{$trans("form.createProduct.metaTitle.label")}
+			{trans("form.createProduct.metaTitle.label")}
 		</label>
 	</div>
 
@@ -109,7 +109,7 @@
 		/>
 
 		<label class="floating-label" for="metaDescription">
-			{$trans("form.createProduct.metaDescription.label")}
+			{trans("form.createProduct.metaDescription.label")}
 		</label>
 	</div>
 
@@ -126,7 +126,7 @@
 		/>
 
 		<label class="floating-label" for="metaKeywords">
-			{$trans("form.createProduct.metaKeywords.label")}
+			{trans("form.createProduct.metaKeywords.label")}
 		</label>
 	</div>
 
@@ -134,7 +134,7 @@
 	<div class="input-group">
 		<ImageUploadInput
 			elementId="twitterImage"
-			label={$trans("form.createProduct.twitterImage.label")}
+			label={trans("form.createProduct.twitterImage.label")}
 			{name}
 			bind:images={twitterImage}
 		/>
@@ -145,7 +145,7 @@
 	<div class="input-group">
 		<ImageUploadInput
 			elementId="openGraphImages"
-			label={$trans("form.createProduct.openGraphImages.label")}
+			label={trans("form.createProduct.openGraphImages.label")}
 			{name}
 			multiple={true}
 			bind:images={openGraphImages}

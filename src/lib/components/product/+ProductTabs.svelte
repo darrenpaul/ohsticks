@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Product } from "$lib/types/product";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 
 	let activeTab = 0;
 
@@ -13,14 +13,14 @@
 			class={`${activeTab === 0 ? "--tab-button-active" : "--tab-button"}`}
 			on:click={() => (activeTab = 0)}
 		>
-			{$trans("component.productTabs.description.label")}
+			{trans("component.productTabs.description.label")}
 		</button>
 
 		<button
 			class={`${activeTab === 2 ? "--tab-button-active" : "--tab-button"}`}
 			on:click={() => (activeTab = 2)}
 		>
-			{$trans("component.productTabs.reviews.label")}
+			{trans("component.productTabs.reviews.label")}
 		</button>
 	</div>
 

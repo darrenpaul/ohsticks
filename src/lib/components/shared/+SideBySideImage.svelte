@@ -1,8 +1,4 @@
 <script lang="ts">
-	// import ProductListCard from "$lib/components/shared/+ProductListCard.svelte";
-	// import { _ as trans } from "svelte-i18n";
-
-	// export let title = "Product List Carousel";
 </script>
 
 <div class="side-by-side-image">

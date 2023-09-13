@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { _ } from "svelte-i18n";
 	import { user } from "$lib/firebase/firebaseClient";
 	import { error } from "@sveltejs/kit";
 
@@ -20,6 +19,5 @@
 </script>
 
 <h1>Admin Dashboard</h1>
-{$_("page.home.title")}
 
 <button class="submit-button" on:click={onRunMigration}>Run Migration</button>

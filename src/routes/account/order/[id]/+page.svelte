@@ -5,7 +5,7 @@
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
-	import { _ as trans } from "svelte-i18n";
+	import { trans } from "$lib/locales/translateCopy";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
 	import { user } from "$lib/firebase/firebaseClient";
 	import OrderConfirmationHeader from "$lib/components/order/+OrderConfirmationHeader.svelte";
@@ -61,7 +61,7 @@
 
 				<div class="--button-wrapper">
 					<a class="submit-button" href={`${collectionRoute.path}/all`}>
-						{$trans("page.order.continueShopping.label")}
+						{trans("page.order.continueShopping.label")}
 					</a>
 				</div>
 			</div>
