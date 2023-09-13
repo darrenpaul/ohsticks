@@ -1,6 +1,6 @@
 import { findCountryCurrency } from "$lib/constants/shippingCountries.js";
 
-/** @type {import('./$types').PageServerLoad} */
+/** @type {import('./$types').PageLoad} */
 export async function load({ fetch, getClientAddress, cookies }) {
 	const clientAddress = getClientAddress();
 	console.log("load ~ clientAddress:", clientAddress);
