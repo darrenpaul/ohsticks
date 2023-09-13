@@ -6,13 +6,18 @@ export async function load({ fetch, getClientAddress, cookies }) {
 	console.log("load ~ clientAddress:", clientAddress);
 	// const clientAddress = "185.108.105.72";
 
-	const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
-	const countryData = await countryResponse.json();
-	const isoCode: string = countryData?.country || "AT";
+	let currency = cookies.get("currency");
 
-	const currencyCode = findCountryCurrency(isoCode);
-
-	const currency = currencyCode;
+	// TODO: move to method and add expire date to cookie
+	if (!currency) {
+		const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
+		const countryData = await countryResponse.json();
+		const isoCode: string = countryData?.country || "AT";
+		const currencyCode = findCountryCurrency(isoCode);
+		currency = currencyCode;
+		cookies.set("currency", currencyCode);
+		currency = currencyCode;
+	}
 
 	const queries = [{ key: "currency", value: currency }];
 	const queryString = queries.map((query) => `${query.key}=${query.value}`).join("&");

@@ -6,17 +6,17 @@ export async function load({ params, fetch, cookies, getClientAddress }) {
 	const slug = params.slug;
 
 	const clientAddress = getClientAddress();
+	console.log("load ~ clientAddress:", clientAddress);
 	// const clientAddress = "185.108.105.72";
+
 	let currency = cookies.get("currency");
 
 	if (!currency) {
-		console.log("load ~ currency:", currency);
 		const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
-		const { countryData } = await countryResponse.json();
-		const isoCode: string = countryData?.isoCode || "AT";
-
+		const countryData = await countryResponse.json();
+		const isoCode: string = countryData?.country || "AT";
 		const currencyCode = findCountryCurrency(isoCode);
-		console.log("load ~ countryData:", isoCode);
+		currency = currencyCode;
 		cookies.set("currency", currencyCode);
 		currency = currencyCode;
 	}
