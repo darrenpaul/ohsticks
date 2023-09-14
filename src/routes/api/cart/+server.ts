@@ -1,56 +1,10 @@
 import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
-import type { CartItem, CartUser } from "$lib/types/cart";
+import type { CartItem } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
-import { mergeCartItems } from "$lib/utils/cartHelpers.js";
-import type { QuerySnapshot } from "firebase-admin/firestore";
-import type { Product } from "$lib/types/product.js";
+import { getLatestCart } from "$lib/server/cartHelpers";
 
 const table = "cart";
-
-const getLatestCart = async (tableSnapshot: QuerySnapshot) => {
-	// Multiple carts found, delete old carts and use the latest one
-	const userCarts: CartUser[] = tableSnapshot.docs.map((doc) => ({
-		id: doc.id,
-		...doc.data()
-	})) as CartUser[];
-
-	userCarts.sort((a: CartUser, b: CartUser) => b.createdAt.seconds - a.createdAt.seconds);
-
-	const cartData = userCarts.shift() as CartUser;
-
-	if (userCarts.length > 0) {
-		// Delete old carts
-		userCarts.forEach(async (cart) => {
-			await adminDB.collection(table).doc(cart.id).delete();
-		});
-	}
-
-	// Ensures the cart data always contains the latest product data
-	const productTableSnapshot = await adminDB.collection("product").get();
-	const products = productTableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-	const syncedWithProducts = cartData.cartItems.map((cartItem) => {
-		const product: Product = products.find((product) => product.id === cartItem.id) as Product;
-
-		if (!product) return undefined;
-
-		return {
-			...cartItem,
-			image: {
-				...product.featureImage
-			},
-			price: product.price,
-			name: product.name,
-			description: product.description,
-			brand: product.brand,
-			id: product.id,
-			categories: product.categories
-		};
-	});
-	const removedUndefined = syncedWithProducts.filter((item) => item !== undefined);
-
-	return { ...cartData, cartItems: removedUndefined };
-};
 
 // ADD ITEM TO CART
 /** @type {import('./$types').RequestHandler} */
@@ -79,7 +33,6 @@ export const POST = async ({ request }) => {
 
 	if (!tableSnapshot.empty) {
 		const cartData = await getLatestCart(tableSnapshot);
-
 		if (cartData) {
 			const cartItems = cartData.cartItems as CartItem[];
 
@@ -142,6 +95,14 @@ export const GET = async ({ request }) => {
 		.collection(table)
 		.where("userId", "==", decodedIdToken.uid)
 		.get();
+
+	if (tableSnapshot.empty) {
+		return new Response(JSON.stringify({}), {
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+	}
 
 	const cartData = await getLatestCart(tableSnapshot);
 

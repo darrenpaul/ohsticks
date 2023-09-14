@@ -1,8 +1,7 @@
 import { adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
 import type { CartItem, CartResponse } from "$lib/types/cart";
-import { mergeCartItems } from "$lib/utils/cartHelpers.js";
-import type { Product } from "$lib/types/product";
+import { mergeCartItems, syncCartItemsAndProducts } from "$lib/server/cartHelpers";
 
 const table = "cart";
 
@@ -91,30 +90,9 @@ export const GET = async ({ request, url, fetch }) => {
 		});
 	}
 
-	// Ensures the cart data always contains the latest product data
-	const productTableSnapshot = await adminDB.collection("product").get();
-	const products = productTableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-	const syncedWithProducts = cartItems.map((cartItem) => {
-		const product: Product = products.find((product) => product.id === cartItem.id) as Product;
+	const syncedCartItems = await syncCartItemsAndProducts(cartItems);
 
-		if (!product) return undefined;
-
-		return {
-			...cartItem,
-			image: {
-				...product.featureImage
-			},
-			price: product.price,
-			name: product.name,
-			description: product.description,
-			brand: product.brand,
-			id: product.id,
-			categories: product.categories
-		};
-	});
-	const removedUndefined = syncedWithProducts.filter((item) => item !== undefined);
-
-	const jsonString = JSON.stringify({ cartKey: cartKey, cartItems: removedUndefined });
+	const jsonString = JSON.stringify({ cartKey: cartKey, cartItems: syncedCartItems });
 
 	return new Response(jsonString, {
 		headers: {
