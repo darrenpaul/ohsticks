@@ -22,9 +22,6 @@
 	let categories = product?.categories.join(", ") || "";
 	let description = product?.description || "";
 	let contentSections: ContentSection[] = product?.contentSections || [];
-	let purchasePrice: number = product?.purchasePrice || 0;
-	let markupPercentage = product?.markupPercentage || 25;
-	let price: string = product?.price || "";
 	let currencyPrice = product?.currencyPrice || {};
 	let quantity = product?.quantity || 10;
 	let visible = product?.visible || false;

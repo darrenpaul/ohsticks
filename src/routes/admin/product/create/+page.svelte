@@ -21,7 +21,7 @@
 	let contentSections: ContentSection[] = [];
 	let purchasePrice: number;
 	let markupPercentage = 25;
-	let price: string;
+	let currencyPrice = {};
 	let quantity = 10;
 	let visible = false;
 	let featureImage: Image[] = [];
@@ -102,7 +102,7 @@
 	<!-- CONTENT SECTIONS -->
 	<ProductCreateContentSections bind:contentSections />
 
-	<ProductCreatePrice bind:purchasePrice bind:markupPercentage bind:price />
+	<ProductCreatePrice bind:currencyPrice />
 
 	<!-- QUANTITY -->
 	<div class="input-group">

@@ -1,4 +1,5 @@
-import type { Image } from "$lib/types/product";
+import type { Image, Product } from "$lib/types/product";
+
 export type CartItem = {
 	id: string;
 	name: string;
@@ -6,6 +7,7 @@ export type CartItem = {
 	slug: string;
 	brand: string;
 	price: string;
+	currency: string;
 	quantity: number;
 	image: Image;
 	categories: string[];
@@ -35,4 +37,19 @@ export type CartUser = {
 	cartItems: CartItem[];
 	expiration: { seconds: number };
 	createdAt: { seconds: number };
+};
+
+export const createCartItem = (product: Product) => {
+	return {
+		id: product.id,
+		name: product.name,
+		description: product.description,
+		brand: product.brand,
+		slug: product.slug,
+		quantity: 1,
+		price: product.price.toString(),
+		currency: product.currency,
+		image: product.featureImage,
+		categories: product.categories
+	} as CartItem;
 };
