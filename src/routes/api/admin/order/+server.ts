@@ -6,6 +6,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import type { OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
 import { adminRole } from "$lib/constants/roles";
+import sendOrderUpdateEmail from "$lib/server/utils/email/sendOrderUpdateEmail";
 
 const table = "order";
 
@@ -154,6 +155,20 @@ export const PUT = async ({ url, fetch, request }) => {
 		status,
 		updatedAt: timestamp
 	});
+
+	// TODO: send email to customer
+	// sendOrderUpdateEmail({
+	// 	id,
+	// 	customer,
+	// 	shippingAddress,
+	// 	items,
+	// 	paymentMethod,
+	// 	shippingMethod,
+	// 	subtotal,
+	// 	total,
+	// 	createdAt,
+	// 	status
+	// });
 
 	return new Response();
 };
