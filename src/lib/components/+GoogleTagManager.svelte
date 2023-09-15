@@ -1,27 +1,4 @@
-<script lang="ts">
-	import { partytownSnippet } from "@builder.io/partytown/integration";
-</script>
-
 <svelte:head>
-	<script>
-		partytown = {
-			forward: ["dataLayer.push"]
-		};
-	</script>
-
-	{@html "<script>" + partytownSnippet() + "</script>"}
-
-	<script
-		type="text/partytown"
-		src="https://www.googletagmanager.com/gtag/js?id=GTM-N7QQ97Z8"
-	></script>
-	<!-- <script type="text/partytown">
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-ZX7H2KPXNZ');
-</script>
-
 	<script>
 		(function (w, d, s, l, i) {
 			w[l] = w[l] || [];
@@ -33,7 +10,7 @@
 			j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
 			f.parentNode.insertBefore(j, f);
 		})(window, document, "script", "dataLayer", "GTM-N7QQ97Z8");
-	</script> -->
+	</script>
 </svelte:head>
 
 <!-- Google Tag Manager (noscript) -->
