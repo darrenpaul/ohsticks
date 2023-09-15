@@ -46,3 +46,5 @@ export async function load({ fetch, getClientAddress, cookies }) {
 		pageData
 	};
 }
+
+export const csr = false;
