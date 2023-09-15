@@ -3,12 +3,12 @@
 
 <div class="side-by-side-image">
 	<img
-		src="https://images.unsplash.com/photo-1572950947476-26a6e4111e80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-sticker-bag.webp?alt=media&token=8066933f-a352-467e-8e8b-2d8492bbbf16"
 		alt="Preview"
 	/>
 
 	<img
-		src="https://images.unsplash.com/photo-1589384267710-7a170981ca78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3270&q=80"
+		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-sticker-on-laptop.webp?alt=media&token=0fde785a-213a-4a5a-9dca-a44aef9b055b"
 		alt="Preview"
 	/>
 </div>
@@ -23,5 +23,17 @@
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
+
+		img {
+			/* SIZE */
+			@apply h-full;
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply object-cover;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
 	}
 </style>

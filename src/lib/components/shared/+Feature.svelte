@@ -6,8 +6,8 @@
 
 <div class="feature">
 	<img
-		src="https://images.unsplash.com/photo-1572950947476-26a6e4111e80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-		alt="Preview"
+		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-feature-image.webp?alt=media&token=f8000ac4-8286-4ce5-89f9-76165f0705b6"
+		alt="wall full of stickers from OhSticks"
 	/>
 
 	<div class="--title">
