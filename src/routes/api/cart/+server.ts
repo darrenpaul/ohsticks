@@ -2,7 +2,7 @@ import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
 import type { CartItem } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
-import { getLatestCart } from "$lib/server/cartHelpers";
+import { getLatestCart, mergeCartItems } from "$lib/server/cartHelpers";
 
 const table = "cart";
 
