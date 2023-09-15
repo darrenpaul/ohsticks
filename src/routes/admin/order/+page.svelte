@@ -37,6 +37,13 @@
 			<div class="--order-list">
 				<AdminOrderList
 					title={trans("page.admin.readyToProcess.label")}
+					orders={orders.filter(
+						(order) => ![paid, processing, shipped, delivered].includes(order.status)
+					)}
+				/>
+
+				<AdminOrderList
+					title={trans("page.admin.readyToProcess.label")}
 					orders={orders.filter((order) => order.status === paid)}
 				/>
 
