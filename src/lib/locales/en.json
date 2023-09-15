@@ -542,6 +542,14 @@
 			"shop": {
 				"label": "Shop"
 			}
+		},
+		"authCheck": {
+			"login": {
+				"label": "Login"
+			},
+			"loginRequired": {
+				"label": "You must be logged in to view this page."
+			}
 		}
 	}
 }
