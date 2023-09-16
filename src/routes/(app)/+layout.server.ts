@@ -46,3 +46,8 @@ export async function load({ fetch, getClientAddress, cookies }) {
 		pageData
 	};
 }
+
+/** @type {import('@sveltejs/adapter-vercel').Config} */
+export const config = {
+	runtime: "edge"
+};
