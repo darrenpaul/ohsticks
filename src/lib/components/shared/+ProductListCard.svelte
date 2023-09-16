@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Rating from "$lib/components/shared/+Rating.svelte";
 	import { productRoute } from "$lib/constants/routes/productRoute";
-	import { currency } from "$lib/stores/currencyStore";
 	import type { Product } from "$lib/types/product";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { selectItemEvent } from "$lib/utils/googleTagManager";

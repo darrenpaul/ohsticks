@@ -550,6 +550,20 @@
 			"loginRequired": {
 				"label": "You must be logged in to view this page."
 			}
+		},
+		"googleTagManager": {
+			"allowAdStorage": {
+				"label": "Personalized ads? Agree and enjoy!"
+			},
+			"allowAnalyticsStorage": {
+				"label": "Better user experience? Count me in!"
+			},
+			"acceptSelection": {
+				"label": "Selection"
+			},
+			"acceptAll": {
+				"label": "Accept All"
+			}
 		}
 	}
 }
