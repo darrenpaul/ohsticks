@@ -53,7 +53,12 @@
 					<td>{product.price}</td>
 					<td>{product.quantity}</td>
 					<td>
-						<img class="w-24 h-24 object-cover" src={product.featureImage.src} alt={product.name} />
+						<img
+							class="w-24 h-24 object-cover"
+							src={product.featureImage.src}
+							alt={product.name}
+							loading="lazy"
+						/>
 					</td>
 				</tr>
 			{/each}

@@ -8,7 +8,7 @@
 <div class="checkout-cart-item">
 	<div class="--group">
 		<div class="relative">
-			<img class="--image" src={cartItem.image.src} alt={cartItem.name} />
+			<img class="--image" src={cartItem.image.src} alt={cartItem.name} loading="lazy" />
 
 			<div class="--quantity-wrapper">
 				<p>{cartItem.quantity}</p>

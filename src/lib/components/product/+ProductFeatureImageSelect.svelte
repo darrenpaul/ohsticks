@@ -20,13 +20,14 @@
 					class={activeImage === productImage ? "--image-active" : "--image"}
 					src={productImage.src}
 					alt={product.name}
+					loading="lazy"
 				/>
 			</button>
 		{/each}
 	</div>
 
 	<div>
-		<img src={activeImage.src} alt={product.name} />
+		<img src={activeImage.src} alt={product.name} loading="eager" />
 	</div>
 </div>
 

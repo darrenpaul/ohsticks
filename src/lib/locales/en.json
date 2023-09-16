@@ -564,6 +564,27 @@
 			"acceptAll": {
 				"label": "Accept All"
 			}
+		},
+		"generalInformation": {
+			"whyChooseUs": {
+				"label": "Why Choose OhSticks?"
+			},
+			"qualityAssurance": {
+				"label": "Quality Assurance",
+				"description": "Our stickers are made from high-quality, durable materials to ensure long-lasting enjoyment."
+			},
+			"vibrantColors": {
+				"label": "Vibrant Colors",
+				"description": "Experience stickers that pop with vibrant colors, adding life to your belongings."
+			},
+			"easyApplication": {
+				"label": "Easy Application",
+				"description": "Our stickers are easy to apply, remove, and reposition without leaving any residue."
+			},
+			"customerSatisfaction": {
+				"label": "Customer Satisfaction",
+				"description": "We are dedicated to ensuring your complete satisfaction with every purchase."
+			}
 		}
 	}
 }

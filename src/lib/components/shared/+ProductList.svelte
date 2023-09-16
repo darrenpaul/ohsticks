@@ -32,7 +32,7 @@
 		/* SIZE */
 		@apply w-full;
 		/* MARGINS AND PADDING */
-		@apply px-2 mx-auto mb-16;
+		@apply px-2 mx-auto;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

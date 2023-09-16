@@ -117,10 +117,9 @@
 		/* MARGINS AND PADDING */
 		@apply px-4;
 		/* LAYOUT */
-		@apply fixed top-0 left-0 z-navigation;
+		@apply fixed top-0 md:top-4 left-0 z-navigation;
 		/* BORDERS */
 		/* COLORS */
-		@apply bg-white;
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
 		@apply drop-shadow;
@@ -129,21 +128,26 @@
 			/* SIZE */
 			@apply max-w-[1170px] h-full;
 			/* MARGINS AND PADDING */
-			@apply mx-auto;
+			@apply mx-auto px-4 lg:px-0;
 			/* LAYOUT */
 			@apply flex justify-between items-center lg:grid grid-cols-3 place-items-center;
 			/* BORDERS */
+			@apply rounded-3xl;
 			/* COLORS */
+			@apply bg-white;
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 		}
 
 		.--branding {
 			/* SIZE */
+			@apply h-full;
 			/* MARGINS AND PADDING */
+			@apply px-0 lg:px-8;
 			/* LAYOUT */
-			@apply flex gap-6 self-center place-self-start;
+			@apply flex gap-6 self-center place-self-start items-center;
 			/* BORDERS */
+			@apply rounded-3xl;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
@@ -151,10 +155,13 @@
 
 		.--links {
 			/* SIZE */
+			@apply h-full;
 			/* MARGINS AND PADDING */
+			@apply px-0 lg:px-8;
 			/* LAYOUT */
-			@apply flex gap-6 self-center place-self-center;
+			@apply flex gap-6 self-center place-self-center items-center;
 			/* BORDERS */
+			@apply rounded-3xl;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
@@ -184,10 +191,13 @@
 
 		.--cart-account {
 			/* SIZE */
+			@apply h-full;
 			/* MARGINS AND PADDING */
+			@apply px-0 lg:px-8;
 			/* LAYOUT */
-			@apply flex gap-6 self-center place-self-end;
+			@apply flex gap-6 self-center place-self-end items-center;
 			/* BORDERS */
+			@apply rounded-3xl;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
