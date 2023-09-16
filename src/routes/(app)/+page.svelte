@@ -9,6 +9,7 @@
 	import { brandName, companyLogo, siteUrl } from "$lib/constants/site";
 	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute.js";
 	import { trans } from "$lib/locales/translateCopy";
+	import GeneralInformation from "$lib/components/shared/+GeneralInformation.svelte";
 
 	export /** @type {import('./$types').PageData} */
 	let data;
@@ -39,7 +40,13 @@
 	<Feature />
 
 	<ContainWidth background="bg-transparent">
-		<ProductList title={trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
+		<div class="--component-wrapper">
+			<ProductList title={trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
+		</div>
+
+		<div class="--component-wrapper">
+			<GeneralInformation />
+		</div>
 
 		<SideBySideImage />
 	</ContainWidth>
@@ -96,5 +103,16 @@
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
+
+		.--component-wrapper {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply mb-24;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
 	}
 </style>

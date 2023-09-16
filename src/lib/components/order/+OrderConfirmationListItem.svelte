@@ -14,7 +14,7 @@
 <div class="checkout-cart-item">
 	<div class="--group">
 		<div class="relative">
-			<img class="--image" src={item.image.src} alt={item.name} />
+			<img class="--image" src={item.image.src} alt={item.name} loading="lazy" />
 
 			<div class="--quantity-wrapper">
 				<p>{item.quantity}</p>

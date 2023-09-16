@@ -15,7 +15,7 @@
 
 <div class="product-list-card">
 	<a href={`${productRoute.path}/${product.slug}`} on:click={track}>
-		<img src={product.featureImage.src} alt="Preview" />
+		<img width="250" height="250" src={product.featureImage.src} alt="Preview" loading="lazy" />
 
 		<div class="--content">
 			<p class="--title">{product.name}</p>

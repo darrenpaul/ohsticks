@@ -40,7 +40,7 @@
 
 {#each images as image}
 	<div>
-		<img src={image?.src} alt={image?.alt} />
+		<img src={image?.src} alt={image?.alt} loading="lazy" />
 		<button on:click|preventDefault={() => onImageDelete(image?.src)} class="slim-button">
 			Delete
 		</button>
