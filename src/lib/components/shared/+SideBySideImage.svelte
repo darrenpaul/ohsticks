@@ -28,7 +28,7 @@
 
 		img {
 			/* SIZE */
-			@apply h-full;
+			@apply h-full max-h-[50vh];
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
 			@apply object-cover;
