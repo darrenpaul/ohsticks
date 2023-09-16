@@ -6,7 +6,7 @@
 
 <div class="feature">
 	<img
-		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-feature-image.webp?alt=media&token=f8000ac4-8286-4ce5-89f9-76165f0705b6"
+		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-homepage-feature.webp?alt=media&token=e77db1a2-582e-4ffe-abb1-714cf0cd149b"
 		alt="wall full of stickers from OhSticks"
 	/>
 
