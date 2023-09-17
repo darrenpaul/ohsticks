@@ -34,39 +34,64 @@ const createAuthenticationUser = async ({
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
+export const POST = async ({ request, locals: { supabase, getSession } }) => {
+	console.log("POST ~ supabase:", supabase);
 	const { firstName, lastName, emailAddress, shippingAddress, password } = await request.json();
+	const session = await getSession();
 
-	const userRecord = await createAuthenticationUser({
-		emailAddress,
-		password,
-		firstName,
-		LastName: lastName
+	const { data: shippingAddressData, error: shippingAddressError } = await supabase
+		.from("shipping_address")
+		.insert({
+			address_1: "address1",
+			address_2: "address2",
+			city: "city",
+			country: "country",
+			postal_code: "postalCode",
+			province: "province"
+		})
+		.select()
+		.single();
+	console.log("POST ~ shippingAddressData:", shippingAddressData);
+	const { data: accountData, error: accountError } = await supabase.from("account").insert({
+		first_name: firstName,
+		last_name: lastName,
+		email_address: emailAddress,
+		shipping_address: shippingAddressData.id
 	});
+	console.log("POST ~ accountError:", accountError);
+	console.log("POST ~ accountData:", accountData);
 
-	const userUID = userRecord.uid;
+	// const userRecord = await createAuthenticationUser({
+	// 	emailAddress,
+	// 	password,
+	// 	firstName,
+	// 	LastName: lastName
+	// });
 
-	try {
-		await adminDB.collection(table).doc(userUID).set({
-			firstName,
-			lastName,
-			emailAddress,
-			shippingAddress,
-			role: userRole
-		});
+	// const userUID = userRecord.uid;
 
-		adminAuth.setCustomUserClaims(userUID, { role: "user" });
-		// Change to admin when needed
-		// adminAuth.setCustomUserClaims(userUID, { role: "admin" });
+	// try {
+	// 	await adminDB.collection(table).doc(userUID).set({
+	// 		firstName,
+	// 		lastName,
+	// 		emailAddress,
+	// 		shippingAddress,
+	// 		role: userRole
+	// 	});
 
-		return new Response();
-	} catch (errorResponse: unknown) {
-		console.log(errorResponse);
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
-		});
-	}
+	// 	adminAuth.setCustomUserClaims(userUID, { role: "user" });
+	// 	// Change to admin when needed
+	// 	// adminAuth.setCustomUserClaims(userUID, { role: "admin" });
+
+	// 	return new Response();
+	// } catch (errorResponse: unknown) {
+	// 	console.log(errorResponse);
+	// 	const knownError = errorResponse as HttpError;
+	// 	throw error(knownError.status, {
+	// 		message: knownError.body.message
+	// 	});
+	// }
+	return new Response();
 };
 
 // LIST

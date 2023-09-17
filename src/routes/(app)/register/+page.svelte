@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 	import { browser } from "$app/environment";
@@ -8,6 +7,9 @@
 	import { goto } from "$app/navigation";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
+
+	export let data;
+	let { supabase } = data;
 
 	let firstName: string = "";
 	let lastName: string = "";
@@ -29,6 +31,14 @@
 	}
 
 	const handleFormSubmit = async () => {
+		await supabase.auth.signUp({
+			email,
+			password,
+			options: {
+				emailRedirectTo: `${location.origin}/auth/callback`
+			}
+		});
+
 		const response = await fetch("/api/account", {
 			method: "POST",
 			body: JSON.stringify({
@@ -40,15 +50,15 @@
 			})
 		});
 
-		if (!response.ok) {
-			const message = await response.text();
-			throw new Error(message);
-		}
+		// if (!response.ok) {
+		// 	const message = await response.text();
+		// 	throw new Error(message);
+		// }
 
-		track();
+		// track();
 
-		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
-		alert("Account created successfully!");
+		// const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
+		// alert("Account created successfully!");
 	};
 
 	const track = () => {

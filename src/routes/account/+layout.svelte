@@ -3,8 +3,8 @@
 	import NavigationAccount from "$lib/components/navigation/+NavigationAccount.svelte";
 </script>
 
-<AuthCheck>
-	<NavigationAccount />
+<!-- <AuthCheck> -->
+<NavigationAccount />
 
-	<slot />
-</AuthCheck>
+<slot />
+<!-- </AuthCheck> -->

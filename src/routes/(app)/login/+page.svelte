@@ -11,6 +11,9 @@
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
+	export let data;
+
+	let { supabase } = data;
 	let previousPage: string = base;
 	let email = "";
 	let password = "";
@@ -26,8 +29,10 @@
 	}
 
 	const handleFormSubmit = async () => {
-		track();
-		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
+		const apples = await supabase.auth.signInWithPassword({ email, password });
+		console.log("handleFormSubmit ~ apples:", apples);
+		// const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
+		// track();
 	};
 
 	const track = () => {

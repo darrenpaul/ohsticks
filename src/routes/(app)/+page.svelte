@@ -14,7 +14,7 @@
 	export /** @type {import('./$types').PageData} */
 	let data;
 
-	let products: Product[] = data.products;
+	let products: Product[] = data.products || [];
 	let pageData = data.pageData.find((page) => page.slug === "home");
 
 	let pageUrl = "";
