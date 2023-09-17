@@ -57,7 +57,7 @@
 </script>
 
 <div class="product-page">
-	<ContainWidth>
+	<ContainWidth padding={"pt-24"}>
 		<BreadCrumb {crumbs} />
 
 		<ProductFeature {product} />
@@ -110,7 +110,6 @@
 	.product-page {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply mt-20;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
