@@ -6,7 +6,7 @@
 	$user;
 </script>
 
-<AuthAdminCheck>
-	<AdminNavigation />
-	<slot />
-</AuthAdminCheck>
+<!-- <AuthAdminCheck> -->
+<AdminNavigation />
+<slot />
+<!-- </AuthAdminCheck> -->

@@ -1,36 +1,42 @@
-import { adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
-import type { CartItem, CartResponse } from "$lib/types/cart";
-import { mergeCartItems, syncCartItemsAndProducts } from "$lib/server/cartHelpers";
+import type { CartItem } from "$lib/types/cart";
+import { mergeCartItems } from "$lib/server/cartHelpers";
 
-const table = "cart";
+const table = "cart_guest";
 
 // ADD ITEM TO CART
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
+export const POST = async ({ request, locals: { supabase } }) => {
 	const cartKey = request.headers.get("cart-key");
 	const { cartItem } = await request.json();
 
 	if (cartKey) {
-		const cartReference = await adminDB.collection(table).doc(cartKey);
+		const { data } = await supabase.from(table).select().eq("id", cartKey).single();
 
-		const cartData = (await cartReference.get()).data();
-
-		if (cartData) {
-			const cartItems = cartData.cartItems as CartItem[];
+		if (data) {
+			const cartItems = data.cart_items as CartItem[];
 			cartItems.push(cartItem);
 
 			const mergedCartItems = mergeCartItems(cartItems);
 
-			const payload = {
-				cartItems: mergedCartItems,
-				expiration: addDays(new Date(), 7),
-				createdAt: new Date()
+			const updatePayload = {
+				cart_items: mergedCartItems,
+				expiration: addDays(new Date(), 7)
 			};
 
-			cartReference.update(payload);
+			const { data: updatedData } = await supabase
+				.from(table)
+				.update(updatePayload)
+				.eq("id", cartKey)
+				.select()
+				.single();
 
-			return new Response(JSON.stringify({ cartKey: cartReference.id, ...payload }), {
+			const payload = {
+				cartKey: updatedData.id,
+				cartItems: updatedData.cart_items
+			};
+
+			return new Response(JSON.stringify(payload), {
 				headers: {
 					"Content-Type": "application/json"
 				}
@@ -39,14 +45,22 @@ export const POST = async ({ request }) => {
 
 		// If cartData is null, then a new cart will be created
 	}
-	const cartReference = await adminDB.collection(table).doc();
+
+	const { data, error } = await supabase
+		.from(table)
+		.insert({
+			cart_items: [cartItem],
+			expiration: addDays(new Date(), 7)
+		})
+		.select()
+		.single();
+
 	const payload = {
-		cartItems: [cartItem],
-		expiration: addDays(new Date(), 7),
-		createdAt: new Date()
+		cartItems: data.cart_items,
+		cartKey: data.id
 	};
-	await cartReference.set(payload);
-	return new Response(JSON.stringify({ cartKey: cartReference.id, ...payload }), {
+
+	return new Response(JSON.stringify(payload), {
 		headers: {
 			"Content-Type": "application/json"
 		}
@@ -55,7 +69,7 @@ export const POST = async ({ request }) => {
 
 // GET CART
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url, fetch }) => {
+export const GET = async ({ request, url, fetch, locals: { supabase } }) => {
 	const cartKey = request.headers.get("cart-key");
 
 	if (!cartKey) {
@@ -66,10 +80,9 @@ export const GET = async ({ request, url, fetch }) => {
 		});
 	}
 
-	const guestCartReference = await adminDB.collection(table).doc(cartKey).get();
-	const guestCartData = guestCartReference.data() as CartResponse;
+	const { data } = await supabase.from(table).select().eq("id", cartKey).single();
 
-	if (!guestCartData) {
+	if (!data) {
 		return new Response(JSON.stringify({}), {
 			headers: {
 				"Content-Type": "application/json"
@@ -77,24 +90,19 @@ export const GET = async ({ request, url, fetch }) => {
 		});
 	}
 
-	const { cartItems, expiration } = guestCartData;
-
-	const expirationDate = new Date(expiration.seconds * 1000);
-	if (isAfter(new Date(), new Date(expirationDate))) {
-		const jsonString = JSON.stringify({});
-
-		return new Response(jsonString, {
+	if (isAfter(new Date(), new Date(data.expiration))) {
+		await supabase.from(table).delete().eq("id", cartKey).single();
+		return new Response(JSON.stringify({}), {
 			headers: {
 				"Content-Type": "application/json"
 			}
 		});
 	}
 
-	const syncedCartItems = await syncCartItemsAndProducts(cartItems);
+	const cartItems = data.cart_items as CartItem[];
+	// const syncedCartItems = await syncCartItemsAndProducts(cartItems, supabase);
 
-	const jsonString = JSON.stringify({ cartKey: cartKey, cartItems: syncedCartItems });
-
-	return new Response(jsonString, {
+	return new Response(JSON.stringify({ cartKey: cartKey, cartItems: cartItems }), {
 		headers: {
 			"Content-Type": "application/json"
 		}
@@ -103,7 +111,7 @@ export const GET = async ({ request, url, fetch }) => {
 
 // DELETE ITEM FROM CART
 /** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
+export const DELETE = async ({ request, locals: { supabase } }) => {
 	const cartKey = request.headers.get("cart-key");
 	const { cartItem } = await request.json();
 
@@ -115,10 +123,8 @@ export const DELETE = async ({ request }) => {
 		});
 	}
 
-	const cartReference = await adminDB.collection(table).doc(cartKey);
-	const cartData = (await cartReference.get()).data();
-
-	if (!cartData) {
+	const { data } = await supabase.from(table).select().eq("id", cartKey).single();
+	if (!data) {
 		return new Response(JSON.stringify({}), {
 			headers: {
 				"Content-Type": "application/json"
@@ -126,20 +132,27 @@ export const DELETE = async ({ request }) => {
 		});
 	}
 
-	const cartItems = cartData.cartItems as CartItem[];
+	const cartItems = data.cart_items as CartItem[];
 	const filteredCartItems = cartItems.filter((item) => item.id !== cartItem.id);
 
-	const mergedCartItems = mergeCartItems(filteredCartItems);
-
-	const payload = {
-		cartItems: mergedCartItems,
-		expiration: addDays(new Date(), 7),
-		createdAt: new Date()
+	const updatePayload = {
+		cart_items: filteredCartItems,
+		expiration: addDays(new Date(), 7)
 	};
 
-	cartReference.update(payload);
+	const { data: updatedData } = await supabase
+		.from(table)
+		.update(updatePayload)
+		.eq("id", cartKey)
+		.select()
+		.single();
 
-	return new Response(JSON.stringify({ cartKey: cartReference.id, ...payload }), {
+	const payload = {
+		cartKey: updatedData.id,
+		cartItems: updatedData.cart_items
+	};
+
+	return new Response(JSON.stringify(payload), {
 		headers: {
 			"Content-Type": "application/json"
 		}

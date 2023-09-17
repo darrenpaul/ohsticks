@@ -11,20 +11,22 @@
 
 	export let data;
 
-	let products: Product[];
-	let pageData = data.body.pageData.find((page) => page.slug === "collection");
+	let products: Product[] = [];
+	let pageData = data.pageData.find((page) => page.slug === "collection");
 	let pageUrl = "";
 
 	$: {
-		if (data.body.products) {
-			products = data.body.products;
-
-			if (browser) {
-				track();
-			}
+		if (browser) {
+			products = productsByCategory($page.params.slug);
+			track();
+			pageUrl = `${$page.url}`;
 		}
-		pageUrl = `${$page.url}`;
 	}
+
+	const productsByCategory = (category: string) => {
+		if (category === "all") return data.products;
+		return data.products.filter((product: Product) => product.categories.includes(category));
+	};
 
 	const track = () => {
 		viewItemListEvent(products);

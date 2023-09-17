@@ -31,22 +31,18 @@ export const fetchGuestCart = async () => {
 	const cartData = await response.json();
 
 	if (!cartData.cartKey) {
-		localStorage.removeItem(cartGuestLocalStorageKey);
+		// localStorage.removeItem(cartGuestLocalStorageKey);
 	}
 
 	cart.set(cartData);
 };
 
-export const fetchUserCart = async (accessToken: string) => {
+export const fetchUserCart = async () => {
 	if (!browser) return;
 
 	localStorage.removeItem(cartGuestLocalStorageKey);
 
-	const headers = new Headers();
-	headers.append("x-access-token", accessToken);
-
 	const cartResponse = await fetch("/api/cart", {
-		headers,
 		method: "GET"
 	});
 
@@ -61,13 +57,13 @@ export const clearCart = () => {
 	cart.set(null);
 };
 
-export const addToCart = async (product: Product, accessToken: string | null | undefined) => {
+export const addToCart = async (product: Product, session) => {
 	addToCartEvent(product);
 
 	const cartItem: CartItem = createCartItem(product);
 
-	if (accessToken) {
-		const cartData = await addToCartUser(cartItem, accessToken);
+	if (session) {
+		const cartData = await addToCartUser(cartItem);
 
 		if (cartData) {
 			cart.set(cartData);
@@ -80,20 +76,13 @@ export const addToCart = async (product: Product, accessToken: string | null | u
 	}
 };
 
-export const removeFromCart = async (
-	product: Product,
-	accessToken: string | null | undefined,
-	index = 0
-) => {
-	// TODO: Change to remove from cart event
-	// addToCartEvent(product);
-
+export const removeFromCart = async (product: Product, session, index = 0) => {
 	const cartItem: CartItem = createCartItem(product);
 
 	removeFromCartEvent(cartItem, index);
 
-	if (accessToken) {
-		const cartData = await removeFromCartUser(cartItem, accessToken);
+	if (session) {
+		const cartData = await removeFromCartUser(cartItem);
 		if (cartData) {
 			cart.set(cartData);
 		}

@@ -79,8 +79,6 @@ const userStore = () => {
 			userWithRole.role = role;
 
 			set(userWithRole);
-
-			fetchUserCart(token);
 		});
 
 		return () => unsubscribe();

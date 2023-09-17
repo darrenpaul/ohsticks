@@ -23,15 +23,9 @@ export const addToCartGuest = async (cartItem: CartItem) => {
 	}
 };
 
-export const addToCartUser = async (cartItem: CartItem, accessToken: string) => {
-	const headers = new Headers();
-	if (accessToken) {
-		headers.append("x-access-token", accessToken);
-	}
-
+export const addToCartUser = async (cartItem: CartItem) => {
 	const response = await fetch("/api/cart", {
 		method: "POST",
-		headers,
 		body: JSON.stringify({ cartItem })
 	});
 
@@ -64,15 +58,10 @@ export const removeFromCartGuest = async (cartItem: CartItem) => {
 	}
 };
 
-export const removeFromCartUser = async (cartItem: CartItem, accessToken: string) => {
-	const headers = new Headers();
-	if (accessToken) {
-		headers.append("x-access-token", accessToken);
-	}
-
+export const removeFromCartUser = async (cartItem: CartItem) => {
 	const response = await fetch("/api/cart", {
 		method: "DELETE",
-		headers,
+
 		body: JSON.stringify({ cartItem })
 	});
 

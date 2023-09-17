@@ -14,17 +14,16 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";
-	import { onMount } from "svelte";
 	import Carousel from "svelte-carousel";
 	import { viewItemEvent } from "$lib/utils/googleTagManager.js";
+	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
+	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 
-	let MobileOnlyComponent;
-	let DesktopOnlyComponent;
+	export let data;
 
-	onMount(async () => {
-		MobileOnlyComponent = (await import("$lib/components/shared/+MobileOnly.svelte")).default;
-		DesktopOnlyComponent = (await import("$lib/components/shared/+DesktopOnly.svelte")).default;
-	});
+	let product: Product;
+	let relatedProducts: Product[];
+	let session;
 
 	let crumbs: Link[] = [
 		homeRoute,
@@ -36,31 +35,27 @@
 		}
 	];
 
-	export let data;
-	let product: Product;
-	let relatedProducts: Product[];
-
-	$: {
-		if (data.body.product) {
-			product = data.body.product;
-			relatedProducts = data.body.relatedProducts as Product[];
-
-			if (browser) {
-				track();
-			}
-		}
-	}
-
 	const track = () => {
 		viewItemEvent(product);
 	};
+
+	$: {
+		const slug = $page.params.slug;
+
+		product = data.products.find((product: Product) => product.slug === slug);
+		relatedProducts = data.products.filter((product: Product) => product.slug !== slug);
+		session = data.session;
+		if (browser) {
+			track();
+		}
+	}
 </script>
 
 <div class="product-page">
 	<ContainWidth>
 		<BreadCrumb {crumbs} />
 
-		<ProductFeature {product} />
+		<ProductFeature {product} {session} />
 	</ContainWidth>
 
 	<ContainWidth background="bg-transparent">
@@ -70,7 +65,7 @@
 			<h2 class="--heading">{trans("page.product.relatedProducts.label")}</h2>
 
 			{#if browser}
-				<svelte:component this={MobileOnlyComponent}>
+				<svelte:component this={MobileOnly}>
 					<Carousel
 						particlesToShow={1}
 						particlesToScroll={1}
@@ -85,7 +80,7 @@
 					</Carousel>
 				</svelte:component>
 
-				<svelte:component this={DesktopOnlyComponent}>
+				<svelte:component this={DesktopOnly}>
 					<Carousel
 						particlesToShow={3}
 						particlesToScroll={2}

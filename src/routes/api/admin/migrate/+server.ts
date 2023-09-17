@@ -41,20 +41,18 @@ export const PUT = async ({ request, locals: { supabase, getSession } }) => {
 		...doc.data()
 	})) as Product[];
 
-	const product = products[0];
-
 	const updatePromises = products.map(async (product: Product) => {
-		await supabase.from("product").insert({
+		return await supabase.from("product").insert({
 			name: product.name,
 			slug: product.slug,
 			description: product.description,
 			categories: product.categories,
 			visible: product.visible,
-			currency_prices: JSON.stringify(product.currencyPrice),
-			content_sections: JSON.stringify(product.contentSections),
-			feature_image: JSON.stringify(product.featureImage),
-			product_images: JSON.stringify(product.images),
-			meta: JSON.stringify(product.meta)
+			currency_price: product.currencyPrice,
+			content_sections: product.contentSections,
+			feature_image: product.featureImage,
+			images: product.images,
+			meta: product.meta
 		});
 	});
 

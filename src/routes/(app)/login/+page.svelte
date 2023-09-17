@@ -1,47 +1,44 @@
 <script lang="ts">
-	import { goto, afterNavigate } from "$app/navigation";
+	import { goto } from "$app/navigation";
 	import { browser } from "$app/environment";
-	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
-	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { trans } from "$lib/locales/translateCopy";
-	import { base } from "$app/paths";
 	import { page } from "$app/stores";
-	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
+	import {
+		accountRoute,
+		forgotPasswordRoute,
+		registerRoute
+	} from "$lib/constants/routes/accountRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
 	export let data;
 
-	let { supabase } = data;
-	let previousPage: string = base;
-	let email = "";
-	let password = "";
+	let { supabase, session } = data;
+	let email: string;
+	let password: string;
 
 	$: {
-		if (browser && $user) {
-			if (previousPage === $page.url.pathname) {
-				goto(homeRoute.path, { replaceState: true });
-			} else {
-				goto(previousPage, { replaceState: true });
-			}
+		if (browser && session) {
+			goto(homeRoute.path, { replaceState: true });
 		}
 	}
 
 	const handleFormSubmit = async () => {
-		const apples = await supabase.auth.signInWithPassword({ email, password });
-		console.log("handleFormSubmit ~ apples:", apples);
-		// const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
-		// track();
+		const nextPage = $page.url.searchParams.get("page");
+
+		const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+		if (data) {
+			track();
+			if (nextPage) {
+				goto(accountRoute.path, { replaceState: true });
+			}
+		}
 	};
 
 	const track = () => {
 		dataLayer.push({ event: "login" });
 	};
-
-	afterNavigate(({ from }) => {
-		previousPage = from?.url.pathname || previousPage;
-	});
 </script>
 
 <div class="login-page">

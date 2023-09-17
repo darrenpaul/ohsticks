@@ -14,10 +14,11 @@
 	const cartState: Writable<Boolean> = getContext("cartState");
 
 	export let product: Product;
+	export let session;
 
 	const handleAddToCart = async () => {
 		const accessToken = await $user?.getIdToken();
-		addToCart(product, accessToken);
+		addToCart(product, session);
 		cartState.set(true);
 	};
 </script>

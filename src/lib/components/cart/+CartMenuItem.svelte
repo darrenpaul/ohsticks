@@ -4,6 +4,9 @@
 	import { removeFromCart } from "$lib/stores/cartStore";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { user } from "$lib/firebase/firebaseClient";
+	import { getContext } from "svelte";
+
+	const sessionState: Writable<any> = getContext("sessionState");
 
 	let totalPrice: string;
 
@@ -15,8 +18,7 @@
 	}
 
 	const handleRemoveFromCart = async (cartItem: CartItem) => {
-		const accessToken = await $user?.getIdToken();
-		removeFromCart(cartItem, accessToken, index);
+		removeFromCart(cartItem, $sessionState, index);
 	};
 </script>
 

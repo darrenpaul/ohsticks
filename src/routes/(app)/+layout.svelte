@@ -5,14 +5,24 @@
 	import CartMenu from "$lib/components/cart/+CartMenu.svelte";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
-
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
+	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore.js";
+
+	const cartState = writable(false);
+	const supabaseState = writable();
+	const sessionState = writable();
 
 	export let data;
 
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	let supabase;
+	let session;
+	$: {
+		supabase = data?.supabase;
+		session = data?.session;
+		supabaseState.set(supabase);
+		sessionState.set(session);
+	}
 
 	onMount(() => {
 		const {
@@ -21,15 +31,20 @@
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate("supabase:auth");
 			}
+			if (_session) {
+				fetchUserCart();
+			} else {
+				fetchGuestCart();
+			}
 		});
 
 		return () => subscription.unsubscribe();
 	});
 
-	const cartState = writable(false);
-
 	if (browser) {
 		setContext("cartState", cartState);
+		setContext("supabaseState", supabaseState);
+		setContext("sessionState", sessionState);
 	}
 </script>
 

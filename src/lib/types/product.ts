@@ -116,7 +116,7 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			currency_price: currencyPrice
 		} = product;
 
-		const currencyPriceData = JSON.parse(currencyPrice);
+		const currencyPriceData = currencyPrice;
 		const productPrice = currencyPriceData[currency].price;
 
 		const newProduct: Product = {
@@ -125,12 +125,12 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			slug,
 			categories,
 			description,
-			contentSections: JSON.parse(contentSections),
+			contentSections: contentSections,
 			quantity,
 			visible,
-			featureImage: JSON.parse(featureImage),
-			images: JSON.parse(images),
-			meta: JSON.parse(meta),
+			featureImage: featureImage,
+			images: images,
+			meta: meta,
 			brand,
 			price: productPrice,
 			currency: currencyPriceData[currency].currency

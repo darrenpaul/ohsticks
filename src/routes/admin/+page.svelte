@@ -4,16 +4,9 @@
 
 	const onRunMigration = async () => {
 		console.log("running migration");
-		const accessToken = await $user?.getIdToken();
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
 
 		await fetch("/api/admin/migrate", {
-			method: "PUT",
-			headers: {
-				"x-access-token": accessToken
-			}
+			method: "PUT"
 		});
 	};
 </script>

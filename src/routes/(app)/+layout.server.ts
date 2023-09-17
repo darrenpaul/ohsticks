@@ -1,23 +1,9 @@
-import { findCountryCurrency } from "$lib/constants/shippingCountries.js";
+import { getRegionCurrency } from "$lib/server/region.js";
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, getClientAddress, cookies, locals: { getSession } }) {
 	const clientAddress = getClientAddress();
-	// const clientAddress = "185.108.105.72";
-	console.log("load ~ clientAddress:", clientAddress);
-
-	let currency = cookies.get("currency");
-
-	// TODO: move to method and add expire date to cookie
-	if (!currency) {
-		const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
-		const countryData = await countryResponse.json();
-		const isoCode: string = countryData?.country || "AT";
-		const currencyCode = findCountryCurrency(isoCode);
-		currency = currencyCode;
-		cookies.set("currency", currencyCode);
-		currency = currencyCode;
-	}
+	const currency = await getRegionCurrency(clientAddress, cookies);
 
 	const queries = [{ key: "currency", value: currency }];
 	const queryString = queries.map((query) => `${query.key}=${query.value}`).join("&");

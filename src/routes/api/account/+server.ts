@@ -34,10 +34,9 @@ const createAuthenticationUser = async ({
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, locals: { supabase, getSession } }) => {
+export const POST = async ({ request, locals: { supabase } }) => {
 	console.log("POST ~ supabase:", supabase);
 	const { firstName, lastName, emailAddress, shippingAddress, password } = await request.json();
-	const session = await getSession();
 
 	const { data: shippingAddressData, error: shippingAddressError } = await supabase
 		.from("shipping_address")

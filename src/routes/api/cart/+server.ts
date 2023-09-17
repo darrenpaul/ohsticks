@@ -1,24 +1,16 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { addDays, isAfter } from "date-fns";
 import type { CartItem } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
-import { getLatestCart, mergeCartItems } from "$lib/server/cartHelpers";
+import { mergeCartItems } from "$lib/server/cartHelpers";
 
 const table = "cart";
 
 // ADD ITEM TO CART
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
-	const accessToken = request.headers.get("x-access-token");
+export const POST = async ({ request, locals: { supabase, getSession } }) => {
+	const session = await getSession();
 
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
-	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	if (!decodedIdToken) {
+	if (!session) {
 		throw error(401, {
 			message: "unauthorized"
 		});
@@ -26,45 +18,57 @@ export const POST = async ({ request }) => {
 
 	const { cartItem } = await request.json();
 
-	const tableSnapshot = await adminDB
-		.collection(table)
-		.where("userId", "==", decodedIdToken.uid)
-		.get();
+	const { data } = await supabase.from(table).select().eq("user_id", session.user.id).single();
 
-	if (!tableSnapshot.empty) {
-		const cartData = await getLatestCart(tableSnapshot);
-		if (cartData) {
-			const cartItems = cartData.cartItems as CartItem[];
+	if (data) {
+		// const cartData = await getLatestCart(tableSnapshot);
+		// if (cartData) {
+		const cartItems = data.cart_items as CartItem[];
+		cartItems.push(cartItem);
 
-			cartItems.push(cartItem);
+		const mergedCartItems: CartItem[] = mergeCartItems(cartItems);
 
-			const mergedCartItems: CartItem[] = mergeCartItems(cartItems);
+		const updatePayload = {
+			user_id: session.user.id,
+			cart_items: mergedCartItems,
+			expiration: addDays(new Date(), 7)
+		};
 
-			const payload = {
-				userId: decodedIdToken.uid,
-				cartItems: mergedCartItems,
-				expiration: addDays(new Date(), 7),
-				createdAt: new Date()
-			};
-			await adminDB.collection(table).doc(cartData.id).set(payload);
+		const { data: updatedData } = await supabase
+			.from(table)
+			.update(updatePayload)
+			.eq("user_id", session.user.id)
+			.select()
+			.single();
 
-			return new Response(JSON.stringify(payload), {
-				headers: {
-					"Content-Type": "application/json"
-				}
-			});
-		}
+		const payload = {
+			cartItems: updatedData.cart_items
+		};
+
+		return new Response(JSON.stringify(payload), {
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+		// }
 	}
 
-	// No carts found, create new cart
-	const payload = {
-		userId: decodedIdToken.uid,
-		cartItems: [cartItem],
-		expiration: addDays(new Date(), 7),
-		createdAt: new Date()
+	// // No carts found, create new cart
+	const createPayload = {
+		user_id: session.user.id,
+		cart_items: [cartItem],
+		expiration: addDays(new Date(), 7)
 	};
 
-	await adminDB.collection(table).doc().set(payload);
+	const { data: createdData, error } = await supabase
+		.from(table)
+		.insert(createPayload)
+		.select()
+		.single();
+
+	const payload = {
+		cartItems: JSON.parse(createdData.cart_items)
+	};
 
 	return new Response(JSON.stringify(payload), {
 		headers: {
@@ -75,28 +79,17 @@ export const POST = async ({ request }) => {
 
 // GET CART
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request }) => {
-	const accessToken = request.headers.get("x-access-token");
-
-	if (!accessToken) {
+export const GET = async ({ request, locals: { supabase, getSession } }) => {
+	const session = await getSession();
+	if (!session) {
 		throw error(401, {
 			message: "unauthorized"
 		});
 	}
 
-	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	if (!decodedIdToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
+	const { data } = await supabase.from(table).select().eq("user_id", session.user.id).single();
 
-	const tableSnapshot = await adminDB
-		.collection(table)
-		.where("userId", "==", decodedIdToken.uid)
-		.get();
-
-	if (tableSnapshot.empty) {
+	if (!data) {
 		return new Response(JSON.stringify({}), {
 			headers: {
 				"Content-Type": "application/json"
@@ -104,21 +97,19 @@ export const GET = async ({ request }) => {
 		});
 	}
 
-	const cartData = await getLatestCart(tableSnapshot);
-
-	if (!cartData) {
-		return new Response(JSON.stringify({}), {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	}
-
-	const { expiration, cartItems } = cartData;
+	// TODO: Reintroduce this
+	// const cartData = await getLatestCart(tableSnapshot);
+	// if (!cartData) {
+	// 	return new Response(JSON.stringify({}), {
+	// 		headers: {
+	// 			"Content-Type": "application/json"
+	// 		}
+	// 	});
+	// }
 
 	// Delete Cart if expired
-	const expirationDate = new Date(expiration.seconds * 1000);
-	if (isAfter(new Date(), new Date(expirationDate))) {
+	if (isAfter(new Date(), new Date(data.expiration))) {
+		await supabase.from(table).delete().eq("user_id", session.user.id).single();
 		return new Response(JSON.stringify({}), {
 			headers: {
 				"Content-Type": "application/json"
@@ -126,7 +117,13 @@ export const GET = async ({ request }) => {
 		});
 	}
 
-	return new Response(JSON.stringify({ cartItems, userId: decodedIdToken.uid }), {
+	// const syncedCartItems = await syncCartItemsAndProducts(data.cart_items, supabase);
+
+	const payload = {
+		cartItems: data.cart_items
+	};
+
+	return new Response(JSON.stringify(payload), {
 		headers: {
 			"Content-Type": "application/json"
 		}
@@ -135,30 +132,18 @@ export const GET = async ({ request }) => {
 
 // DELETE ITEM FROM CART
 /** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
-	const accessToken = request.headers.get("x-access-token");
-
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
-	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	if (!decodedIdToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
+export const DELETE = async ({ request, locals: { supabase, getSession } }) => {
 	const { cartItem } = await request.json();
 
-	const tableSnapshot = await adminDB
-		.collection(table)
-		.where("userId", "==", decodedIdToken.uid)
-		.get();
+	const session = await getSession();
+	if (!session) {
+		throw error(401, {
+			message: "unauthorized"
+		});
+	}
 
-	if (tableSnapshot.empty) {
+	const { data } = await supabase.from(table).select().eq("user_id", session.user.id).single();
+	if (!data) {
 		return new Response(JSON.stringify({}), {
 			headers: {
 				"Content-Type": "application/json"
@@ -166,27 +151,28 @@ export const DELETE = async ({ request }) => {
 		});
 	}
 
-	const cartData = await getLatestCart(tableSnapshot);
+	const cartItems = data.cart_items as CartItem[];
+	const filteredCartItems = cartItems.filter((item) => item.id !== cartItem.id);
 
-	if (cartData) {
-		const cartItems = cartData.cartItems as CartItem[];
+	const updatePayload = {
+		cart_items: filteredCartItems,
+		expiration: addDays(new Date(), 7)
+	};
 
-		const filteredCartItems = cartItems.filter((item) => item.id !== cartItem.id);
+	const { data: updatedData } = await supabase
+		.from(table)
+		.update(updatePayload)
+		.eq("user_id", session.user.id)
+		.select()
+		.single();
 
-		const mergedCartItems: CartItem[] = mergeCartItems(filteredCartItems);
+	const payload = {
+		cartItems: updatedData.cart_items
+	};
 
-		const payload = {
-			userId: decodedIdToken.uid,
-			cartItems: mergedCartItems,
-			expiration: addDays(new Date(), 7),
-			createdAt: new Date()
-		};
-		await adminDB.collection(table).doc(cartData.id).set(payload);
-
-		return new Response(JSON.stringify(payload), {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	}
+	return new Response(JSON.stringify(payload), {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 };

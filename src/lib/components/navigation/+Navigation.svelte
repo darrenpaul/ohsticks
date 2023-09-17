@@ -13,7 +13,6 @@
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
 	import BrandIcon from "$lib/components/icons/+BrandIcon.svelte";
 
-	let scrollYPosition: number;
 	let navigationFixed: boolean = false;
 
 	let mobileMenuOpen: boolean = false;
@@ -22,16 +21,9 @@
 	let linksMobile = [homeRoute, collectionAllRoute, contactRoute];
 
 	$: {
-		// if (scrollYPosition > 80) {
-		// 	navigationFixed = true;
-		// } else {
-		// 	navigationFixed = false;
-		// }
 		$page.url && (mobileMenuOpen = false);
 	}
 </script>
-
-<svelte:window bind:scrollY={scrollYPosition} />
 
 <!-- MOBILE NAVIGATION -->
 <MobileOnly>

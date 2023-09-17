@@ -1,10 +1,11 @@
+import { accountRoute, loginRoute } from "$lib/constants/routes/accountRoute.js";
 import { fail, redirect } from "@sveltejs/kit";
 
 export const load = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 
 	if (!session) {
-		throw redirect(303, "/");
+		throw redirect(303, `${loginRoute.path}?page=${accountRoute.name}`);
 	}
 
 	const { data } = await supabase
