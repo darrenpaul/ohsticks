@@ -40,7 +40,7 @@
 			{trans("component.footer.newsletter.label")}
 		</label>
 
-		<button class="floating-button">
+		<button class="floating-button" aria-label="Sign up to newsletter">
 			<SendMessageIcon />
 		</button>
 	</div>

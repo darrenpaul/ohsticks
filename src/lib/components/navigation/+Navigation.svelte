@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="--branding">
-				<a href={homeRoute.path}>
+				<a href={homeRoute.path} aria-label={`Go to ${homeRoute.label} page`}>
 					<BrandIcon />
 				</a>
 			</div>
@@ -87,7 +87,7 @@
 	<header class={navigationFixed ? "fixed" : "block"}>
 		<div class="--inner">
 			<div class="--branding">
-				<a href={homeRoute.path}>
+				<a href={homeRoute.path} aria-label={`Go to ${homeRoute.label} page`}>
 					<BrandIcon />
 				</a>
 			</div>
