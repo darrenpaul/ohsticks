@@ -34,22 +34,22 @@ const table = "user";
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, locals: { supabase } }) => {
-	console.log("POST ~ supabase:", supabase);
-	const { firstName, lastName, emailAddress, shippingAddress, password } = await request.json();
+	const { uuid, firstName, lastName, emailAddress, shippingAddress } = await request.json();
 
 	const { data: shippingAddressData, error: shippingAddressError } = await supabase
 		.from("shipping_address")
 		.insert({
-			address_1: "address1",
-			address_2: "address2",
-			city: "city",
-			country: "country",
-			postal_code: "postalCode",
-			province: "province"
+			uuid,
+			address_1: shippingAddress?.address1 || "",
+			address_2: shippingAddress?.address2 || "",
+			city: shippingAddress?.city || "",
+			country: shippingAddress?.country || "",
+			postal_code: shippingAddress?.postalCode || "",
+			province: shippingAddress?.province || ""
 		})
 		.select()
 		.single();
-	console.log("POST ~ shippingAddressData:", shippingAddressData);
+
 	const { data: accountData, error: accountError } = await supabase.from("account").insert({
 		first_name: firstName,
 		last_name: lastName,
@@ -59,36 +59,6 @@ export const POST = async ({ request, locals: { supabase } }) => {
 	console.log("POST ~ accountError:", accountError);
 	console.log("POST ~ accountData:", accountData);
 
-	// const userRecord = await createAuthenticationUser({
-	// 	emailAddress,
-	// 	password,
-	// 	firstName,
-	// 	LastName: lastName
-	// });
-
-	// const userUID = userRecord.uid;
-
-	// try {
-	// 	await adminDB.collection(table).doc(userUID).set({
-	// 		firstName,
-	// 		lastName,
-	// 		emailAddress,
-	// 		shippingAddress,
-	// 		role: userRole
-	// 	});
-
-	// 	adminAuth.setCustomUserClaims(userUID, { role: "user" });
-	// 	// Change to admin when needed
-	// 	// adminAuth.setCustomUserClaims(userUID, { role: "admin" });
-
-	// 	return new Response();
-	// } catch (errorResponse: unknown) {
-	// 	console.log(errorResponse);
-	// 	const knownError = errorResponse as HttpError;
-	// 	throw error(knownError.status, {
-	// 		message: knownError.body.message
-	// 	});
-	// }
 	return new Response();
 };
 

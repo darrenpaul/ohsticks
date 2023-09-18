@@ -9,7 +9,6 @@
 
 	export let data;
 	let { supabase, session } = data;
-
 	let firstName: string = "";
 	let lastName: string = "";
 	let email: string = "";
@@ -30,7 +29,7 @@
 	}
 
 	const handleFormSubmit = async () => {
-		await supabase.auth.signUp({
+		const { data } = await supabase.auth.signUp({
 			email,
 			password,
 			options: {
@@ -41,6 +40,7 @@
 		const response = await fetch("/api/account", {
 			method: "POST",
 			body: JSON.stringify({
+				uuid: data.user.id,
 				firstName,
 				lastName,
 				emailAddress: email,
@@ -49,15 +49,9 @@
 			})
 		});
 
-		// if (!response.ok) {
-		// 	const message = await response.text();
-		// 	throw new Error(message);
-		// }
+		track();
 
-		// track();
-
-		// const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
-		// alert("Account created successfully!");
+		alert("Account created successfully!");
 	};
 
 	const track = () => {

@@ -1,6 +1,9 @@
 import { error } from "@sveltejs/kit";
 import type { Order, OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
+import { siteUrl } from "$lib/constants/site.js";
+import { accountRoute } from "$lib/constants/routes/accountRoute.js";
+import randomString from "$lib/utils/randomString";
 
 const table = "order";
 
@@ -8,23 +11,6 @@ const table = "order";
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, locals: { supabase } }) => {
 	const { customer, shippingAddress, items, paymentMethod, shippingMethod } = await request.json();
-
-	// TODO: create account if not exists
-	// await adminAuth.getUserByEmail(customer.email).catch(async () => {
-	// 	await fetch("/api/account", {
-	// 		method: "POST",
-	// 		body: JSON.stringify({
-	// 			firstName: customer.firstName,
-	// 			lastName: customer.lastName,
-	// 			emailAddress: customer.email,
-	// 			password: randomString(20, false, true),
-	// 			shippingAddress: shippingAddress
-	// 		})
-	// 	});
-	// 	await sendPasswordResetEmail(auth, customer.email);
-	// });
-
-	// const orderReference = await adminDB.collection(table).doc();
 
 	const subtotal = sumArrayNumbers(
 		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
@@ -56,6 +42,7 @@ export const POST = async ({ request, locals: { supabase } }) => {
 		total: createdData.total,
 		status: createdData.status
 	};
+
 	return new Response(JSON.stringify(payload), {
 		headers: {
 			"Content-Type": "application/json"
