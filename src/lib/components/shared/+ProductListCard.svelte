@@ -17,7 +17,7 @@
 	<a
 		href={`${productRoute.path}/${product.slug}`}
 		on:click={track}
-		aria-label={`Go to ${product.name} page`}
+		aria-label={`${product.name} - ${addCurrencySymbol(product.price, product.currency)}`}
 	>
 		<img width="250" height="250" src={product.featureImage.src} alt="Preview" loading="lazy" />
 

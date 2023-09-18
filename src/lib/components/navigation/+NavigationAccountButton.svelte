@@ -19,7 +19,7 @@
 </script>
 
 {#if $sessionState}
-	<button on:click={handleLogout} aria-label="Log out of account"><LogoutIcon /></button>
+	<button on:click={handleLogout} aria-label="Logout of account"><LogoutIcon /></button>
 {:else}
-	<a href={loginRoute.path}><PersonIcon /></a>
+	<a href={loginRoute.path} aria-label="Login"><PersonIcon /></a>
 {/if}
