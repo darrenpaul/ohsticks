@@ -1,64 +1,60 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-import { error, type HttpError } from "@sveltejs/kit";
-import { adminRole } from "$lib/constants/roles";
-
 const table = "product";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }) => {
-	const accessToken = request.headers.get("x-access-token");
+	// const accessToken = request.headers.get("x-access-token");
 
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
+	// if (!accessToken) {
+	// 	throw error(401, {
+	// 		message: "unauthorized"
+	// 	});
+	// }
 
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-		if (decodedIdToken.role !== adminRole) {
-			throw error(401, {
-				message: "unauthorized"
-			});
-		}
-	} catch (errorResponse) {
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
-		});
-	}
+	// try {
+	// 	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+	// 	if (decodedIdToken.role !== adminRole) {
+	// 		throw error(401, {
+	// 			message: "unauthorized"
+	// 		});
+	// 	}
+	// } catch (errorResponse) {
+	// 	const knownError = errorResponse as HttpError;
+	// 	throw error(knownError.status, {
+	// 		message: knownError.body.message
+	// 	});
+	// }
 
-	const {
-		name,
-		slug,
-		brand,
-		categories,
-		description,
-		contentSections,
-		currencyPrice,
-		quantity,
-		visible,
-		featureImage,
-		images,
-		meta
-	} = await request.json();
+	// const {
+	// 	name,
+	// 	slug,
+	// 	brand,
+	// 	categories,
+	// 	description,
+	// 	contentSections,
+	// 	currencyPrice,
+	// 	quantity,
+	// 	visible,
+	// 	featureImage,
+	// 	images,
+	// 	meta
+	// } = await request.json();
 
-	await adminDB.collection(table).doc().set({
-		name,
-		slug,
-		brand,
-		categories,
-		description,
-		contentSections,
-		currencyPrice,
-		quantity,
-		visible,
-		featureImage,
-		images,
-		meta,
-		createdAt: new Date()
-	});
+	// await adminDB.collection(table).doc().set({
+	// 	name,
+	// 	slug,
+	// 	brand,
+	// 	categories,
+	// 	description,
+	// 	contentSections,
+	// 	currencyPrice,
+	// 	quantity,
+	// 	visible,
+	// 	featureImage,
+	// 	images,
+	// 	meta,
+	// 	createdAt: new Date()
+	// });
 
 	return new Response(
 		String({
@@ -96,49 +92,51 @@ export const GET = async ({ url, request }) => {
 
 	// const slug = url.searchParams.get("slug");
 
-	const tableSnapshot = await adminDB.collection(table).get();
-	const products = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+	// const tableSnapshot = await adminDB.collection(table).get();
+	// const products = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-	return new Response(JSON.stringify(products), {
-		headers: {
-			"Content-Type": "application/json"
-		}
-	});
+	// return new Response(JSON.stringify(products), {
+	// 	headers: {
+	// 		"Content-Type": "application/json"
+	// 	}
+	// });
+
+	return new Response();
 };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
 export const PUT = async ({ request }) => {
-	const {
-		id,
-		name,
-		slug,
-		brand,
-		categories,
-		description,
-		contentSections,
-		currencyPrice,
-		quantity,
-		visible,
-		featureImage,
-		images,
-		meta
-	} = await request.json();
+	// const {
+	// 	id,
+	// 	name,
+	// 	slug,
+	// 	brand,
+	// 	categories,
+	// 	description,
+	// 	contentSections,
+	// 	currencyPrice,
+	// 	quantity,
+	// 	visible,
+	// 	featureImage,
+	// 	images,
+	// 	meta
+	// } = await request.json();
 
-	await adminDB.collection(table).doc(id).update({
-		name,
-		slug,
-		brand,
-		categories,
-		description,
-		contentSections,
-		currencyPrice,
-		quantity,
-		visible,
-		featureImage,
-		images,
-		meta
-	});
+	// await adminDB.collection(table).doc(id).update({
+	// 	name,
+	// 	slug,
+	// 	brand,
+	// 	categories,
+	// 	description,
+	// 	contentSections,
+	// 	currencyPrice,
+	// 	quantity,
+	// 	visible,
+	// 	featureImage,
+	// 	images,
+	// 	meta
+	// });
 
 	return new Response(
 		String({
@@ -150,9 +148,9 @@ export const PUT = async ({ request }) => {
 // DELETE
 /** @type {import('./$types').RequestHandler} */
 export const DELETE = async ({ request }) => {
-	const { id } = await request.json();
+	// const { id } = await request.json();
 
-	await adminDB.collection(table).doc(id).delete();
+	// await adminDB.collection(table).doc(id).delete();
 
 	return new Response(
 		String({

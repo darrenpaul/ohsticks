@@ -12,7 +12,7 @@
 	export let data;
 
 	let products: Product[] = [];
-	let pageData = data.pageData.find((page) => page.slug === "collection");
+	// let pageData = data.pageData.find((page) => page.slug === "collection");
 	let pageUrl = "";
 
 	$: {
@@ -45,7 +45,7 @@
 	</div>
 </div>
 
-<MetaTags
+<!-- <MetaTags
 	title={pageData.meta?.title}
 	titleTemplate={pageData.meta?.title}
 	description={pageData.meta?.description}
@@ -80,7 +80,7 @@
 			}))
 		}
 	]}
-/>
+/> -->
 
 <style lang="scss">
 	.collection-page {

@@ -1,8 +1,5 @@
 import OpenAI from "openai";
 import { OPEN_AI_API_KEY } from "$env/static/private";
-import { adminAuth } from "$lib/server/firebaseAdminClient";
-import { adminRole } from "$lib/constants/roles";
-import { error, type HttpError } from "@sveltejs/kit";
 
 const titleAndDescription = (searchPrompt: string) => {
 	return [
@@ -75,28 +72,6 @@ const prompts = (searchPrompt: string) => {
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }) => {
-	const accessToken = request.headers.get("x-access-token");
-
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-		if (decodedIdToken.role !== adminRole) {
-			throw error(401, {
-				message: "unauthorized"
-			});
-		}
-	} catch (errorResponse) {
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
-		});
-	}
-
 	const { searchPrompt } = await request.json();
 
 	const content = eCommerceProduct(searchPrompt).join(" ");

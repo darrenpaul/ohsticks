@@ -1,13 +1,13 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-import { error, type HttpError } from "@sveltejs/kit";
-import { adminRole } from "$lib/constants/roles";
-import type { Product } from "$lib/types/product";
+// import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
+// import { error, type HttpError } from "@sveltejs/kit";
+// import { adminRole } from "$lib/constants/roles";
+// import type { Product } from "$lib/types/product";
 
 const table = "product";
 
-const updateProduct = async (product: Product) => {
-	return await adminDB.collection(table).doc(product.id).update(product);
-};
+// const updateProduct = async (product: Product) => {
+// 	return await adminDB.collection(table).doc(product.id).update(product);
+// };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
@@ -35,29 +35,29 @@ export const PUT = async ({ request, locals: { supabase, getSession } }) => {
 	// 	});
 	// }
 
-	const tableSnapshot = await adminDB.collection(table).get();
-	const products: Product[] = tableSnapshot.docs.map((doc) => ({
-		id: doc.id,
-		...doc.data()
-	})) as Product[];
+	// const tableSnapshot = await adminDB.collection(table).get();
+	// const products: Product[] = tableSnapshot.docs.map((doc) => ({
+	// 	id: doc.id,
+	// 	...doc.data()
+	// })) as Product[];
 
-	const updatePromises = products.map(async (product: Product) => {
-		return await supabase.from("product").insert({
-			name: product.name,
-			slug: product.slug,
-			description: product.description,
-			categories: product.categories,
-			visible: product.visible,
-			currency_price: product.currencyPrice,
-			content_sections: product.contentSections,
-			feature_image: product.featureImage,
-			images: product.images,
-			meta: product.meta
-		});
-	});
+	// const updatePromises = products.map(async (product: Product) => {
+	// 	return await supabase.from("product").insert({
+	// 		name: product.name,
+	// 		slug: product.slug,
+	// 		description: product.description,
+	// 		categories: product.categories,
+	// 		visible: product.visible,
+	// 		currency_price: product.currencyPrice,
+	// 		content_sections: product.contentSections,
+	// 		feature_image: product.featureImage,
+	// 		images: product.images,
+	// 		meta: product.meta
+	// 	});
+	// });
 
-	const abc = await Promise.all(updatePromises);
-	console.log("abc:", abc);
+	// const abc = await Promise.all(updatePromises);
+	// console.log("abc:", abc);
 
 	// const { data: shippingAddressData, error: shippingAddressError } = await supabase
 	// 	.from("shipping_address")

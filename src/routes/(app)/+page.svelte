@@ -15,7 +15,7 @@
 	let data;
 
 	let products: Product[] = data.products || [];
-	let pageData = data.pageData.find((page) => page.slug === "home");
+	// let pageData = data.pageData.find((page) => page.slug === "home");
 
 	let pageUrl = "";
 
@@ -52,7 +52,7 @@
 	</ContainWidth>
 </div>
 
-<MetaTags
+<!-- <MetaTags
 	title={pageData.meta?.title}
 	titleTemplate={pageData.meta?.title}
 	description={pageData.meta?.description}
@@ -92,7 +92,7 @@
 			image: pageData.meta.openGraph.images.map((image) => image.src)
 		}
 	]}
-/>
+/> -->
 
 <style lang="scss">
 	.home-page {

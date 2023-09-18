@@ -1,12 +1,7 @@
 <script lang="ts">
-	import { user, productStorageBucket } from "$lib/firebase/firebaseClient";
-	import { adminRole } from "$lib/constants/roles";
-	import { deleteImage, uploadImage } from "$lib/firebase/firebaseImageUtils";
 	import { slugString } from "$lib/utils/slugString";
-	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { error } from "@sveltejs/kit";
 	import { trans } from "$lib/locales/translateCopy";
-
 	import PageCreateOpenGraph from "$lib/components/admin/product/+PageCreateOpenGraph.svelte";
 	import PageCreateMeta from "$lib/components/admin/product/+PageCreateMeta.svelte";
 	import PageCreateTwitter from "$lib/components/admin/product/+PageCreateTwitter.svelte";
@@ -26,46 +21,45 @@
 	let twitterImageAlt = "";
 
 	const handleFormSubmit = async () => {
-		const accessToken = await $user?.getIdToken();
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-		const { role } = await firebaseAuthenticateRole(accessToken);
-		if (!role || role !== adminRole) {
-			return error(401, "Unauthorized");
-		}
-
-		const response = await fetch("/api/admin/page", {
-			method: "POST",
-			headers: {
-				"x-access-token": accessToken
-			},
-			body: JSON.stringify({
-				name,
-				slug,
-				meta: {
-					title: metaTitle,
-					description: metaDescription,
-					openGraph: {
-						title: openGraphTitle,
-						description: openGraphDescription,
-						type: openGraphType,
-						images: openGraphImages
-					},
-					twitter: {
-						title: twitterTitle,
-						description: twitterDescription,
-						card: twitterCard,
-						image: twitterImage,
-						imageAlt: twitterImageAlt
-					}
-				}
-			})
-		});
-		if (response.ok) {
-			alert("Page created");
-			return;
-		}
+		// const accessToken = await $user?.getIdToken();
+		// if (!accessToken) {
+		// 	return error(401, "Unauthorized");
+		// }
+		// const { role } = await firebaseAuthenticateRole(accessToken);
+		// if (!role || role !== adminRole) {
+		// 	return error(401, "Unauthorized");
+		// }
+		// const response = await fetch("/api/admin/page", {
+		// 	method: "POST",
+		// 	headers: {
+		// 		"x-access-token": accessToken
+		// 	},
+		// 	body: JSON.stringify({
+		// 		name,
+		// 		slug,
+		// 		meta: {
+		// 			title: metaTitle,
+		// 			description: metaDescription,
+		// 			openGraph: {
+		// 				title: openGraphTitle,
+		// 				description: openGraphDescription,
+		// 				type: openGraphType,
+		// 				images: openGraphImages
+		// 			},
+		// 			twitter: {
+		// 				title: twitterTitle,
+		// 				description: twitterDescription,
+		// 				card: twitterCard,
+		// 				image: twitterImage,
+		// 				imageAlt: twitterImageAlt
+		// 			}
+		// 		}
+		// 	})
+		// });
+		// if (response.ok) {
+		// 	alert("Page created");
+		// 	return;
+		// }
 	};
 </script>
 

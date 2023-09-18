@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { user } from "$lib/firebase/firebaseClient";
-	import { error } from "@sveltejs/kit";
 	import { onMount } from "svelte";
 	import type { Order } from "$lib/types/order";
 	import AdminOrderList from "$lib/components/admin/order/+AdminOrderList.svelte";
@@ -11,21 +9,18 @@
 	export let orders: Order[];
 
 	onMount(async () => {
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-
-		const response = await fetch("/api/admin/order", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"x-access-token": accessToken
-			}
-		});
-
-		orders = await response.json();
+		// const accessToken = await $user?.getIdToken();
+		// if (!accessToken) {
+		// 	return error(401, "Unauthorized");
+		// }
+		// const response = await fetch("/api/admin/order", {
+		// 	method: "GET",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 		"x-access-token": accessToken
+		// 	}
+		// });
+		// orders = await response.json();
 	});
 </script>
 

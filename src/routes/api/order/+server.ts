@@ -1,8 +1,6 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-import { error, type HttpError } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 import type { Order, OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
-import { updated } from "$app/stores";
 
 const table = "order";
 
@@ -183,9 +181,9 @@ export const PUT = async ({ request, url, fetch, locals: { supabase, getSession 
 // DELETE
 /** @type {import('./$types').RequestHandler} */
 export const DELETE = async ({ request }) => {
-	const { id } = await request.json();
+	// const { id } = await request.json();
 
-	await adminDB.collection(table).doc(id).delete();
+	// await adminDB.collection(table).doc(id).delete();
 
 	return new Response(
 		String({

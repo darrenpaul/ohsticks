@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { user } from "$lib/firebase/firebaseClient";
-	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
 	import { trans } from "$lib/locales/translateCopy";
 	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
 	import ProductCreateSeoForm from "$lib/components/admin/product/+ProductCreateSeoForm.svelte";
@@ -8,7 +6,6 @@
 	import type { ContentSection, Image } from "$lib/types/product";
 	import ProductCreateInformation from "$lib/components/admin/product/+ProductCreateInformation.svelte";
 	import ProductCreatePrice from "$lib/components/admin/product/+ProductCreatePrice.svelte";
-	import firebaseAuthenticateRole from "$lib/firebase/firebaseAuthenticateRole";
 	import { adminRole } from "$lib/constants/roles";
 	import { error } from "@sveltejs/kit";
 	import { brandName } from "$lib/constants/site.js";
@@ -35,21 +32,9 @@
 	let openGraphImages: Image[] = product?.meta?.openGraph?.images || [];
 
 	const handleFormSubmit = async () => {
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-		const { role } = await firebaseAuthenticateRole(accessToken);
-		if (!role || role !== adminRole) {
-			return error(401, "Unauthorized");
-		}
-
 		const response = await fetch("/api/admin/product", {
 			method: "PUT",
-			headers: {
-				"x-access-token": accessToken
-			},
+
 			body: JSON.stringify({
 				id: product.id,
 				name,
