@@ -4,7 +4,6 @@
 	import { cart } from "$lib/stores/cartStore";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
 	import CheckoutShippingMethod from "./+CheckoutShippingMethod.svelte";
 	import { getContext } from "svelte";
 	import { browser } from "$app/environment";
@@ -40,10 +39,10 @@
 	$: {
 		selectableProvinces = shippingCountries.find((item) => item.isoCode === country)?.states || [];
 
-		if ($user?.email) {
-			email = $user.email;
-			emailInputDisabled = true;
-		}
+		// if ($user?.email) {
+		// 	email = $user.email;
+		// 	emailInputDisabled = true;
+		// }
 	}
 
 	const trackContinueToPayment = () => {

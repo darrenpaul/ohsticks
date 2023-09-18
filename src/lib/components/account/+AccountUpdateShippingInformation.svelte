@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { auth, user } from "$lib/firebase/firebaseClient";
 	import { shippingCountries } from "$lib/constants/shippingCountries";
 	import { trans } from "$lib/locales/translateCopy";
-	import { updateProfile } from "firebase/auth";
 	import { onMount } from "svelte";
 	import { error } from "@sveltejs/kit";
 
@@ -28,17 +26,10 @@
 		const formData = new FormData(form);
 		const values = Object.fromEntries(formData.entries());
 
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-
 		await fetch("/api/account", {
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
-				"x-access-token": accessToken
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(values)
 		});

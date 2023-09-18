@@ -1,4 +1,4 @@
-import { adminDB } from "$lib/server/firebaseAdminClient";
+// import { adminDB } from "$lib/server/firebaseAdminClient";
 
 const table = "contact";
 
@@ -7,12 +7,12 @@ const table = "contact";
 export const POST = async ({ request }) => {
 	const { name, email, subject, message } = await request.json();
 
-	await adminDB.collection(table).doc().set({
-		name,
-		email,
-		subject,
-		message
-	});
+	// await adminDB.collection(table).doc().set({
+	// 	name,
+	// 	email,
+	// 	subject,
+	// 	message
+	// });
 
 	return new Response(
 		String({

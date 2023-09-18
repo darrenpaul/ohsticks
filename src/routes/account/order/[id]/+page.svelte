@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
-	import CheckoutForm from "$lib/components/checkout/+CheckoutForm.svelte";
-	import CheckoutInformation from "$lib/components/checkout/+CheckoutInformation.svelte";
-	import { writable } from "svelte/store";
-	import { setContext } from "svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import { trans } from "$lib/locales/translateCopy";
-	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
 	import OrderConfirmationHeader from "$lib/components/order/+OrderConfirmationHeader.svelte";
 	import OrderConfirmationUpdates from "$lib/components/order/+OrderConfirmationUpdates.svelte";
 	import { error } from "@sveltejs/kit";
@@ -21,24 +15,12 @@
 	let order: Order;
 
 	const handleOrderFetch = async () => {
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-
 		const response = await fetch(`/api/order?id=${$page.params.id}`, {
-			method: "GET",
-			headers: {
-				"x-access-token": accessToken
-			}
+			method: "GET"
 		});
 
 		if (response.ok) {
-			const jsonData = await response.json();
-			if (jsonData.order) {
-				order = jsonData.order;
-			}
+			order = await response.json();
 		} else {
 			return error(response.status, "Order not found");
 		}

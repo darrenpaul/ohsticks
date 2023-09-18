@@ -2,14 +2,13 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 	import { browser } from "$app/environment";
-	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { goto } from "$app/navigation";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
 	export let data;
-	let { supabase } = data;
+	let { supabase, session } = data;
 
 	let firstName: string = "";
 	let lastName: string = "";
@@ -25,7 +24,7 @@
 	};
 
 	$: {
-		if (browser && $user) {
+		if (browser && session) {
 			goto(homeRoute.path, { replaceState: true });
 		}
 	}

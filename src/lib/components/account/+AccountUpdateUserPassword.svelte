@@ -1,26 +1,22 @@
 <script lang="ts">
-	import { auth } from "$lib/firebase/firebaseClient";
-	import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 	import { trans } from "$lib/locales/translateCopy";
 
 	let password: string = "";
 	let newPassword: string = "";
 
 	const handleFormSubmit = async () => {
-		const user = auth.currentUser;
-
-		if (!user || !user.email) return console.error("No user signed in");
-
-		const credential = EmailAuthProvider.credential(user.email, password);
-
-		reauthenticateWithCredential(user, credential)
-			.then(async () => {
-				await updatePassword(user, newPassword);
-				// TODO: Show success message
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+		// TODO: Implement
+		// const user = auth.currentUser;
+		// if (!user || !user.email) return console.error("No user signed in");
+		// const credential = EmailAuthProvider.credential(user.email, password);
+		// reauthenticateWithCredential(user, credential)
+		// 	.then(async () => {
+		// 		await updatePassword(user, newPassword);
+		// 		// TODO: Show success message
+		// 	})
+		// 	.catch((error) => {
+		// 		console.error(error);
+		// 	});
 	};
 </script>
 

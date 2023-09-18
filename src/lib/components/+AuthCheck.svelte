@@ -1,25 +1,25 @@
 <script lang="ts">
-	import { user } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import BrandPortraitIcon from "./icons/+BrandPortraitIcon.svelte";
 </script>
 
-{#if $user}
+<!-- {#if $user}
 	<slot />
-{:else}
-	<div class="authentication-needed-page">
-		<BrandPortraitIcon />
+{:else} -->
+<div class="authentication-needed-page">
+	<BrandPortraitIcon />
 
-		<h2>{trans("component.authCheck.loginRequired.label")}</h2>
+	<h2>{trans("component.authCheck.loginRequired.label")}</h2>
 
-		<a class="btn btn-primary" href="/login">
-			<ButtonIcon>
-				{trans("component.authCheck.login.label")}
-			</ButtonIcon>
-		</a>
-	</div>
-{/if}
+	<a class="btn btn-primary" href="/login">
+		<ButtonIcon>
+			{trans("component.authCheck.login.label")}
+		</ButtonIcon>
+	</a>
+</div>
+
+<!-- {/if} -->
 
 <style lang="scss">
 	.authentication-needed-page {

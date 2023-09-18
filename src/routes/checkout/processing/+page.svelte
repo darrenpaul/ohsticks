@@ -19,7 +19,6 @@
 		const orderResponse = await fetch(`/api/order?session_id=${sessionId}&order_id=${orderId}`, {
 			method: "PUT"
 		});
-
 		const { status, items, shippingMethod } = await orderResponse.json();
 
 		if (status === "paid") {

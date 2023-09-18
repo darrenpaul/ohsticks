@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { auth } from "$lib/firebase/firebaseClient";
+	// import { auth } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
 	import { sendPasswordResetEmail } from "firebase/auth";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
@@ -7,9 +7,10 @@
 	let email = "";
 
 	const handleFormSubmit = async () => {
-		await sendPasswordResetEmail(auth, email);
-		alert("Password reset email sent!");
-		window.location.href = loginRoute.path;
+		// TODO: Implement
+		// await sendPasswordResetEmail(auth, email);
+		// alert("Password reset email sent!");
+		// window.location.href = loginRoute.path;
 	};
 </script>
 

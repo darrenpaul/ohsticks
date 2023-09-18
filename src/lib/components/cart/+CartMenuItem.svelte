@@ -3,7 +3,6 @@
 	import BinIcon from "$lib/components/icons/+BinIcon.svelte";
 	import { removeFromCart } from "$lib/stores/cartStore";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
-	import { user } from "$lib/firebase/firebaseClient";
 	import { getContext } from "svelte";
 
 	const sessionState: Writable<any> = getContext("sessionState");

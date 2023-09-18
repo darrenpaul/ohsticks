@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { page } from "$app/stores";
-	import { logoutUser } from "$lib/firebase/firebaseClient";
 	import { accountOrdersRoute, accountRoute } from "$lib/constants/routes/accountRoute";
 
 	let links = [homeRoute, accountRoute, accountOrdersRoute];
@@ -16,7 +15,7 @@
 		{/each}
 	</div>
 
-	<button class="--logout-button" on:click={logoutUser}>Logout</button>
+	<button class="--logout-button" on:click={() => {}}>Logout</button>
 </nav>
 
 <style lang="scss">

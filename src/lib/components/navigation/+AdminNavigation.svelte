@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { adminProductRoute } from "$lib/constants/routes/admin/adminProductRoute";
 	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute";
-	import { logoutUser } from "$lib/firebase/firebaseClient";
 	import { adminPageRoute } from "$lib/constants/routes/admin/adminPageRoute";
 </script>
 
@@ -11,7 +10,7 @@
 		<a href={adminOrderRoute.path}>{adminOrderRoute.label}</a>
 		<a href={adminPageRoute.path}>{adminPageRoute.label}</a>
 	</div>
-	<button on:click={logoutUser}>Logout</button>
+	<button on:click={() => {}}>Logout</button>
 </nav>
 
 <style lang="scss">

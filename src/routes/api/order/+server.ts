@@ -1,33 +1,32 @@
 import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 import { error, type HttpError } from "@sveltejs/kit";
-import { auth } from "$lib/firebase/firebaseClient";
-import randomString from "$lib/utils/randomString.js";
-import { sendPasswordResetEmail } from "firebase/auth";
 import type { Order, OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
+import { updated } from "$app/stores";
 
 const table = "order";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, fetch }) => {
+export const POST = async ({ request, fetch, locals: { supabase, getSession } }) => {
 	const { customer, shippingAddress, items, paymentMethod, shippingMethod } = await request.json();
 
-	await adminAuth.getUserByEmail(customer.email).catch(async () => {
-		await fetch("/api/account", {
-			method: "POST",
-			body: JSON.stringify({
-				firstName: customer.firstName,
-				lastName: customer.lastName,
-				emailAddress: customer.email,
-				password: randomString(20, false, true),
-				shippingAddress: shippingAddress
-			})
-		});
-		await sendPasswordResetEmail(auth, customer.email);
-	});
+	// TODO: create account if not exists
+	// await adminAuth.getUserByEmail(customer.email).catch(async () => {
+	// 	await fetch("/api/account", {
+	// 		method: "POST",
+	// 		body: JSON.stringify({
+	// 			firstName: customer.firstName,
+	// 			lastName: customer.lastName,
+	// 			emailAddress: customer.email,
+	// 			password: randomString(20, false, true),
+	// 			shippingAddress: shippingAddress
+	// 		})
+	// 	});
+	// 	await sendPasswordResetEmail(auth, customer.email);
+	// });
 
-	const orderReference = await adminDB.collection(table).doc();
+	// const orderReference = await adminDB.collection(table).doc();
 
 	const subtotal = sumArrayNumbers(
 		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
@@ -35,98 +34,101 @@ export const POST = async ({ request, fetch }) => {
 
 	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
 
-	const timestamp = new Date();
-
-	const payload = {
+	const createPayload = {
 		customer,
-		shippingAddress,
-		paymentMethod,
+		shipping_address: shippingAddress,
+		payment_method: paymentMethod,
 		items,
 		subtotal,
-		shippingMethod,
+		shipping_method: shippingMethod,
 		total,
-		createdAt: timestamp,
-		updatedAt: timestamp
+		updated_at: new Date()
 	};
 
-	orderReference.set(payload);
+	const { data: createdData, error } = await supabase
+		.from(table)
+		.insert(createPayload)
+		.select()
+		.single();
+	// orderReference.set(payload);
 
-	return new Response(
-		JSON.stringify({
-			id: orderReference.id,
-			...payload
-		}),
-		{
-			headers: {
-				"Content-Type": "application/json"
-			}
+	const payload = {
+		id: createdData.id,
+		customer: createdData.customer,
+		shippingAddress: createdData.shipping_address,
+		paymentMethod: createdData.payment_method,
+		items: createdData.items,
+		subtotal: createdData.subtotal,
+		shippingMethod: createdData.shipping_method,
+		total: createdData.total,
+		status: createdData.status
+	};
+	return new Response(JSON.stringify(payload), {
+		headers: {
+			"Content-Type": "application/json"
 		}
-	);
+	});
 };
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url }) => {
-	const accessToken = request.headers.get("x-access-token");
-
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
+export const GET = async ({ request, url, locals: { supabase, getSession } }) => {
 	const orderId = url.searchParams.get("id");
 
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
+	if (orderId) {
+		const { data } = await supabase.from(table).select().eq("id", orderId).single();
 
-		const tableSnapshot = await adminDB
-			.collection(table)
-			.where("customer.email", "==", decodedIdToken.email)
-			.get();
-
-		const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-		if (orderId) {
-			console.log("GET ~ orderId:", orderId);
-			const order = tableData.find((order) => order.id === orderId);
-
-			if (!order) {
-				throw error(404, {
-					message: "order not found"
-				});
-			}
-
-			const jsonString = JSON.stringify({ order });
-
-			return new Response(jsonString, {
-				headers: {
-					"Content-Type": "application/json"
-				}
+		if (!data) {
+			throw error(404, {
+				message: "order not found"
 			});
 		}
 
-		const orders = tableData;
+		const payload = {
+			id: data.id,
+			customer: data.customer,
+			shippingAddress: data.shipping_address,
+			paymentMethod: data.payment_method,
+			items: data.items,
+			subtotal: data.subtotal,
+			shippingMethod: data.shipping_method,
+			total: data.total,
+			status: data.status
+		};
 
-		const jsonString = JSON.stringify({ orders });
-
-		return new Response(jsonString, {
+		return new Response(JSON.stringify(payload), {
 			headers: {
 				"Content-Type": "application/json"
 			}
 		});
-	} catch (errorResponse) {
-		console.log(errorResponse);
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
-		});
 	}
+
+	const { data } = await supabase.from(table).select();
+
+	const orders = data.map((order: Order) => ({
+		id: order.id,
+		customer: order.customer,
+		shippingAddress: order.shipping_address,
+		paymentMethod: order.payment_method,
+		items: order.items,
+		subtotal: order.subtotal,
+		shippingMethod: order.shipping_method,
+		total: order.total,
+		status: order.status,
+		createdAt: order.created_at,
+		updatedAt: order.updated_at
+	}));
+
+	return new Response(JSON.stringify(orders), {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request, url, fetch }) => {
+export const PUT = async ({ request, url, fetch, locals: { supabase, getSession } }) => {
 	const sessionId = url.searchParams.get("session_id");
 	const orderId = url.searchParams.get("order_id");
 
@@ -157,19 +159,19 @@ export const PUT = async ({ request, url, fetch }) => {
 
 	const timestamp = new Date();
 
-	await adminDB.collection(table).doc(orderId).update({
-		status,
-		updatedAt: timestamp
-	});
-
-	const tableSnapshot = await adminDB.collection(table).get();
-
-	const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-	const order: Order = tableData.find((order) => order.id === orderId) as Order;
+	const { data: updatedData } = await supabase
+		.from(table)
+		.update({ status, updated_at: timestamp })
+		.eq("id", orderId)
+		.select()
+		.single();
 
 	return new Response(
-		JSON.stringify({ status, items: order.items, shippingMethod: order.shippingMethod }),
+		JSON.stringify({
+			status: updatedData.status,
+			items: updatedData.items,
+			shippingMethod: updatedData.shipping_method
+		}),
 		{
 			headers: {
 				"Content-Type": "application/json"
