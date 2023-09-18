@@ -5,7 +5,6 @@
 	import { error } from "@sveltejs/kit";
 
 	export let account;
-	console.log("account:", account);
 
 	let firstName: string = account.firstName ?? "";
 	let lastName: string = account.lastName ?? "";

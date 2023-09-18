@@ -9,22 +9,11 @@
 	import AdminOrderItemList from "$lib/components/admin/order/+AdminOrderItemList.svelte";
 	import AdminOrderPriceSummary from "$lib/components/admin/order/+AdminOrderPriceSummary.svelte";
 
-	let order: Order;
+	export let data;
+	let order: Order = data.order;
 
 	let orderStatus: string;
 	let shippingAddress: IngAddress;
-
-	const handleOrderFetch = async () => {
-		const response = await fetch(`/api/admin/order?id=${$page.params.id}`, {
-			method: "GET"
-		});
-
-		const jsonData = await response.json();
-		order = await jsonData.order;
-
-		orderStatus = order.status;
-		shippingAddress = order.shippingAddress;
-	};
 
 	const handleOrderUpdate = async () => {
 		await fetch("/api/admin/order", {
@@ -37,10 +26,6 @@
 			})
 		});
 	};
-
-	if (browser) {
-		handleOrderFetch();
-	}
 </script>
 
 <ContainWidth>

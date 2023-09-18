@@ -1,18 +1,23 @@
-// import { productStorageBucket } from "$lib/firebase/firebaseClient";
-// import randomString from "$lib/utils/randomString";
 // import { uploadImage } from "$lib/firebase/firebaseImageUtils";
-// import { slugString } from "$lib/utils/slugString";
+import randomString from "$lib/utils/randomString";
+import { slugString } from "$lib/utils/slugString";
 
-export const handleImageUpload = async (name: string, imageFile: File) => {
-	// const slug = slugString(name);
-	// const imageType = imageFile.type.split("/")[1];
-	// const imageName = `${slug}-${randomString(5, true)}.${imageType}`;
-	// return await uploadImage({
-	// 	bucketName: productStorageBucket,
-	// 	collectionName: slug,
-	// 	imageName,
-	// 	imageFile: imageFile
-	// });
+const productStorageBucket = "product";
+
+export const handleImageUpload = async (name: string, imageFile: File, supabase) => {
+	const slug = slugString(name);
+	const imageType = imageFile.type.split("/")[1];
+	const imageName = `${slug}-${randomString(5, true)}.${imageType}`;
+
+	const { data: uploadData } = await supabase.storage
+		.from(productStorageBucket)
+		.upload(`${name}/${imageName}`, imageFile, {
+			cacheControl: "3600",
+			upsert: false
+		});
+	const { data } = await supabase.storage.from(productStorageBucket).getPublicUrl(uploadData.path);
+
+	return data.publicUrl;
 };
 
 export const getImageMeta = async (url: string) => {
@@ -32,4 +37,16 @@ export const getImageMeta = async (url: string) => {
 
 		return { width, height };
 	};
+};
+
+export const deleteImages = async (name: string, supabase) => {
+	const { data, error } = await supabase.storage.from(productStorageBucket).list(name, {
+		limit: 100,
+		offset: 0,
+		sortBy: { column: "name", order: "asc" }
+	});
+
+	const images = data.map((image) => `${name}/${image.name}`);
+
+	return await supabase.storage.from(productStorageBucket).remove(images);
 };

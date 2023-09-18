@@ -18,12 +18,12 @@
 
 		<p>
 			{trans("page.admin.createdAt.label")}:
-			<b>{format(new Date(order.createdAt._seconds * 1000), "MMMM dd, yyyy HH:mm")}</b>
+			<b>{format(new Date(order.createdAt), "MMMM dd, yyyy HH:mm")}</b>
 		</p>
 
 		<p>
 			{trans("page.admin.updatedAt.label")}:
-			<b>{format(new Date(order.updatedAt._seconds * 1000), "MMMM dd, yyyy HH:mm")}</b>
+			<b>{format(new Date(order.updatedAt), "MMMM dd, yyyy HH:mm")}</b>
 		</p>
 	</div>
 

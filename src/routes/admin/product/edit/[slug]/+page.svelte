@@ -73,10 +73,6 @@
 			alert("Product Updated");
 			return;
 		}
-
-		// [...featureImage, ...productImages, ...openGraphImages, ...twitterImage].forEach((image) =>
-		// 	deleteImage(image.src)
-		// );
 	};
 </script>
 

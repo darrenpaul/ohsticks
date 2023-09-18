@@ -14,6 +14,7 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
+	const sessionState: Writable<any> = getContext("sessionState");
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
 	let emailInputDisabled = false;
@@ -39,10 +40,10 @@
 	$: {
 		selectableProvinces = shippingCountries.find((item) => item.isoCode === country)?.states || [];
 
-		// if ($user?.email) {
-		// 	email = $user.email;
-		// 	emailInputDisabled = true;
-		// }
+		if ($sessionState) {
+			email = $sessionState.user.email;
+			emailInputDisabled = true;
+		}
 	}
 
 	const trackContinueToPayment = () => {

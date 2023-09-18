@@ -5,7 +5,7 @@
 
 	export let data;
 
-	let pageData = data.body.pageData.find((page) => page.slug === "contact");
+	let pageData = data.pageData;
 	let pageUrl = "";
 	let name = "";
 	let email = "";
@@ -107,16 +107,16 @@
 </div>
 
 <MetaTags
-	title={pageData.meta?.title}
-	titleTemplate={pageData.meta?.title}
-	description={pageData.meta?.description}
+	title={pageData.title}
+	titleTemplate={pageData.title}
+	description={pageData.description}
 	canonical={pageUrl}
 	openGraph={{
-		...pageData.meta.openGraph,
+		...pageData.openGraph,
 		url: pageUrl
 	}}
 	twitter={{
-		...pageData.meta.twitter,
+		...pageData.twitter,
 		site: pageUrl
 	}}
 />

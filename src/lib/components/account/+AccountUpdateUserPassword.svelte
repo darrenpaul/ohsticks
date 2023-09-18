@@ -1,45 +1,23 @@
 <script lang="ts">
 	import { trans } from "$lib/locales/translateCopy";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
 
-	let password: string = "";
+	const supabaseState: Writable<any> = getContext("supabaseState");
+
 	let newPassword: string = "";
 
 	const handleFormSubmit = async () => {
-		// TODO: Implement
-		// const user = auth.currentUser;
-		// if (!user || !user.email) return console.error("No user signed in");
-		// const credential = EmailAuthProvider.credential(user.email, password);
-		// reauthenticateWithCredential(user, credential)
-		// 	.then(async () => {
-		// 		await updatePassword(user, newPassword);
-		// 		// TODO: Show success message
-		// 	})
-		// 	.catch((error) => {
-		// 		console.error(error);
-		// 	});
+		const { data } = await $supabaseState.auth.updateUser({ password: newPassword });
+		if (data) {
+			alert("Password updated");
+		}
 	};
 </script>
 
 <form class="account-update-user-password" on:submit|preventDefault={handleFormSubmit}>
 	<h4>{trans("page.account.userInformation.label")}</h4>
 
-	<!-- FIRST NAME -->
-	<div class="input-group">
-		<input
-			class={password ? "" : "peer"}
-			type="password"
-			id="password"
-			name="password"
-			bind:value={password}
-			placeholder=""
-			required
-		/>
-		<label class="floating-label" for="password"
-			>{trans("page.account.currentPassword.label")}</label
-		>
-	</div>
-
-	<!-- LAST NAME -->
 	<div class="input-group">
 		<input
 			class={newPassword ? "" : "peer"}

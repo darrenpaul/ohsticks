@@ -1,16 +1,22 @@
 <script lang="ts">
-	// import { auth } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
-	import { sendPasswordResetEmail } from "firebase/auth";
-	import { loginRoute } from "$lib/constants/routes/accountRoute";
+	import { accountRoute } from "$lib/constants/routes/accountRoute";
+	import { siteUrl } from "$lib/constants/site.js";
+	import { goto } from "$app/navigation";
+	import { homeRoute } from "$lib/constants/routes/homeRoute.js";
 
+	export let data;
+	let supabase = data.supabase;
 	let email = "";
 
 	const handleFormSubmit = async () => {
-		// TODO: Implement
-		// await sendPasswordResetEmail(auth, email);
-		// alert("Password reset email sent!");
-		// window.location.href = loginRoute.path;
+		await supabase.auth.resetPasswordForEmail("darrenpaul@duck.com", {
+			redirectTo: `${siteUrl}/${accountRoute.path}`
+		});
+
+		alert("Reset email sent, please check your email");
+
+		goto(homeRoute.path, { replaceState: true });
 	};
 </script>
 

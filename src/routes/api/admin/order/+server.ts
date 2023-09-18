@@ -1,134 +1,79 @@
-// import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-// import { error, type HttpError } from "@sveltejs/kit";
-// import { auth } from "$lib/firebase/firebaseClient";
-// import randomString from "$lib/utils/randomString.js";
-// import { sendPasswordResetEmail } from "firebase/auth";
-// import type { OrderItem } from "$lib/types/order.js";
-// import { sumArrayNumbers } from "$lib/utils/maths.js";
-// import { adminRole } from "$lib/constants/roles";
-// import sendOrderUpdateEmail from "$lib/server/utils/email/sendOrderUpdateEmail";
+import authenticatedAdmin from "$lib/server/authenticatedAdmin.js";
+import { error } from "@sveltejs/kit";
 
 const table = "order";
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url }) => {
-	// const accessToken = request.headers.get("x-access-token");
-	// const orderId = url.searchParams.get("id");
+export const GET = async ({ locals: { supabase, getSession } }) => {
+	const authenticated = await authenticatedAdmin(getSession, supabase);
+	if (!authenticated) {
+		throw error(401, {
+			message: "unauthorized"
+		});
+	}
 
-	// if (!accessToken) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
+	const { data } = await supabase.from(table).select();
 
-	// const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	// if (!decodedIdToken || decodedIdToken.role !== adminRole) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
+	const orders = data.map((order) => ({
+		id: order.id,
+		customer: order.customer,
+		shippingAddress: order.shipping_address,
+		paymentMethod: order.payment_method,
+		items: order.items,
+		subtotal: order.subtotal,
+		shippingMethod: order.shipping_method,
+		total: order.total,
+		status: order.status,
+		createdAt: order.created_at,
+		updatedAt: order.updated_at
+	}));
 
-	// const tableSnapshot = await adminDB.collection(table).get();
-	// const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-	// if (orderId) {
-	// 	const order = tableData.find((order) => order.id === orderId);
-
-	// 	if (!order) {
-	// 		throw error(404, {
-	// 			message: "order not found"
-	// 		});
-	// 	}
-
-	// 	return new Response(JSON.stringify({ order }), {
-	// 		headers: {
-	// 			"Content-Type": "application/json"
-	// 		}
-	// 	});
-	// }
-
-	// return new Response(JSON.stringify(tableData), {
-	// 	headers: {
-	// 		"Content-Type": "application/json"
-	// 	}
-	// });
-
-	return new Response();
+	return new Response(JSON.stringify(orders), {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ url, fetch, request }) => {
-	// const accessToken = request.headers.get("x-access-token");
-	// const {
-	// 	id,
-	// 	customer,
-	// 	shippingAddress,
-	// 	items,
-	// 	paymentMethod,
-	// 	shippingMethod,
-	// 	subtotal,
-	// 	total,
-	// 	createdAt,
-	// 	status
-	// } = await request.json();
+export const PUT = async ({ request, locals: { supabase, getSession } }) => {
+	const authenticated = await authenticatedAdmin(getSession, supabase);
+	if (!authenticated) {
+		throw error(401, {
+			message: "unauthorized"
+		});
+	}
 
-	// if (!accessToken) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
+	const {
+		id,
+		customer,
+		shippingAddress,
+		items,
+		paymentMethod,
+		shippingMethod,
+		subtotal,
+		total,
+		status
+	} = await request.json();
 
-	// const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	// if (!decodedIdToken || decodedIdToken.role !== adminRole) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
-
-	// const timestamp = new Date();
-
-	// await adminDB.collection(table).doc(id).update({
-	// 	customer,
-	// 	shippingAddress,
-	// 	items,
-	// 	paymentMethod,
-	// 	shippingMethod,
-	// 	subtotal,
-	// 	total,
-	// 	createdAt,
-	// 	status,
-	// 	updatedAt: timestamp
-	// });
-
-	// TODO: send email to customer
-	// sendOrderUpdateEmail({
-	// 	id,
-	// 	customer,
-	// 	shippingAddress,
-	// 	items,
-	// 	paymentMethod,
-	// 	shippingMethod,
-	// 	subtotal,
-	// 	total,
-	// 	createdAt,
-	// 	status
-	// });
+	await supabase
+		.from(table)
+		.update({
+			customer,
+			shipping_address: shippingAddress,
+			items,
+			payment_method: paymentMethod,
+			shipping_method: shippingMethod,
+			subtotal,
+			total,
+			status,
+			updated_at: new Date()
+		})
+		.eq("id", id)
+		.select()
+		.single();
 
 	return new Response();
-};
-
-// DELETE
-/** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
-	const { id } = await request.json();
-
-	// await adminDB.collection(table).doc(id).delete();
-
-	return new Response(
-		String({
-			status: 200
-		})
-	);
 };

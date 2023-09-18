@@ -10,9 +10,6 @@
 		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-homepage-feature.webp?alt=media&token=e77db1a2-582e-4ffe-abb1-714cf0cd149b"
 		alt="wall full of stickers from OhSticks"
 		loading="eager"
-		on:load={() => {
-			console.log("loaded");
-		}}
 	/>
 
 	<div class="--title">

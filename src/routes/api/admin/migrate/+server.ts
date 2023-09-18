@@ -12,7 +12,7 @@ const table = "product";
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
 export const PUT = async ({ request, locals: { supabase, getSession } }) => {
-	const session = await getSession();
+	// const session = await getSession();
 	// const accessToken = request.headers.get("x-access-token");
 
 	// if (!accessToken) {
@@ -35,24 +35,20 @@ export const PUT = async ({ request, locals: { supabase, getSession } }) => {
 	// 	});
 	// }
 
-	// const tableSnapshot = await adminDB.collection(table).get();
-	// const products: Product[] = tableSnapshot.docs.map((doc) => ({
+	// const tableSnapshot = await adminDB.collection("page").get();
+	// const pages = tableSnapshot.docs.map((doc) => ({
 	// 	id: doc.id,
 	// 	...doc.data()
-	// })) as Product[];
+	// }));
+	// console.log("pages", pages);
 
-	// const updatePromises = products.map(async (product: Product) => {
-	// 	return await supabase.from("product").insert({
-	// 		name: product.name,
-	// 		slug: product.slug,
-	// 		description: product.description,
-	// 		categories: product.categories,
-	// 		visible: product.visible,
-	// 		currency_price: product.currencyPrice,
-	// 		content_sections: product.contentSections,
-	// 		feature_image: product.featureImage,
-	// 		images: product.images,
-	// 		meta: product.meta
+	// const updatePromises = pages.map(async (page) => {
+	// 	return await supabase.from("page").insert({
+	// 		slug: page.slug,
+	// 		title: page.meta.title,
+	// 		description: page.meta.description,
+	// 		twitter: page.meta.twitter,
+	// 		open_graph: page.meta.openGraph
 	// 	});
 	// });
 

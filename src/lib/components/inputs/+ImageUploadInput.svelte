@@ -2,6 +2,10 @@
 	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
 	import type { Image } from "$lib/types/product";
 	import { getImageMeta, handleImageUpload } from "$lib/utils/imageProcessing";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
+
+	const supabaseState: Writable<any> = getContext("supabaseState");
 
 	export let name = "";
 	export let elementId = "";
@@ -17,7 +21,7 @@
 	const onImagesToUpload = async (event) => {
 		const imageFiles = [...event.target.files];
 
-		const imagePromises = imageFiles.map((image) => handleImageUpload(name, image));
+		const imagePromises = imageFiles.map((image) => handleImageUpload(name, image, $supabaseState));
 		const uploadedImageUrls = await Promise.all(imagePromises);
 		const imagesMeta = await Promise.all(
 			uploadedImageUrls.map(async (url) => await getImageMeta(url))

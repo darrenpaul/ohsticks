@@ -32,6 +32,8 @@
 			track();
 			if (nextPage) {
 				goto(accountRoute.path, { replaceState: true });
+			} else {
+				goto(homeRoute.path, { replaceState: true });
 			}
 		}
 	};

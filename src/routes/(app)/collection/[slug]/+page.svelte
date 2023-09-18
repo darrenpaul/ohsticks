@@ -12,7 +12,7 @@
 	export let data;
 
 	let products: Product[] = [];
-	// let pageData = data.pageData.find((page) => page.slug === "collection");
+	let pageData = data.pageData;
 	let pageUrl = "";
 
 	$: {
@@ -45,17 +45,17 @@
 	</div>
 </div>
 
-<!-- <MetaTags
-	title={pageData.meta?.title}
-	titleTemplate={pageData.meta?.title}
-	description={pageData.meta?.description}
+<MetaTags
+	title={pageData.title}
+	titleTemplate={pageData.title}
+	description={pageData.description}
 	canonical={pageUrl}
 	openGraph={{
-		...pageData.meta.openGraph,
+		...pageData.openGraph,
 		url: pageUrl
 	}}
 	twitter={{
-		...pageData.meta.twitter,
+		...pageData.twitter,
 		site: pageUrl
 	}}
 />
@@ -80,7 +80,7 @@
 			}))
 		}
 	]}
-/> -->
+/>
 
 <style lang="scss">
 	.collection-page {

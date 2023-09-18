@@ -9,6 +9,10 @@
 	import { adminRole } from "$lib/constants/roles";
 	import { error } from "@sveltejs/kit";
 	import { brandName } from "$lib/constants/site";
+	import { deleteImages } from "$lib/utils/imageProcessing.js";
+
+	export let data;
+	let supabase = data.supabase;
 
 	let name: string;
 	let slug = "";
@@ -67,14 +71,13 @@
 				}
 			})
 		});
+
 		if (response.ok) {
 			alert("Product created");
 			return;
 		}
 
-		// [...featureImage, ...productImages, ...openGraphImages, ...twitterImage].forEach((image) =>
-		// 	deleteImage(image.src)
-		// );
+		await deleteImages(name, supabase);
 	};
 </script>
 

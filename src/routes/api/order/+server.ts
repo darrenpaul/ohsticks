@@ -6,7 +6,7 @@ const table = "order";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, fetch, locals: { supabase, getSession } }) => {
+export const POST = async ({ request, locals: { supabase } }) => {
 	const { customer, shippingAddress, items, paymentMethod, shippingMethod } = await request.json();
 
 	// TODO: create account if not exists
@@ -43,12 +43,7 @@ export const POST = async ({ request, fetch, locals: { supabase, getSession } })
 		updated_at: new Date()
 	};
 
-	const { data: createdData, error } = await supabase
-		.from(table)
-		.insert(createPayload)
-		.select()
-		.single();
-	// orderReference.set(payload);
+	const { data: createdData } = await supabase.from(table).insert(createPayload).select().single();
 
 	const payload = {
 		id: createdData.id,
@@ -70,7 +65,7 @@ export const POST = async ({ request, fetch, locals: { supabase, getSession } })
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url, locals: { supabase, getSession } }) => {
+export const GET = async ({ url, locals: { supabase } }) => {
 	const orderId = url.searchParams.get("id");
 
 	if (orderId) {
@@ -126,7 +121,7 @@ export const GET = async ({ request, url, locals: { supabase, getSession } }) =>
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request, url, fetch, locals: { supabase, getSession } }) => {
+export const PUT = async ({ url, fetch, locals: { supabase } }) => {
 	const sessionId = url.searchParams.get("session_id");
 	const orderId = url.searchParams.get("order_id");
 
@@ -175,19 +170,5 @@ export const PUT = async ({ request, url, fetch, locals: { supabase, getSession 
 				"Content-Type": "application/json"
 			}
 		}
-	);
-};
-
-// DELETE
-/** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
-	// const { id } = await request.json();
-
-	// await adminDB.collection(table).doc(id).delete();
-
-	return new Response(
-		String({
-			status: 200
-		})
 	);
 };

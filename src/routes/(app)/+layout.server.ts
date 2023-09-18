@@ -15,16 +15,15 @@ export async function load({ fetch, getClientAddress, cookies, locals: { getSess
 			"Content-Type": "application/json"
 		}
 	});
-
 	const products = await productResponse.json();
 
-	const pageResponse = await fetch("/api/page", {
+	const pageSlug = "home";
+	const pageResponse = await fetch(`/api/page?slug=${pageSlug}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		}
 	});
-
 	const pageData = await pageResponse.json();
 
 	return {

@@ -2,14 +2,19 @@ const table = "page";
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ url }) => {
-	// const tableSnapshot = await adminDB.collection(table).get();
+export const GET = async ({ url, locals: { supabase } }) => {
+	const slug = url.searchParams.get("slug");
+	const { data } = await supabase.from(table).select().eq("slug", slug).single();
 
-	// const pageData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+	const pageData = {
+		title: data.title,
+		description: data.description,
+		slug: data.slug,
+		openGraph: data.open_graph,
+		twitter: data.twitter
+	};
 
-	// const jsonString = JSON.stringify(pageData);
-
-	return new Response(JSON.stringify({}), {
+	return new Response(JSON.stringify(pageData), {
 		headers: {
 			"Content-Type": "application/json"
 		}

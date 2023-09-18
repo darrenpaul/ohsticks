@@ -1,15 +1,14 @@
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
-	const pageSlug = "collection";
-	const pageResponse = await fetch(`/api/page?slug=${pageSlug}`, {
+	const response = await fetch("/api/admin/product", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		}
 	});
-	const pageData = await pageResponse.json();
+	const products = await response.json();
 
 	return {
-		pageData
+		products: products
 	};
 }
