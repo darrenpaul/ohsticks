@@ -30,7 +30,7 @@
 	<header>
 		<div class="--inner">
 			<div class="--menu-button-wrapper">
-				<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)}>
+				<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)} aria-label="Close mobile menu">
 					<MenuClosedIcon />
 				</button>
 			</div>
@@ -51,15 +51,22 @@
 		{#if mobileMenuOpen}
 			<div class="--mobile-menu">
 				<div class="--header">
-					<button on:click={() => (mobileMenuOpen = !mobileMenuOpen)} class="--menu-button">
+					<button
+						on:click={() => (mobileMenuOpen = !mobileMenuOpen)}
+						class="--menu-button"
+						aria-label="Open mobile menu"
+					>
 						<MenuOpenIcon fill="fill-white" />{trans("component.navigation.menu.label")}
 					</button>
-					<button class="--account-button">{trans("component.navigation.account.label")}</button>
+
+					<button class="--account-button" aria-label="Open account page">
+						{trans("component.navigation.account.label")}
+					</button>
 				</div>
 
 				<div class="--links-mobile">
 					{#each linksMobile as link}
-						<a class="--link-mobile" href={link.path}>
+						<a class="--link-mobile" href={link.path} aria-label={`Go to ${link.label} page`}>
 							<div class="--link-mobile-inner">
 								{link.label}
 
@@ -87,7 +94,11 @@
 
 			<div class="--links">
 				{#each links as link}
-					<a class={$page.url.pathname === link.path ? "--active" : ""} href={link.path}>
+					<a
+						class={$page.url.pathname === link.path ? "--active" : ""}
+						href={link.path}
+						aria-label={`Go to ${link.label} page`}
+					>
 						{link.label}
 					</a>
 				{/each}

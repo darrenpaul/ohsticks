@@ -15,7 +15,11 @@
 <div class="product-feature-image-select">
 	<div class="--thumbnail-images">
 		{#each imageSelection as productImage}
-			<button on:click={() => (activeImage = productImage)} class="block w-24 h-24">
+			<button
+				on:click={() => (activeImage = productImage)}
+				class="block w-24 h-24"
+				aria-label="Select product image"
+			>
 				<img
 					class={activeImage === productImage ? "--image-active" : "--image"}
 					src={productImage.src}

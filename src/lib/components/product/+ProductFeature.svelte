@@ -38,7 +38,7 @@
 		<p class="--description">{product.description}</p>
 
 		<div>
-			<button on:click={handleAddToCart}>
+			<button on:click={handleAddToCart} aria-label="Add product to cart">
 				<ButtonIcon>
 					{trans("component.productFeature.addToCart.label")}
 				</ButtonIcon>

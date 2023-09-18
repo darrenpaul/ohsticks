@@ -12,6 +12,7 @@
 		<button
 			class={`${activeTab === 0 ? "--tab-button-active" : "--tab-button"}`}
 			on:click={() => (activeTab = 0)}
+			aria-label="View product details"
 		>
 			{trans("component.productTabs.description.label")}
 		</button>
@@ -19,6 +20,7 @@
 		<button
 			class={`${activeTab === 2 ? "--tab-button-active" : "--tab-button"}`}
 			on:click={() => (activeTab = 2)}
+			aria-label="View product reviews"
 		>
 			{trans("component.productTabs.reviews.label")}
 		</button>

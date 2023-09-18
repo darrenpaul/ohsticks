@@ -133,7 +133,7 @@
 			<label class="floating-label" for="email">{trans("form.register.password.label")}</label>
 		</div>
 
-		<button>
+		<button aria-label="Register new account">
 			<ButtonIcon>
 				{trans("form.register.submit.label")}
 			</ButtonIcon>

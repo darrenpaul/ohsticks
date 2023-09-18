@@ -79,7 +79,7 @@
 			<label class="floating-label" for="email">{trans("form.login.password.label")}</label>
 		</div>
 
-		<button>
+		<button aria-label="Login into account">
 			<ButtonIcon>
 				{trans("form.login.submit.label")}
 			</ButtonIcon>

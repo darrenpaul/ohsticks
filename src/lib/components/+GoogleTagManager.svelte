@@ -95,11 +95,11 @@
 		</div>
 
 		<div class="--buttons">
-			<button class="submit-button" on:click={onAcceptSelection}>
+			<button class="submit-button" on:click={onAcceptSelection} aria-label="Accept GDPR Selection">
 				{trans("component.googleTagManager.acceptSelection.label")}
 			</button>
 
-			<button class="submit-button --button" on:click={onAcceptAll}>
+			<button class="submit-button --button" on:click={onAcceptAll} aria-label="Accept All GDPR">
 				{trans("component.googleTagManager.acceptAll.label")}
 			</button>
 		</div>

@@ -102,7 +102,9 @@
 			<label class="floating-label" for="email">{trans("form.contact.message.label")}</label>
 		</div>
 
-		<button class="submit-button">{trans("form.contact.submit.label")}</button>
+		<button class="submit-button" aria-label="Send contact message"
+			>{trans("form.contact.submit.label")}</button
+		>
 	</form>
 </div>
 

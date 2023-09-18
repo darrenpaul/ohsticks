@@ -42,7 +42,9 @@
 			<label class="floating-label" for="email">{trans("form.forgotPassword.email.label")}</label>
 		</div>
 
-		<button class="submit-button">{trans("form.forgotPassword.submit.label")}</button>
+		<button class="submit-button" aria-label="Reset account password">
+			{trans("form.forgotPassword.submit.label")}
+		</button>
 	</form>
 </div>
 

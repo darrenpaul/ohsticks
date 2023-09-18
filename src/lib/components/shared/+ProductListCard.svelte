@@ -14,7 +14,11 @@
 </script>
 
 <div class="product-list-card">
-	<a href={`${productRoute.path}/${product.slug}`} on:click={track}>
+	<a
+		href={`${productRoute.path}/${product.slug}`}
+		on:click={track}
+		aria-label={`Go to ${product.name} page`}
+	>
 		<img width="250" height="250" src={product.featureImage.src} alt="Preview" loading="lazy" />
 
 		<div class="--content">

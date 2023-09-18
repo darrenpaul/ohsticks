@@ -34,7 +34,7 @@
 	};
 </script>
 
-<button class="navigation-cart-button" on:click={openCart}>
+<button class="navigation-cart-button" on:click={openCart} aria-label="Open Cart Button">
 	{#if cartQuantity > 0}
 		<p class="--quantity">{cartQuantity}</p>
 	{/if}

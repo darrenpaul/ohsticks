@@ -20,7 +20,7 @@
 		</h2>
 
 		<div class="--button-wrapper">
-			<a href={collectionAllRoute.path}>
+			<a href={collectionAllRoute.path} aria-label={`Go to ${collectionAllRoute.label} page`}>
 				<ButtonIcon>
 					{trans("component.productList.collection")}
 				</ButtonIcon>
