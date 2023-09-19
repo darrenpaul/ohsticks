@@ -5,17 +5,16 @@ const table = "newsletter";
 export const POST = async ({ request, locals: { supabase } }) => {
 	const { email } = await request.json();
 
-	// const { data } = await supabase.from(table).select("*").eq("email", email);
-	// console.log("POST ~ data:", data)
+	const { data } = await supabase.from(table).select("*").eq("email", email);
 
-	// if (data && data.length > 0) {
-	// 	return new Response(
-	// 		String({
-	// 			status: 200,
-	// 			body: "success"
-	// 		})
-	// 	);
-	// }
+	if (data && data.length > 0) {
+		return new Response(
+			String({
+				status: 200,
+				body: "success"
+			})
+		);
+	}
 
 	const { error } = await supabase.from(table).insert({
 		email
