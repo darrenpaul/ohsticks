@@ -1,18 +1,25 @@
-// import { adminDB } from "$lib/server/firebaseAdminClient";
-
 const table = "contact";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
+export const POST = async ({ request, locals: { supabase } }) => {
 	const { name, email, subject, message } = await request.json();
 
-	// await adminDB.collection(table).doc().set({
-	// 	name,
-	// 	email,
-	// 	subject,
-	// 	message
-	// });
+	const { error } = await supabase.from(table).insert({
+		name,
+		email,
+		subject,
+		message
+	});
+
+	if (error) {
+		return new Response(
+			String({
+				status: 500,
+				body: error.message
+			})
+		);
+	}
 
 	return new Response(
 		String({
