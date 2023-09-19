@@ -71,6 +71,7 @@
 			}
 			.--image-active {
 				@extend .--image;
+
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */

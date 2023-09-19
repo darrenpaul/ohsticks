@@ -111,7 +111,6 @@
 			/* MARGINS AND PADDING */
 			@apply px-4 mb-16;
 			/* LAYOUT */
-			// @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8;
 			@apply flex flex-wrap justify-center gap-8;
 			/* BORDERS */
 			/* COLORS */
