@@ -3,7 +3,6 @@ export default {
 		"postcss-import": {},
 		"tailwindcss/nesting": "postcss-nesting",
 		tailwindcss: {},
-		autoprefixer: {},
-		cssnano: {}
+		autoprefixer: {}
 	}
 };
