@@ -49,7 +49,7 @@
 	</div>
 </section>
 
-<style lang="scss">
+<style lang="postcss">
 	.product-feature {
 		/* SIZE */
 		/* MARGINS AND PADDING */

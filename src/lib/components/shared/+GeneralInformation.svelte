@@ -64,7 +64,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.general-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */

@@ -46,7 +46,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.cart-menu-item {
 		/* SIZE */
 		/* MARGINS AND PADDING */

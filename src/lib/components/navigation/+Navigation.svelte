@@ -113,7 +113,7 @@
 	</header>
 </DesktopOnly>
 
-<style lang="scss">
+<style lang="postcss">
 	header {
 		/* SIZE */
 		@apply w-full h-20;

@@ -106,7 +106,7 @@
 	</div>
 {/if}
 
-<style lang="scss">
+<style lang="postcss">
 	.accept-gdpr {
 		/* SIZE */
 		@apply w-screen h-fit;

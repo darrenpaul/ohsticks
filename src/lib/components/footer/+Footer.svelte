@@ -62,7 +62,7 @@
 	</div>
 </footer>
 
-<style lang="scss">
+<style lang="postcss">
 	footer {
 		/* SIZE */
 		/* MARGINS AND PADDING */

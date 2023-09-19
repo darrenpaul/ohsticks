@@ -9,7 +9,7 @@
 	import { viewCartEvent } from "$lib/utils/googleTagManager";
 
 	const cartState: Writable<boolean> = getContext("cartState");
-	let cartQuantity: number = 0;
+	let cartQuantity: number;
 
 	$: {
 		cartQuantity = 0;

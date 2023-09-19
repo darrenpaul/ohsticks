@@ -59,7 +59,7 @@
 	</div>
 {/each}
 
-<style lang="scss">
+<style lang="postcss">
 	.shipping-method-radio {
 		/* SIZE */
 		/* MARGINS AND PADDING */

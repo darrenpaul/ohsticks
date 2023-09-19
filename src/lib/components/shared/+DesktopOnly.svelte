@@ -2,7 +2,7 @@
 	<slot />
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.desktop-only {
 		/* SIZE */
 		/* MARGINS AND PADDING */

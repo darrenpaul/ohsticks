@@ -5,7 +5,7 @@
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
-	export let title: string = "Product List";
+	export let title: string;
 	export let products: Product[];
 </script>
 

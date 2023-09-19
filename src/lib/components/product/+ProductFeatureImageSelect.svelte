@@ -35,7 +35,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.product-feature-image-select {
 		/* SIZE */
 		/* MARGINS AND PADDING */

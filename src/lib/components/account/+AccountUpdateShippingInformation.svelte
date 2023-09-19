@@ -168,7 +168,7 @@
 	<button class="slim-button">{trans("page.account.update.label")}</button>
 </form>
 
-<style lang="scss">
+<style lang="postcss">
 	.account-update-user-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */

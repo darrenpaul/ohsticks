@@ -35,7 +35,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.feature {
 		/* SIZE */
 		@apply w-full h-[100dvh];

@@ -14,7 +14,7 @@
 	/>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.side-by-side-image {
 		/* SIZE */
 		/* MARGINS AND PADDING */

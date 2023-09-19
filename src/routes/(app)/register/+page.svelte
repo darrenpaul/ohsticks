@@ -143,7 +143,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.register-page {
 		/* SIZE */
 		@apply max-w-[400px];

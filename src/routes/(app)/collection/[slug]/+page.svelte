@@ -82,7 +82,7 @@
 	]}
 />
 
-<style lang="scss">
+<style lang="postcss">
 	.collection-page {
 		/* SIZE */
 		@apply w-fit max-w-[1495px];

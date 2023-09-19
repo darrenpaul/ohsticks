@@ -255,7 +255,7 @@
 	</div>
 </form>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-form {
 		/* SIZE */
 		/* MARGINS AND PADDING */
