@@ -3,7 +3,7 @@
 	import SendMessageIcon from "$lib/components/icons/+SendMessageIcon.svelte";
 	import { newsletterSignupEvent } from "$lib/utils/googleTagManager";
 
-	let newsletterEmail: string = "";
+	let newsletterEmail: string;
 
 	const handleNewsletterSubmit = async (event: Event) => {
 		const form = event.target as HTMLFormElement;

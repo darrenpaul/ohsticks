@@ -4,13 +4,14 @@
 	import { removeFromCart } from "$lib/stores/cartStore";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
 
 	const sessionState: Writable<any> = getContext("sessionState");
 
 	let totalPrice: string;
 
 	export let cartItem: CartItem;
-	export let index: number = 0;
+	export let index: number;
 
 	$: {
 		totalPrice = (Number(cartItem.price) * cartItem.quantity).toFixed(2);

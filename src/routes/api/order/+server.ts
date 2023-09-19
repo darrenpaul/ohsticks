@@ -1,9 +1,5 @@
-import { error } from "@sveltejs/kit";
 import type { Order, OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
-import { siteUrl } from "$lib/constants/site.js";
-import { accountRoute } from "$lib/constants/routes/accountRoute.js";
-import randomString from "$lib/utils/randomString";
 
 const table = "order";
 

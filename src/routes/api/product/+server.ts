@@ -10,10 +10,10 @@ export const GET = async ({ url, locals: { supabase } }) => {
 	let products;
 
 	if (slug) {
-		const { data, error } = await supabase.from(table).select().eq("visible", true, "slug", slug);
+		const { data } = await supabase.from(table).select().eq("visible", true, "slug", slug);
 		products = data;
 	} else {
-		const { data, error } = await supabase.from(table).select().eq("visible", true);
+		const { data } = await supabase.from(table).select().eq("visible", true);
 		products = data;
 	}
 

@@ -1,5 +1,3 @@
-const table = "user";
-
 // const createAuthenticationUser = async ({
 // 	emailAddress,
 // 	phoneNumber,
@@ -32,7 +30,7 @@ const table = "user";
 export const POST = async ({ request, locals: { supabase } }) => {
 	const { userId, firstName, lastName } = await request.json();
 
-	const { data, error } = await supabase.from("account").insert({
+	await supabase.from("account").insert({
 		first_name: firstName,
 		last_name: lastName,
 		user_id: userId

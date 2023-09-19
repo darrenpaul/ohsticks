@@ -39,7 +39,7 @@ export const getImageMeta = async (url: string) => {
 };
 
 export const deleteImages = async (name: string, supabase) => {
-	const { data, error } = await supabase.storage.from(productStorageBucket).list(name, {
+	const { data } = await supabase.storage.from(productStorageBucket).list(name, {
 		limit: 100,
 		offset: 0,
 		sortBy: { column: "name", order: "asc" }

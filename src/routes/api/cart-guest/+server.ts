@@ -46,7 +46,7 @@ export const POST = async ({ request, locals: { supabase } }) => {
 		// If cartData is null, then a new cart will be created
 	}
 
-	const { data, error } = await supabase
+	const { data } = await supabase
 		.from(table)
 		.insert({
 			cart_items: [cartItem],
@@ -69,7 +69,7 @@ export const POST = async ({ request, locals: { supabase } }) => {
 
 // GET CART
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url, fetch, locals: { supabase } }) => {
+export const GET = async ({ request, locals: { supabase } }) => {
 	const cartKey = request.headers.get("cart-key");
 
 	if (!cartKey) {

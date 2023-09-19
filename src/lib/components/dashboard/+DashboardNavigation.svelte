@@ -8,7 +8,7 @@
 		<a href={adminProductRoute.path}>{adminProductRoute.label}</a>
 		<a href={adminOrderRoute.path}>{adminOrderRoute.label}</a>
 	</div>
-	<button on:click={() => {}}>Logout</button>
+	<!-- <button on:click={() => {}}>Logout</button> -->
 </nav>
 
 <style lang="scss">

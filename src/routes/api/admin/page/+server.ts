@@ -1,8 +1,6 @@
-const table = "page";
-
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
+export const POST = async () => {
 	// const accessToken = request.headers.get("x-access-token");
 
 	// const { name, slug, meta } = await request.json();
@@ -43,7 +41,7 @@ export const POST = async ({ request }) => {
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ url, request }) => {
+export const GET = async () => {
 	// TODO: PROTECT THIS ROUTE
 
 	// const accessToken = request.headers.get("x-access-token");
@@ -81,7 +79,7 @@ export const GET = async ({ url, request }) => {
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request }) => {
+export const PUT = async () => {
 	// const { id, name, slug, meta } = await request.json();
 
 	// await adminDB.collection(table).doc(id).update({
@@ -99,7 +97,7 @@ export const PUT = async ({ request }) => {
 
 // DELETE
 /** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
+export const DELETE = async () => {
 	// const { id } = await request.json();
 
 	// await adminDB.collection(table).doc(id).delete();

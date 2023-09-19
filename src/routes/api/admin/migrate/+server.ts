@@ -2,15 +2,13 @@
 // import { adminRole } from "$lib/constants/roles";
 // import type { Product } from "$lib/types/product";
 
-const table = "product";
-
 // const updateProduct = async (product: Product) => {
 // 	return await adminDB.collection(table).doc(product.id).update(product);
 // };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request, locals: { supabase, getSession } }) => {
+export const PUT = async () => {
 	// const session = await getSession();
 	// const accessToken = request.headers.get("x-access-token");
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import type { Order } from "$lib/types/order";
 	import AdminOrderList from "$lib/components/admin/order/+AdminOrderList.svelte";
 	import { trans } from "$lib/locales/translateCopy";

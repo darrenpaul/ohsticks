@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { trans } from "$lib/locales/translateCopy";
-	import { error } from "@sveltejs/kit";
 	import type { ContentSection, Image } from "$lib/types/product";
 	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
 

@@ -27,7 +27,7 @@
 	const handleFormSubmit = async () => {
 		const nextPage = $page.url.searchParams.get("page");
 
-		const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+		const { data } = await supabase.auth.signInWithPassword({ email, password });
 		if (data) {
 			track();
 			if (nextPage) {

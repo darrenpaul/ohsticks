@@ -13,9 +13,9 @@
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
 	import BrandIcon from "$lib/components/icons/+BrandIcon.svelte";
 
-	let navigationFixed: boolean = false;
+	let navigationFixed: boolean;
 
-	let mobileMenuOpen: boolean = false;
+	let mobileMenuOpen: boolean;
 
 	let links = [homeRoute, collectionAllRoute, contactRoute];
 	let linksMobile = [homeRoute, collectionAllRoute, contactRoute];

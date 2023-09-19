@@ -8,7 +8,7 @@
 	import type { Writable } from "svelte/store";
 	import { viewCartEvent } from "$lib/utils/googleTagManager";
 
-	const cartState: Writable<Boolean> = getContext("cartState");
+	const cartState: Writable<boolean> = getContext("cartState");
 	let cartQuantity: number = 0;
 
 	$: {

@@ -1,6 +1,6 @@
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, locals: { supabase } }) => {
+export const POST = async ({ locals: { supabase } }) => {
 	const { data } = await supabase.auth.signUp({
 		email: "darrenpaul@duck.com",
 		password: "asdasdasda",

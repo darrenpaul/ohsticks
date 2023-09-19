@@ -11,7 +11,7 @@
 	import type { CartItem } from "$lib/types/cart";
 	import type { Writable } from "svelte/store";
 
-	const cartState: Writable<Boolean> = getContext("cartState");
+	const cartState: Writable<boolean> = getContext("cartState");
 
 	let totalQuantity = 0;
 	let totalPrice = "0.00";
@@ -38,7 +38,7 @@
 </script>
 
 <div class="cart-menu">
-	<div class="--backdrop" role="button" tabindex={1} on:click={closeCart} on:keydown={() => {}} />
+	<div class="--backdrop" role="button" tabindex={1} on:click={closeCart} on:keydown={closeCart} />
 
 	<div class="--menu">
 		<div class="--header">

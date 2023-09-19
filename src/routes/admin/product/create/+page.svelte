@@ -6,8 +6,6 @@
 	import type { ContentSection, Image } from "$lib/types/product";
 	import ProductCreateInformation from "$lib/components/admin/product/+ProductCreateInformation.svelte";
 	import ProductCreatePrice from "$lib/components/admin/product/+ProductCreatePrice.svelte";
-	import { adminRole } from "$lib/constants/roles";
-	import { error } from "@sveltejs/kit";
 	import { brandName } from "$lib/constants/site";
 	import { deleteImages } from "$lib/utils/imageProcessing.js";
 
@@ -46,7 +44,7 @@
 				contentSections,
 				purchasePrice,
 				markupPercentage,
-				price,
+				currencyPrice,
 				quantity,
 				visible,
 				featureImage: featureImage[0] || "",

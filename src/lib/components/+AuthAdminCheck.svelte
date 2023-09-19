@@ -1,6 +1,6 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { adminRole } from "$lib/constants/roles";
-</script>
+</script> -->
 
 <!-- {#if $user && $user.role === adminRole}
 	<slot />

@@ -5,7 +5,7 @@
 
 	const supabaseState: Writable<any> = getContext("supabaseState");
 
-	let newPassword: string = "";
+	let newPassword: string;
 
 	const handleFormSubmit = async () => {
 		const { data } = await $supabaseState.auth.updateUser({ password: newPassword });

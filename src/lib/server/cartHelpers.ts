@@ -15,7 +15,7 @@ export const mergeCartItems = (cartItems: CartItem[]) => {
 	return Object.values(mergedCartItems);
 };
 
-export const getLatestCart = async (tableSnapshot) => {
+export const getLatestCart = async () => {
 	// // Multiple carts found, delete old carts and use the latest one
 	// const userCarts: CartUser[] = tableSnapshot.docs.map((doc) => ({
 	// 	id: doc.id,

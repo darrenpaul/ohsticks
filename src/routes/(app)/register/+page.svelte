@@ -9,10 +9,10 @@
 
 	export let data;
 	let { supabase, session } = data;
-	let firstName: string = "";
-	let lastName: string = "";
-	let email: string = "";
-	let password: string = "";
+	let firstName: string;
+	let lastName: string;
+	let email: string;
+	let password: string;
 	let shippingAddress = {
 		address1: "",
 		address2: "",
@@ -37,7 +37,7 @@
 			}
 		});
 
-		const response = await fetch("/api/account", {
+		await fetch("/api/account", {
 			method: "POST",
 			body: JSON.stringify({
 				userId: data.user.id,

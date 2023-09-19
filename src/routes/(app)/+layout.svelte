@@ -62,7 +62,7 @@
 	<Footer />
 {/if}
 
-<style lang="scss">
+<style lang="postcss">
 	.page {
 		/* SIZE */
 		@apply min-h-[100dvh];

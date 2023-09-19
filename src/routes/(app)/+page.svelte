@@ -94,7 +94,7 @@
 	]}
 />
 
-<style lang="scss">
+<style lang="postcss">
 	.home-page {
 		/* SIZE */
 		/* MARGINS AND PADDING */

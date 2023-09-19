@@ -1,12 +1,13 @@
 <script lang="ts">
-	import Rating from "$lib/components/shared/+Rating.svelte";
+	// import Rating from "$lib/components/shared/+Rating.svelte";
+
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import type { Product } from "$lib/types/product";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { selectItemEvent } from "$lib/utils/googleTagManager";
 
 	export let product: Product;
-	export let index: number = 0;
+	export let index: number;
 
 	const track = () => {
 		selectItemEvent(product, index);

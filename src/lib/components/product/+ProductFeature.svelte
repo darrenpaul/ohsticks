@@ -10,7 +10,7 @@
 	import type { Writable } from "svelte/store";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
-	const cartState: Writable<Boolean> = getContext("cartState");
+	const cartState: Writable<boolean> = getContext("cartState");
 
 	export let product: Product;
 	export let session;

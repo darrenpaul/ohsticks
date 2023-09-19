@@ -1,5 +1,4 @@
 <script lang="ts">
-	import AuthCheck from "$lib/components/+AuthCheck.svelte";
 	import NavigationAccount from "$lib/components/navigation/+NavigationAccount.svelte";
 
 	import { browser } from "$app/environment";

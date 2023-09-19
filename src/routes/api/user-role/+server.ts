@@ -1,4 +1,4 @@
-export const POST = async ({ request }) => {
+export const POST = async () => {
 	const payload = { role: "admin" };
 	return new Response(JSON.stringify(payload), {
 		headers: {

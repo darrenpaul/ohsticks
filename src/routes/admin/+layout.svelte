@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
-	import AuthAdminCheck from "$lib/components/+AuthAdminCheck.svelte";
 	import AdminNavigation from "$lib/components/navigation/+AdminNavigation.svelte";
 	import { setContext } from "svelte";
 	import { writable } from "svelte/store";

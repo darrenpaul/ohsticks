@@ -1,7 +1,7 @@
 import type { Order } from "$lib/types/order.js";
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ fetch, url, params }) {
+export async function load({ fetch, params }) {
 	const orderId = params.id;
 
 	const orderResponse = await fetch("/api/admin/order", {

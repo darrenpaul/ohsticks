@@ -1,9 +1,6 @@
 <script lang="ts">
 	import AdminOrderShippingInformation from "$lib/components/admin/order/+AdminOrderShippingInformation.svelte";
-	import { browser } from "$app/environment";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
-	import { error } from "@sveltejs/kit";
-	import { page } from "$app/stores";
 	import type { IngAddress, Order } from "$lib/types/order";
 	import AdminOrderHeader from "$lib/components/admin/order/+AdminOrderHeader.svelte";
 	import AdminOrderItemList from "$lib/components/admin/order/+AdminOrderItemList.svelte";

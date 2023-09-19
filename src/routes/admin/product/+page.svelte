@@ -4,7 +4,6 @@
 		adminProductEditRoute
 	} from "$lib/constants/routes/admin/adminProductRoute";
 	import type { Product } from "$lib/types/product";
-	import { error } from "@sveltejs/kit";
 	import { onMount } from "svelte";
 
 	onMount(async () => {

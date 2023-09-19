@@ -18,16 +18,16 @@
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
 	let emailInputDisabled = false;
-	let email: string = "";
-	let country: string = "";
-	let firstName: string = "";
-	let lastName: string = "";
-	let address1: string = "";
-	let address2: string = "";
-	let city: string = "";
-	let province: string = "";
-	let postalCode: string = "";
-	let selectableProvinces: { name: string; isoCode: string }[] = [];
+	let email: string;
+	let country: string;
+	let firstName: string;
+	let lastName: string;
+	let address1: string;
+	let address2: string;
+	let city: string;
+	let province: string;
+	let postalCode: string;
+	let selectableProvinces: { name: string; isoCode: string }[];
 	let shippingMethod: ShippingMethod;
 	let paymentMethod = "stripe";
 
