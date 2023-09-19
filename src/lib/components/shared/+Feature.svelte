@@ -22,7 +22,8 @@
 		<h1>Stick it to the man with OhSticks</h1>
 
 		<h2>
-			Make your mark and show off your style with our trendy decals. Get stuck on OhSticks today!
+			Make your mark and show off your style with our trendy decals.<br />Get stuck on OhSticks
+			today!
 		</h2>
 
 		<div class="--button-wrapper">
