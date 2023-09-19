@@ -1,7 +1,14 @@
 <script lang="ts">
-	import { deleteImage } from "$lib/firebase/firebaseImageUtils";
 	import type { Image } from "$lib/types/product";
-	import { getImageMeta, handleImageUpload } from "$lib/utils/imageProcessing";
+	import {
+		deleteImagesByPath,
+		getImageBucketFromUrl,
+		getImageFolderFromUrl,
+		getImageMeta,
+		getImageNameFromUrl,
+		handleImageUpload
+	} from "$lib/utils/imageProcessing";
+	import { slugString } from "$lib/utils/slugString";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
 
@@ -14,14 +21,24 @@
 	export let images: Image[] = [];
 
 	const onImageDelete = async (imageSrc: string) => {
-		await deleteImage(imageSrc);
+		const imageBucket = getImageBucketFromUrl(imageSrc);
+		const imageFolder = getImageFolderFromUrl(imageSrc);
+		const imageName = getImageNameFromUrl(imageSrc);
+
+		const imagePaths = [`${imageFolder}/${imageName}`];
+		await deleteImagesByPath(imageBucket, imagePaths, $supabaseState);
+		console.log("onImageDelete ~ imagePaths:", imagePaths);
 		images = images.filter((image) => image?.src !== imageSrc);
 	};
 
 	const onImagesToUpload = async (event) => {
 		const imageFiles = [...event.target.files];
 
-		const imagePromises = imageFiles.map((image) => handleImageUpload(name, image, $supabaseState));
+		const slugName = slugString(name);
+
+		const imagePromises = imageFiles.map((image) =>
+			handleImageUpload(slugName, image, $supabaseState)
+		);
 		const uploadedImageUrls = await Promise.all(imagePromises);
 		const imagesMeta = await Promise.all(
 			uploadedImageUrls.map(async (url) => await getImageMeta(url))

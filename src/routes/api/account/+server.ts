@@ -1,7 +1,3 @@
-import { error, type HttpError } from "@sveltejs/kit";
-// import { userRole } from "$lib/constants/roles";
-// import type { FirebaseError } from "firebase-admin";
-
 const table = "user";
 
 // const createAuthenticationUser = async ({

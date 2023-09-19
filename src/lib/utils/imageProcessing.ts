@@ -1,4 +1,3 @@
-// import { uploadImage } from "$lib/firebase/firebaseImageUtils";
 import randomString from "$lib/utils/randomString";
 import { slugString } from "$lib/utils/slugString";
 
@@ -49,4 +48,31 @@ export const deleteImages = async (name: string, supabase) => {
 	const images = data.map((image) => `${name}/${image.name}`);
 
 	return await supabase.storage.from(productStorageBucket).remove(images);
+};
+
+export const deleteImagesByPath = async (imageBucket: string, imagePaths: string[], supabase) => {
+	return await supabase.storage.from(imageBucket).remove(imagePaths);
+};
+
+const getIndexOfUrl = (url: string, index: number) => {
+	// Split the URL by '/'
+	const urlParts = url.split("/");
+
+	// Filter out any empty strings from the split
+	const filteredUrlParts = urlParts.filter((part) => part.length > 0);
+
+	// Return the last item from the filtered URL parts
+	return filteredUrlParts[filteredUrlParts.length - index];
+};
+
+export const getImageBucketFromUrl = (url: string) => {
+	return getIndexOfUrl(url, 3);
+};
+
+export const getImageFolderFromUrl = (url: string) => {
+	return getIndexOfUrl(url, 2);
+};
+
+export const getImageNameFromUrl = (url: string) => {
+	return getIndexOfUrl(url, 1);
 };

@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { shippingCountries } from "$lib/constants/shippingCountries";
 	import { trans } from "$lib/locales/translateCopy";
-	import { onMount } from "svelte";
-	import { error } from "@sveltejs/kit";
 
 	export let session;
 	export let account;

@@ -1,4 +1,3 @@
-// import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
 // import { error, type HttpError } from "@sveltejs/kit";
 // import { adminRole } from "$lib/constants/roles";
 // import type { Product } from "$lib/types/product";

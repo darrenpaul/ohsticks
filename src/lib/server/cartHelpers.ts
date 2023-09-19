@@ -1,7 +1,5 @@
-import { adminDB } from "$lib/server/firebaseAdminClient";
-import type { CartItem, CartUser } from "$lib/types/cart";
+import type { CartItem } from "$lib/types/cart";
 import type { Product, ProductResponse } from "$lib/types/product";
-import type { QuerySnapshot } from "firebase/firestore";
 
 export const mergeCartItems = (cartItems: CartItem[]) => {
 	const mergedCartItems: { [prop: string]: CartItem } = {};
@@ -17,7 +15,7 @@ export const mergeCartItems = (cartItems: CartItem[]) => {
 	return Object.values(mergedCartItems);
 };
 
-export const getLatestCart = async (tableSnapshot: QuerySnapshot) => {
+export const getLatestCart = async (tableSnapshot) => {
 	// // Multiple carts found, delete old carts and use the latest one
 	// const userCarts: CartUser[] = tableSnapshot.docs.map((doc) => ({
 	// 	id: doc.id,
@@ -36,7 +34,7 @@ export const getLatestCart = async (tableSnapshot: QuerySnapshot) => {
 };
 
 export const syncCartItemsAndProducts = async (cartItems: CartItem[], supabase) => {
-	const { data, error } = await supabase.from("product").select().eq("visible", true);
+	const { data } = await supabase.from("product").select().eq("visible", true);
 	const products = data;
 
 	const syncedWithProducts = cartItems.map((cartItem) => {

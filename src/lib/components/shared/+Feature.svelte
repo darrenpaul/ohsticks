@@ -5,12 +5,18 @@
 </script>
 
 <div class="feature">
-	<img
-		height="100dvh"
-		src="https://firebasestorage.googleapis.com/v0/b/ohsticks-37fa7.appspot.com/o/page%2Fohsticks-homepage-feature.webp?alt=media&token=e77db1a2-582e-4ffe-abb1-714cf0cd149b"
-		alt="wall full of stickers from OhSticks"
-		loading="eager"
-	/>
+	<picture>
+		<source
+			media="(max-width:465px)"
+			srcset="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-homepage-feature-910x1256.webp"
+		/>
+
+		<img
+			src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-homepage-feature.webp"
+			alt="wall full of stickers from OhSticks"
+			loading="eager"
+		/>
+	</picture>
 
 	<div class="--title">
 		<h1>Stick it to the man with OhSticks</h1>

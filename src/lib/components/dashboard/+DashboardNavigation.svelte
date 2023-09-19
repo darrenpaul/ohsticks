@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { adminProductRoute } from "$lib/constants/routes/admin/adminProductRoute";
 	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute";
-	// import { logoutUser } from "$lib/firebase/firebaseClient";
 </script>
 
 <nav>

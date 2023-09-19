@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { error } from "@sveltejs/kit";
 	import { trans } from "$lib/locales/translateCopy";
 	import PageCreateOpenGraph from "$lib/components/admin/product/+PageCreateOpenGraph.svelte";
 	import PageCreateMeta from "$lib/components/admin/product/+PageCreateMeta.svelte";
