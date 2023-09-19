@@ -3,6 +3,7 @@
 	import AccountUpdateUserPassword from "$lib/components/account/+AccountUpdateUserPassword.svelte";
 
 	export let data;
+	let session = data.session;
 	let { account } = data;
 
 	$: ({ account } = data);
@@ -11,7 +12,7 @@
 <div class="account-page">
 	<h1>Account</h1>
 
-	<AccountUpdateShippingInformation {account} />
+	<AccountUpdateShippingInformation {session} {account} />
 
 	<AccountUpdateUserPassword />
 </div>

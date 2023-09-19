@@ -19,6 +19,7 @@ export const POST = async ({ request, locals: { supabase } }) => {
 	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
 
 	const createPayload = {
+		email: customer.email,
 		customer,
 		shipping_address: shippingAddress,
 		payment_method: paymentMethod,
@@ -52,38 +53,13 @@ export const POST = async ({ request, locals: { supabase } }) => {
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ url, locals: { supabase } }) => {
-	const orderId = url.searchParams.get("id");
+export const GET = async ({ locals: { supabase, getSession } }) => {
+	const session = await getSession();
 
-	if (orderId) {
-		const { data } = await supabase.from(table).select().eq("id", orderId).single();
-
-		if (!data) {
-			throw error(404, {
-				message: "order not found"
-			});
-		}
-
-		const payload = {
-			id: data.id,
-			customer: data.customer,
-			shippingAddress: data.shipping_address,
-			paymentMethod: data.payment_method,
-			items: data.items,
-			subtotal: data.subtotal,
-			shippingMethod: data.shipping_method,
-			total: data.total,
-			status: data.status
-		};
-
-		return new Response(JSON.stringify(payload), {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	}
-
-	const { data } = await supabase.from(table).select();
+	const { data } = await supabase
+		.from(table)
+		.select()
+		.eq("email", session?.user.email);
 
 	const orders = data.map((order: Order) => ({
 		id: order.id,

@@ -1,5 +1,5 @@
 import { accountRoute, loginRoute } from "$lib/constants/routes/accountRoute.js";
-import { fail, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 
 export const load = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
@@ -11,22 +11,21 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	const { data } = await supabase
 		.from("account")
 		.select(
-			`first_name, last_name, email_address, shipping_address( address_1, address_2, city, country, postal_code, province )`
+			`first_name, last_name, shipping_address( address_1, address_2, city, country, postal_code, province )`
 		)
-		.eq("id", session.user.id)
+		.eq("user_id", session.user.id)
 		.single();
 
 	const account = {
 		firstName: data.first_name,
 		lastName: data.last_name,
-		emailAddress: data.email_address,
 		shippingAddress: {
-			address1: data.shipping_address.address_1,
-			address2: data.shipping_address.address_2,
-			city: data.shipping_address.city,
-			country: data.shipping_address.country,
-			postalCode: data.shipping_address.postal_code,
-			province: data.shipping_address.province
+			address1: data.shipping_address?.address_1 || "",
+			address2: data.shipping_address?.address_2 || "",
+			city: data.shipping_address?.city || "",
+			country: data.shipping_address?.country || "",
+			postalCode: data.shipping_address?.postal_code || "",
+			province: data.shipping_address?.province || ""
 		}
 	};
 

@@ -40,7 +40,7 @@
 		const response = await fetch("/api/account", {
 			method: "POST",
 			body: JSON.stringify({
-				uuid: data.user.id,
+				userId: data.user.id,
 				firstName,
 				lastName,
 				emailAddress: email,

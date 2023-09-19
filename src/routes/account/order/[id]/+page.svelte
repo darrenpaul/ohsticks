@@ -1,34 +1,16 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import { trans } from "$lib/locales/translateCopy";
 	import OrderConfirmationHeader from "$lib/components/order/+OrderConfirmationHeader.svelte";
 	import OrderConfirmationUpdates from "$lib/components/order/+OrderConfirmationUpdates.svelte";
-	import { error } from "@sveltejs/kit";
-	import { page } from "$app/stores";
 	import type { Order } from "$lib/types/order";
 	import OrderConfirmationShipping from "$lib/components/order/+OrderConfirmationShipping.svelte";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import OrderConfirmationList from "$lib/components/order/+OrderConfirmationList.svelte";
 	import OrderConfirmationTotals from "$lib/components/order/+OrderConfirmationTotals.svelte";
 
-	let order: Order;
-
-	const handleOrderFetch = async () => {
-		const response = await fetch(`/api/order?id=${$page.params.id}`, {
-			method: "GET"
-		});
-
-		if (response.ok) {
-			order = await response.json();
-		} else {
-			return error(response.status, "Order not found");
-		}
-	};
-
-	if (browser) {
-		handleOrderFetch();
-	}
+	export let data;
+	let order: Order = data.order;
 </script>
 
 <ContainWidth>

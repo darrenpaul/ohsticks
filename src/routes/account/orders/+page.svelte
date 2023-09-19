@@ -1,26 +1,11 @@
 <script lang="ts">
 	import AccountOrdersList from "$lib/components/account/+AccountOrderList.svelte";
 	import { trans } from "$lib/locales/translateCopy";
-	import { browser } from "$app/environment";
 	import type { Order } from "$lib/types/order";
 	import { delivered, paid } from "$lib/constants/orderUpdate";
 
-	let orders: Order[] = [];
-
-	const handleOrderFetch = async () => {
-		const response = await fetch("/api/order", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-
-		orders = await response.json();
-	};
-
-	if (browser) {
-		handleOrderFetch();
-	}
+	export let data;
+	let orders: Order[] = data.orders;
 </script>
 
 <h1>{trans("page.account.orders.label")}</h1>

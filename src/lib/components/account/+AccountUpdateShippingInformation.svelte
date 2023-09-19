@@ -4,6 +4,7 @@
 	import { onMount } from "svelte";
 	import { error } from "@sveltejs/kit";
 
+	export let session;
 	export let account;
 
 	let firstName: string = account.firstName ?? "";
@@ -38,7 +39,7 @@
 <form on:submit={handleSubmit} class="account-update-user-information">
 	<h4>{trans("page.account.userInformation.label")}</h4>
 
-	<p>{account?.emailAddress}</p>
+	<p>{session.user?.email}</p>
 
 	<div class="--group-2">
 		<!-- FIRST NAME -->

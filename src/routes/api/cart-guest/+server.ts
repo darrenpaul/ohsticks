@@ -134,6 +134,14 @@ export const DELETE = async ({ request, locals: { supabase } }) => {
 
 	const cartItems = data.cart_items as CartItem[];
 	const filteredCartItems = cartItems.filter((item) => item.id !== cartItem.id);
+	if (filteredCartItems.length === 0) {
+		await supabase.from(table).delete().eq("id", cartKey).single();
+		return new Response(JSON.stringify({}), {
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+	}
 
 	const updatePayload = {
 		cart_items: filteredCartItems,

@@ -67,7 +67,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		.single();
 
 	const payload = {
-		cartItems: JSON.parse(createdData.cart_items)
+		cartItems: createdData.cart_items
 	};
 
 	return new Response(JSON.stringify(payload), {
@@ -79,7 +79,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 
 // GET CART
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, locals: { supabase, getSession } }) => {
+export const GET = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 	if (!session) {
 		throw error(401, {
@@ -153,6 +153,14 @@ export const DELETE = async ({ request, locals: { supabase, getSession } }) => {
 
 	const cartItems = data.cart_items as CartItem[];
 	const filteredCartItems = cartItems.filter((item) => item.id !== cartItem.id);
+	if (filteredCartItems.length === 0) {
+		await supabase.from(table).delete().eq("user_id", session.user.id).single();
+		return new Response(JSON.stringify({}), {
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+	}
 
 	const updatePayload = {
 		cart_items: filteredCartItems,

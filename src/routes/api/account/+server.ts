@@ -34,135 +34,75 @@ const table = "user";
 // CREATE
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, locals: { supabase } }) => {
-	const { uuid, firstName, lastName, emailAddress, shippingAddress } = await request.json();
+	const { userId, firstName, lastName } = await request.json();
 
-	const { data: shippingAddressData, error: shippingAddressError } = await supabase
-		.from("shipping_address")
-		.insert({
-			uuid,
-			address_1: shippingAddress?.address1 || "",
-			address_2: shippingAddress?.address2 || "",
-			city: shippingAddress?.city || "",
-			country: shippingAddress?.country || "",
-			postal_code: shippingAddress?.postalCode || "",
-			province: shippingAddress?.province || ""
-		})
-		.select()
-		.single();
-
-	const { data: accountData, error: accountError } = await supabase.from("account").insert({
+	const { data, error } = await supabase.from("account").insert({
 		first_name: firstName,
 		last_name: lastName,
-		email_address: emailAddress,
-		shipping_address: shippingAddressData.id
+		user_id: userId
 	});
-	console.log("POST ~ accountError:", accountError);
-	console.log("POST ~ accountData:", accountData);
 
 	return new Response();
 };
 
-// LIST
-/** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request }) => {
-	// const accessToken = request.headers.get("x-access-token");
-	// if (!accessToken) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
-	// const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	// if (!decodedIdToken) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
-	// const tableSnapshot = await adminDB
-	// 	.collection(table)
-	// 	.where("emailAddress", "==", decodedIdToken.email)
-	// 	.get();
-	// const userData = tableSnapshot.docs.map((doc) => ({
-	// 	id: doc.id,
-	// 	...doc.data()
-	// }));
-	// if (userData.length === 0) {
-	// 	throw error(404, {
-	// 		message: "user not found"
-	// 	});
-	// }
-	// const jsonString = JSON.stringify({ ...userData[0] });
-	// return new Response(jsonString, {
-	// 	headers: {
-	// 		"Content-Type": "application/json"
-	// 	}
-	// });
-};
-
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request }) => {
-	// const { firstName, lastName, country, address1, address2, city, province, postalCode } =
-	// 	await request.json();
-	// const accessToken = request.headers.get("x-access-token");
-	// if (!accessToken) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
-	// try {
-	// 	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	// 	const id = decodedIdToken.uid;
-	// 	adminAuth.updateUser(id, {
-	// 		displayName: `${firstName} ${lastName}`
-	// 	});
-	// 	await adminDB.collection(table).doc(id).update({
-	// 		firstName,
-	// 		lastName,
-	// 		shippingAddress: {
-	// 			country,
-	// 			address1,
-	// 			address2,
-	// 			city,
-	// 			province,
-	// 			postalCode
-	// 		}
-	// 	});
-	// 	return new Response(
-	// 		String({
-	// 			status: 200
-	// 		})
-	// 	);
-	// } catch (errorResponse) {
-	// 	const knownError = errorResponse as HttpError;
-	// 	throw error(knownError.status, {
-	// 		message: knownError.body.message
-	// 	});
-	// }
-};
+export const PUT = async ({ request, locals: { supabase, getSession } }) => {
+	const { firstName, lastName, country, address1, address2, city, province, postalCode } =
+		await request.json();
 
-// DELETE
-/** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
-	// const accessToken = request.headers.get("x-access-token");
-	// if (!accessToken) {
-	// 	throw error(401, {
-	// 		message: "unauthorized"
-	// 	});
-	// }
-	// try {
-	// 	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	// 	const uid = decodedIdToken.uid;
-	// 	await adminAuth.deleteUser(uid);
-	// 	await adminDB.collection(table).doc(uid).delete();
-	// 	return new Response(
-	// 		String({
-	// 			status: 200
-	// 		})
-	// 	);
-	// } catch (errorResponse) {
-	// 	const knownError = errorResponse as HttpError;
-	// 	throw error(knownError.status, {
-	// 		message: knownError.body.message
-	// 	});
-	// }
+	const session = await getSession();
+
+	const { data: existingShippingData } = await supabase
+		.from("shipping_address")
+		.select()
+		.eq("user_id", session?.user.id)
+		.select()
+		.single();
+
+	if (existingShippingData) {
+		await supabase
+			.from("shipping_address")
+			.update({
+				address_1: address1,
+				address_2: address2 || "",
+				city: city,
+				province: province,
+				postal_code: postalCode,
+				country: country,
+				user_id: session?.user.id
+			})
+			.eq("user_id", session?.user.id)
+			.select()
+			.single();
+		return new Response();
+	}
+
+	const { data: shippingAddressData } = await supabase
+		.from("shipping_address")
+		.insert({
+			address_1: address1,
+			address_2: address2 || "",
+			city: city,
+			province: province,
+			postal_code: postalCode,
+			country: country,
+			user_id: session?.user.id
+		})
+		.eq("user_id", session?.user.id)
+		.select()
+		.single();
+
+	await supabase
+		.from("account")
+		.update({
+			first_name: firstName,
+			last_name: lastName,
+			shipping_address: shippingAddressData?.id
+		})
+		.eq("user_id", session?.user.id)
+		.select()
+		.single();
+
+	return new Response();
 };
