@@ -4,7 +4,7 @@
 	import ProductReviews from "./+ProductReviews.svelte";
 	import ProductReviewForm from "./+ProductReviewForm.svelte";
 
-	let activeTab = 1;
+	let activeTab = 0;
 
 	export let product: Product;
 	export let reviews;

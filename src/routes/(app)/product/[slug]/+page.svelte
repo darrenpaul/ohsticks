@@ -47,6 +47,8 @@
 		// TODO: move to server side
 		product = data.products.find((product: Product) => product.slug === slug);
 		relatedProducts = data.products.filter((product: Product) => product.slug !== slug);
+		reviews = data.reviews;
+		canReview = data.canReview;
 		session = data.session;
 		if (browser) {
 			track();
