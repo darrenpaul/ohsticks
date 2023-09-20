@@ -1,53 +1,41 @@
-import { findCountryCurrency } from "$lib/constants/shippingCountries";
-import type { Product } from "$lib/types/product";
+import { delivered } from "$lib/constants/orderUpdate.js";
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params, fetch, cookies, getClientAddress }) {
-	const slug = params.slug;
+export async function load({ params, fetch, locals: { getSession } }) {
+	const productSlug = params.slug;
+	const session = await getSession();
 
-	const clientAddress = getClientAddress();
-	console.log("load ~ clientAddress:", clientAddress);
-	// const clientAddress = "185.108.105.72";
+	const reviewsResponse = await fetch(`/api/review?slug=${productSlug}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
+	const reviews = await reviewsResponse.json();
 
-	let currency = cookies.get("currency");
-
-	// TODO: move to method and add expire date to cookie
-	if (!currency) {
-		const countryResponse = await fetch(`https://api.country.is/${clientAddress}`);
-		const countryData = await countryResponse.json();
-		const isoCode: string = countryData?.country || "AT";
-		const currencyCode = findCountryCurrency(isoCode);
-		currency = currencyCode;
-		cookies.set("currency", currencyCode);
-		currency = currencyCode;
+	if (!session) {
+		return {
+			reviews
+		};
 	}
 
-	const queries = [{ key: "currency", value: currency }];
-	const queryString = queries.map((query) => `${query.key}=${query.value}`).join("&");
-	const url = `/api/product?${queryString}`;
-
-	const response = await fetch(url, {
+	const ordersResponse = await fetch("/api/order", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		}
 	});
 
-	const products = await response.json();
+	const orders = await ordersResponse.json();
 
-	const product = products.find((product: Product) => product.slug === slug);
-
-	if (!product) {
-		return {
-			status: 404,
-			body: {
-				message: "Product not found"
-			}
-		};
-	}
+	// check if user has ordered this product and it has been delivered
+	const matchProducts = orders.filter((order) => {
+		return order.items.filter((item) => item.slug === productSlug);
+	});
+	const canReview = !!matchProducts.find((order) => order.status === delivered);
 
 	return {
-		status: 200,
-		body: { product: product, relatedProducts: products }
+		reviews,
+		canReview
 	};
 }

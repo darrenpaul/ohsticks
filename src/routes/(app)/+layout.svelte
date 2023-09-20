@@ -5,14 +5,46 @@
 	import CartMenu from "$lib/components/cart/+CartMenu.svelte";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
-
-	/** @type {import('./$types').PageData} */
-	export let data;
+	import { invalidate } from "$app/navigation";
+	import { onMount } from "svelte";
+	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore.js";
 
 	const cartState = writable(false);
+	const supabaseState = writable();
+	const sessionState = writable();
+
+	export let data;
+
+	let supabase;
+	let session;
+	$: {
+		supabase = data?.supabase;
+		session = data?.session;
+		supabaseState.set(supabase);
+		sessionState.set(session);
+	}
+
+	onMount(() => {
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate("supabase:auth");
+			}
+			if (_session) {
+				fetchUserCart();
+			} else {
+				fetchGuestCart();
+			}
+		});
+
+		return () => subscription.unsubscribe();
+	});
 
 	if (browser) {
 		setContext("cartState", cartState);
+		setContext("supabaseState", supabaseState);
+		setContext("sessionState", sessionState);
 	}
 </script>
 
@@ -30,7 +62,7 @@
 	<Footer />
 {/if}
 
-<style lang="scss">
+<style lang="postcss">
 	.page {
 		/* SIZE */
 		@apply min-h-[100dvh];

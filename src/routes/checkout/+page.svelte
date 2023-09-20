@@ -35,7 +35,7 @@
 	</div>
 </ContainWidth>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-page {
 		/* SIZE */
 		@apply min-h-[100dvh];

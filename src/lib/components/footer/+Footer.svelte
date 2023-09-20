@@ -17,7 +17,7 @@
 	<div class="--top-section">
 		<!-- BRAND -->
 		<div class="--row">
-			<a href={homeRoute.path}>
+			<a href={homeRoute.path} aria-label={`Go to ${homeRoute.label} page`}>
 				<BrandPortraitIcon />
 			</a>
 
@@ -33,7 +33,7 @@
 			<h3>{trans("component.footer.shop.label")}</h3>
 
 			{#each shopLinks as link}
-				<a href={link.path}>{link.label}</a>
+				<a href={link.path} aria-label={`Go to ${link.label} page`}>{link.label}</a>
 			{/each}
 		</div>
 
@@ -42,7 +42,7 @@
 			<h3>Help</h3>
 
 			{#each helpLinks as link}
-				<a href={link.path}>{link.label}</a>
+				<a href={link.path} aria-label={`Go to ${link.label} page`}>{link.label}</a>
 			{/each}
 		</div>
 
@@ -56,13 +56,13 @@
 		<p>{trans("site.copyright")}</p>
 
 		<div>
-			<a href="/">Privacy Policy</a>
-			<a href="/">Terms Of Service</a>
+			<a href="/" aria-label={`Go to Privacy page`}>Privacy Policy</a>
+			<a href="/" aria-label={`Go to Terms page`}>Terms Of Service</a>
 		</div>
 	</div>
 </footer>
 
-<style lang="scss">
+<style lang="postcss">
 	footer {
 		/* SIZE */
 		/* MARGINS AND PADDING */

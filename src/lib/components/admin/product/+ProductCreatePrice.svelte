@@ -1,23 +1,37 @@
 <script lang="ts">
 	import { trans } from "$lib/locales/translateCopy";
+	import type { CurrencyPrice, Price } from "$lib/types/product";
 
 	export let currencyPrice = {};
+	let currencyPriceArray: Price[] = Object.values(currencyPrice);
 
-	const calculatePrice = (price) => {
-		const purchasePriceNumber = Number(price.purchasePrice);
-		const markupPercentageNumber = Number(price.markupPercentage);
+	const createCurrencyObject = () => {
+		const newCurrencyPrice: CurrencyPrice = currencyPrice;
+		currencyPriceArray.forEach((item) => {
+			newCurrencyPrice[item.currency] = {
+				...item
+			};
+		});
+	};
+
+	const calculatePrice = (item: Price) => {
+		const purchasePriceNumber = Number(item.purchasePrice);
+		const markupPercentageNumber = Number(item.markupPercentage);
 		const priceNumber = Number(purchasePriceNumber * (1 + markupPercentageNumber / 100)).toFixed(2);
-		price.price = priceNumber;
+		item.price = priceNumber;
 		return priceNumber;
 	};
 
 	const onCreate = () => {
-		currencyPrice["zar"] = {
-			currency: "",
-			purchasePrice: 0,
-			markupPercentage: 25,
-			price: 0
-		};
+		currencyPriceArray = [
+			...currencyPriceArray,
+			{
+				currency: "",
+				purchasePrice: 0,
+				markupPercentage: 25,
+				price: 0
+			}
+		];
 	};
 </script>
 
@@ -30,7 +44,7 @@
 		</button>
 	</div>
 
-	{#each Object.values(currencyPrice) as price, index}
+	{#each currencyPriceArray as item, index}
 		<!-- CURRENCY  -->
 		<div class="input-group">
 			<input
@@ -38,8 +52,9 @@
 				id="currencyPrice-currency-{index}"
 				name="currencyPrice-currency-{index}"
 				type="text"
-				bind:value={price.currency}
+				bind:value={item.currency}
 				placeholder=""
+				on:change={createCurrencyObject}
 			/>
 
 			<label class="floating-label" for="currencyPrice-currency-{index}">
@@ -55,8 +70,9 @@
 					id="currencyPrice-purchasePrice-{index}"
 					name="currencyPrice-purchasePrice-{index}"
 					type="text"
-					bind:value={price.purchasePrice}
+					bind:value={item.purchasePrice}
 					placeholder=""
+					on:change={createCurrencyObject}
 				/>
 
 				<label class="floating-label" for="currencyPrice-purchasePrice-{index}">
@@ -69,21 +85,22 @@
 				<label for="currencyPrice-price-{index}">
 					{trans("form.createProduct.price.label")}
 				</label>
-				<p id="currencyPrice-price-{index}">{calculatePrice(price)}</p>
+				<p id="currencyPrice-price-{index}">{calculatePrice(item)}</p>
 			</div>
 		</div>
 
 		<!-- MARK UP PERCENTAGE -->
 		<div class="input-group">
 			<label for="currencyPrice-markupPercentage-{index}"
-				>{trans("form.createProduct.markupPercentage.label")} {price.markupPercentage}%</label
+				>{trans("form.createProduct.markupPercentage.label")} {item.markupPercentage}%</label
 			>
 			<input
 				type="range"
 				min="0"
 				max="100"
 				id="currencyPrice-markupPercentage-{index}"
-				bind:value={price.markupPercentage}
+				bind:value={item.markupPercentage}
+				on:change={createCurrencyObject}
 			/>
 		</div>
 	{/each}

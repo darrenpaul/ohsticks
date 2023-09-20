@@ -142,7 +142,7 @@
 	<p>{order.customer.email}</p>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.admin-order-shipping-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */

@@ -4,7 +4,6 @@
 	import { cart } from "$lib/stores/cartStore";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
 	import CheckoutShippingMethod from "./+CheckoutShippingMethod.svelte";
 	import { getContext } from "svelte";
 	import { browser } from "$app/environment";
@@ -15,19 +14,20 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
+	const sessionState: Writable<any> = getContext("sessionState");
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
 	let emailInputDisabled = false;
-	let email: string = "";
-	let country: string = "";
-	let firstName: string = "";
-	let lastName: string = "";
-	let address1: string = "";
-	let address2: string = "";
-	let city: string = "";
-	let province: string = "";
-	let postalCode: string = "";
-	let selectableProvinces: { name: string; isoCode: string }[] = [];
+	let email: string;
+	let country: string;
+	let firstName: string;
+	let lastName: string;
+	let address1: string;
+	let address2: string;
+	let city: string;
+	let province: string;
+	let postalCode: string;
+	let selectableProvinces: { name: string; isoCode: string }[];
 	let shippingMethod: ShippingMethod;
 	let paymentMethod = "stripe";
 
@@ -40,8 +40,8 @@
 	$: {
 		selectableProvinces = shippingCountries.find((item) => item.isoCode === country)?.states || [];
 
-		if ($user?.email) {
-			email = $user.email;
+		if ($sessionState) {
+			email = $sessionState.user.email;
 			emailInputDisabled = true;
 		}
 	}
@@ -255,7 +255,7 @@
 	</div>
 </form>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-form {
 		/* SIZE */
 		/* MARGINS AND PADDING */

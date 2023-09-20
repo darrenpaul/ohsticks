@@ -1,9 +1,8 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { adminRole } from "$lib/constants/roles";
-	import { user } from "$lib/firebase/firebaseClient";
-</script>
+</script> -->
 
-{#if $user && $user.role === adminRole}
+<!-- {#if $user && $user.role === adminRole}
 	<slot />
 {:else}
 	<p class="text-error my-10">
@@ -11,4 +10,4 @@
 
 		<a class="btn btn-primary" href="/login">Sign in</a>
 	</p>
-{/if}
+{/if} -->

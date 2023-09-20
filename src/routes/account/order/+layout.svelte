@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { user } from "$lib/firebase/firebaseClient";
-
-	$user;
 </script>
 
 <div class="page">

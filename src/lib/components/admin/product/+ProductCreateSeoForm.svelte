@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { trans } from "$lib/locales/translateCopy";
-	import { user } from "$lib/firebase/firebaseClient";
-	import { error } from "@sveltejs/kit";
 	import type { ContentSection, Image } from "$lib/types/product";
 	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
 
@@ -19,18 +17,16 @@
 
 	const handleSeoGenerate = async () => {
 		isFetching = true;
-		const accessToken = await $user?.getIdToken();
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
+		// const accessToken = await $user?.getIdToken();
+		// if (!accessToken) {
+		// 	return error(401, "Unauthorized");
+		// }
 
 		const response = await fetch("/api/ai", {
 			body: JSON.stringify({
 				searchPrompt: searchKeywords
 			}),
-			headers: {
-				"x-access-token": accessToken
-			},
+
 			method: "POST"
 		});
 		const jsonData = await response.json();

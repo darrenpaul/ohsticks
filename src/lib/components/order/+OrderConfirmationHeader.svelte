@@ -4,6 +4,8 @@
 	import type { Order } from "$lib/types/order";
 
 	export let order: Order;
+
+
 </script>
 
 <div class="order-confirmation-header">

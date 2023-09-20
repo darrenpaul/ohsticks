@@ -1,15 +1,22 @@
 <script lang="ts">
-	import { auth } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
-	import { sendPasswordResetEmail } from "firebase/auth";
-	import { loginRoute } from "$lib/constants/routes/accountRoute";
+	import { accountRoute } from "$lib/constants/routes/accountRoute";
+	import { siteUrl } from "$lib/constants/site.js";
+	import { goto } from "$app/navigation";
+	import { homeRoute } from "$lib/constants/routes/homeRoute.js";
 
+	export let data;
+	let supabase = data.supabase;
 	let email = "";
 
 	const handleFormSubmit = async () => {
-		await sendPasswordResetEmail(auth, email);
-		alert("Password reset email sent!");
-		window.location.href = loginRoute.path;
+		await supabase.auth.resetPasswordForEmail("darrenpaul@duck.com", {
+			redirectTo: `${siteUrl}/${accountRoute.path}`
+		});
+
+		alert("Reset email sent, please check your email");
+
+		goto(homeRoute.path, { replaceState: true });
 	};
 </script>
 
@@ -35,7 +42,9 @@
 			<label class="floating-label" for="email">{trans("form.forgotPassword.email.label")}</label>
 		</div>
 
-		<button class="submit-button">{trans("form.forgotPassword.submit.label")}</button>
+		<button class="submit-button" aria-label="Reset account password">
+			{trans("form.forgotPassword.submit.label")}
+		</button>
 	</form>
 </div>
 

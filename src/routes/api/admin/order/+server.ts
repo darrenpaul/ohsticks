@@ -1,110 +1,35 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-import { error, type HttpError } from "@sveltejs/kit";
-import { auth } from "$lib/firebase/firebaseClient";
-import randomString from "$lib/utils/randomString.js";
-import { sendPasswordResetEmail } from "firebase/auth";
-import type { OrderItem } from "$lib/types/order.js";
-import { sumArrayNumbers } from "$lib/utils/maths.js";
-import { adminRole } from "$lib/constants/roles";
-import sendOrderUpdateEmail from "$lib/server/utils/email/sendOrderUpdateEmail";
+import authenticatedAdmin from "$lib/server/authenticatedAdmin.js";
+import { error } from "@sveltejs/kit";
 
 const table = "order";
 
-// CREATE
-/** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, fetch }) => {
-	const { customer, shippingAddress, items, paymentMethod, shippingMethod } = await request.json();
-
-	await adminAuth.getUserByEmail(customer.email).catch(async () => {
-		await fetch("/api/account", {
-			method: "POST",
-			body: JSON.stringify({
-				firstName: customer.firstName,
-				lastName: customer.lastName,
-				emailAddress: customer.email,
-				password: randomString(20, false, true),
-				shippingAddress: shippingAddress
-			})
-		});
-		await sendPasswordResetEmail(auth, customer.email);
-	});
-
-	const orderReference = await adminDB.collection(table).doc();
-
-	const subtotal = sumArrayNumbers(
-		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
-	).toFixed(2);
-
-	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
-
-	const timestamp = new Date();
-
-	const payload = {
-		customer,
-		shippingAddress,
-		paymentMethod,
-		items,
-		subtotal,
-		shippingMethod,
-		total,
-		createdAt: timestamp,
-		updatedAt: timestamp
-	};
-
-	orderReference.set(payload);
-
-	return new Response(
-		JSON.stringify({
-			id: orderReference.id,
-			...payload
-		}),
-		{
-			headers: {
-				"Content-Type": "application/json"
-			}
-		}
-	);
-};
-
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url }) => {
-	const accessToken = request.headers.get("x-access-token");
-	const orderId = url.searchParams.get("id");
-
-	if (!accessToken) {
+export const GET = async ({ locals: { supabase, getSession } }) => {
+	const authenticated = await authenticatedAdmin(getSession, supabase);
+	if (!authenticated) {
 		throw error(401, {
 			message: "unauthorized"
 		});
 	}
 
-	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	if (!decodedIdToken || decodedIdToken.role !== adminRole) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
+	const { data } = await supabase.from(table).select();
 
-	const tableSnapshot = await adminDB.collection(table).get();
-	const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+	const orders = data.map((order) => ({
+		id: order.id,
+		customer: order.customer,
+		shippingAddress: order.shipping_address,
+		paymentMethod: order.payment_method,
+		items: order.items,
+		subtotal: order.subtotal,
+		shippingMethod: order.shipping_method,
+		total: order.total,
+		status: order.status,
+		createdAt: order.created_at,
+		updatedAt: order.updated_at
+	}));
 
-	if (orderId) {
-		const order = tableData.find((order) => order.id === orderId);
-
-		if (!order) {
-			throw error(404, {
-				message: "order not found"
-			});
-		}
-
-		return new Response(JSON.stringify({ order }), {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	}
-
-	return new Response(JSON.stringify(tableData), {
+	return new Response(JSON.stringify(orders), {
 		headers: {
 			"Content-Type": "application/json"
 		}
@@ -113,8 +38,14 @@ export const GET = async ({ request, url }) => {
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ url, fetch, request }) => {
-	const accessToken = request.headers.get("x-access-token");
+export const PUT = async ({ request, locals: { supabase, getSession } }) => {
+	const authenticated = await authenticatedAdmin(getSession, supabase);
+	if (!authenticated) {
+		throw error(401, {
+			message: "unauthorized"
+		});
+	}
+
 	const {
 		id,
 		customer,
@@ -124,65 +55,25 @@ export const PUT = async ({ url, fetch, request }) => {
 		shippingMethod,
 		subtotal,
 		total,
-		createdAt,
 		status
 	} = await request.json();
 
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
-	const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-	if (!decodedIdToken || decodedIdToken.role !== adminRole) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
-
-	const timestamp = new Date();
-
-	await adminDB.collection(table).doc(id).update({
-		customer,
-		shippingAddress,
-		items,
-		paymentMethod,
-		shippingMethod,
-		subtotal,
-		total,
-		createdAt,
-		status,
-		updatedAt: timestamp
-	});
-
-	// TODO: send email to customer
-	// sendOrderUpdateEmail({
-	// 	id,
-	// 	customer,
-	// 	shippingAddress,
-	// 	items,
-	// 	paymentMethod,
-	// 	shippingMethod,
-	// 	subtotal,
-	// 	total,
-	// 	createdAt,
-	// 	status
-	// });
+	await supabase
+		.from(table)
+		.update({
+			customer,
+			shipping_address: shippingAddress,
+			items,
+			payment_method: paymentMethod,
+			shipping_method: shippingMethod,
+			subtotal,
+			total,
+			status,
+			updated_at: new Date()
+		})
+		.eq("id", id)
+		.select()
+		.single();
 
 	return new Response();
-};
-
-// DELETE
-/** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
-	const { id } = await request.json();
-
-	await adminDB.collection(table).doc(id).delete();
-
-	return new Response(
-		String({
-			status: 200
-		})
-	);
 };

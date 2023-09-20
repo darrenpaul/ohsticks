@@ -1,32 +1,12 @@
 <script lang="ts">
-	import { user } from "$lib/firebase/firebaseClient";
-	import { error } from "@sveltejs/kit";
-	import { onMount } from "svelte";
 	import type { Order } from "$lib/types/order";
 	import AdminOrderList from "$lib/components/admin/order/+AdminOrderList.svelte";
 	import { trans } from "$lib/locales/translateCopy";
 	import { delivered, paid, processing, shipped } from "$lib/constants/orderUpdate";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 
-	export let orders: Order[];
-
-	onMount(async () => {
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-
-		const response = await fetch("/api/admin/order", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"x-access-token": accessToken
-			}
-		});
-
-		orders = await response.json();
-	});
+	export let data;
+	let orders: Order[] = data.orders;
 </script>
 
 <ContainWidth background={"bg-white"}>

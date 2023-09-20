@@ -6,15 +6,15 @@
 </script>
 
 <div class="socials">
-	<a href={trans("socials.instagram.url")}>
+	<a href={trans("socials.instagram.url")} aria-label="Go to Instagram page">
 		<InstagramIcon width={32} height={32} />
 	</a>
 
-	<a href={trans("socials.pinterest.url")}>
+	<a href={trans("socials.pinterest.url")} aria-label="Go to Pinterest page">
 		<PinterestIcon width={32} height={32} />
 	</a>
 
-	<a href={trans("socials.facebook.url")}>
+	<a href={trans("socials.facebook.url")} aria-label="Go to Facebook page">
 		<FacebookIcon width={32} height={32} />
 	</a>
 </div>

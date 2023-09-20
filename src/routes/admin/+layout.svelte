@@ -1,12 +1,30 @@
 <script lang="ts">
-	import AuthAdminCheck from "$lib/components/+AuthAdminCheck.svelte";
+	import { browser } from "$app/environment";
 	import AdminNavigation from "$lib/components/navigation/+AdminNavigation.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
+	import { setContext } from "svelte";
+	import { writable } from "svelte/store";
 
-	$user;
+	const supabaseState = writable();
+	const sessionState = writable();
+
+	export let data;
+
+	let supabase;
+	let session;
+	$: {
+		supabase = data?.supabase;
+		session = data?.session;
+		supabaseState.set(supabase);
+		sessionState.set(session);
+	}
+
+	if (browser) {
+		setContext("supabaseState", supabaseState);
+		setContext("sessionState", sessionState);
+	}
 </script>
 
-<AuthAdminCheck>
-	<AdminNavigation />
-	<slot />
-</AuthAdminCheck>
+<!-- <AuthAdminCheck> -->
+<AdminNavigation />
+<slot />
+<!-- </AuthAdminCheck> -->

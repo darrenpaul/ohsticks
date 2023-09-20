@@ -100,6 +100,15 @@
 			},
 			"total": {
 				"label": "Total"
+			},
+			"processingPayment": {
+				"label": "Processing Payment"
+			},
+			"pleaseDontClose": {
+				"label": "Please don't close this window"
+			},
+			"youWillBeRedirected": {
+				"label": "You will be redirected when the processing is completed."
 			}
 		},
 		"account": {
@@ -490,6 +499,26 @@
 			"twitterCard": {
 				"label": "Twitter Card"
 			}
+		},
+		"review": {
+			"title": {
+				"label": "Write a review"
+			},
+			"description": {
+				"label": "Share your thoughts with other customers"
+			},
+			"reviewTitle": {
+				"label": "Title"
+			},
+			"reviewContent": {
+				"label": "Content"
+			},
+			"submit": {
+				"label": "Submit"
+			},
+			"image": {
+				"label": "Image"
+			}
 		}
 	},
 	"component": {
@@ -517,7 +546,10 @@
 				"label": "Specifications"
 			},
 			"reviews": {
-				"label": "Reviews"
+				"label": "Reviews",
+				"noReviews": {
+					"label": "No reviews yet"
+				}
 			}
 		},
 		"navigation": {

@@ -2,7 +2,7 @@
 	<slot />
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.mobile-only {
 		/* SIZE */
 		/* MARGINS AND PADDING */

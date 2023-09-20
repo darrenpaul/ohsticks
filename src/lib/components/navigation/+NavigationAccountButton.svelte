@@ -2,11 +2,24 @@
 	import PersonIcon from "$lib/components/icons/+PersonIcon.svelte";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 	import LogoutIcon from "$lib/components/icons/+LogoutIcon.svelte";
-	import { user, logoutUser } from "$lib/firebase/firebaseClient";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
+	import { clearCart } from "$lib/stores/cartStore";
+	import { goto } from "$app/navigation";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+
+	const supabaseState: Writable<any> = getContext("supabaseState");
+	const sessionState: Writable<any> = getContext("sessionState");
+
+	const handleLogout = async () => {
+		await clearCart();
+		await $supabaseState.auth.signOut();
+		goto(homeRoute.path, { replaceState: true });
+	};
 </script>
 
-{#if $user}
-	<button on:click={logoutUser}><LogoutIcon /></button>
+{#if $sessionState}
+	<button on:click={handleLogout} aria-label="Logout of account"><LogoutIcon /></button>
 {:else}
-	<a href={loginRoute.path}><PersonIcon /></a>
+	<a href={loginRoute.path} aria-label="Login"><PersonIcon /></a>
 {/if}

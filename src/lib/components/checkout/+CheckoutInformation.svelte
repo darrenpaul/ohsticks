@@ -12,7 +12,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */

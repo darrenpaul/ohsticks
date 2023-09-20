@@ -1,19 +1,30 @@
-import { productStorageBucket } from "$lib/firebase/firebaseClient";
 import randomString from "$lib/utils/randomString";
-import { uploadImage } from "$lib/firebase/firebaseImageUtils";
 import { slugString } from "$lib/utils/slugString";
+import { getUnixTime } from "date-fns";
 
-export const handleImageUpload = async (name: string, imageFile: File) => {
+const productStorageBucket = "product";
+
+export const handleImageUpload = async (
+	name: string,
+	imageFile: File,
+	bucket: string,
+	supabase
+) => {
 	const slug = slugString(name);
 	const imageType = imageFile.type.split("/")[1];
-	const imageName = `${slug}-${randomString(5, true)}.${imageType}`;
+	const timestamp = getUnixTime(new Date());
+	const imageName = `${slug}-${randomString(5, true)}-${timestamp}.${imageType}`;
 
-	return await uploadImage({
-		bucketName: productStorageBucket,
-		collectionName: slug,
-		imageName,
-		imageFile: imageFile
-	});
+	const { data: uploadData } = await supabase.storage
+		.from(bucket)
+		.upload(`${name}/${imageName}`, imageFile, {
+			cacheControl: "86400",
+			upsert: false
+		});
+
+	const { data } = await supabase.storage.from(bucket).getPublicUrl(uploadData.path);
+
+	return data.publicUrl;
 };
 
 export const getImageMeta = async (url: string) => {
@@ -33,4 +44,43 @@ export const getImageMeta = async (url: string) => {
 
 		return { width, height };
 	};
+};
+
+export const deleteImages = async (name: string, supabase) => {
+	const { data } = await supabase.storage.from(productStorageBucket).list(name, {
+		limit: 100,
+		offset: 0,
+		sortBy: { column: "name", order: "asc" }
+	});
+
+	const images = data.map((image) => `${name}/${image.name}`);
+
+	return await supabase.storage.from(productStorageBucket).remove(images);
+};
+
+export const deleteImagesByPath = async (imageBucket: string, imagePaths: string[], supabase) => {
+	return await supabase.storage.from(imageBucket).remove(imagePaths);
+};
+
+const getIndexOfUrl = (url: string, index: number) => {
+	// Split the URL by '/'
+	const urlParts = url.split("/");
+
+	// Filter out any empty strings from the split
+	const filteredUrlParts = urlParts.filter((part) => part.length > 0);
+
+	// Return the last item from the filtered URL parts
+	return filteredUrlParts[filteredUrlParts.length - index];
+};
+
+export const getImageBucketFromUrl = (url: string) => {
+	return getIndexOfUrl(url, 3);
+};
+
+export const getImageFolderFromUrl = (url: string) => {
+	return getIndexOfUrl(url, 2);
+};
+
+export const getImageNameFromUrl = (url: string) => {
+	return getIndexOfUrl(url, 1);
 };

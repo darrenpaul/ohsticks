@@ -3,23 +3,19 @@
 		adminPageCreateRoute,
 		adminPageEditRoute
 	} from "$lib/constants/routes/admin/adminPageRoute";
-	import { user } from "$lib/firebase/firebaseClient";
-	import type { Product } from "$lib/types/product";
-	import { error } from "@sveltejs/kit";
 	import { onMount } from "svelte";
 
 	onMount(async () => {
-		const accessToken = await $user?.getIdToken();
+		// const accessToken = await $user?.getIdToken();
 
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
+		// if (!accessToken) {
+		// 	return error(401, "Unauthorized");
+		// }
 
 		const response = await fetch("/api/admin/page", {
 			method: "GET",
 			headers: {
-				"Content-Type": "application/json",
-				"x-access-token": accessToken
+				"Content-Type": "application/json"
 			}
 		});
 

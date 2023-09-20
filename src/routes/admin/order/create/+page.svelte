@@ -12,10 +12,6 @@
 	let createdAt = "asdasdas";
 	let updatedAt = "asdasdas";
 
-	const onFileSelected = (event) => {
-		featureImage = event.target.files[0];
-	};
-
 	const handleFormSubmit = async () => {
 		fetch("/api/order", {
 			method: "POST",

@@ -5,7 +5,7 @@
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
-	export let title: string = "Product List";
+	export let title: string;
 	export let products: Product[];
 </script>
 
@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="--button-wrapper">
-		<a href={collectionAllRoute.path}>
+		<a href={collectionAllRoute.path} aria-label={`Go to ${collectionAllRoute.label} page`}>
 			<ButtonIcon>
 				{trans("component.productList.collection")}
 			</ButtonIcon>
@@ -56,7 +56,6 @@
 			/* MARGINS AND PADDING */
 			@apply mb-16;
 			/* LAYOUT */
-			// @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8;
 			@apply flex flex-wrap justify-center gap-8;
 			/* BORDERS */
 			/* COLORS */

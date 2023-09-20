@@ -14,8 +14,8 @@
 	export /** @type {import('./$types').PageData} */
 	let data;
 
-	let products: Product[] = data.products;
-	let pageData = data.pageData.find((page) => page.slug === "home");
+	let products: Product[] = data.products || [];
+	let pageData = data.pageData;
 
 	let pageUrl = "";
 
@@ -53,16 +53,16 @@
 </div>
 
 <MetaTags
-	title={pageData.meta?.title}
-	titleTemplate={pageData.meta?.title}
-	description={pageData.meta?.description}
+	title={pageData.title}
+	titleTemplate={pageData.title}
+	description={pageData.description}
 	canonical={pageUrl}
 	openGraph={{
-		...pageData.meta.openGraph,
+		...pageData.openGraph,
 		url: pageUrl
 	}}
 	twitter={{
-		...pageData.meta.twitter,
+		...pageData.twitter,
 		site: pageUrl
 	}}
 />
@@ -89,12 +89,12 @@
 			url: siteUrl,
 			logo: companyLogo,
 			description: "Business description",
-			image: pageData.meta.openGraph.images.map((image) => image.src)
+			image: pageData.openGraph.images.map((image) => image.src)
 		}
 	]}
 />
 
-<style lang="scss">
+<style lang="postcss">
 	.home-page {
 		/* SIZE */
 		/* MARGINS AND PADDING */

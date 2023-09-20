@@ -2,19 +2,16 @@
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
-	const pageResponse = await fetch("/api/page", {
+	const pageSlug = "contact";
+	const pageResponse = await fetch(`/api/page?slug=${pageSlug}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		}
 	});
-
 	const pageData = await pageResponse.json();
 
 	return {
-		status: 200,
-		body: {
-			pageData
-		}
+		pageData
 	};
 }

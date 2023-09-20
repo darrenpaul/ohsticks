@@ -7,17 +7,16 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import ProductFeatureCategories from "./+ProductFeatureCategories.svelte";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
-	import { user } from "$lib/firebase/firebaseClient";
 	import type { Writable } from "svelte/store";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
-	const cartState: Writable<Boolean> = getContext("cartState");
+	const cartState: Writable<boolean> = getContext("cartState");
 
 	export let product: Product;
+	export let session;
 
 	const handleAddToCart = async () => {
-		const accessToken = await $user?.getIdToken();
-		addToCart(product, accessToken);
+		addToCart(product, session);
 		cartState.set(true);
 	};
 </script>
@@ -39,7 +38,7 @@
 		<p class="--description">{product.description}</p>
 
 		<div>
-			<button on:click={handleAddToCart}>
+			<button on:click={handleAddToCart} aria-label="Add product to cart">
 				<ButtonIcon>
 					{trans("component.productFeature.addToCart.label")}
 				</ButtonIcon>
@@ -50,7 +49,7 @@
 	</div>
 </section>
 
-<style lang="scss">
+<style lang="postcss">
 	.product-feature {
 		/* SIZE */
 		/* MARGINS AND PADDING */

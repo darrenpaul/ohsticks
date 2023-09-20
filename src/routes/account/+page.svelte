@@ -1,12 +1,18 @@
 <script lang="ts">
 	import AccountUpdateShippingInformation from "$lib/components/account/+AccountUpdateShippingInformation.svelte";
 	import AccountUpdateUserPassword from "$lib/components/account/+AccountUpdateUserPassword.svelte";
+
+	export let data;
+	let session = data.session;
+	let { account } = data;
+
+	$: ({ account } = data);
 </script>
 
 <div class="account-page">
 	<h1>Account</h1>
 
-	<AccountUpdateShippingInformation />
+	<AccountUpdateShippingInformation {session} {account} />
 
 	<AccountUpdateUserPassword />
 </div>

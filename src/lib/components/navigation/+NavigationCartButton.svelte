@@ -8,8 +8,8 @@
 	import type { Writable } from "svelte/store";
 	import { viewCartEvent } from "$lib/utils/googleTagManager";
 
-	const cartState: Writable<Boolean> = getContext("cartState");
-	let cartQuantity: number = 0;
+	const cartState: Writable<boolean> = getContext("cartState");
+	let cartQuantity: number;
 
 	$: {
 		cartQuantity = 0;
@@ -34,7 +34,7 @@
 	};
 </script>
 
-<button class="navigation-cart-button" on:click={openCart}>
+<button class="navigation-cart-button" on:click={openCart} aria-label="Open Cart Button">
 	{#if cartQuantity > 0}
 		<p class="--quantity">{cartQuantity}</p>
 	{/if}
