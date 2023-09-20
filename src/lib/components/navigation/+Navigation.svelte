@@ -117,7 +117,7 @@
 		/* MARGINS AND PADDING */
 		@apply px-4;
 		/* LAYOUT */
-		@apply fixed top-0 md:top-4 left-0 z-navigation;
+		@apply fixed top-4 left-0 z-navigation;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
@@ -208,7 +208,7 @@
 			@apply w-screen h-screen;
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply fixed top-0 left-0 z-mobile-menu;
+			@apply fixed -top-4 left-0 z-mobile-menu;
 			/* BORDERS */
 			/* COLORS */
 			@apply bg-white;

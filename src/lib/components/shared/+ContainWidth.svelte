@@ -1,8 +1,9 @@
 <script lang="ts">
 	export let background = "bg-neutral-100";
+	export let padding = "p-0";
 </script>
 
-<div class={`contain-width ${background}`}>
+<div class={`contain-width ${background} ${padding}`}>
 	<div class="--inner">
 		<slot />
 	</div>
