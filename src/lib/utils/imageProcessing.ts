@@ -1,20 +1,28 @@
 import randomString from "$lib/utils/randomString";
 import { slugString } from "$lib/utils/slugString";
+import { getUnixTime } from "date-fns";
 
 const productStorageBucket = "product";
 
-export const handleImageUpload = async (name: string, imageFile: File, supabase) => {
+export const handleImageUpload = async (
+	name: string,
+	imageFile: File,
+	bucket: string,
+	supabase
+) => {
 	const slug = slugString(name);
 	const imageType = imageFile.type.split("/")[1];
-	const imageName = `${slug}-${randomString(5, true)}.${imageType}`;
+	const timestamp = getUnixTime(new Date());
+	const imageName = `${slug}-${randomString(5, true)}-${timestamp}.${imageType}`;
 
 	const { data: uploadData } = await supabase.storage
-		.from(productStorageBucket)
+		.from(bucket)
 		.upload(`${name}/${imageName}`, imageFile, {
-			cacheControl: "3600",
+			cacheControl: "86400",
 			upsert: false
 		});
-	const { data } = await supabase.storage.from(productStorageBucket).getPublicUrl(uploadData.path);
+
+	const { data } = await supabase.storage.from(bucket).getPublicUrl(uploadData.path);
 
 	return data.publicUrl;
 };

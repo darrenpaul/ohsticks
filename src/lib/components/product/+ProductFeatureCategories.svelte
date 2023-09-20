@@ -68,16 +68,5 @@
 			@apply text-gray-500;
 			/* ANIMATION AND EFFECTS */
 		}
-
-		small {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mr-1;
-			/* LAYOUT */
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
 	}
 </style>

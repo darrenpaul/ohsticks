@@ -22,6 +22,8 @@
 	export let data;
 
 	let product: Product;
+	let reviews = data.reviews;
+	let canReview = data.canReview;
 	let relatedProducts: Product[];
 	let session;
 
@@ -42,6 +44,7 @@
 	$: {
 		const slug = $page.params.slug;
 
+		// TODO: move to server side
 		product = data.products.find((product: Product) => product.slug === slug);
 		relatedProducts = data.products.filter((product: Product) => product.slug !== slug);
 		session = data.session;
@@ -59,7 +62,7 @@
 	</ContainWidth>
 
 	<ContainWidth background="bg-transparent">
-		<ProductTabs {product} />
+		<ProductTabs {product} {reviews} {canReview} />
 
 		<div class="--carousel-wrapper">
 			<h2 class="--heading">{trans("page.product.relatedProducts.label")}</h2>
@@ -99,7 +102,7 @@
 	</ContainWidth>
 </div>
 
-<ProductSeo {product} />>
+<ProductSeo {product} />
 
 <style lang="postcss">
 	.product-page {

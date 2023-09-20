@@ -16,6 +16,7 @@
 
 	export let name = "";
 	export let elementId = "";
+	export let bucket = "product";
 	export let label = "";
 	export let multiple = false;
 	export let images: Image[] = [];
@@ -34,11 +35,12 @@
 		const imageFiles = [...event.target.files];
 
 		const slugName = slugString(name);
-
 		const imagePromises = imageFiles.map((image) =>
-			handleImageUpload(slugName, image, $supabaseState)
+			handleImageUpload(slugName, image, bucket, $supabaseState)
 		);
+
 		const uploadedImageUrls = await Promise.all(imagePromises);
+
 		const imagesMeta = await Promise.all(
 			uploadedImageUrls.map(async (url) => await getImageMeta(url))
 		);
