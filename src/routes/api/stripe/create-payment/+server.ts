@@ -28,14 +28,20 @@ export const POST = async ({ request }) => {
 				product_data: {
 					name: product.name,
 					description: product.description,
-					images: [product.image.src]
-				}
+					images: [product.image.src],
+					tax_code: "txcd_20090028"
+				},
+				tax_behavior: "inclusive"
 			},
 			quantity: Number(product.quantity)
 		};
 	});
 
 	const stripeUrlParams = ["session_id={CHECKOUT_SESSION_ID}", `order_id=${order.id}`];
+
+	const baseStripeUrl = `${STRIPE_REDIRECT_DOMAIN}/checkout/processing`;
+	const successUrl = `${baseStripeUrl}?${stripeUrlParams.join("&")}&status=success`;
+	const cancelUrl = `${baseStripeUrl}?${stripeUrlParams.join("&")}&status=failed`;
 
 	const session = await stripe.checkout.sessions.create({
 		line_items: [...lineItems],
@@ -47,12 +53,14 @@ export const POST = async ({ request }) => {
 				shipping_rate: order.shippingMethod.id
 			}
 		],
-		success_url: `${STRIPE_REDIRECT_DOMAIN}/checkout/processing?${stripeUrlParams.join(
-			"&"
-		)}&status=success`,
-		cancel_url: `${STRIPE_REDIRECT_DOMAIN}/checkout/processing?${stripeUrlParams.join(
-			"&"
-		)}&status=failed`
+		success_url: successUrl,
+		cancel_url: cancelUrl,
+		automatic_tax: {
+			enabled: true
+		},
+		tax_id_collection: {
+			enabled: true
+		}
 	});
 
 	return new Response(JSON.stringify({ sessionUrl: session.url }), {

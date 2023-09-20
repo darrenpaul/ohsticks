@@ -51,9 +51,38 @@ export const fetchUserCart = async () => {
 	cart.set(cartData);
 };
 
+export const deleteGuestCart = async () => {
+	const cartKey = localStorage.getItem(cartGuestLocalStorageKey);
+	const headers = new Headers();
+	if (cartKey) {
+		headers.append("cart-key", cartKey);
+	}
+	await fetch("/api/cart-guest", {
+		headers,
+		method: "DELETE"
+	});
+};
+
+export const deleteUserCart = async () => {
+	await fetch("/api/cart", {
+		method: "DELETE"
+	});
+};
+
 export const cart = writable({} as Cart | CartGuest | null);
 
+export const deleteCart = async (session) => {
+	if (session) {
+		await deleteUserCart();
+	} else {
+		await deleteGuestCart();
+	}
+
+	cart.set(null);
+};
+
 export const clearCart = () => {
+	localStorage.removeItem(cartGuestLocalStorageKey);
 	cart.set(null);
 };
 

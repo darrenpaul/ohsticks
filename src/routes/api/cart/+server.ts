@@ -2,6 +2,7 @@ import { addDays, isAfter } from "date-fns";
 import type { CartItem } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
 import { mergeCartItems } from "$lib/server/cartHelpers";
+import { cartActionRemove } from "$lib/constants/cart";
 
 const table = "cart";
 
@@ -16,15 +17,27 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		});
 	}
 
-	const { cartItem } = await request.json();
+	const { cartItem, action } = await request.json();
 
 	const { data } = await supabase.from(table).select().eq("user_id", session.user.id).single();
 
 	if (data) {
-		// const cartData = await getLatestCart(tableSnapshot);
-		// if (cartData) {
-		const cartItems = data.cart_items as CartItem[];
-		cartItems.push(cartItem);
+		let cartItems = data.cart_items as CartItem[];
+
+		if (action === cartActionRemove) {
+			cartItems = cartItems.filter((item) => item.id !== cartItem.id);
+		} else {
+			cartItems.push(cartItem);
+		}
+
+		if (cartItems.length === 0) {
+			await supabase.from(table).delete().eq("user_id", session.user.id).single();
+			return new Response(JSON.stringify({}), {
+				headers: {
+					"Content-Type": "application/json"
+				}
+			});
+		}
 
 		const mergedCartItems: CartItem[] = mergeCartItems(cartItems);
 
@@ -132,9 +145,7 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 
 // DELETE ITEM FROM CART
 /** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request, locals: { supabase, getSession } }) => {
-	const { cartItem } = await request.json();
-
+export const DELETE = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 	if (!session) {
 		throw error(401, {
@@ -142,43 +153,8 @@ export const DELETE = async ({ request, locals: { supabase, getSession } }) => {
 		});
 	}
 
-	const { data } = await supabase.from(table).select().eq("user_id", session.user.id).single();
-	if (!data) {
-		return new Response(JSON.stringify({}), {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	}
-
-	const cartItems = data.cart_items as CartItem[];
-	const filteredCartItems = cartItems.filter((item) => item.id !== cartItem.id);
-	if (filteredCartItems.length === 0) {
-		await supabase.from(table).delete().eq("user_id", session.user.id).single();
-		return new Response(JSON.stringify({}), {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	}
-
-	const updatePayload = {
-		cart_items: filteredCartItems,
-		expiration: addDays(new Date(), 7)
-	};
-
-	const { data: updatedData } = await supabase
-		.from(table)
-		.update(updatePayload)
-		.eq("user_id", session.user.id)
-		.select()
-		.single();
-
-	const payload = {
-		cartItems: updatedData.cart_items
-	};
-
-	return new Response(JSON.stringify(payload), {
+	await supabase.from(table).delete().eq("user_id", session.user.id).single();
+	return new Response(JSON.stringify({}), {
 		headers: {
 			"Content-Type": "application/json"
 		}

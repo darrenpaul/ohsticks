@@ -8,17 +8,18 @@
 
 <div class="product-feature-categories">
 	<p class="--title">
-		{trans("component.productFeature.categories.label")}:
+		{trans("component.productFeature.categories.label")}
 	</p>
 
-	{#each product.categories as category, index}
-		{#if index < product.categories.length - 1}
-			<a href={`${collectionRoute.path}/${category}`}>{category}</a>
-			<small>,</small>
-		{:else}
-			<a href={`${collectionRoute.path}/${category}`}>{category}</a>
-		{/if}
-	{/each}
+	<div class="--categories">
+		{#each product.categories as category, index}
+			{#if index < product.categories.length - 1}
+				<a class="capitalize" href={`${collectionRoute.path}/${category}`}>{category}</a>
+			{:else}
+				<a class="capitalize" href={`${collectionRoute.path}/${category}`}>{category}</a>
+			{/if}
+		{/each}
+	</div>
 </div>
 
 <style lang="scss">
@@ -26,11 +27,22 @@
 		/* SIZE */
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
-		@apply flex items-center;
+		@apply flex flex-col gap-1;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
+
+		.--categories {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			/* LAYOUT */
+			@apply flex flex-wrap gap-2;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
 
 		.--title {
 			/* SIZE */
@@ -47,8 +59,10 @@
 		a {
 			/* SIZE */
 			/* MARGINS AND PADDING */
+			@apply px-3;
 			/* LAYOUT */
 			/* BORDERS */
+			@apply border border-black rounded-full;
 			/* COLORS */
 			/* TEXT */
 			@apply text-gray-500;

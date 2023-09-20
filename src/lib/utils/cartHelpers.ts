@@ -1,4 +1,4 @@
-import { cartGuestLocalStorageKey } from "$lib/constants/cart";
+import { cartActionRemove, cartGuestLocalStorageKey } from "$lib/constants/cart";
 import type { CartItem } from "$lib/types/cart";
 
 export const addToCartGuest = async (cartItem: CartItem) => {
@@ -45,9 +45,9 @@ export const removeFromCartGuest = async (cartItem: CartItem) => {
 	}
 
 	const response = await fetch("/api/cart-guest", {
-		method: "DELETE",
+		method: "POST",
 		headers,
-		body: JSON.stringify({ cartItem })
+		body: JSON.stringify({ cartItem, action: cartActionRemove })
 	});
 
 	const cartData = await response.json();
@@ -60,9 +60,9 @@ export const removeFromCartGuest = async (cartItem: CartItem) => {
 
 export const removeFromCartUser = async (cartItem: CartItem) => {
 	const response = await fetch("/api/cart", {
-		method: "DELETE",
+		method: "POST",
 
-		body: JSON.stringify({ cartItem })
+		body: JSON.stringify({ cartItem, action: cartActionRemove })
 	});
 
 	const cartData = await response.json();

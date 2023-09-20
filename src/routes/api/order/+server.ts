@@ -1,5 +1,8 @@
+import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
+import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import type { Order, OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
+import { createClient } from "@supabase/supabase-js";
 
 const table = "order";
 
@@ -7,6 +10,13 @@ const table = "order";
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, locals: { supabase } }) => {
 	const { customer, shippingAddress, items, paymentMethod, shippingMethod } = await request.json();
+
+	const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false
+		}
+	});
 
 	const subtotal = sumArrayNumbers(
 		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
@@ -26,7 +36,11 @@ export const POST = async ({ request, locals: { supabase } }) => {
 		updated_at: new Date()
 	};
 
-	const { data: createdData } = await supabase.from(table).insert(createPayload).select().single();
+	const { data: createdData } = await supabaseAdmin
+		.from("order")
+		.insert(createPayload)
+		.select()
+		.single();
 
 	const payload = {
 		id: createdData.id,
@@ -80,7 +94,8 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ url, fetch, locals: { supabase } }) => {
+export const PUT = async ({ url, fetch, locals: { supabase, getSession } }) => {
+	const supabaseSession = await getSession();
 	const sessionId = url.searchParams.get("session_id");
 	const orderId = url.searchParams.get("order_id");
 
@@ -107,14 +122,25 @@ export const PUT = async ({ url, fetch, locals: { supabase } }) => {
 
 	const stripeData = await stripeResponse.json();
 
+	const userId = supabaseSession?.user?.id || null;
 	const status = stripeData.payment_status;
+	const stripeCustomerEmail = stripeData.customer_email;
+	const paymentIntentId = stripeData.payment_intent;
 
 	const timestamp = new Date();
 
-	const { data: updatedData } = await supabase
+	const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false
+		}
+	});
+
+	const { data: updatedData } = await supabaseAdmin
 		.from(table)
-		.update({ status, updated_at: timestamp })
+		.update({ status, stripe_payment_id: paymentIntentId, updated_at: timestamp, user_id: userId })
 		.eq("id", orderId)
+		.eq("email", stripeCustomerEmail)
 		.select()
 		.single();
 

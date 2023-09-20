@@ -27,7 +27,6 @@
 
 		const imagePaths = [`${imageFolder}/${imageName}`];
 		await deleteImagesByPath(imageBucket, imagePaths, $supabaseState);
-		console.log("onImageDelete ~ imagePaths:", imagePaths);
 		images = images.filter((image) => image?.src !== imageSrc);
 	};
 

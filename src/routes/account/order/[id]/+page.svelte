@@ -8,6 +8,7 @@
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import OrderConfirmationList from "$lib/components/order/+OrderConfirmationList.svelte";
 	import OrderConfirmationTotals from "$lib/components/order/+OrderConfirmationTotals.svelte";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
 	export let data;
 	let order: Order = data.order;
@@ -24,8 +25,10 @@
 				<OrderConfirmationShipping {order} />
 
 				<div class="--button-wrapper">
-					<a class="submit-button" href={`${collectionRoute.path}/all`}>
-						{trans("page.order.continueShopping.label")}
+					<a href={`${collectionRoute.path}/all`}>
+						<ButtonIcon>
+							{trans("page.order.continueShopping.label")}
+						</ButtonIcon>
 					</a>
 				</div>
 			</div>
@@ -42,9 +45,9 @@
 <style lang="scss">
 	.order-confirmation-page {
 		/* SIZE */
-		@apply h-[100dvh];
+		@apply min-h-[100dvh];
 		/* MARGINS AND PADDING */
-		@apply pt-20;
+		@apply py-5;
 		/* LAYOUT */
 		@apply grid grid-cols-2 gap-8;
 		/* BORDERS */
