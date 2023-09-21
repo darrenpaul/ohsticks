@@ -1,5 +1,5 @@
 export const adminRoute = {
 	path: "/admin",
-	name: "admin",
-	label: "Admin"
+	name: "admin-home",
+	label: "Home"
 };
