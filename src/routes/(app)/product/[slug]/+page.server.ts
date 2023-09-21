@@ -33,7 +33,6 @@ export async function load({ params, fetch, locals: { getSession } }) {
 		return order.items.filter((item) => item.slug === productSlug);
 	});
 	const canReview = !!matchProducts.find((order) => order.status === delivered);
-	console.log("load ~ canReview:", productSlug);
 
 	return {
 		reviews,
