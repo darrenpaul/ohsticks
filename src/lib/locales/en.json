@@ -618,5 +618,13 @@
 				"description": "We are dedicated to ensuring your complete satisfaction with every purchase."
 			}
 		}
+	},
+	"notification": {
+		"accountCreated": {
+			"label": "Account created successfully, please check your email to verify your account."
+		},
+		"userAlreadyRegistered": {
+			"label": "User already registered"
+		}
 	}
 }

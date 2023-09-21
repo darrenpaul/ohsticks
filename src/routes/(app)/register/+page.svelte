@@ -6,6 +6,9 @@
 	import { goto } from "$app/navigation";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
+	import randomString from "$lib/utils/randomString.js";
 
 	export let data;
 	let { supabase, session } = data;
@@ -13,14 +16,6 @@
 	let lastName: string;
 	let email: string;
 	let password: string;
-	let shippingAddress = {
-		address1: "",
-		address2: "",
-		city: "",
-		province: "",
-		postalCode: "",
-		country: ""
-	};
 
 	$: {
 		if (browser && session) {
@@ -28,14 +23,41 @@
 		}
 	}
 
+	const notificationState: Writable<any> = getContext("notificationState");
+
 	const handleFormSubmit = async () => {
-		const { data } = await supabase.auth.signUp({
+		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,
 			options: {
 				emailRedirectTo: `${location.origin}/auth/callback`
 			}
 		});
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: "error"
+				}
+			]);
+			return;
+		}
+
+		const emailIsTaken = data.user.identities?.length === 0;
+		if (emailIsTaken) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: trans("notification.userAlreadyRegistered.label"),
+					type: "error"
+				}
+			]);
+			return;
+		}
 
 		await fetch("/api/account", {
 			method: "POST",
@@ -44,14 +66,22 @@
 				firstName,
 				lastName,
 				emailAddress: email,
-				password,
-				shippingAddress
+				password
 			})
 		});
 
 		track();
 
-		alert("Account created successfully!");
+		notificationState.set([
+			...$notificationState,
+			{
+				id: randomString(5),
+				message: trans("notification.accountCreated.label"),
+				type: "success"
+			}
+		]);
+
+		goto(loginRoute.path, { replaceState: true });
 	};
 
 	const track = () => {

@@ -68,16 +68,5 @@
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 		}
-
-		.--image {
-			/* SIZE */
-			@apply max-h-[50vh];
-			/* MARGINS AND PADDING */
-			/* LAYOUT */
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
 	}
 </style>

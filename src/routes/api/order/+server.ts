@@ -94,7 +94,7 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ url, fetch, locals: { supabase, getSession } }) => {
+export const PUT = async ({ url, fetch, locals: { getSession } }) => {
 	const supabaseSession = await getSession();
 	const sessionId = url.searchParams.get("session_id");
 	const orderId = url.searchParams.get("order_id");
@@ -136,7 +136,7 @@ export const PUT = async ({ url, fetch, locals: { supabase, getSession } }) => {
 		}
 	});
 
-	const { data: updatedData } = await supabaseAdmin
+	const { data: updatedData, error } = await supabaseAdmin
 		.from(table)
 		.update({ status, stripe_payment_id: paymentIntentId, updated_at: timestamp, user_id: userId })
 		.eq("id", orderId)

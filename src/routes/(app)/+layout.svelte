@@ -8,10 +8,12 @@
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore.js";
+	import Toaster from "$lib/components/notification/+Toaster.svelte";
 
 	const cartState = writable(false);
 	const supabaseState = writable();
 	const sessionState = writable();
+	const notificationState = writable([]);
 
 	export let data;
 
@@ -45,6 +47,7 @@
 		setContext("cartState", cartState);
 		setContext("supabaseState", supabaseState);
 		setContext("sessionState", sessionState);
+		setContext("notificationState", notificationState);
 	}
 </script>
 
@@ -53,6 +56,8 @@
 
 	<div class="page">
 		<slot />
+
+		<Toaster />
 	</div>
 
 	{#if $cartState}
