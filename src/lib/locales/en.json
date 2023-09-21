@@ -109,6 +109,15 @@
 			},
 			"youWillBeRedirected": {
 				"label": "You will be redirected when the processing is completed."
+			},
+			"taxCalculatedAtPayment": {
+				"label": "Tax calculated at payment"
+			},
+			"showOrderSummary": {
+				"label": "Show Order Summary"
+			},
+			"hideOrderSummary": {
+				"label": "Hide Order Summary"
 			}
 		},
 		"account": {
@@ -625,6 +634,12 @@
 		},
 		"userAlreadyRegistered": {
 			"label": "User already registered"
+		},
+		"reviewSubmitted": {
+			"label": "Review submitted successfully"
+		},
+		"reviewSubmitFailed": {
+			"label": "Failed to submit review"
 		}
 	}
 }

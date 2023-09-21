@@ -15,7 +15,7 @@
 	.checkout-cart-list {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply mb-16;
+		@apply mb-8 md:mb-16;
 		/* LAYOUT */
 		@apply grid gap-4;
 		/* BORDERS */

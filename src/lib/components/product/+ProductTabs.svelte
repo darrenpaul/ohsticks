@@ -3,12 +3,15 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import ProductReviews from "./+ProductReviews.svelte";
 	import ProductReviewForm from "./+ProductReviewForm.svelte";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
 
 	let activeTab = 0;
 
 	export let product: Product;
-	export let reviews;
 	export let canReview: boolean;
+
+	const reviewState: Writable<any> = getContext("reviewState");
 </script>
 
 <section class="product-tabs">
@@ -45,10 +48,10 @@
 		{:else if activeTab === 1}
 			<div class="--tab">
 				<div class="--reviews">
-					{#if reviews.length === 0}
+					{#if $reviewState.length === 0}
 						<h3 class="text-center">{trans("component.productTabs.reviews.noReviews.label")}</h3>
 					{:else}
-						<ProductReviews {reviews} />
+						<ProductReviews />
 					{/if}
 
 					{#if canReview}

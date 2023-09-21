@@ -1,8 +1,11 @@
 <script lang="ts">
 	import ProductReview from "$lib/components/product/+ProductReview.svelte";
+	import { getContext } from "svelte";
 	import Paginate from "../shared/+Paginate.svelte";
+	import type { Writable } from "svelte/store";
 
-	export let reviews;
+	const reviewState: Writable<any> = getContext("reviewState");
+
 	let paginatedReviews = [];
 
 	// $: {
@@ -18,7 +21,7 @@
 		<ProductReview {review} />
 	{/each}
 
-	<Paginate items={reviews} bind:paginatedList={paginatedReviews} />
+	<Paginate items={$reviewState} bind:paginatedList={paginatedReviews} />
 </div>
 
 <style lang="postcss">

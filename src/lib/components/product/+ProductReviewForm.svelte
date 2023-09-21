@@ -2,10 +2,15 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import StarIcon from "$lib/components/icons/+StarIcon.svelte";
-	import ImageUploadInput from "$lib/components/inputs/+ImageUploadInput.svelte";
-	import type { Image, Product } from "$lib/types/product";
+	import type { Product } from "$lib/types/product";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
+	import randomString from "$lib/utils/randomString";
 
 	export let product: Product;
+
+	const reviewState: Writable<any> = getContext("reviewState");
+	const notificationState: Writable<any> = getContext("notificationState");
 
 	let rating: number = 5;
 	let title: string;
@@ -16,8 +21,7 @@
 	};
 
 	const handleFormSubmit = async () => {
-		console.log("apples");
-		await fetch("/api/review", {
+		const response = await fetch("/api/review", {
 			method: "POST",
 			body: JSON.stringify({
 				productSlug: product.slug,
@@ -28,6 +32,40 @@
 				}
 			})
 		});
+		if (!response.ok) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: trans("notification.reviewSubmitFailed.label"),
+					type: "error"
+				}
+			]);
+			return;
+		}
+
+		notificationState.set([
+			...$notificationState,
+			{
+				id: randomString(5),
+				message: trans("notification.reviewSubmitted.label"),
+				type: "success"
+			}
+		]);
+
+		reviewState.set([
+			...$reviewState,
+			{
+				rating,
+				title,
+				content,
+				createdAt: new Date().toISOString()
+			}
+		]);
+
+		rating = 5;
+		title = "";
+		content = "";
 	};
 </script>
 

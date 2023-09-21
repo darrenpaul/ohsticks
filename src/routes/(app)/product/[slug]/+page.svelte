@@ -18,14 +18,17 @@
 	import { viewItemEvent } from "$lib/utils/googleTagManager.js";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
+	import { writable } from "svelte/store";
+	import { setContext } from "svelte";
 
 	export let data;
 
 	let product: Product;
-	let reviews = data.reviews;
 	let canReview = data.canReview;
 	let relatedProducts: Product[];
 	let session;
+
+	const reviewState = writable();
 
 	let crumbs: Link[] = [
 		homeRoute,
@@ -47,12 +50,16 @@
 		// TODO: move to server side
 		product = data.products.find((product: Product) => product.slug === slug);
 		relatedProducts = data.products.filter((product: Product) => product.slug !== slug);
-		reviews = data.reviews;
+		reviewState.set(data.reviews);
 		canReview = data.canReview;
 		session = data.session;
 		if (browser) {
 			track();
 		}
+	}
+
+	if (browser) {
+		setContext("reviewState", reviewState);
 	}
 </script>
 
@@ -64,7 +71,7 @@
 	</ContainWidth>
 
 	<ContainWidth background="bg-transparent">
-		<ProductTabs {product} {reviews} {canReview} />
+		<ProductTabs {product} {canReview} />
 
 		<div class="--carousel-wrapper">
 			<h2 class="--heading">{trans("page.product.relatedProducts.label")}</h2>

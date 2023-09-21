@@ -26,8 +26,9 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 	const { data: userAccount } = await supabaseAdmin
 		.from("account")
 		.select()
-		.eq("id", session.user.id)
+		.eq("user_id", session.user.id)
 		.single();
+	console.log("POST ~ userAccount:", userAccount);
 
 	const { data: existingData } = await supabase
 		.from("review")

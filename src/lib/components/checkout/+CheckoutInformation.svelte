@@ -7,7 +7,9 @@
 <div class="checkout-information">
 	<div class="--inner">
 		<CheckoutCartList />
+
 		<CheckoutCouponCode />
+
 		<CheckoutTotals />
 	</div>
 </div>
@@ -16,10 +18,11 @@
 	.checkout-information {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply p-2 md:p-8;
+		@apply p-4 md:p-8 mb-8 md:mb-0;
 		/* LAYOUT */
 		@apply relative;
 		/* BORDERS */
+		@apply border md:border-none rounded-md;
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
@@ -28,7 +31,7 @@
 			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply fixed;
+			@apply block md:fixed;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
