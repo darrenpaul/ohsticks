@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { adminOrderRoute } from "$lib/constants/routes/admin/adminOrderRoute";
+	import { adminOrderRoute } from "$lib/constants/routes/adminOrderRoute";
 	import type { Order } from "$lib/types/order";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { format } from "date-fns";

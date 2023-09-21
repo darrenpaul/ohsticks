@@ -22,7 +22,7 @@
 		// 	return error(401, "Unauthorized");
 		// }
 
-		const response = await fetch("/api/ai", {
+		const response = await fetch("/api/admin/ai", {
 			body: JSON.stringify({
 				searchPrompt: searchKeywords
 			}),

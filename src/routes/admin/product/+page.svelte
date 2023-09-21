@@ -2,7 +2,7 @@
 	import {
 		adminProductCreateRoute,
 		adminProductEditRoute
-	} from "$lib/constants/routes/admin/adminProductRoute";
+	} from "$lib/constants/routes/adminProductRoute";
 	import type { Product } from "$lib/types/product";
 	import { onMount } from "svelte";
 

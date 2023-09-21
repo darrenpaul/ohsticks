@@ -1,8 +1,5 @@
 <script lang="ts">
-	import {
-		adminPageCreateRoute,
-		adminPageEditRoute
-	} from "$lib/constants/routes/admin/adminPageRoute";
+	import { adminPageCreateRoute, adminPageEditRoute } from "$lib/constants/routes/adminPageRoute";
 	import { onMount } from "svelte";
 
 	onMount(async () => {

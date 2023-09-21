@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
-	import AdminNavigation from "$lib/components/navigation/+AdminNavigation.svelte";
+	import Navigation from "$lib/components/navigation/+Navigation.svelte";
 	import { setContext } from "svelte";
 	import { writable } from "svelte/store";
 
@@ -25,6 +25,6 @@
 </script>
 
 <!-- <AuthAdminCheck> -->
-<AdminNavigation />
+<Navigation />
 <slot />
 <!-- </AuthAdminCheck> -->
