@@ -4,7 +4,6 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import { adminRoute } from "$lib/constants/routes/adminRoute.js";
-	import { onMount } from "svelte";
 
 	export let data;
 
