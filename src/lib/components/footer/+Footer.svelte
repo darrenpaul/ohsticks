@@ -66,7 +66,7 @@
 	footer {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply pt-24 px-4;
+		@apply pt-8 md:pt-24 px-4;
 		/* LAYOUT */
 		@apply grid;
 		/* BORDERS */
@@ -114,9 +114,9 @@
 
 		.--copyright-wrapper {
 			/* SIZE */
-			@apply max-w-[1170px] w-full h-20;
+			@apply max-w-[1170px] w-full h-fit;
 			/* MARGINS AND PADDING */
-			@apply mx-auto;
+			@apply mx-auto py-4;
 			/* LAYOUT */
 			@apply flex flex-col-reverse md:flex-row items-center justify-between;
 			/* BORDERS */

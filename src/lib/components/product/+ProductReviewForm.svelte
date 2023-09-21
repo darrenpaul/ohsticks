@@ -105,6 +105,7 @@
 			id="content"
 			name="content"
 			bind:value={content}
+			placeholder=""
 			required
 		/>
 		<label class="floating-label" for="content">{trans("form.review.reviewContent.label")}</label>

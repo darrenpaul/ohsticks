@@ -70,7 +70,6 @@
 <style lang="postcss">
 	.page {
 		/* SIZE */
-		@apply min-h-[100dvh];
 		/* MARGINS AND PADDING */
 		@apply mx-auto;
 		/* LAYOUT */

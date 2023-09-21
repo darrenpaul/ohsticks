@@ -2,6 +2,7 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import { MetaTags } from "svelte-meta-tags";
 	import { page } from "$app/stores";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
 	export let data;
 
@@ -99,13 +100,15 @@
 				placeholder=""
 				required
 			/>
-			<label class="floating-label" for="email">
+			<label class="floating-label" for="message">
 				{trans("form.contact.message.label")}
 			</label>
 		</div>
 
-		<button class="submit-button" aria-label="Send contact message">
-			{trans("form.contact.submit.label")}
+		<button aria-label="Send contact message">
+			<ButtonIcon>
+				{trans("form.contact.submit.label")}
+			</ButtonIcon>
 		</button>
 	</form>
 </div>
@@ -130,7 +133,7 @@
 		/* SIZE */
 		@apply w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-40 mx-auto;
+		@apply mt-40 mb-16 mx-auto;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

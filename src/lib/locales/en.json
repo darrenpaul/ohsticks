@@ -11,7 +11,10 @@
 	"page": {
 		"home": {
 			"popularProducts": "Popular Products",
-			"featuredProducts": "Featured Products"
+			"featuredProducts": "Featured Products",
+			"browserOurPopulateCategories": {
+				"label": "Browse Our Popular Categories"
+			}
 		},
 		"product": {
 			"relatedProducts": {

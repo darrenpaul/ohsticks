@@ -1,38 +1,44 @@
-<div class="side-by-side-image">
-	<img
-		width="auto"
-		src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-bag.webp"
-		alt="Preview"
-		loading="lazy"
-	/>
+<script lang="ts">
+	export let title = "";
+</script>
 
-	<img
-		width="auto"
-		src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
-		alt="Preview"
-		loading="lazy"
-	/>
+<div class="side-by-side-image">
+	<h2 class="--heading">{title}</h2>
+
+	<div class="--images">
+		<slot />
+	</div>
 </div>
 
 <style lang="postcss">
 	.side-by-side-image {
 		/* SIZE */
 		/* MARGINS AND PADDING */
+		@apply mb-8 md:mb-16;
 		/* LAYOUT */
-		@apply grid sm:grid-cols-2 gap-4;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
 
-		img {
+		.--heading {
 			/* SIZE */
-			@apply h-full max-h-[50vh];
+			/* MARGINS AND PADDING */
+			@apply my-16;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			@apply text-3xl text-center font-bold;
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--images {
+			/* SIZE */
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
-			@apply object-cover;
+			@apply grid md:grid-cols-3 gap-4;
 			/* BORDERS */
-			@apply rounded-xl;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
