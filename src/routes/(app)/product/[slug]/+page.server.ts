@@ -29,10 +29,11 @@ export async function load({ params, fetch, locals: { getSession } }) {
 	const orders = await ordersResponse.json();
 
 	// check if user has ordered this product and it has been delivered
-	const matchProducts = orders.filter((order) => {
-		return order.items.filter((item) => item.slug === productSlug);
-	});
-	const canReview = !!matchProducts.find((order) => order.status === delivered);
+	const filterOutNotDelivered = orders.filter((order) => order.status === delivered);
+	const productsFromOrders = filterOutNotDelivered.map((order) => order.items).flat();
+	const matchedProducts = productsFromOrders.filter((product) => product.slug === productSlug);
+
+	const canReview = !!matchedProducts.length;
 
 	return {
 		reviews,
