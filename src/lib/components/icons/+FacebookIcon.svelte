@@ -1,21 +1,21 @@
 <script lang="ts">
 	export let width = 24;
 	export let height = 24;
-	export let fill = "fill-black";
 </script>
 
-<svg
-	clip-rule="evenodd"
-	fill-rule="evenodd"
-	stroke-linejoin="round"
-	stroke-miterlimit="2"
-	viewBox="0 0 24 24"
-	{width}
-	{height}
-	xmlns="http://www.w3.org/2000/svg"
->
+<svg {width} {height} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path
-		class={fill}
-		d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 10h-2v2h2v6h3v-6h1.82l.18-2h-2v-.833c0-.478.096-.667.558-.667h1.442v-2.5h-2.404c-1.798 0-2.596.792-2.596 2.308v1.692z"
+		d="M66.67 8H13.33C10.3863 8 8 10.3863 8 13.33V66.67C8 69.6137 10.3863 72 13.33 72H66.67C69.6137 72 72 69.6137 72 66.67V13.33C72 10.3863 69.6137 8 66.67 8Z"
+		fill="#F2B724"
+		stroke="#CBB9D7"
+		stroke-width="3"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+	<path
+		fill-rule="evenodd"
+		clip-rule="evenodd"
+		d="M46.54 24.75C47.97 24.7 49.39 24.74 50.82 24.74H51.41V17.32C50.65 17.24 49.85 17.13 49.05 17.1C47.59 17.03 46.12 16.96 44.66 17C42.42 17.05 40.31 17.59 38.46 18.92C36.34 20.44 35.18 22.58 34.73 25.11C34.55 26.15 34.5 27.23 34.47 28.29C34.43 29.96 34.47 31.62 34.47 33.29V33.91H27.37V42.2H34.43V63.03H43.06V42.23H50.09C50.45 39.47 50.8 36.75 51.17 33.9C50.6 33.9 50.1 33.9 49.59 33.9C47.59 33.9 43 33.9 43 33.9C43 33.9 43.02 29.79 43.07 28.01C43.14 25.57 44.59 24.82 46.54 24.75Z"
+		fill="white"
 	/>
 </svg>

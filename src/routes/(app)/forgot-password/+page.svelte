@@ -8,7 +8,7 @@
 	import randomString from "$lib/utils/randomString.js";
 	import type { Writable } from "svelte/store";
 	import { getContext } from "svelte";
-	import { successNotification } from "$lib/constants/notifications.js";
+	import { errorNotification, successNotification } from "$lib/constants/notifications.js";
 
 	export let data;
 
@@ -18,9 +18,22 @@
 	let email: string;
 
 	const handleFormSubmit = async () => {
-		await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: `${siteUrl}/${accountRoute.path}`
-		});
+		console.log("asasdasd");
+		const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+		console.log("handleFormSubmit ~ data:", data);
+		console.log("handleFormSubmit ~ error:", error);
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: errorNotification
+				}
+			]);
+			return;
+		}
 
 		notificationState.set([
 			...$notificationState,
@@ -31,7 +44,7 @@
 			}
 		]);
 
-		goto(homeRoute.path, { replaceState: true });
+		// goto(homeRoute.path, { replaceState: true });
 	};
 </script>
 

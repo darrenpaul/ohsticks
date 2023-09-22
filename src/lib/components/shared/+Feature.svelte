@@ -39,7 +39,7 @@
 <style lang="postcss">
 	.feature {
 		/* SIZE */
-		@apply w-full h-[100dvh];
+		@apply w-full h-screen;
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
 		@apply relative overflow-hidden;
