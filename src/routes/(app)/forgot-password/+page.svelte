@@ -3,18 +3,33 @@
 	import { accountRoute } from "$lib/constants/routes/accountRoute";
 	import { siteUrl } from "$lib/constants/site.js";
 	import { goto } from "$app/navigation";
-	import { homeRoute } from "$lib/constants/routes/homeRoute.js";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import randomString from "$lib/utils/randomString.js";
+	import type { Writable } from "svelte/store";
+	import { getContext } from "svelte";
+	import { successNotification } from "$lib/constants/notifications.js";
 
 	export let data;
+
+	const notificationState: Writable<any> = getContext("notificationState");
+
 	let supabase = data.supabase;
-	let email = "";
+	let email: string;
 
 	const handleFormSubmit = async () => {
-		await supabase.auth.resetPasswordForEmail("darrenpaul@duck.com", {
+		await supabase.auth.resetPasswordForEmail(email, {
 			redirectTo: `${siteUrl}/${accountRoute.path}`
 		});
 
-		alert("Reset email sent, please check your email");
+		notificationState.set([
+			...$notificationState,
+			{
+				id: randomString(5),
+				message: trans("form.forgotPassword.resetEmailSent.label"),
+				type: successNotification
+			}
+		]);
 
 		goto(homeRoute.path, { replaceState: true });
 	};
@@ -42,8 +57,10 @@
 			<label class="floating-label" for="email">{trans("form.forgotPassword.email.label")}</label>
 		</div>
 
-		<button class="submit-button" aria-label="Reset account password">
-			{trans("form.forgotPassword.submit.label")}
+		<button aria-label="Reset account password">
+			<ButtonIcon>
+				{trans("form.forgotPassword.submit.label")}
+			</ButtonIcon>
 		</button>
 	</form>
 </div>
@@ -53,7 +70,7 @@
 		/* SIZE */
 		@apply w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-40 mx-auto;
+		@apply mt-40 mx-auto pb-16;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

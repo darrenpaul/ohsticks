@@ -9,6 +9,7 @@
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
 	import randomString from "$lib/utils/randomString.js";
+	import { errorNotification } from "$lib/constants/notifications.js";
 
 	export let data;
 	let { supabase, session } = data;
@@ -40,7 +41,7 @@
 				{
 					id: randomString(5),
 					message: error.message,
-					type: "error"
+					type: errorNotification
 				}
 			]);
 			return;

@@ -448,6 +448,9 @@
 			},
 			"submit": {
 				"label": "Reset"
+			},
+			"resetEmailSent": {
+				"label": "Reset email sent, please check your email."
 			}
 		},
 		"contact": {
@@ -573,6 +576,10 @@
 			},
 			"account": {
 				"label": "Account"
+			},
+			"logout": {
+				"label": "Logout",
+				"aria": "Logout out of account"
 			}
 		},
 		"footer": {

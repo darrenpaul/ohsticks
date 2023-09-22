@@ -6,6 +6,7 @@
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
 	import randomString from "$lib/utils/randomString";
+	import { errorNotification, successNotification } from "$lib/constants/notifications";
 
 	export let product: Product;
 
@@ -38,7 +39,7 @@
 				{
 					id: randomString(5),
 					message: trans("notification.reviewSubmitFailed.label"),
-					type: "error"
+					type: errorNotification
 				}
 			]);
 			return;
@@ -49,7 +50,7 @@
 			{
 				id: randomString(5),
 				message: trans("notification.reviewSubmitted.label"),
-				type: "success"
+				type: successNotification
 			}
 		]);
 

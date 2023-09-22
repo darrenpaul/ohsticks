@@ -11,8 +11,14 @@
 	} from "$lib/constants/routes/accountRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
+	import randomString from "$lib/utils/randomString.js";
+	import type { Writable } from "svelte/store";
+	import { getContext } from "svelte";
+	import { errorNotification } from "$lib/constants/notifications.js";
 
 	export let data;
+
+	const notificationState: Writable<any> = getContext("notificationState");
 
 	let { supabase, session } = data;
 	let email: string;
@@ -27,14 +33,25 @@
 	const handleFormSubmit = async () => {
 		const nextPage = $page.url.searchParams.get("page");
 
-		const { data } = await supabase.auth.signInWithPassword({ email, password });
-		if (data) {
-			track();
-			if (nextPage) {
-				goto(accountRoute.path, { replaceState: true });
-			} else {
-				goto(homeRoute.path, { replaceState: true });
-			}
+		const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: errorNotification
+				}
+			]);
+			return;
+		}
+
+		track();
+		if (nextPage) {
+			goto(accountRoute.path, { replaceState: true });
+		} else {
+			goto(homeRoute.path, { replaceState: true });
 		}
 	};
 
