@@ -1,15 +1,50 @@
 <script lang="ts">
-	import { auth } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
-	import { sendPasswordResetEmail } from "firebase/auth";
-	import { loginRoute } from "$lib/constants/routes/accountRoute";
+	import { accountRoute } from "$lib/constants/routes/accountRoute";
+	import { siteUrl } from "$lib/constants/site.js";
+	import { goto } from "$app/navigation";
+	import { homeRoute } from "$lib/constants/routes/homeRoute";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import randomString from "$lib/utils/randomString.js";
+	import type { Writable } from "svelte/store";
+	import { getContext } from "svelte";
+	import { errorNotification, successNotification } from "$lib/constants/notifications.js";
 
-	let email = "";
+	export let data;
+
+	const notificationState: Writable<any> = getContext("notificationState");
+
+	let supabase = data.supabase;
+	let email: string;
 
 	const handleFormSubmit = async () => {
-		await sendPasswordResetEmail(auth, email);
-		alert("Password reset email sent!");
-		window.location.href = loginRoute.path;
+		console.log("asasdasd");
+		const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+		console.log("handleFormSubmit ~ data:", data);
+		console.log("handleFormSubmit ~ error:", error);
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: errorNotification
+				}
+			]);
+			return;
+		}
+
+		notificationState.set([
+			...$notificationState,
+			{
+				id: randomString(5),
+				message: trans("form.forgotPassword.resetEmailSent.label"),
+				type: successNotification
+			}
+		]);
+
+		// goto(homeRoute.path, { replaceState: true });
 	};
 </script>
 
@@ -35,7 +70,11 @@
 			<label class="floating-label" for="email">{trans("form.forgotPassword.email.label")}</label>
 		</div>
 
-		<button class="submit-button">{trans("form.forgotPassword.submit.label")}</button>
+		<button aria-label="Reset account password">
+			<ButtonIcon>
+				{trans("form.forgotPassword.submit.label")}
+			</ButtonIcon>
+		</button>
 	</form>
 </div>
 
@@ -44,7 +83,7 @@
 		/* SIZE */
 		@apply w-[400px];
 		/* MARGINS AND PADDING */
-		@apply mt-40 mx-auto;
+		@apply mt-40 mx-auto pb-16;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */

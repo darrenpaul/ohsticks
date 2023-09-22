@@ -22,7 +22,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-cart-item {
 		/* SIZE */
 		/* MARGINS AND PADDING */

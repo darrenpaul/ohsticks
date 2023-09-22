@@ -11,7 +11,7 @@
 
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
-	let shippingPrice: string = "0.00";
+	let shippingPrice: string;
 	let cartItemsTotal: string;
 	let total: string;
 
@@ -49,6 +49,8 @@
 		<p class="--total-text">{trans("page.checkout.total.label")}</p>
 		<p class="--total-text">{addCurrencySymbol(total)}</p>
 	</div>
+
+	<small>{trans("page.checkout.taxCalculatedAtPayment.label")}</small>
 </div>
 
 <style lang="scss">

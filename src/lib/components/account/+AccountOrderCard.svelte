@@ -14,7 +14,7 @@
 			{order.id}
 		</a>
 	</td>
-	<td class="text-center">{format(new Date(order.createdAt._seconds * 1000), "dd MMM, yyyy")}</td>
+	<td class="text-center">{format(new Date(order.createdAt), "dd MMM, yyyy")}</td>
 	<td class="text-center">{order.shippingAddress.address1}</td>
 	<td class="text-center">{addCurrencySymbol(order?.total || "0.00")}</td>
 	<td class="text-center uppercase font-bold">{order.status}</td>

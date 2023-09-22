@@ -11,20 +11,22 @@
 
 	export let data;
 
-	let products: Product[];
-	let pageData = data.body.pageData.find((page) => page.slug === "collection");
+	let products: Product[] = [];
+	let pageData = data.pageData;
 	let pageUrl = "";
 
 	$: {
-		if (data.body.products) {
-			products = data.body.products;
-
-			if (browser) {
-				track();
-			}
+		if (browser) {
+			products = productsByCategory($page.params.slug);
+			track();
+			pageUrl = `${$page.url}`;
 		}
-		pageUrl = `${$page.url}`;
 	}
+
+	const productsByCategory = (category: string) => {
+		if (category === "all") return data.products;
+		return data.products.filter((product: Product) => product.categories.includes(category));
+	};
 
 	const track = () => {
 		viewItemListEvent(products);
@@ -44,16 +46,16 @@
 </div>
 
 <MetaTags
-	title={pageData.meta?.title}
-	titleTemplate={pageData.meta?.title}
-	description={pageData.meta?.description}
+	title={pageData.title}
+	titleTemplate={pageData.title}
+	description={pageData.description}
 	canonical={pageUrl}
 	openGraph={{
-		...pageData.meta.openGraph,
+		...pageData.openGraph,
 		url: pageUrl
 	}}
 	twitter={{
-		...pageData.meta.twitter,
+		...pageData.twitter,
 		site: pageUrl
 	}}
 />
@@ -80,7 +82,7 @@
 	]}
 />
 
-<style lang="scss">
+<style lang="postcss">
 	.collection-page {
 		/* SIZE */
 		@apply w-fit max-w-[1495px];
@@ -109,7 +111,6 @@
 			/* MARGINS AND PADDING */
 			@apply px-4 mb-16;
 			/* LAYOUT */
-			// @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8;
 			@apply flex flex-wrap justify-center gap-8;
 			/* BORDERS */
 			/* COLORS */

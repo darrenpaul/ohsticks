@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
-	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import type { Link } from "$lib/types/link";
-	import capitalizeWords from "$lib/utils/capitalizeWords";
 
 	export let crumbs: Link[];
 </script>

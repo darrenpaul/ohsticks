@@ -19,44 +19,44 @@
 // places.sort((a, b) => (a.name > b.name ? 1 : -1));
 // console.log("places ~ places:", places);
 
-const australia = {
-	name: "Australia",
-	isoCode: "AU",
-	states: [
-		{
-			name: "Australian Capital Territory",
-			isoCode: "ACT"
-		},
-		{
-			name: "New South Wales",
-			isoCode: "NSW"
-		},
-		{
-			name: "Northern Territory",
-			isoCode: "NT"
-		},
-		{
-			name: "Queensland",
-			isoCode: "QLD"
-		},
-		{
-			name: "South Australia",
-			isoCode: "SA"
-		},
-		{
-			name: "Tasmania",
-			isoCode: "TAS"
-		},
-		{
-			name: "Victoria",
-			isoCode: "VIC"
-		},
-		{
-			name: "Western Australia",
-			isoCode: "WA"
-		}
-	]
-};
+// const australia = {
+// 	name: "Australia",
+// 	isoCode: "AU",
+// 	states: [
+// 		{
+// 			name: "Australian Capital Territory",
+// 			isoCode: "ACT"
+// 		},
+// 		{
+// 			name: "New South Wales",
+// 			isoCode: "NSW"
+// 		},
+// 		{
+// 			name: "Northern Territory",
+// 			isoCode: "NT"
+// 		},
+// 		{
+// 			name: "Queensland",
+// 			isoCode: "QLD"
+// 		},
+// 		{
+// 			name: "South Australia",
+// 			isoCode: "SA"
+// 		},
+// 		{
+// 			name: "Tasmania",
+// 			isoCode: "TAS"
+// 		},
+// 		{
+// 			name: "Victoria",
+// 			isoCode: "VIC"
+// 		},
+// 		{
+// 			name: "Western Australia",
+// 			isoCode: "WA"
+// 		}
+// 	]
+// };
 
 const austria = {
 	name: "Austria",
@@ -102,313 +102,313 @@ const austria = {
 	]
 };
 
-const canada = {
-	name: "Canada",
-	isoCode: "CA",
-	states: [
-		{
-			name: "Alberta",
-			isoCode: "AB"
-		},
-		{
-			name: "British Columbia",
-			isoCode: "BC"
-		},
-		{
-			name: "Manitoba",
-			isoCode: "MB"
-		},
-		{
-			name: "New Brunswick",
-			isoCode: "NB"
-		},
-		{
-			name: "Newfoundland and Labrador",
-			isoCode: "NL"
-		},
-		{
-			name: "Northwest Territories",
-			isoCode: "NT"
-		},
-		{
-			name: "Nova Scotia",
-			isoCode: "NS"
-		},
-		{
-			name: "Nunavut",
-			isoCode: "NU"
-		},
-		{
-			name: "Ontario",
-			isoCode: "ON"
-		},
-		{
-			name: "Prince Edward Island",
-			isoCode: "PE"
-		},
-		{
-			name: "Quebec",
-			isoCode: "QC"
-		},
-		{
-			name: "Saskatchewan",
-			isoCode: "SK"
-		},
-		{
-			name: "Yukon",
-			isoCode: "YT"
-		}
-	]
-};
+// const canada = {
+// 	name: "Canada",
+// 	isoCode: "CA",
+// 	states: [
+// 		{
+// 			name: "Alberta",
+// 			isoCode: "AB"
+// 		},
+// 		{
+// 			name: "British Columbia",
+// 			isoCode: "BC"
+// 		},
+// 		{
+// 			name: "Manitoba",
+// 			isoCode: "MB"
+// 		},
+// 		{
+// 			name: "New Brunswick",
+// 			isoCode: "NB"
+// 		},
+// 		{
+// 			name: "Newfoundland and Labrador",
+// 			isoCode: "NL"
+// 		},
+// 		{
+// 			name: "Northwest Territories",
+// 			isoCode: "NT"
+// 		},
+// 		{
+// 			name: "Nova Scotia",
+// 			isoCode: "NS"
+// 		},
+// 		{
+// 			name: "Nunavut",
+// 			isoCode: "NU"
+// 		},
+// 		{
+// 			name: "Ontario",
+// 			isoCode: "ON"
+// 		},
+// 		{
+// 			name: "Prince Edward Island",
+// 			isoCode: "PE"
+// 		},
+// 		{
+// 			name: "Quebec",
+// 			isoCode: "QC"
+// 		},
+// 		{
+// 			name: "Saskatchewan",
+// 			isoCode: "SK"
+// 		},
+// 		{
+// 			name: "Yukon",
+// 			isoCode: "YT"
+// 		}
+// 	]
+// };
 
-const ireland = {
-	name: "Ireland",
-	isoCode: "IE",
-	states: [
-		{
-			name: "Carlow",
-			isoCode: "CW"
-		},
-		{
-			name: "Cavan",
-			isoCode: "CN"
-		},
-		{
-			name: "Clare",
-			isoCode: "CE"
-		},
-		{
-			name: "Connacht",
-			isoCode: "C"
-		},
-		{
-			name: "Cork",
-			isoCode: "CO"
-		},
-		{
-			name: "Donegal",
-			isoCode: "DL"
-		},
-		{
-			name: "Dublin",
-			isoCode: "D"
-		},
-		{
-			name: "Galway",
-			isoCode: "G"
-		},
-		{
-			name: "Kerry",
-			isoCode: "KY"
-		},
-		{
-			name: "Kildare",
-			isoCode: "KE"
-		},
-		{
-			name: "Kilkenny",
-			isoCode: "KK"
-		},
-		{
-			name: "Laois",
-			isoCode: "LS"
-		},
-		{
-			name: "Leinster",
-			isoCode: "L"
-		},
-		{
-			name: "Limerick",
-			isoCode: "LK"
-		},
-		{
-			name: "Longford",
-			isoCode: "LD"
-		},
-		{
-			name: "Louth",
-			isoCode: "LH"
-		},
-		{
-			name: "Mayo",
-			isoCode: "MO"
-		},
-		{
-			name: "Meath",
-			isoCode: "MH"
-		},
-		{
-			name: "Monaghan",
-			isoCode: "MN"
-		},
-		{
-			name: "Munster",
-			isoCode: "M"
-		},
-		{
-			name: "Offaly",
-			isoCode: "OY"
-		},
-		{
-			name: "Roscommon",
-			isoCode: "RN"
-		},
-		{
-			name: "Sligo",
-			isoCode: "SO"
-		},
-		{
-			name: "Tipperary",
-			isoCode: "TA"
-		},
-		{
-			name: "Ulster",
-			isoCode: "U"
-		},
-		{
-			name: "Waterford",
-			isoCode: "WD"
-		},
-		{
-			name: "Westmeath",
-			isoCode: "WH"
-		},
-		{
-			name: "Wexford",
-			isoCode: "WX"
-		},
-		{
-			name: "Wicklow",
-			isoCode: "WW"
-		}
-	]
-};
+// const ireland = {
+// 	name: "Ireland",
+// 	isoCode: "IE",
+// 	states: [
+// 		{
+// 			name: "Carlow",
+// 			isoCode: "CW"
+// 		},
+// 		{
+// 			name: "Cavan",
+// 			isoCode: "CN"
+// 		},
+// 		{
+// 			name: "Clare",
+// 			isoCode: "CE"
+// 		},
+// 		{
+// 			name: "Connacht",
+// 			isoCode: "C"
+// 		},
+// 		{
+// 			name: "Cork",
+// 			isoCode: "CO"
+// 		},
+// 		{
+// 			name: "Donegal",
+// 			isoCode: "DL"
+// 		},
+// 		{
+// 			name: "Dublin",
+// 			isoCode: "D"
+// 		},
+// 		{
+// 			name: "Galway",
+// 			isoCode: "G"
+// 		},
+// 		{
+// 			name: "Kerry",
+// 			isoCode: "KY"
+// 		},
+// 		{
+// 			name: "Kildare",
+// 			isoCode: "KE"
+// 		},
+// 		{
+// 			name: "Kilkenny",
+// 			isoCode: "KK"
+// 		},
+// 		{
+// 			name: "Laois",
+// 			isoCode: "LS"
+// 		},
+// 		{
+// 			name: "Leinster",
+// 			isoCode: "L"
+// 		},
+// 		{
+// 			name: "Limerick",
+// 			isoCode: "LK"
+// 		},
+// 		{
+// 			name: "Longford",
+// 			isoCode: "LD"
+// 		},
+// 		{
+// 			name: "Louth",
+// 			isoCode: "LH"
+// 		},
+// 		{
+// 			name: "Mayo",
+// 			isoCode: "MO"
+// 		},
+// 		{
+// 			name: "Meath",
+// 			isoCode: "MH"
+// 		},
+// 		{
+// 			name: "Monaghan",
+// 			isoCode: "MN"
+// 		},
+// 		{
+// 			name: "Munster",
+// 			isoCode: "M"
+// 		},
+// 		{
+// 			name: "Offaly",
+// 			isoCode: "OY"
+// 		},
+// 		{
+// 			name: "Roscommon",
+// 			isoCode: "RN"
+// 		},
+// 		{
+// 			name: "Sligo",
+// 			isoCode: "SO"
+// 		},
+// 		{
+// 			name: "Tipperary",
+// 			isoCode: "TA"
+// 		},
+// 		{
+// 			name: "Ulster",
+// 			isoCode: "U"
+// 		},
+// 		{
+// 			name: "Waterford",
+// 			isoCode: "WD"
+// 		},
+// 		{
+// 			name: "Westmeath",
+// 			isoCode: "WH"
+// 		},
+// 		{
+// 			name: "Wexford",
+// 			isoCode: "WX"
+// 		},
+// 		{
+// 			name: "Wicklow",
+// 			isoCode: "WW"
+// 		}
+// 	]
+// };
 
-const netherlands = {
-	name: "Netherlands",
-	isoCode: "NL",
-	states: [
-		{
-			name: "Bonaire",
-			isoCode: "BQ1"
-		},
-		{
-			name: "Drenthe",
-			isoCode: "DR"
-		},
-		{
-			name: "Flevoland",
-			isoCode: "FL"
-		},
-		{
-			name: "Friesland",
-			isoCode: "FR"
-		},
-		{
-			name: "Gelderland",
-			isoCode: "GE"
-		},
-		{
-			name: "Groningen",
-			isoCode: "GR"
-		},
-		{
-			name: "Limburg",
-			isoCode: "LI"
-		},
-		{
-			name: "North Brabant",
-			isoCode: "NB"
-		},
-		{
-			name: "North Holland",
-			isoCode: "NH"
-		},
-		{
-			name: "Overijssel",
-			isoCode: "OV"
-		},
-		{
-			name: "Saba",
-			isoCode: "BQ2"
-		},
-		{
-			name: "Sint Eustatius",
-			isoCode: "BQ3"
-		},
-		{
-			name: "South Holland",
-			isoCode: "ZH"
-		},
-		{
-			name: "Utrecht",
-			isoCode: "UT"
-		},
-		{
-			name: "Zeeland",
-			isoCode: "ZE"
-		}
-	]
-};
+// const netherlands = {
+// 	name: "Netherlands",
+// 	isoCode: "NL",
+// 	states: [
+// 		{
+// 			name: "Bonaire",
+// 			isoCode: "BQ1"
+// 		},
+// 		{
+// 			name: "Drenthe",
+// 			isoCode: "DR"
+// 		},
+// 		{
+// 			name: "Flevoland",
+// 			isoCode: "FL"
+// 		},
+// 		{
+// 			name: "Friesland",
+// 			isoCode: "FR"
+// 		},
+// 		{
+// 			name: "Gelderland",
+// 			isoCode: "GE"
+// 		},
+// 		{
+// 			name: "Groningen",
+// 			isoCode: "GR"
+// 		},
+// 		{
+// 			name: "Limburg",
+// 			isoCode: "LI"
+// 		},
+// 		{
+// 			name: "North Brabant",
+// 			isoCode: "NB"
+// 		},
+// 		{
+// 			name: "North Holland",
+// 			isoCode: "NH"
+// 		},
+// 		{
+// 			name: "Overijssel",
+// 			isoCode: "OV"
+// 		},
+// 		{
+// 			name: "Saba",
+// 			isoCode: "BQ2"
+// 		},
+// 		{
+// 			name: "Sint Eustatius",
+// 			isoCode: "BQ3"
+// 		},
+// 		{
+// 			name: "South Holland",
+// 			isoCode: "ZH"
+// 		},
+// 		{
+// 			name: "Utrecht",
+// 			isoCode: "UT"
+// 		},
+// 		{
+// 			name: "Zeeland",
+// 			isoCode: "ZE"
+// 		}
+// 	]
+// };
 
-const saudiArabia = {
-	name: "Saudi Arabia",
-	isoCode: "SA",
-	states: [
-		{
-			name: "'Asir",
-			isoCode: "14"
-		},
-		{
-			name: "Al Bahah",
-			isoCode: "11"
-		},
-		{
-			name: "Al Jawf",
-			isoCode: "12"
-		},
-		{
-			name: "Al Madinah",
-			isoCode: "03"
-		},
-		{
-			name: "Al-Qassim",
-			isoCode: "05"
-		},
-		{
-			name: "Eastern Province",
-			isoCode: "04"
-		},
-		{
-			name: "Ha'il",
-			isoCode: "06"
-		},
-		{
-			name: "Jizan",
-			isoCode: "09"
-		},
-		{
-			name: "Makkah",
-			isoCode: "02"
-		},
-		{
-			name: "Najran",
-			isoCode: "10"
-		},
-		{
-			name: "Northern Borders",
-			isoCode: "08"
-		},
-		{
-			name: "Riyadh",
-			isoCode: "01"
-		},
-		{
-			name: "Tabuk",
-			isoCode: "07"
-		}
-	]
-};
+// const saudiArabia = {
+// 	name: "Saudi Arabia",
+// 	isoCode: "SA",
+// 	states: [
+// 		{
+// 			name: "'Asir",
+// 			isoCode: "14"
+// 		},
+// 		{
+// 			name: "Al Bahah",
+// 			isoCode: "11"
+// 		},
+// 		{
+// 			name: "Al Jawf",
+// 			isoCode: "12"
+// 		},
+// 		{
+// 			name: "Al Madinah",
+// 			isoCode: "03"
+// 		},
+// 		{
+// 			name: "Al-Qassim",
+// 			isoCode: "05"
+// 		},
+// 		{
+// 			name: "Eastern Province",
+// 			isoCode: "04"
+// 		},
+// 		{
+// 			name: "Ha'il",
+// 			isoCode: "06"
+// 		},
+// 		{
+// 			name: "Jizan",
+// 			isoCode: "09"
+// 		},
+// 		{
+// 			name: "Makkah",
+// 			isoCode: "02"
+// 		},
+// 		{
+// 			name: "Najran",
+// 			isoCode: "10"
+// 		},
+// 		{
+// 			name: "Northern Borders",
+// 			isoCode: "08"
+// 		},
+// 		{
+// 			name: "Riyadh",
+// 			isoCode: "01"
+// 		},
+// 		{
+// 			name: "Tabuk",
+// 			isoCode: "07"
+// 		}
+// 	]
+// };
 
 const southAfrica = {
 	name: "South Africa",
@@ -454,92 +454,92 @@ const southAfrica = {
 	]
 };
 
-const sweden = {
-	name: "Sweden",
-	isoCode: "SE",
-	states: [
-		{
-			name: "Blekinge",
-			isoCode: "K"
-		},
-		{
-			name: "Dalarna County",
-			isoCode: "W"
-		},
-		{
-			name: "Gotland County",
-			isoCode: "I"
-		},
-		{
-			name: "Gävleborg County",
-			isoCode: "X"
-		},
-		{
-			name: "Halland County",
-			isoCode: "N"
-		},
-		{
-			name: "Jönköping County",
-			isoCode: "F"
-		},
-		{
-			name: "Kalmar County",
-			isoCode: "H"
-		},
-		{
-			name: "Kronoberg County",
-			isoCode: "G"
-		},
-		{
-			name: "Norrbotten County",
-			isoCode: "BD"
-		},
-		{
-			name: "Skåne County",
-			isoCode: "M"
-		},
-		{
-			name: "Stockholm County",
-			isoCode: "AB"
-		},
-		{
-			name: "Södermanland County",
-			isoCode: "D"
-		},
-		{
-			name: "Uppsala County",
-			isoCode: "C"
-		},
-		{
-			name: "Värmland County",
-			isoCode: "S"
-		},
-		{
-			name: "Västerbotten County",
-			isoCode: "AC"
-		},
-		{
-			name: "Västernorrland County",
-			isoCode: "Y"
-		},
-		{
-			name: "Västmanland County",
-			isoCode: "U"
-		},
-		{
-			name: "Västra Götaland County",
-			isoCode: "O"
-		},
-		{
-			name: "Örebro County",
-			isoCode: "T"
-		},
-		{
-			name: "Östergötland County",
-			isoCode: "E"
-		}
-	]
-};
+// const sweden = {
+// 	name: "Sweden",
+// 	isoCode: "SE",
+// 	states: [
+// 		{
+// 			name: "Blekinge",
+// 			isoCode: "K"
+// 		},
+// 		{
+// 			name: "Dalarna County",
+// 			isoCode: "W"
+// 		},
+// 		{
+// 			name: "Gotland County",
+// 			isoCode: "I"
+// 		},
+// 		{
+// 			name: "Gävleborg County",
+// 			isoCode: "X"
+// 		},
+// 		{
+// 			name: "Halland County",
+// 			isoCode: "N"
+// 		},
+// 		{
+// 			name: "Jönköping County",
+// 			isoCode: "F"
+// 		},
+// 		{
+// 			name: "Kalmar County",
+// 			isoCode: "H"
+// 		},
+// 		{
+// 			name: "Kronoberg County",
+// 			isoCode: "G"
+// 		},
+// 		{
+// 			name: "Norrbotten County",
+// 			isoCode: "BD"
+// 		},
+// 		{
+// 			name: "Skåne County",
+// 			isoCode: "M"
+// 		},
+// 		{
+// 			name: "Stockholm County",
+// 			isoCode: "AB"
+// 		},
+// 		{
+// 			name: "Södermanland County",
+// 			isoCode: "D"
+// 		},
+// 		{
+// 			name: "Uppsala County",
+// 			isoCode: "C"
+// 		},
+// 		{
+// 			name: "Värmland County",
+// 			isoCode: "S"
+// 		},
+// 		{
+// 			name: "Västerbotten County",
+// 			isoCode: "AC"
+// 		},
+// 		{
+// 			name: "Västernorrland County",
+// 			isoCode: "Y"
+// 		},
+// 		{
+// 			name: "Västmanland County",
+// 			isoCode: "U"
+// 		},
+// 		{
+// 			name: "Västra Götaland County",
+// 			isoCode: "O"
+// 		},
+// 		{
+// 			name: "Örebro County",
+// 			isoCode: "T"
+// 		},
+// 		{
+// 			name: "Östergötland County",
+// 			isoCode: "E"
+// 		}
+// 	]
+// };
 
 const unitedKingdom = {
 	name: "United Kingdom",

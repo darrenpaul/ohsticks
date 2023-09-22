@@ -1,10 +1,17 @@
 <script lang="ts">
 	import type { Product } from "$lib/types/product";
 	import { trans } from "$lib/locales/translateCopy";
+	import ProductReviews from "./+ProductReviews.svelte";
+	import ProductReviewForm from "./+ProductReviewForm.svelte";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
 
 	let activeTab = 0;
 
 	export let product: Product;
+	export let canReview: boolean;
+
+	const reviewState: Writable<any> = getContext("reviewState");
 </script>
 
 <section class="product-tabs">
@@ -12,13 +19,15 @@
 		<button
 			class={`${activeTab === 0 ? "--tab-button-active" : "--tab-button"}`}
 			on:click={() => (activeTab = 0)}
+			aria-label="View product details"
 		>
 			{trans("component.productTabs.description.label")}
 		</button>
 
 		<button
-			class={`${activeTab === 2 ? "--tab-button-active" : "--tab-button"}`}
-			on:click={() => (activeTab = 2)}
+			class={`${activeTab === 1 ? "--tab-button-active" : "--tab-button"}`}
+			on:click={() => (activeTab = 1)}
+			aria-label="View product reviews"
 		>
 			{trans("component.productTabs.reviews.label")}
 		</button>
@@ -38,7 +47,17 @@
 			</div>
 		{:else if activeTab === 1}
 			<div class="--tab">
-				<div class="--tab">Some Reviews</div>
+				<div class="--reviews">
+					{#if $reviewState.length === 0}
+						<h3 class="text-center">{trans("component.productTabs.reviews.noReviews.label")}</h3>
+					{:else}
+						<ProductReviews />
+					{/if}
+
+					{#if canReview}
+						<ProductReviewForm {product} />
+					{/if}
+				</div>
 			</div>
 		{/if}
 	</div>
@@ -48,7 +67,7 @@
 	.product-tabs {
 		/* SIZE */
 		/* MARGINS AND PADDING */
-		@apply px-8 mb-16;
+		@apply px-8 my-16;
 		/* LAYOUT */
 		/* BORDERS */
 		/* COLORS */
@@ -59,7 +78,7 @@
 			/* SIZE */
 			@apply w-full;
 			/* MARGINS AND PADDING */
-			@apply py-16;
+			@apply pb-8 lg:py-16;
 			/* LAYOUT */
 			@apply flex justify-center items-center gap-8;
 			/* BORDERS */
@@ -113,6 +132,18 @@
 					/* SIZE */
 					/* MARGINS AND PADDING */
 					@apply mb-8;
+					/* LAYOUT */
+					/* BORDERS */
+					/* COLORS */
+					/* TEXT */
+					/* ANIMATION AND EFFECTS */
+				}
+
+				.--reviews {
+					/* SIZE */
+					@apply max-w-[800px];
+					/* MARGINS AND PADDING */
+					@apply mx-auto;
 					/* LAYOUT */
 					/* BORDERS */
 					/* COLORS */

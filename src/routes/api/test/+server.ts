@@ -1,24 +1,21 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-import { error, type HttpError } from "@sveltejs/kit";
+import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
+import { PUBLIC_SUPABASE_URL } from "$env/static/public";
+import { createClient } from "@supabase/supabase-js";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
-	const email = "daaaaadadad@applesw.com";
-	await adminAuth
-		.getUserByEmail(email)
-		.then((userRecord) => {
-			// See the UserRecord reference doc for the contents of userRecord.
-			console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-		})
-		.catch((error) => {
-			// console.log("Error fetching user data:", error);
-			console.log("creating user account");
-		});
-
-	return new Response(JSON.stringify({}), {
-		headers: {
-			"Content-Type": "application/json"
+export const POST = async ({ locals: { supabase } }) => {
+	const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false
 		}
 	});
+
+	const { data, error } = await supabaseAdmin.from("order").select();
+
+	console.log("POST ~ error:", error);
+	console.log("POST ~ data:", data);
+
+	return new Response();
 };

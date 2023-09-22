@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let text: string = "Toggle me";
-	export let checked: boolean = false;
+	export let text: string;
+	export let checked: boolean;
 
 	const onToggle = () => {
 		checked = !checked;

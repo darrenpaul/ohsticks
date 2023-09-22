@@ -1,52 +1,17 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
-	import CheckoutForm from "$lib/components/checkout/+CheckoutForm.svelte";
-	import CheckoutInformation from "$lib/components/checkout/+CheckoutInformation.svelte";
-	import { writable } from "svelte/store";
-	import { setContext } from "svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import { trans } from "$lib/locales/translateCopy";
-	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
 	import OrderConfirmationHeader from "$lib/components/order/+OrderConfirmationHeader.svelte";
 	import OrderConfirmationUpdates from "$lib/components/order/+OrderConfirmationUpdates.svelte";
-	import { error } from "@sveltejs/kit";
-	import { page } from "$app/stores";
 	import type { Order } from "$lib/types/order";
 	import OrderConfirmationShipping from "$lib/components/order/+OrderConfirmationShipping.svelte";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import OrderConfirmationList from "$lib/components/order/+OrderConfirmationList.svelte";
 	import OrderConfirmationTotals from "$lib/components/order/+OrderConfirmationTotals.svelte";
+	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 
-	let order: Order;
-
-	const handleOrderFetch = async () => {
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-
-		const response = await fetch(`/api/order?id=${$page.params.id}`, {
-			method: "GET",
-			headers: {
-				"x-access-token": accessToken
-			}
-		});
-
-		if (response.ok) {
-			const jsonData = await response.json();
-			if (jsonData.order) {
-				order = jsonData.order;
-			}
-		} else {
-			return error(response.status, "Order not found");
-		}
-	};
-
-	if (browser) {
-		handleOrderFetch();
-	}
+	export let data;
+	let order: Order = data.order;
 </script>
 
 <ContainWidth>
@@ -60,8 +25,10 @@
 				<OrderConfirmationShipping {order} />
 
 				<div class="--button-wrapper">
-					<a class="submit-button" href={`${collectionRoute.path}/all`}>
-						{trans("page.order.continueShopping.label")}
+					<a href={`${collectionRoute.path}/all`}>
+						<ButtonIcon>
+							{trans("page.order.continueShopping.label")}
+						</ButtonIcon>
 					</a>
 				</div>
 			</div>
@@ -78,9 +45,9 @@
 <style lang="scss">
 	.order-confirmation-page {
 		/* SIZE */
-		@apply h-[100dvh];
+		@apply min-h-[100dvh];
 		/* MARGINS AND PADDING */
-		@apply pt-20;
+		@apply py-5;
 		/* LAYOUT */
 		@apply grid grid-cols-2 gap-8;
 		/* BORDERS */

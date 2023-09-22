@@ -1,39 +1,11 @@
 <script lang="ts">
 	import AccountOrdersList from "$lib/components/account/+AccountOrderList.svelte";
 	import { trans } from "$lib/locales/translateCopy";
-	import { browser } from "$app/environment";
-	import { user } from "$lib/firebase/firebaseClient";
 	import type { Order } from "$lib/types/order";
-	import { error } from "@sveltejs/kit";
 	import { delivered, paid } from "$lib/constants/orderUpdate";
 
-	let orders: Order[] = [];
-
-	const handleOrderFetch = async () => {
-		const accessToken = await $user?.getIdToken();
-
-		if (!accessToken) {
-			return error(401, "Unauthorized");
-		}
-
-		const response = await fetch("/api/order", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"x-access-token": accessToken
-			}
-		});
-
-		const jsonData = await response.json();
-
-		if (jsonData.orders) {
-			orders = jsonData.orders;
-		}
-	};
-
-	if (browser) {
-		handleOrderFetch();
-	}
+	export let data;
+	let orders: Order[] = data.orders;
 </script>
 
 <h1>{trans("page.account.orders.label")}</h1>

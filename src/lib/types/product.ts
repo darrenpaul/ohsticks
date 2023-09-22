@@ -99,8 +99,6 @@ export type Price = {
 };
 
 export const createProducts = (products: ProductResponse[], currency = "eur") => {
-	products.sort((a, b) => b.createdAt - a.createdAt);
-
 	const cleanProducts = products.map((product) => {
 		const {
 			id,
@@ -108,17 +106,18 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			slug,
 			categories,
 			description,
-			contentSections,
+			content_sections: contentSections,
 			quantity,
 			visible,
-			featureImage,
+			feature_image: featureImage,
 			images,
 			meta,
 			brand,
-			currencyPrice
+			currency_price: currencyPrice
 		} = product;
 
-		const productPrice = currencyPrice[currency].price;
+		const currencyPriceData = currencyPrice;
+		const productPrice = currencyPriceData[currency].price;
 
 		const newProduct: Product = {
 			id,
@@ -126,15 +125,15 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			slug,
 			categories,
 			description,
-			contentSections,
+			contentSections: contentSections,
 			quantity,
 			visible,
-			featureImage,
-			images,
-			meta,
+			featureImage: featureImage,
+			images: images,
+			meta: meta,
 			brand,
 			price: productPrice,
-			currency: currencyPrice[currency].currency
+			currency: currencyPriceData[currency].currency
 		};
 		return newProduct;
 	});

@@ -1,4 +1,4 @@
-export default (length: number, onlyLowerCase: boolean, includeSymbols = false) => {
+export default (length: number, onlyLowerCase = false, includeSymbols = false) => {
 	let result = "";
 
 	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

@@ -1,3 +1,7 @@
+
+
+
+
 <script lang="ts">
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";

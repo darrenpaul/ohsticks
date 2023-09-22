@@ -4,8 +4,7 @@
 	import { cart } from "$lib/stores/cartStore";
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import ArrowLeftIcon from "$lib/components/icons/+ArrowLeftIcon.svelte";
-	import { user } from "$lib/firebase/firebaseClient";
-	import CheckoutShippingMethod from "./+CheckoutShippingMethod.svelte";
+	import CheckoutShippingMethod from "$lib/components/checkout/+CheckoutShippingMethod.svelte";
 	import { getContext } from "svelte";
 	import { browser } from "$app/environment";
 	import type { Writable } from "svelte/store";
@@ -14,20 +13,28 @@
 	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import CheckoutInformation from "$lib/components/checkout/+CheckoutInformation.svelte";
+	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
+	import Accordion from "$lib/components/+Accordion.svelte";
+	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
+	import CaretDownIcon from "$lib/components/icons/+CaretDownIcon.svelte";
+	import CaretUpIcon from "$lib/components/icons/+CaretUpIcon.svelte";
 
+	const sessionState: Writable<any> = getContext("sessionState");
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
+	let orderSummaryOpen = false;
 	let emailInputDisabled = false;
-	let email: string = "";
-	let country: string = "";
-	let firstName: string = "";
-	let lastName: string = "";
-	let address1: string = "";
-	let address2: string = "";
-	let city: string = "";
-	let province: string = "";
-	let postalCode: string = "";
-	let selectableProvinces: { name: string; isoCode: string }[] = [];
+	let email: string;
+	let country: string;
+	let firstName: string;
+	let lastName: string;
+	let address1: string;
+	let address2: string;
+	let city: string;
+	let province: string;
+	let postalCode: string;
+	let selectableProvinces: { name: string; isoCode: string }[];
 	let shippingMethod: ShippingMethod;
 	let paymentMethod = "stripe";
 
@@ -40,8 +47,8 @@
 	$: {
 		selectableProvinces = shippingCountries.find((item) => item.isoCode === country)?.states || [];
 
-		if ($user?.email) {
-			email = $user.email;
+		if ($sessionState) {
+			email = $sessionState.user.email;
 			emailInputDisabled = true;
 		}
 	}
@@ -88,6 +95,31 @@
 			<BrandPortraitIcon />
 		</a>
 	</div>
+
+	<MobileOnly>
+		<Accordion bind:open={orderSummaryOpen}>
+			<div class="--accordion-header" slot="head">
+				<div class="--left">
+					<CartIcon />
+					<p>
+						{#if orderSummaryOpen}
+							{trans("page.checkout.hideOrderSummary.label")}
+						{:else}
+							{trans("page.checkout.showOrderSummary.label")}
+						{/if}
+					</p>
+				</div>
+
+				{#if orderSummaryOpen}
+					<CaretUpIcon fill="fill-gray-500" />
+				{:else}
+					<CaretDownIcon fill="fill-gray-500" />
+				{/if}
+			</div>
+
+			<CheckoutInformation slot="content" />
+		</Accordion>
+	</MobileOnly>
 
 	<h4>{trans("form.checkout.contact.label")}</h4>
 
@@ -255,9 +287,10 @@
 	</div>
 </form>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-form {
 		/* SIZE */
+		@apply h-fit;
 		/* MARGINS AND PADDING */
 		@apply p-2 md:p-8;
 		/* LAYOUT */
@@ -278,6 +311,30 @@
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
+		}
+
+		.--accordion-header {
+			/* SIZE */
+			@apply w-full;
+			/* MARGINS AND PADDING */
+			@apply mb-2;
+			/* LAYOUT */
+			@apply flex items-center justify-between;
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+
+			.--left {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				/* LAYOUT */
+				@apply flex items-center gap-2;
+				/* BORDERS */
+				/* COLORS */
+				/* TEXT */
+				/* ANIMATION AND EFFECTS */
+			}
 		}
 
 		.--group-2 {

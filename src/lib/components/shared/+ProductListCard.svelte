@@ -1,12 +1,13 @@
 <script lang="ts">
-	import Rating from "$lib/components/shared/+Rating.svelte";
+	// import Rating from "$lib/components/shared/+Rating.svelte";
+
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import type { Product } from "$lib/types/product";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { selectItemEvent } from "$lib/utils/googleTagManager";
 
 	export let product: Product;
-	export let index: number = 0;
+	export let index: number;
 
 	const track = () => {
 		selectItemEvent(product, index);
@@ -14,7 +15,11 @@
 </script>
 
 <div class="product-list-card">
-	<a href={`${productRoute.path}/${product.slug}`} on:click={track}>
+	<a
+		href={`${productRoute.path}/${product.slug}`}
+		aria-label={`${product.name} ${addCurrencySymbol(product.price, product.currency)}`}
+		on:click={track}
+	>
 		<img width="250" height="250" src={product.featureImage.src} alt="Preview" loading="lazy" />
 
 		<div class="--content">

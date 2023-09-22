@@ -1,42 +1,63 @@
 <script lang="ts">
-	import { goto, afterNavigate } from "$app/navigation";
+	import { goto } from "$app/navigation";
 	import { browser } from "$app/environment";
-	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
-	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { trans } from "$lib/locales/translateCopy";
-	import { base } from "$app/paths";
 	import { page } from "$app/stores";
-	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
+	import {
+		accountRoute,
+		forgotPasswordRoute,
+		registerRoute
+	} from "$lib/constants/routes/accountRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
+	import randomString from "$lib/utils/randomString.js";
+	import type { Writable } from "svelte/store";
+	import { getContext } from "svelte";
+	import { errorNotification } from "$lib/constants/notifications.js";
 
-	let previousPage: string = base;
-	let email = "";
-	let password = "";
+	export let data;
+
+	const notificationState: Writable<any> = getContext("notificationState");
+
+	let { supabase, session } = data;
+	let email: string;
+	let password: string;
 
 	$: {
-		if (browser && $user) {
-			if (previousPage === $page.url.pathname) {
-				goto(homeRoute.path, { replaceState: true });
-			} else {
-				goto(previousPage, { replaceState: true });
-			}
+		if (browser && session) {
+			goto(homeRoute.path, { replaceState: true });
 		}
 	}
 
 	const handleFormSubmit = async () => {
+		const nextPage = $page.url.searchParams.get("page");
+
+		const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: errorNotification
+				}
+			]);
+			return;
+		}
+
 		track();
-		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
+		if (nextPage) {
+			goto(accountRoute.path, { replaceState: true });
+		} else {
+			goto(homeRoute.path, { replaceState: true });
+		}
 	};
 
 	const track = () => {
 		dataLayer.push({ event: "login" });
 	};
-
-	afterNavigate(({ from }) => {
-		previousPage = from?.url.pathname || previousPage;
-	});
 </script>
 
 <div class="login-page">
@@ -75,7 +96,7 @@
 			<label class="floating-label" for="email">{trans("form.login.password.label")}</label>
 		</div>
 
-		<button>
+		<button aria-label="Login into account">
 			<ButtonIcon>
 				{trans("form.login.submit.label")}
 			</ButtonIcon>

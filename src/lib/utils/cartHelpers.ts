@@ -1,4 +1,4 @@
-import { cartGuestLocalStorageKey } from "$lib/constants/cart";
+import { cartActionRemove, cartGuestLocalStorageKey } from "$lib/constants/cart";
 import type { CartItem } from "$lib/types/cart";
 
 export const addToCartGuest = async (cartItem: CartItem) => {
@@ -23,15 +23,9 @@ export const addToCartGuest = async (cartItem: CartItem) => {
 	}
 };
 
-export const addToCartUser = async (cartItem: CartItem, accessToken: string) => {
-	const headers = new Headers();
-	if (accessToken) {
-		headers.append("x-access-token", accessToken);
-	}
-
+export const addToCartUser = async (cartItem: CartItem) => {
 	const response = await fetch("/api/cart", {
 		method: "POST",
-		headers,
 		body: JSON.stringify({ cartItem })
 	});
 
@@ -51,9 +45,9 @@ export const removeFromCartGuest = async (cartItem: CartItem) => {
 	}
 
 	const response = await fetch("/api/cart-guest", {
-		method: "DELETE",
+		method: "POST",
 		headers,
-		body: JSON.stringify({ cartItem })
+		body: JSON.stringify({ cartItem, action: cartActionRemove })
 	});
 
 	const cartData = await response.json();
@@ -64,16 +58,11 @@ export const removeFromCartGuest = async (cartItem: CartItem) => {
 	}
 };
 
-export const removeFromCartUser = async (cartItem: CartItem, accessToken: string) => {
-	const headers = new Headers();
-	if (accessToken) {
-		headers.append("x-access-token", accessToken);
-	}
-
+export const removeFromCartUser = async (cartItem: CartItem) => {
 	const response = await fetch("/api/cart", {
-		method: "DELETE",
-		headers,
-		body: JSON.stringify({ cartItem })
+		method: "POST",
+
+		body: JSON.stringify({ cartItem, action: cartActionRemove })
 	});
 
 	const cartData = await response.json();

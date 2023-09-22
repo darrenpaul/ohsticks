@@ -1,33 +1,22 @@
-import { adminAuth, adminDB } from "$lib/server/firebaseAdminClient";
-import { error, type HttpError } from "@sveltejs/kit";
-import { auth } from "$lib/firebase/firebaseClient";
-import randomString from "$lib/utils/randomString.js";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
+import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import type { Order, OrderItem } from "$lib/types/order.js";
 import { sumArrayNumbers } from "$lib/utils/maths.js";
+import { createClient } from "@supabase/supabase-js";
 
 const table = "order";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, fetch }) => {
+export const POST = async ({ request, locals: { supabase } }) => {
 	const { customer, shippingAddress, items, paymentMethod, shippingMethod } = await request.json();
 
-	await adminAuth.getUserByEmail(customer.email).catch(async () => {
-		await fetch("/api/account", {
-			method: "POST",
-			body: JSON.stringify({
-				firstName: customer.firstName,
-				lastName: customer.lastName,
-				emailAddress: customer.email,
-				password: randomString(20, false, true),
-				shippingAddress: shippingAddress
-			})
-		});
-		await sendPasswordResetEmail(auth, customer.email);
+	const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false
+		}
 	});
-
-	const orderReference = await adminDB.collection(table).doc();
 
 	const subtotal = sumArrayNumbers(
 		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
@@ -35,98 +24,78 @@ export const POST = async ({ request, fetch }) => {
 
 	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
 
-	const timestamp = new Date();
-
-	const payload = {
+	const createPayload = {
+		email: customer.email,
 		customer,
-		shippingAddress,
-		paymentMethod,
+		shipping_address: shippingAddress,
+		payment_method: paymentMethod,
 		items,
 		subtotal,
-		shippingMethod,
+		shipping_method: shippingMethod,
 		total,
-		createdAt: timestamp,
-		updatedAt: timestamp
+		updated_at: new Date()
 	};
 
-	orderReference.set(payload);
+	const { data: createdData } = await supabaseAdmin
+		.from("order")
+		.insert(createPayload)
+		.select()
+		.single();
 
-	return new Response(
-		JSON.stringify({
-			id: orderReference.id,
-			...payload
-		}),
-		{
-			headers: {
-				"Content-Type": "application/json"
-			}
+	const payload = {
+		id: createdData.id,
+		customer: createdData.customer,
+		shippingAddress: createdData.shipping_address,
+		paymentMethod: createdData.payment_method,
+		items: createdData.items,
+		subtotal: createdData.subtotal,
+		shippingMethod: createdData.shipping_method,
+		total: createdData.total,
+		status: createdData.status
+	};
+
+	return new Response(JSON.stringify(payload), {
+		headers: {
+			"Content-Type": "application/json"
 		}
-	);
+	});
 };
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ request, url }) => {
-	const accessToken = request.headers.get("x-access-token");
+export const GET = async ({ locals: { supabase, getSession } }) => {
+	const session = await getSession();
 
-	if (!accessToken) {
-		throw error(401, {
-			message: "unauthorized"
-		});
-	}
+	const { data } = await supabase
+		.from(table)
+		.select()
+		.eq("email", session?.user.email);
 
-	const orderId = url.searchParams.get("id");
+	const orders = data.map((order: Order) => ({
+		id: order.id,
+		customer: order.customer,
+		shippingAddress: order.shipping_address,
+		paymentMethod: order.payment_method,
+		items: order.items,
+		subtotal: order.subtotal,
+		shippingMethod: order.shipping_method,
+		total: order.total,
+		status: order.status,
+		createdAt: order.created_at,
+		updatedAt: order.updated_at
+	}));
 
-	try {
-		const decodedIdToken = await adminAuth.verifyIdToken(accessToken);
-
-		const tableSnapshot = await adminDB
-			.collection(table)
-			.where("customer.email", "==", decodedIdToken.email)
-			.get();
-
-		const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-		if (orderId) {
-			console.log("GET ~ orderId:", orderId);
-			const order = tableData.find((order) => order.id === orderId);
-
-			if (!order) {
-				throw error(404, {
-					message: "order not found"
-				});
-			}
-
-			const jsonString = JSON.stringify({ order });
-
-			return new Response(jsonString, {
-				headers: {
-					"Content-Type": "application/json"
-				}
-			});
+	return new Response(JSON.stringify(orders), {
+		headers: {
+			"Content-Type": "application/json"
 		}
-
-		const orders = tableData;
-
-		const jsonString = JSON.stringify({ orders });
-
-		return new Response(jsonString, {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-	} catch (errorResponse) {
-		console.log(errorResponse);
-		const knownError = errorResponse as HttpError;
-		throw error(knownError.status, {
-			message: knownError.body.message
-		});
-	}
+	});
 };
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
-export const PUT = async ({ request, url, fetch }) => {
+export const PUT = async ({ url, fetch, locals: { getSession } }) => {
+	const supabaseSession = await getSession();
 	const sessionId = url.searchParams.get("session_id");
 	const orderId = url.searchParams.get("order_id");
 
@@ -153,41 +122,38 @@ export const PUT = async ({ request, url, fetch }) => {
 
 	const stripeData = await stripeResponse.json();
 
+	const userId = supabaseSession?.user?.id || null;
 	const status = stripeData.payment_status;
+	const stripeCustomerEmail = stripeData.customer_email;
+	const paymentIntentId = stripeData.payment_intent;
 
 	const timestamp = new Date();
 
-	await adminDB.collection(table).doc(orderId).update({
-		status,
-		updatedAt: timestamp
+	const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false
+		}
 	});
 
-	const tableSnapshot = await adminDB.collection(table).get();
-
-	const tableData = tableSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-	const order: Order = tableData.find((order) => order.id === orderId) as Order;
+	const { data: updatedData, error } = await supabaseAdmin
+		.from(table)
+		.update({ status, stripe_payment_id: paymentIntentId, updated_at: timestamp, user_id: userId })
+		.eq("id", orderId)
+		.eq("email", stripeCustomerEmail)
+		.select()
+		.single();
 
 	return new Response(
-		JSON.stringify({ status, items: order.items, shippingMethod: order.shippingMethod }),
+		JSON.stringify({
+			status: updatedData.status,
+			items: updatedData.items,
+			shippingMethod: updatedData.shipping_method
+		}),
 		{
 			headers: {
 				"Content-Type": "application/json"
 			}
 		}
-	);
-};
-
-// DELETE
-/** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ request }) => {
-	const { id } = await request.json();
-
-	await adminDB.collection(table).doc(id).delete();
-
-	return new Response(
-		String({
-			status: 200
-		})
 	);
 };

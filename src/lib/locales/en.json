@@ -5,13 +5,16 @@
 	},
 	"socials": {
 		"facebook": { "url": "https://www.facebook.com/ohsticks", "label": "Facebook" },
-		"instagram": { "url": "https://www.instagram.com/ohsticks", "label": "Instagram" },
+		"instagram": { "url": "https://www.instagram.com/ohsticksstore", "label": "Instagram" },
 		"pinterest": { "url": "https://www.pinterest.com/ohsticks", "label": "Pinterest" }
 	},
 	"page": {
 		"home": {
 			"popularProducts": "Popular Products",
-			"featuredProducts": "Featured Products"
+			"featuredProducts": "Featured Products",
+			"browserOurPopulateCategories": {
+				"label": "Browse Our Popular Categories"
+			}
 		},
 		"product": {
 			"relatedProducts": {
@@ -100,6 +103,24 @@
 			},
 			"total": {
 				"label": "Total"
+			},
+			"processingPayment": {
+				"label": "Processing Payment"
+			},
+			"pleaseDontClose": {
+				"label": "Please don't close this window"
+			},
+			"youWillBeRedirected": {
+				"label": "You will be redirected when the processing is completed."
+			},
+			"taxCalculatedAtPayment": {
+				"label": "Tax calculated at payment"
+			},
+			"showOrderSummary": {
+				"label": "Show Order Summary"
+			},
+			"hideOrderSummary": {
+				"label": "Hide Order Summary"
 			}
 		},
 		"account": {
@@ -427,6 +448,9 @@
 			},
 			"submit": {
 				"label": "Reset"
+			},
+			"resetEmailSent": {
+				"label": "Reset email sent, please check your email."
 			}
 		},
 		"contact": {
@@ -490,6 +514,26 @@
 			"twitterCard": {
 				"label": "Twitter Card"
 			}
+		},
+		"review": {
+			"title": {
+				"label": "Write a review"
+			},
+			"description": {
+				"label": "Share your thoughts with other customers"
+			},
+			"reviewTitle": {
+				"label": "Title"
+			},
+			"reviewContent": {
+				"label": "Content"
+			},
+			"submit": {
+				"label": "Submit"
+			},
+			"image": {
+				"label": "Image"
+			}
 		}
 	},
 	"component": {
@@ -517,7 +561,10 @@
 				"label": "Specifications"
 			},
 			"reviews": {
-				"label": "Reviews"
+				"label": "Reviews",
+				"noReviews": {
+					"label": "No reviews yet"
+				}
 			}
 		},
 		"navigation": {
@@ -529,6 +576,10 @@
 			},
 			"account": {
 				"label": "Account"
+			},
+			"logout": {
+				"label": "Logout",
+				"aria": "Logout out of account"
 			}
 		},
 		"footer": {
@@ -585,6 +636,20 @@
 				"label": "Customer Satisfaction",
 				"description": "We are dedicated to ensuring your complete satisfaction with every purchase."
 			}
+		}
+	},
+	"notification": {
+		"accountCreated": {
+			"label": "Account created successfully, please check your email to verify your account."
+		},
+		"userAlreadyRegistered": {
+			"label": "User already registered"
+		},
+		"reviewSubmitted": {
+			"label": "Review submitted successfully"
+		},
+		"reviewSubmitFailed": {
+			"label": "Failed to submit review"
 		}
 	}
 }

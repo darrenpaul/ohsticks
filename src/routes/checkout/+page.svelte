@@ -8,6 +8,7 @@
 	import { standardShipping } from "$lib/constants/shippingMethods";
 	import { checkoutEvent } from "$lib/utils/googleTagManager";
 	import { cart } from "$lib/stores/cartStore";
+	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 
 	const shippingMethod = writable();
 	$: shippingMethod.set(standardShipping);
@@ -31,11 +32,13 @@
 	<div class="checkout-page">
 		<CheckoutForm />
 
-		<CheckoutInformation />
+		<DesktopOnly>
+			<CheckoutInformation />
+		</DesktopOnly>
 	</div>
 </ContainWidth>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-page {
 		/* SIZE */
 		@apply min-h-[100dvh];

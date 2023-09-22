@@ -1,54 +1,88 @@
 <script lang="ts">
-	import { auth, firebaseSignInWithEmailAndPassword } from "$lib/firebase/firebaseClient";
 	import { trans } from "$lib/locales/translateCopy";
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 	import { browser } from "$app/environment";
-	import { user } from "$lib/firebase/firebaseClient";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { goto } from "$app/navigation";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
+	import { getContext } from "svelte";
+	import type { Writable } from "svelte/store";
+	import randomString from "$lib/utils/randomString.js";
+	import { errorNotification } from "$lib/constants/notifications.js";
 
-	let firstName: string = "";
-	let lastName: string = "";
-	let email: string = "";
-	let password: string = "";
-	let shippingAddress = {
-		address1: "",
-		address2: "",
-		city: "",
-		province: "",
-		postalCode: "",
-		country: ""
-	};
+	export let data;
+	let { supabase, session } = data;
+	let firstName: string;
+	let lastName: string;
+	let email: string;
+	let password: string;
 
 	$: {
-		if (browser && $user) {
+		if (browser && session) {
 			goto(homeRoute.path, { replaceState: true });
 		}
 	}
 
+	const notificationState: Writable<any> = getContext("notificationState");
+
 	const handleFormSubmit = async () => {
-		const response = await fetch("/api/account", {
+		const { data, error } = await supabase.auth.signUp({
+			email,
+			password,
+			options: {
+				emailRedirectTo: `${location.origin}/auth/callback`
+			}
+		});
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: errorNotification
+				}
+			]);
+			return;
+		}
+
+		const emailIsTaken = data.user.identities?.length === 0;
+		if (emailIsTaken) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: trans("notification.userAlreadyRegistered.label"),
+					type: "error"
+				}
+			]);
+			return;
+		}
+
+		await fetch("/api/account", {
 			method: "POST",
 			body: JSON.stringify({
+				userId: data.user.id,
 				firstName,
 				lastName,
 				emailAddress: email,
-				password,
-				shippingAddress
+				password
 			})
 		});
 
-		if (!response.ok) {
-			const message = await response.text();
-			throw new Error(message);
-		}
-
 		track();
 
-		const { user } = await firebaseSignInWithEmailAndPassword(auth, email, password);
-		alert("Account created successfully!");
+		notificationState.set([
+			...$notificationState,
+			{
+				id: randomString(5),
+				message: trans("notification.accountCreated.label"),
+				type: "success"
+			}
+		]);
+
+		goto(loginRoute.path, { replaceState: true });
 	};
 
 	const track = () => {
@@ -124,7 +158,7 @@
 			<label class="floating-label" for="email">{trans("form.register.password.label")}</label>
 		</div>
 
-		<button>
+		<button aria-label="Register new account">
 			<ButtonIcon>
 				{trans("form.register.submit.label")}
 			</ButtonIcon>
@@ -140,7 +174,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.register-page {
 		/* SIZE */
 		@apply max-w-[400px];
