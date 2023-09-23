@@ -18,8 +18,7 @@
 	let categories = "";
 	let description = "";
 	let contentSections: ContentSection[] = [];
-	let purchasePrice: number;
-	let markupPercentage = 25;
+	let discountPercentage = 0;
 	let currencyPrice = {};
 	let quantity = 10;
 	let visible = false;
@@ -42,9 +41,8 @@
 				categories: categories.split(",").map((category) => category.trim()),
 				description,
 				contentSections,
-				purchasePrice,
-				markupPercentage,
 				currencyPrice,
+				discountPercentage,
 				quantity,
 				visible,
 				featureImage: featureImage[0] || "",
@@ -88,6 +86,15 @@
 	<ProductCreateContentSections bind:contentSections />
 
 	<ProductCreatePrice bind:currencyPrice />
+
+	<!-- DISCOUNT PERCENTAGE -->
+	<div class="input-group">
+		<label for="discountPercentage">
+			{trans("form.createProduct.discountPercentage.label")}
+			{discountPercentage}%
+		</label>
+		<input type="range" min="0" max="100" id="discountPercentage" bind:value={discountPercentage} />
+	</div>
 
 	<!-- QUANTITY -->
 	<div class="input-group">

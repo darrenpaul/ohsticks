@@ -273,6 +273,9 @@
 				"label": "Markup Percentage",
 				"placeholder": "Enter product markup percentage"
 			},
+			"discountPercentage": {
+				"label": "Discount Percentage"
+			},
 			"price": {
 				"label": "Price"
 			},

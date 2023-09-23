@@ -18,11 +18,11 @@
 	let description = product?.description || "";
 	let contentSections: ContentSection[] = product?.contentSections || [];
 	let currencyPrice = product?.currencyPrice || {};
+	let discountPercentage = product?.discountPercentage || 0;
 	let quantity = product?.quantity || 10;
 	let visible = product?.visible || false;
 	let featureImage: Image[] = [product?.featureImage] || [];
 	let productImages: Image[] = product?.images || [];
-
 	let metaTitle = product?.meta?.title || "";
 	let metaDescription = product?.meta?.description || "";
 	let metaKeywords = product?.meta?.keywords || "";
@@ -42,6 +42,7 @@
 				description,
 				contentSections,
 				currencyPrice,
+				discountPercentage,
 				quantity,
 				visible,
 				featureImage: featureImage[0] || "",
@@ -83,6 +84,15 @@
 	<ProductCreateContentSections bind:contentSections />
 
 	<ProductCreatePrice bind:currencyPrice />
+
+	<!-- DISCOUNT PERCENTAGE -->
+	<div class="input-group">
+		<label for="discountPercentage">
+			{trans("form.createProduct.discountPercentage.label")}
+			{discountPercentage}%
+		</label>
+		<input type="range" min="0" max="100" id="discountPercentage" bind:value={discountPercentage} />
+	</div>
 
 	<!-- QUANTITY -->
 	<div class="input-group">
