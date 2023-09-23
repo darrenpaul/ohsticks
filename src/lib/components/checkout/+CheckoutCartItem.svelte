@@ -1,8 +1,15 @@
 <script lang="ts">
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import { calculateDiscountPrice } from "$lib/utils/maths";
 
 	export let cartItem: CartItem;
+
+	let price = cartItem.price;
+
+	$: {
+		price = calculateDiscountPrice(Number(cartItem.price), cartItem.discount);
+	}
 </script>
 
 <div class="checkout-cart-item">
@@ -17,7 +24,7 @@
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>
-			<p class="--price">{addCurrencySymbol(cartItem.price)}</p>
+			<p class="--price">{addCurrencySymbol(price)}</p>
 		</div>
 	</div>
 </div>

@@ -38,6 +38,8 @@ export type OrderItem = {
 	slug: string;
 	brand: string;
 	price: number;
+	currency: string;
+	discount: number;
 	quantity: number;
 	image: Image;
 	categories: string[];

@@ -2,7 +2,7 @@
 	import CrossIcon from "$lib/components/icons/+CrossIcon.svelte";
 	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
-	import { sumArrayNumbers } from "$lib/utils/maths";
+	import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
 	import { browser } from "$app/environment";
 	import CartMenuItem from "./+CartMenuItem.svelte";
 	import { getContext } from "svelte";
@@ -22,7 +22,10 @@
 				if ($cart?.cartItems) {
 					totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
 					totalPrice = sumArrayNumbers(
-						$cart?.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
+						$cart?.cartItems.map(
+							(item: CartItem) =>
+								Number(calculateDiscountPrice(Number(item.price), item.discount)) * item.quantity
+						)
 					).toFixed(2);
 				} else {
 					totalQuantity = 0;

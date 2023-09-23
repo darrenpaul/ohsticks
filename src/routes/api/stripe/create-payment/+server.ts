@@ -1,6 +1,7 @@
 import type { OrderItem } from "$lib/types/order.js";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, STRIPE_REDIRECT_DOMAIN } from "$env/static/private";
+import { calculateDiscountPrice } from "$lib/utils/maths";
 
 // DOCUMENTATION
 // https://stripe.com/docs/api/checkout/sessions
@@ -24,7 +25,7 @@ export const POST = async ({ request }) => {
 		return {
 			price_data: {
 				currency: "eur",
-				unit_amount: Number(product.price) * 100,
+				unit_amount: calculateDiscountPrice(Number(product.price), product.discount) * 100,
 				product_data: {
 					name: product.name,
 					description: product.description,

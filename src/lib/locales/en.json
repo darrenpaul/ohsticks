@@ -538,7 +538,8 @@
 	},
 	"component": {
 		"productList": {
-			"collection": "Collection"
+			"collection": "Collection",
+			"sale": "Sale"
 		},
 		"productFeature": {
 			"addToCart": {
