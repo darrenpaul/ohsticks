@@ -7,6 +7,7 @@ export type CartItem = {
 	slug: string;
 	brand: string;
 	price: string;
+	discount: number;
 	currency: string;
 	quantity: number;
 	image: Image;
@@ -48,6 +49,7 @@ export const createCartItem = (product: Product) => {
 		slug: product.slug,
 		quantity: 1,
 		price: product.price.toString(),
+		discount: product.discount,
 		currency: product.currency,
 		image: product.featureImage,
 		categories: product.categories

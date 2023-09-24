@@ -1,7 +1,8 @@
 import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
+import type { CartItem } from "$lib/types/cart.js";
 import type { Order, OrderItem } from "$lib/types/order.js";
-import { sumArrayNumbers } from "$lib/utils/maths.js";
+import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths.js";
 import { createClient } from "@supabase/supabase-js";
 
 const table = "order";
@@ -19,7 +20,10 @@ export const POST = async ({ request, locals: { supabase } }) => {
 	});
 
 	const subtotal = sumArrayNumbers(
-		items.map((item: OrderItem) => Number(item.price) * Number(item.quantity))
+		items.map(
+			(item: CartItem) =>
+				calculateDiscountPrice(Number(item.price), item.discount) * Number(item.quantity)
+		)
 	).toFixed(2);
 
 	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);

@@ -5,16 +5,19 @@
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
+	import { calculateDiscountPrice } from "$lib/utils/maths";
 
 	const sessionState: Writable<any> = getContext("sessionState");
-
-	let totalPrice: string;
 
 	export let cartItem: CartItem;
 	export let index: number;
 
+	let totalPrice: string;
+	let price = Number(cartItem.price);
+
 	$: {
-		totalPrice = (Number(cartItem.price) * cartItem.quantity).toFixed(2);
+		price = calculateDiscountPrice(Number(cartItem.price), cartItem.discount);
+		totalPrice = (Number(price) * cartItem.quantity).toFixed(2);
 	}
 
 	const handleRemoveFromCart = async (cartItem: CartItem) => {

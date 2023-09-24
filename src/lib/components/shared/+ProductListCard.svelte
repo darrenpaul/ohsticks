@@ -1,13 +1,22 @@
 <script lang="ts">
 	// import Rating from "$lib/components/shared/+Rating.svelte";
-
+	import { trans } from "$lib/locales/translateCopy";
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import type { Product } from "$lib/types/product";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { selectItemEvent } from "$lib/utils/googleTagManager";
+	import { calculateDiscountPrice } from "$lib/utils/maths";
 
 	export let product: Product;
 	export let index: number;
+
+	let price = product.price;
+	let onSale = false;
+
+	$: {
+		price = calculateDiscountPrice(Number(product.price), product.discount);
+		onSale = product.discount > 0;
+	}
 
 	const track = () => {
 		selectItemEvent(product, index);
@@ -17,15 +26,23 @@
 <div class="product-list-card">
 	<a
 		href={`${productRoute.path}/${product.slug}`}
-		aria-label={`${product.name} ${addCurrencySymbol(product.price, product.currency)}`}
+		aria-label={`Product ${product.name} ${addCurrencySymbol(price, product.currency)}`}
 		on:click={track}
 	>
-		<img width="250" height="250" src={product.featureImage.src} alt="Preview" loading="lazy" />
+		<div class="relative">
+			<img width="250" height="250" src={product.featureImage.src} alt="Preview" loading="lazy" />
+
+			{#if onSale}
+				<div class="--sale-tag">
+					<p>{trans("component.productList.sale.label")}</p>
+				</div>
+			{/if}
+		</div>
 
 		<div class="--content">
 			<p class="--title">{product.name}</p>
 
-			<p class="--price">{addCurrencySymbol(product.price, product.currency)}</p>
+			<p class="--price">{addCurrencySymbol(price, product.currency)}</p>
 
 			<!-- <Rating /> -->
 		</div>
@@ -57,6 +74,21 @@
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 			@apply drop-shadow;
+		}
+
+		.--sale-tag {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply px-4 py-1;
+			/* LAYOUT */
+			@apply absolute bottom-5 left-1/2 -translate-x-1/2;
+			/* BORDERS */
+			@apply rounded-full border-2;
+			/* COLORS */
+			@apply bg-red-500 text-white border-white;
+			/* TEXT */
+			@apply font-bold tracking-wide;
+			/* ANIMATION AND EFFECTS */
 		}
 
 		.--content {

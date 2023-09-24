@@ -1,17 +1,16 @@
-
-
-
-
 <script lang="ts">
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
+	import { calculateDiscountPrice } from "$lib/utils/maths";
 
 	let totalPrice: string;
 
 	export let item: CartItem;
 
 	$: {
-		totalPrice = (Number(item.price) * item.quantity).toFixed(2);
+		totalPrice = (
+			calculateDiscountPrice(Number(item.price), item.discount) * item.quantity
+		).toFixed(2);
 	}
 </script>
 
@@ -27,7 +26,7 @@
 
 		<div class="--product-details">
 			<p>{item.name}</p>
-			<p>{addCurrencySymbol(item.price)}</p>
+			<p>{addCurrencySymbol(calculateDiscountPrice(Number(item.price), item.discount))}</p>
 		</div>
 	</div>
 

@@ -2,7 +2,7 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
 	import { browser } from "$app/environment";
-	import { sumArrayNumbers } from "$lib/utils/maths";
+	import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
 	import type { CartItem } from "$lib/types/cart";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { getContext } from "svelte";
@@ -24,7 +24,10 @@
 	$: {
 		if (browser && $cart && $cart?.cartItems?.length > 0) {
 			cartItemsTotal = sumArrayNumbers(
-				$cart.cartItems.map((item: CartItem) => Number(item.price) * item.quantity)
+				$cart.cartItems.map(
+					(item: CartItem) =>
+						Number(calculateDiscountPrice(Number(item.price), item.discount)) * item.quantity
+				)
 			).toFixed(2);
 			total = (Number(cartItemsTotal) + Number(shippingPrice)).toFixed(2);
 		}

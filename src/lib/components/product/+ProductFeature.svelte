@@ -9,11 +9,20 @@
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import type { Writable } from "svelte/store";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import { calculateDiscountPrice } from "$lib/utils/maths";
 
 	const cartState: Writable<boolean> = getContext("cartState");
 
 	export let product: Product;
 	export let session;
+
+	let discountPrice = 0;
+	let onSale = false;
+
+	$: {
+		discountPrice = calculateDiscountPrice(Number(product.price), product.discount);
+		onSale = product.discount > 0;
+	}
 
 	const handleAddToCart = async () => {
 		addToCart(product, session);
@@ -31,9 +40,16 @@
 
 		<!-- <Rating /> -->
 
-		<p class="--price">
-			{addCurrencySymbol(product.price)}
-		</p>
+		<div class="--prices">
+			<p class={onSale ? "--on-sale" : "--price"}>
+				{addCurrencySymbol(product.price)}
+			</p>
+			{#if onSale}
+				<p class="--price">
+					{addCurrencySymbol(discountPrice)}
+				</p>
+			{/if}
+		</div>
 
 		<p class="--description">{product.description}</p>
 
@@ -93,15 +109,39 @@
 				/* ANIMATION AND EFFECTS */
 			}
 
-			.--price {
+			.--prices {
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
+				@apply flex gap-4;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
-				@apply text-3xl font-bold;
 				/* ANIMATION AND EFFECTS */
+
+				.--price {
+					/* SIZE */
+					/* MARGINS AND PADDING */
+					/* LAYOUT */
+					/* BORDERS */
+					/* COLORS */
+					/* TEXT */
+					@apply text-3xl font-bold;
+					/* ANIMATION AND EFFECTS */
+				}
+
+				.--on-sale {
+					@extend .--price;
+
+					/* SIZE */
+					/* MARGINS AND PADDING */
+					/* LAYOUT */
+					/* BORDERS */
+					/* COLORS */
+					@apply text-gray-400 line-through;
+					/* TEXT */
+					/* ANIMATION AND EFFECTS */
+				}
 			}
 
 			.--description {

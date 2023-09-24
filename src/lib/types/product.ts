@@ -6,6 +6,7 @@ export type Product = {
 	description: string;
 	contentSections: ContentSection[];
 	price: number;
+	discount: number;
 	quantity: number;
 	visible: boolean;
 	featureImage: Image;
@@ -108,6 +109,7 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			description,
 			content_sections: contentSections,
 			quantity,
+			discount,
 			visible,
 			feature_image: featureImage,
 			images,
@@ -127,6 +129,7 @@ export const createProducts = (products: ProductResponse[], currency = "eur") =>
 			description,
 			contentSections: contentSections,
 			quantity,
+			discount,
 			visible,
 			featureImage: featureImage,
 			images: images,
