@@ -1,7 +1,7 @@
 import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import type { CartItem } from "$lib/types/cart.js";
-import type { Order, OrderItem } from "$lib/types/order.js";
+import type { Order } from "$lib/types/order.js";
 import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths.js";
 import { createClient } from "@supabase/supabase-js";
 
