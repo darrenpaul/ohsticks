@@ -29,7 +29,7 @@ export const POST = async ({ fetch, request }) => {
 			address1,
 			address2,
 			city,
-			state: province,
+			province,
 			postalCode,
 			country
 		},
