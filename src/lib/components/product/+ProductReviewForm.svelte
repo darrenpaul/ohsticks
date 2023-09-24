@@ -7,11 +7,12 @@
 	import type { Writable } from "svelte/store";
 	import randomString from "$lib/utils/randomString";
 	import { errorNotification, successNotification } from "$lib/constants/notifications";
+	import type { Notification } from "$lib/types/notification";
 
 	export let product: Product;
 
 	const reviewState: Writable<any> = getContext("reviewState");
-	const notificationState: Writable<any> = getContext("notificationState");
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 
 	let rating: number = 5;
 	let title: string;

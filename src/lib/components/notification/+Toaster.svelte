@@ -2,8 +2,9 @@
 	import Bread from "$lib/components/notification/+Bread.svelte";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
+	import type { Notification } from "$lib/types/notification";
 
-	const notificationState: Writable<any> = getContext("notificationState");
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 </script>
 
 <div class="notification">

@@ -1,6 +1,6 @@
 // CREATE
 
-import { created } from "$lib/constants/orderUpdate.js";
+import { created } from "$lib/constants/orderUpdate";
 
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ fetch, request }) => {

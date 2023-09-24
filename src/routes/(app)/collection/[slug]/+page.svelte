@@ -5,8 +5,8 @@
 	import capitalizeWords from "$lib/utils/capitalizeWords";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { productRoute } from "$lib/constants/routes/productRoute";
-	import { siteUrl } from "$lib/constants/site.js";
-	import { viewItemListEvent } from "$lib/utils/googleTagManager.js";
+	import { siteUrl } from "$lib/constants/site";
+	import { viewItemListEvent } from "$lib/utils/googleTagManager";
 	import { browser } from "$app/environment";
 
 	export let data;

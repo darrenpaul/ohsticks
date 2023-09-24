@@ -1,4 +1,4 @@
-import { accountRoute, loginRoute } from "$lib/constants/routes/accountRoute.js";
+import { accountRoute, loginRoute } from "$lib/constants/routes/accountRoute";
 import { redirect } from "@sveltejs/kit";
 
 export const load = async ({ locals: { supabase, getSession } }) => {

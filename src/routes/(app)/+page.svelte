@@ -3,11 +3,11 @@
 	import ProductList from "$lib/components/shared/+ProductList.svelte";
 	import SideBySideImage from "$lib/components/shared/+SideBySideImage.svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
-	import type { Product } from "$lib/types/product.js";
+	import type { Product } from "$lib/types/product";
 	import { page } from "$app/stores";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { brandName, companyLogo, siteUrl } from "$lib/constants/site";
-	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute.js";
+	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import { trans } from "$lib/locales/translateCopy";
 	import GeneralInformation from "$lib/components/shared/+GeneralInformation.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";

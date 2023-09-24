@@ -1,17 +1,42 @@
 <script lang="ts">
+	import { errorNotification, successNotification } from "$lib/constants/notifications";
 	import { trans } from "$lib/locales/translateCopy";
+	import randomString from "$lib/utils/randomString";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
+	import type { Notification } from "$lib/types/notification";
 
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 	const supabaseState: Writable<any> = getContext("supabaseState");
 
 	let newPassword: string;
 
 	const handleFormSubmit = async () => {
-		const { data } = await $supabaseState.auth.updateUser({ password: newPassword });
-		if (data) {
-			alert("Password updated");
+		const { error } = await $supabaseState.auth.updateUser({ password: newPassword });
+
+		if (error) {
+			notificationState.set([
+				...$notificationState,
+				{
+					id: randomString(5),
+					message: error.message,
+					type: errorNotification
+				}
+			]);
+
+			return;
 		}
+
+		notificationState.set([
+			...$notificationState,
+			{
+				id: randomString(5),
+				message: trans("notification.passwordUpdated.label"),
+				type: successNotification
+			}
+		]);
+
+		newPassword = "";
 	};
 </script>
 
@@ -33,7 +58,9 @@
 		</label>
 	</div>
 
-	<button class="slim-button">{trans("page.account.update.label")}</button>
+	<button class="slim-button">
+		{trans("page.account.update.label")}
+	</button>
 </form>
 
 <style lang="scss">

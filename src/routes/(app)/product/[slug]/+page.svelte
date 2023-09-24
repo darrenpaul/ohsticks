@@ -15,7 +15,7 @@
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
 	import ProductSeo from "$lib/components/product/+ProductSEO.svelte";
 	import Carousel from "svelte-carousel";
-	import { viewItemEvent } from "$lib/utils/googleTagManager.js";
+	import { viewItemEvent } from "$lib/utils/googleTagManager";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 	import { writable } from "svelte/store";

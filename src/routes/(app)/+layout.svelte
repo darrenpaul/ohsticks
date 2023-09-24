@@ -7,7 +7,7 @@
 	import { setContext } from "svelte";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
-	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore.js";
+	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
 	import Toaster from "$lib/components/notification/+Toaster.svelte";
 
 	const cartState = writable(false);

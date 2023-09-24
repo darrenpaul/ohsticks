@@ -1,4 +1,4 @@
-import { delivered } from "$lib/constants/orderUpdate.js";
+import { delivered } from "$lib/constants/orderUpdate";
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch, locals: { getSession } }) {
