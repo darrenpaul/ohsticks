@@ -221,6 +221,11 @@
 			"subtotal": {
 				"label": "Subtotal"
 			}
+		},
+		"createSale": {
+			"discountPercentage": {
+				"label": "Discount Percentage"
+			}
 		}
 	},
 	"form": {

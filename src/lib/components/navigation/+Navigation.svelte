@@ -7,6 +7,7 @@
 	import { loginRoute } from "$lib/constants/routes/accountRoute";
 	import { goto } from "$app/navigation";
 	import { adminRoute } from "$lib/constants/routes/adminRoute";
+	import { adminSaleRoute } from "$lib/constants/routes/adminSaleRoute";
 
 	const supabaseState: Writable<any> = getContext("supabaseState");
 
@@ -20,6 +21,7 @@
 	<div class="--links">
 		<a href={adminRoute.path}>{adminRoute.label}</a>
 		<a href={adminProductRoute.path}>{adminProductRoute.label}</a>
+		<a href={adminSaleRoute.path}>{adminSaleRoute.label}</a>
 		<a href={adminOrderRoute.path}>{adminOrderRoute.label}</a>
 		<a href={adminPageRoute.path}>{adminPageRoute.label}</a>
 	</div>
