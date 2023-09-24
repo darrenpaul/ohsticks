@@ -16,7 +16,7 @@ export const load = async ({ fetch, data, depends }) => {
 		data: { session }
 	} = await supabase.auth.getSession();
 
-	const { orders } = data;
+	const { orders, products } = data;
 
-	return { supabase, session, orders };
+	return { supabase, session, orders, products };
 };

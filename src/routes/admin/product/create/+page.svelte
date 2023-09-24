@@ -84,7 +84,7 @@
 		</h1>
 	</div>
 
-	<form class="product-form" on:submit|preventDefault={handleFormSubmit}>
+	<form class="--form" on:submit|preventDefault={handleFormSubmit}>
 		<ProductCreateInformation bind:name bind:slug bind:brand bind:categories bind:description />
 
 		<!-- CONTENT SECTIONS -->
@@ -137,6 +137,7 @@
 					{name}
 					bind:images={featureImage}
 				/>
+				<small>512x512 (WEBP)</small>
 			</div>
 
 			<!-- IMAGES -->
@@ -148,6 +149,7 @@
 					{name}
 					bind:images={productImages}
 				/>
+				<small>512x512 (WEBP)</small>
 			</div>
 
 			<ProductCreateSeoForm

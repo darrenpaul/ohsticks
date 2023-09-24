@@ -16,8 +16,15 @@ export const load = async ({ fetch, locals: { supabase, getSession } }) => {
 			"Content-Type": "application/json"
 		}
 	});
-
 	const orders = await orderResponse.json();
 
-	return { session, orders };
+	const response = await fetch("/api/admin/product", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
+	const products = await response.json();
+
+	return { session, orders, products };
 };

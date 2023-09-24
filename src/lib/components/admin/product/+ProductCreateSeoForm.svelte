@@ -134,7 +134,7 @@
 			{name}
 			bind:images={twitterImage}
 		/>
-		<small>1200x675</small>
+		<small>1200x675 (JPEG)</small>
 	</div>
 
 	<!-- OPEN GRAPH IMAGES -->
@@ -146,9 +146,9 @@
 			multiple={true}
 			bind:images={openGraphImages}
 		/>
-		<small>1200x630 Facebook</small>
-		<small>1200x627 LinkedIn</small>
-		<small>1000x1500 Pinterest</small>
+		<small>1200x630 Facebook (JPEG)</small>
+		<small>1200x627 LinkedIn (JPEG)</small>
+		<small>1000x1500 Pinterest (JPEG)</small>
 	</div>
 </div>
 

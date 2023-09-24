@@ -526,5 +526,14 @@
 				"description": "We are dedicated to ensuring your complete satisfaction with every purchase."
 			}
 		}
+	},
+	"totalPaidSales": {
+		"label": "Total Paid Sales"
+	},
+	"grossRevenue": {
+		"label": "Gross Revenue"
+	},
+	"grossProfit": {
+		"label": "Gross Profit"
 	}
 }

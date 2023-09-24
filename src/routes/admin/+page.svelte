@@ -4,14 +4,27 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import { paid } from "$lib/constants/orderUpdate";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
+	import TotalSales from "$lib/components/widgets/+TotalSales.svelte";
+	import GrossProfit from "$lib/components/widgets/+GrossProfit.svelte";
+	import type { Product } from "$lib/types/product.js";
+	import GrossRevenue from "$lib/components/widgets/+GrossRevenue.svelte";
 
 	export let data;
 
+	let products: Product[] = data.products;
 	let orders: Order[] = data.orders;
 </script>
 
 <ContainWidth background={"bg-white"}>
 	<div class="admin-order-page">
+		<div class="--widgets">
+			<TotalSales {orders} />
+
+			<GrossRevenue {orders} />
+
+			<GrossProfit {orders} {products} />
+		</div>
+
 		<div class="--order-list">
 			<AdminOrderList
 				title={trans("page.admin.readyToProcess.label")}
@@ -32,11 +45,11 @@
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
 
-		.--title {
+		.--widgets {
 			/* SIZE */
 			/* MARGINS AND PADDING */
-			@apply mb-4;
 			/* LAYOUT */
+			@apply flex gap-4;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

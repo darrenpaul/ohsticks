@@ -5,6 +5,7 @@
 		adminProductEditRoute
 	} from "$lib/constants/routes/adminProductRoute";
 	import type { Product } from "$lib/types/product";
+	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 
 	export let data;
 
@@ -28,9 +29,15 @@
 				<img src={product.featureImage.src} alt={product.name} loading="lazy" />
 
 				<div class="--group">
-					<p class="--title">
-						{product.name}
-					</p>
+					<div class="flex gap-4">
+						<p class="--title">
+							{product.name}
+						</p>
+
+						<p>
+							{addCurrencySymbol(product.currencyPrice.eur.price, "eur")}
+						</p>
+					</div>
 
 					<div class="--categories">
 						{#each product.categories as category}
@@ -82,7 +89,7 @@
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
-				@apply flex items-center  gap-8;
+				@apply flex items-center gap-8;
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */

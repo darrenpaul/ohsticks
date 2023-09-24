@@ -136,6 +136,7 @@
 					{name}
 					bind:images={featureImage}
 				/>
+				<small>512x512 (WEBP)</small>
 			</div>
 
 			<!-- IMAGES -->
@@ -147,6 +148,7 @@
 					{name}
 					bind:images={productImages}
 				/>
+				<small>512x512 (WEBP)</small>
 			</div>
 
 			<ProductCreateSeoForm
