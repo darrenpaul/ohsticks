@@ -1,13 +1,57 @@
 <script lang="ts">
-	const onRunMigration = async () => {
-		console.log("running migration");
+	import type { Order } from "$lib/types/order";
+	import AdminOrderList from "$lib/components/admin/order/+AdminOrderList.svelte";
+	import { trans } from "$lib/locales/translateCopy";
+	import { paid } from "$lib/constants/orderUpdate";
+	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 
-		await fetch("/api/admin/migrate", {
-			method: "PUT"
-		});
-	};
+	export let data;
+
+	let orders: Order[] = data.orders;
 </script>
 
-<h1>Admin Dashboard</h1>
+<ContainWidth background={"bg-white"}>
+	<div class="admin-order-page">
+		<div class="--order-list">
+			<AdminOrderList
+				title={trans("page.admin.readyToProcess.label")}
+				orders={orders.filter((order) => order.status === paid)}
+			/>
+		</div>
+	</div>
+</ContainWidth>
 
-<button class="submit-button" on:click={onRunMigration}>Run Migration</button>
+<style lang="postcss">
+	.admin-order-page {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		@apply mt-10;
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+
+		.--title {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply mb-4;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+
+		.--order-list {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply flex flex-col gap-8;
+			/* LAYOUT */
+			/* BORDERS */
+			/* COLORS */
+			/* TEXT */
+			/* ANIMATION AND EFFECTS */
+		}
+	}
+</style>

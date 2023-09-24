@@ -48,6 +48,19 @@ select {
 	@apply focus:outline-none focus:ring-0 focus:border-blue-600;
 }
 
+.checkbox {
+	/* SIZE */
+	@apply w-4 h-4;
+	/* MARGINS AND PADDING */
+	/* LAYOUT */
+	/* BORDERS */
+	@apply rounded focus:ring-2;
+	/* COLORS */
+	@apply text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+}
+
 .floating-label {
 	/* SIZE */
 	/* MARGINS AND PADDING */
@@ -74,4 +87,33 @@ select {
 	/* COLORS */
 	/* TEXT */
 	/* ANIMATION AND EFFECTS */
+}
+
+.checkbox-group {
+	/* SIZE */
+	@apply w-fit;
+	/* MARGINS AND PADDING */
+	@apply px-4;
+	/* LAYOUT */
+	@apply flex items-center;
+	/* BORDERS */
+	@apply border rounded;
+	/* COLORS */
+	@apply border-gray-200;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+
+	label {
+		/* SIZE */
+		@apply w-full;
+		/* MARGINS AND PADDING */
+		@apply py-4 ml-2;
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		@apply text-gray-900;
+		/* TEXT */
+		@apply text-sm font-medium;
+		/* ANIMATION AND EFFECTS */
+	}
 }

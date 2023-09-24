@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import Navigation from "$lib/components/navigation/+Navigation.svelte";
+	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import { setContext } from "svelte";
 	import { writable } from "svelte/store";
 
@@ -24,7 +25,22 @@
 	}
 </script>
 
-<!-- <AuthAdminCheck> -->
-<Navigation />
-<slot />
-<!-- </AuthAdminCheck> -->
+<div class="page">
+	<Navigation />
+
+	<ContainWidth background={"bg-white"}>
+		<slot />
+	</ContainWidth>
+</div>
+
+<style lang="postcss">
+	.page {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+	}
+</style>

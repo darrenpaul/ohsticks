@@ -1,7 +1,7 @@
 import authenticatedAdmin from "$lib/server/authenticatedAdmin";
 import { error } from "@sveltejs/kit";
 
-export const load = async ({ locals: { supabase, getSession } }) => {
+export const load = async ({ fetch, locals: { supabase, getSession } }) => {
 	const session = await authenticatedAdmin(getSession, supabase);
 	if (!session) {
 		// supabase.auth.signOut();
@@ -9,5 +9,15 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 			message: "unauthorized"
 		});
 	}
-	return { session };
+
+	const orderResponse = await fetch("/api/admin/order", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
+
+	const orders = await orderResponse.json();
+
+	return { session, orders };
 };

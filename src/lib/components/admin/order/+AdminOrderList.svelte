@@ -15,7 +15,6 @@
 			<tr class="--header">
 				<th scope="col" class="text-left">{trans("page.order.orderId.label")}</th>
 				<th scope="col" class="">{trans("page.order.orderDate.label")}</th>
-				<th scope="col" class="">{trans("page.order.shippingAddress.label")}</th>
 				<th scope="col" class="">{trans("page.order.amount.label")}</th>
 				<th scope="col" class="">{trans("page.order.status.label")}</th>
 				<th scope="col" class="">{trans("page.order.action.label")}</th>

@@ -25,21 +25,17 @@
 	};
 </script>
 
-<ContainWidth>
-	{#if order}
-		<div class="admin-order-page">
-			<AdminOrderHeader {order} bind:orderStatus />
+<div class="admin-order-page">
+	<AdminOrderHeader {order} bind:orderStatus />
 
-			<AdminOrderItemList items={order.items} />
+	<AdminOrderItemList items={order.items} />
 
-			<AdminOrderShippingInformation {order} bind:shippingAddress />
+	<AdminOrderShippingInformation {order} bind:shippingAddress />
 
-			<AdminOrderPriceSummary {order} />
+	<AdminOrderPriceSummary {order} />
 
-			<button class="submit-button" on:click={handleOrderUpdate}>Update Order</button>
-		</div>
-	{/if}
-</ContainWidth>
+	<button class="submit-button" on:click={handleOrderUpdate}>Update Order</button>
+</div>
 
 <style lang="scss">
 	.admin-order-page {

@@ -9,74 +9,23 @@
 		"pinterest": { "url": "https://www.pinterest.com/ohsticks", "label": "Pinterest" }
 	},
 	"page": {
-		"home": {
-			"popularProducts": "Popular Products",
-			"featuredProducts": "Featured Products"
-		},
 		"product": {
-			"relatedProducts": {
-				"label": "Related Products"
+			"productPage": {
+				"label": "Product Page"
+			},
+			"view": {
+				"label": "View"
+			},
+			"createProduct": {
+				"label": "Create Product"
+			},
+			"updateProduct": {
+				"label": "Update Product"
 			}
 		},
-		"products": {
-			"viewing": "Viewing"
-		},
-		"about": {
-			"title": "About",
-			"nav": "About"
-		},
-		"contact": {
-			"title": "Contact",
-			"nav": "Contact Us"
-		},
 		"order": {
-			"orderConfirmation": {
-				"label": "Order Confirmation"
-			},
-			"order": {
-				"label": "Order: #{orderId}"
-			},
-			"thankYou": {
-				"label": "Thank You {name}!"
-			},
-			"orderUpdates": {
-				"label": "Order Updates",
-				"description": "We'll send updates to {email} when your order is processed, shipped, and delivered."
-			},
-			"shippingAddress": {
-				"label": "Shipping Address"
-			},
-			"continueShopping": {
-				"label": "Continue Shopping"
-			},
-			"yourOrder": {
-				"label": "Your Order"
-			},
-			"processingStates": {
-				"created": {
-					"label": "Created"
-				},
-				"paid": {
-					"label": "Paid"
-				},
-				"processing": {
-					"label": "Processing"
-				},
-				"shipped": {
-					"label": "Shipped"
-				},
-				"delivered": {
-					"label": "Delivered"
-				}
-			},
 			"orderId": {
 				"label": "Order ID"
-			},
-			"shippingAddress": {
-				"label": "Shipping Address"
-			},
-			"amount": {
-				"label": "Amount"
 			},
 			"orderDate": {
 				"label": "Order Date"
@@ -84,87 +33,14 @@
 			"status": {
 				"label": "Status"
 			},
+			"amount": {
+				"label": "Amount"
+			},
 			"action": {
-				"label": "Action"
-			},
-			"view": {
-				"label": "View"
-			}
-		},
-		"checkout": {
-			"subtotal": {
-				"label": "Subtotal"
-			},
-			"shipping": {
-				"label": "Shipping"
-			},
-			"total": {
-				"label": "Total"
-			},
-			"processingPayment": {
-				"label": "Processing Payment"
-			},
-			"pleaseDontClose": {
-				"label": "Please don't close this window"
-			},
-			"youWillBeRedirected": {
-				"label": "You will be redirected when the processing is completed."
-			}
-		},
-		"account": {
-			"orders": {
-				"label": "Orders"
-			},
-			"upcomingOrders": {
-				"label": "Upcoming Orders"
-			},
-			"pastOrders": {
-				"label": "Past Orders"
-			},
-			"firstName": {
-				"label": "First Name"
-			},
-			"lastName": {
-				"label": "Last Name"
-			},
-			"update": {
-				"label": "Update"
-			},
-			"userInformation": {
-				"label": "User Information"
-			},
-			"shippingInformation": {
-				"label": "Shipping Information"
-			},
-			"country": {
-				"label": "Country",
-				"placeholder": "Select country"
-			},
-			"address1": {
-				"label": "Address 1",
-				"placeholder": "Enter address"
-			},
-			"address2": {
-				"label": "Address 2",
-				"placeholder": "Enter address"
-			},
-			"city": {
-				"label": "City",
-				"placeholder": "Enter city"
-			},
-			"province": {
-				"label": "Province",
-				"placeholder": "Select province"
-			},
-			"postalCode": {
-				"label": "Postal Code",
-				"placeholder": "Enter postal code"
-			},
-			"currentPassword": {
-				"label": "Current Password"
-			},
-			"newPassword": {
-				"label": "New Password"
+				"label": "action",
+				"view": {
+					"label": "View"
+				}
 			}
 		},
 		"admin": {
@@ -225,6 +101,27 @@
 		"createSale": {
 			"discountPercentage": {
 				"label": "Discount Percentage"
+			}
+		},
+		"account": {
+			"country": {
+				"label": "Country"
+			},
+			"address1": {
+				"label": "Address 1"
+			},
+			"address2": {
+				"label": "Address 2"
+			},
+			"city": {
+				"label": "City"
+			},
+			"province": {
+				"label": "Province",
+				"placeholder": "Select province"
+			},
+			"postalCode": {
+				"label": "Postal Code"
 			}
 		}
 	},
@@ -323,6 +220,9 @@
 			},
 			"create": {
 				"label": "Create"
+			},
+			"upload": {
+				"label": "Upload"
 			}
 		},
 		"checkout": {

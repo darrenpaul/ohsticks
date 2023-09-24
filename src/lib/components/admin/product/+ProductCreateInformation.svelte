@@ -20,9 +20,20 @@
 	<label class="floating-label" for="name">{trans("form.createProduct.name.label")}</label>
 </div>
 
-<p>{trans("form.createProduct.slug.label")}</p>
+<div class="input-group">
+	<input
+		disabled
+		class="peer"
+		id="slug"
+		name="slug"
+		type="text"
+		bind:value={slug}
+		placeholder=""
+		required
+	/>
 
-<p id="slug">{slug}</p>
+	<label class="floating-label" for="slug">{trans("form.createProduct.slug.label")}</label>
+</div>
 
 <!-- BRAND -->
 <div class="input-group">
