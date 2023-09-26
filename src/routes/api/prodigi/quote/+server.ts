@@ -9,7 +9,7 @@ export const POST = async ({ request }) => {
 	console.log("POST ~ country:", country);
 
 	const payload = {
-		shippingMethod: "standard",
+		shippingMethod: "express",
 		destinationCountryCode: country,
 		currencyCode: currency,
 		items: items.map((item: OrderItem) => ({

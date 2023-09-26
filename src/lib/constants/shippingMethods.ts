@@ -17,7 +17,7 @@ export const standardShipping = {
 };
 
 export const expressShipping = {
-	id: "shr_1NnKNfGQocPdnFnIdYvLPnDj",
+	id: "shr_1NueSMGQocPdnFnIzDpISNgl",
 	label: "Express Shipping",
 	description: "Delivered within 5 working days",
 	value: "Express",
