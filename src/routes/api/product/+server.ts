@@ -1,4 +1,4 @@
-import { createProducts } from "$lib/types/product.js";
+import { createProducts } from "$lib/types/product";
 const table = "product";
 
 // LIST

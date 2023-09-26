@@ -1,6 +1,6 @@
 // CREATE
 
-import { created } from "$lib/constants/orderUpdate.js";
+import { created } from "$lib/constants/orderUpdate";
 
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ fetch, request }) => {
@@ -29,7 +29,7 @@ export const POST = async ({ fetch, request }) => {
 			address1,
 			address2,
 			city,
-			state: province,
+			province,
 			postalCode,
 			country
 		},

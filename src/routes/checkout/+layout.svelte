@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, setContext } from "svelte";
-	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore.js";
+	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
 	import { writable } from "svelte/store";
 	import { browser } from "$app/environment";
 

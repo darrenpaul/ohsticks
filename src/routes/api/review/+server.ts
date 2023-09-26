@@ -28,7 +28,6 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		.select()
 		.eq("user_id", session.user.id)
 		.single();
-	console.log("POST ~ userAccount:", userAccount);
 
 	const { data: existingData } = await supabase
 		.from("review")
@@ -47,7 +46,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 	};
 
 	if (existingData) {
-		const { data: updatedData } = await supabase
+		await supabase
 			.from("review")
 			.update({ ...createPayload, created_at: new Date() })
 			.eq("id", existingData.id)
@@ -57,11 +56,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		return new Response();
 	}
 
-	const { data: createdData, error } = await supabase
-		.from("review")
-		.insert(createPayload)
-		.select()
-		.single();
+	await supabase.from("review").insert(createPayload).select().single();
 
 	return new Response(JSON.stringify({}), {
 		headers: {

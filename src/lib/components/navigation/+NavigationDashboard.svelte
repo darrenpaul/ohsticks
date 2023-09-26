@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { page } from "$app/stores";
-	import { accountOrdersRoute, accountRoute } from "$lib/constants/routes/accountRoute";
+	import {
+		dashboardAccountOrdersRoute,
+		dashboardAccountRoute
+	} from "$lib/constants/routes/dashboardRoute";
 	import type { Writable } from "svelte/store";
 	import { getContext } from "svelte";
 	import { goto } from "$app/navigation";
 	import { clearCart } from "$lib/stores/cartStore";
 
 	const supabaseState: Writable<any> = getContext("supabaseState");
-	let links = [homeRoute, accountRoute, accountOrdersRoute];
+	let links = [homeRoute, dashboardAccountOrdersRoute, dashboardAccountRoute];
 
 	const handleLogout = async () => {
 		await clearCart();

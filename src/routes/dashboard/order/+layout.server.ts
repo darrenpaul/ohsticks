@@ -1,4 +1,4 @@
-import type { Order } from "$lib/types/order.js";
+import type { Order } from "$lib/types/order";
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, params }) {

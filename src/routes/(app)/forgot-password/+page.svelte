@@ -1,27 +1,21 @@
 <script lang="ts">
 	import { trans } from "$lib/locales/translateCopy";
-	import { accountRoute } from "$lib/constants/routes/accountRoute";
-	import { siteUrl } from "$lib/constants/site.js";
-	import { goto } from "$app/navigation";
-	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
-	import randomString from "$lib/utils/randomString.js";
+	import randomString from "$lib/utils/randomString";
 	import type { Writable } from "svelte/store";
 	import { getContext } from "svelte";
-	import { errorNotification, successNotification } from "$lib/constants/notifications.js";
+	import { errorNotification, successNotification } from "$lib/constants/notifications";
+	import type { Notification } from "$lib/types/notification";
 
 	export let data;
 
-	const notificationState: Writable<any> = getContext("notificationState");
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 
 	let supabase = data.supabase;
 	let email: string;
 
 	const handleFormSubmit = async () => {
-		console.log("asasdasd");
-		const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-		console.log("handleFormSubmit ~ data:", data);
-		console.log("handleFormSubmit ~ error:", error);
+		const { error } = await supabase.auth.resetPasswordForEmail(email);
 
 		if (error) {
 			notificationState.set([

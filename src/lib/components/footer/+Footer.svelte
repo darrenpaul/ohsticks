@@ -3,12 +3,15 @@
 	import FooterNewsletter from "$lib/components/footer/+FooterNewsletter.svelte";
 	import Socials from "$lib/components/shared/+Socials.svelte";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
-	import { accountRoute } from "$lib/constants/routes/accountRoute";
+	import {
+		dashboardAccountOrdersRoute,
+		dashboardAccountRoute
+	} from "$lib/constants/routes/dashboardRoute";
 	import { contactRoute } from "$lib/constants/routes/contactRoute";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
 
-	const shopLinks = [collectionAllRoute, accountRoute];
+	const shopLinks = [collectionAllRoute, dashboardAccountOrdersRoute, dashboardAccountRoute];
 
 	const helpLinks = [contactRoute];
 </script>

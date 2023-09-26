@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ locals: { supabase } }) => {
+export const POST = async () => {
 	const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 		auth: {
 			autoRefreshToken: false,
@@ -12,10 +12,7 @@ export const POST = async ({ locals: { supabase } }) => {
 		}
 	});
 
-	const { data, error } = await supabaseAdmin.from("order").select();
-
-	console.log("POST ~ error:", error);
-	console.log("POST ~ data:", data);
+	await supabaseAdmin.from("order").select();
 
 	return new Response();
 };

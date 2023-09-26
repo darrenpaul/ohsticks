@@ -63,7 +63,7 @@
 	</div>
 </section>
 
-<style lang="scss">
+<style lang="postcss">
 	.product-tabs {
 		/* SIZE */
 		/* MARGINS AND PADDING */

@@ -1,7 +1,7 @@
 import { addDays, isAfter } from "date-fns";
 import type { CartItem } from "$lib/types/cart";
 import { mergeCartItems } from "$lib/server/cartHelpers";
-import { cartActionRemove } from "$lib/constants/cart.js";
+import { cartActionRemove } from "$lib/constants/cart";
 
 const table = "cart_guest";
 

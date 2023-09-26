@@ -8,8 +8,9 @@
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
-	import randomString from "$lib/utils/randomString.js";
-	import { errorNotification } from "$lib/constants/notifications.js";
+	import randomString from "$lib/utils/randomString";
+	import { errorNotification } from "$lib/constants/notifications";
+	import type { Notification } from "$lib/types/notification";
 
 	export let data;
 	let { supabase, session } = data;
@@ -24,7 +25,7 @@
 		}
 	}
 
-	const notificationState: Writable<any> = getContext("notificationState");
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 
 	const handleFormSubmit = async () => {
 		const { data, error } = await supabase.auth.signUp({

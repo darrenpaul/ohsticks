@@ -7,7 +7,7 @@
 	export let type: string;
 	export let duration = 5;
 
-	const notificationState: Writable<any> = getContext("notificationState");
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 
 	let durationLeft = duration;
 	let timer;

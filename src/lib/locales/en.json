@@ -651,6 +651,9 @@
 		},
 		"reviewSubmitFailed": {
 			"label": "Failed to submit review"
+		},
+		"passwordUpdated": {
+			"label": "Password updated successfully"
 		}
 	}
 }

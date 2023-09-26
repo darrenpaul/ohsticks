@@ -1,15 +1,16 @@
 <script lang="ts">
-	import NavigationAccount from "$lib/components/navigation/+NavigationAccount.svelte";
-
+	import NavigationDashboard from "$lib/components/navigation/+NavigationDashboard.svelte";
 	import { browser } from "$app/environment";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
-	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore.js";
+	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
+	import Toaster from "$lib/components/notification/+Toaster.svelte";
 
 	const supabaseState = writable();
 	const sessionState = writable();
+	const notificationState = writable([]);
 
 	export let data;
 
@@ -42,11 +43,10 @@
 	if (browser) {
 		setContext("supabaseState", supabaseState);
 		setContext("sessionState", sessionState);
+		setContext("notificationState", notificationState);
 	}
 </script>
 
-<!-- <AuthCheck> -->
-<NavigationAccount />
-
+<NavigationDashboard />
 <slot />
-<!-- </AuthCheck> -->
+<Toaster />

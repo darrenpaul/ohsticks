@@ -1,4 +1,4 @@
-import { getRegionCurrency } from "$lib/server/region.js";
+import { getRegionCurrency } from "$lib/server/region";
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, getClientAddress, cookies, locals: { getSession } }) {

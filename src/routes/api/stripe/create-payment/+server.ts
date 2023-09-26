@@ -1,4 +1,4 @@
-import type { OrderItem } from "$lib/types/order.js";
+import type { OrderItem } from "$lib/types/order";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, STRIPE_REDIRECT_DOMAIN } from "$env/static/private";
 import { calculateDiscountPrice } from "$lib/utils/maths";

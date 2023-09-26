@@ -1,4 +1,4 @@
-import { homeRoute } from "$lib/constants/routes/homeRoute.js";
+import { homeRoute } from "$lib/constants/routes/homeRoute";
 import { redirect } from "@sveltejs/kit";
 
 export const GET = async ({ url, locals: { supabase } }) => {

@@ -10,7 +10,11 @@
 <div class="account-order-list">
 	<h3>{title}</h3>
 
-	<table class="orders-table">
+	{#each orders as order}
+		<AccountOrderCard {order} />
+	{/each}
+
+	<!-- <table class="orders-table">
 		<thead class="">
 			<tr class="--header">
 				<th scope="col" class="text-left">{trans("page.order.orderId.label")}</th>
@@ -27,7 +31,7 @@
 				<AccountOrderCard {order} />
 			{/each}
 		</tbody>
-	</table>
+	</table> -->
 </div>
 
 <style lang="scss">

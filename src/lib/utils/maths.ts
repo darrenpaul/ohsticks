@@ -3,5 +3,5 @@ export const sumArrayNumbers = (numberArray: Array<number>) => {
 };
 
 export const calculateDiscountPrice = (price: number, discount: number) => {
-	return price - (price * discount) / 100;
+	return price - (price * discount || 0) / 100;
 };

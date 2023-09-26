@@ -11,7 +11,7 @@
 	{/if}
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.checkout-cart-list {
 		/* SIZE */
 		/* MARGINS AND PADDING */

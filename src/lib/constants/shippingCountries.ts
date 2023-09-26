@@ -2,7 +2,6 @@
 
 // const places = ["AT", "AU", "GB", "NL", "US", "SE", "ZA", "SA", "CA", "IE"].map((code) => {
 // 	const country = Country.getCountryByCode(code);
-// 	console.log("places ~ country:", country);
 // 	State.getStatesOfCountry(country.isoCode);
 // 	return {
 // 		name: country.name,
@@ -17,7 +16,6 @@
 // });
 
 // places.sort((a, b) => (a.name > b.name ? 1 : -1));
-// console.log("places ~ places:", places);
 
 // const australia = {
 // 	name: "Australia",

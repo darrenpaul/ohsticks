@@ -4,21 +4,19 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { trans } from "$lib/locales/translateCopy";
 	import { page } from "$app/stores";
-	import {
-		accountRoute,
-		forgotPasswordRoute,
-		registerRoute
-	} from "$lib/constants/routes/accountRoute";
+	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
+	import { dashboardAccountRoute } from "$lib/constants/routes/dashboardRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
-	import randomString from "$lib/utils/randomString.js";
+	import randomString from "$lib/utils/randomString";
 	import type { Writable } from "svelte/store";
 	import { getContext } from "svelte";
-	import { errorNotification } from "$lib/constants/notifications.js";
+	import { errorNotification } from "$lib/constants/notifications";
+	import type { Notification } from "$lib/types/notification";
 
 	export let data;
 
-	const notificationState: Writable<any> = getContext("notificationState");
+	const notificationState: Writable<Notification[]> = getContext("notificationState");
 
 	let { supabase, session } = data;
 	let email: string;
@@ -49,7 +47,7 @@
 
 		track();
 		if (nextPage) {
-			goto(accountRoute.path, { replaceState: true });
+			goto(dashboardAccountRoute.path, { replaceState: true });
 		} else {
 			goto(homeRoute.path, { replaceState: true });
 		}
