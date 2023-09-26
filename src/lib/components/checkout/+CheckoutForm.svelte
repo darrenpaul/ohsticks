@@ -273,18 +273,14 @@
 	<!-- SHIPPING METHOD -->
 	<CheckoutShippingMethod />
 
-	<div class="--button-group">
-		<a class="link-button" href={`${collectionRoute.path}/all`}>
-			<ArrowLeftIcon />
-			{trans("form.checkout.continueShopping.label")}
-		</a>
+	<button class="submit-button w-full">
+		{trans("form.checkout.continueToPayment.label")}
+	</button>
 
-		<button>
-			<ButtonIcon>
-				{trans("form.checkout.continueToPayment.label")}
-			</ButtonIcon>
-		</button>
-	</div>
+	<a class="link-button" href={`${collectionRoute.path}/all`}>
+		<ArrowLeftIcon />
+		{trans("form.checkout.continueShopping.label")}
+	</a>
 </form>
 
 <style lang="postcss">
@@ -353,18 +349,6 @@
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
 			@apply grid grid-cols-1 gap-0 lg:grid-cols-3 md:gap-4;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
-
-		.--button-group {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mt-8 mx-auto;
-			/* LAYOUT */
-			@apply flex flex-col-reverse lg:flex-row justify-between items-center;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */

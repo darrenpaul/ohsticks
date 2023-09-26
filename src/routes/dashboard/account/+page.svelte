@@ -22,7 +22,7 @@
 <style lang="scss">
 	.account-page {
 		/* SIZE */
-		@apply w-[500px];
+		@apply max-w-[500px];
 		/* MARGINS AND PADDING */
 		@apply mx-auto;
 		/* LAYOUT */

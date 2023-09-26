@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { accountOrdersRoute, accountRoute } from "$lib/constants/routes/accountRoute";
+	import {
+		dashboardAccountOrdersRoute,
+		dashboardAccountRoute
+	} from "$lib/constants/routes/dashboardRoute";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
 	import { clearCart } from "$lib/stores/cartStore";
@@ -17,12 +20,14 @@
 </script>
 
 <div class="navigation-account-dropdown-menu">
-	<a class="--dropdown-button" href={accountRoute.path}>
-		{accountRoute.label}
+	<!-- ORDERS -->
+	<a class="--dropdown-button" href={dashboardAccountOrdersRoute.path}>
+		{dashboardAccountOrdersRoute.label}
 	</a>
 
-	<a class="--dropdown-button" href={accountOrdersRoute.path}>
-		{accountOrdersRoute.label}
+	<!-- ACCOUNT -->
+	<a class="--dropdown-button" href={dashboardAccountRoute.path}>
+		{dashboardAccountRoute.label}
 	</a>
 
 	<button

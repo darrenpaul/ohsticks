@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NavigationAccount from "$lib/components/navigation/+NavigationAccount.svelte";
+	import NavigationDashboard from "$lib/components/navigation/+NavigationDashboard.svelte";
 	import { browser } from "$app/environment";
 	import { writable } from "svelte/store";
 	import { setContext } from "svelte";
@@ -47,6 +47,6 @@
 	}
 </script>
 
-<NavigationAccount />
+<NavigationDashboard />
 <slot />
 <Toaster />

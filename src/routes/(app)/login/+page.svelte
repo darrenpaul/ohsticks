@@ -4,11 +4,8 @@
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import { trans } from "$lib/locales/translateCopy";
 	import { page } from "$app/stores";
-	import {
-		accountRoute,
-		forgotPasswordRoute,
-		registerRoute
-	} from "$lib/constants/routes/accountRoute";
+	import { forgotPasswordRoute, registerRoute } from "$lib/constants/routes/accountRoute";
+	import { dashboardAccountRoute } from "$lib/constants/routes/dashboardRoute";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 	import randomString from "$lib/utils/randomString";
@@ -50,7 +47,7 @@
 
 		track();
 		if (nextPage) {
-			goto(accountRoute.path, { replaceState: true });
+			goto(dashboardAccountRoute.path, { replaceState: true });
 		} else {
 			goto(homeRoute.path, { replaceState: true });
 		}

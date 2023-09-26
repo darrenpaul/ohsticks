@@ -3,7 +3,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
-	import { accountOrderRoute } from "$lib/constants/routes/accountRoute";
+	import { dashboardAccountOrderRoute } from "$lib/constants/routes/dashboardRoute";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
 	import type { OrderItem } from "$lib/types/order";
 	import { purchaseEvent } from "$lib/utils/googleTagManager";
@@ -33,7 +33,7 @@
 			await deleteCart(session);
 
 			setTimeout(function () {
-				const redirectUrl = `${accountOrderRoute.path}/${orderId}`;
+				const redirectUrl = `${dashboardAccountOrderRoute.path}/${orderId}`;
 				redirectToUser(redirectUrl);
 			}, 2000);
 		} else {

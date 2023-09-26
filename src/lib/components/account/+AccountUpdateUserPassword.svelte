@@ -58,7 +58,7 @@
 		</label>
 	</div>
 
-	<button class="slim-button">
+	<button class="submit-button w-full">
 		{trans("page.account.update.label")}
 	</button>
 </form>
