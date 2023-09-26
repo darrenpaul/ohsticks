@@ -36,6 +36,7 @@ export const POST = async ({ request }) => {
 		items,
 		subtotal,
 		shipping_method: shippingMethod,
+		currency: "eur",
 		total,
 		updated_at: new Date()
 	};

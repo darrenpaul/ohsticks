@@ -1,6 +1,6 @@
 <script lang="ts">
 	const onClick = async () => {
-		const response = await fetch("/api/prodigi", {
+		const response = await fetch("/api/prodigi/quote", {
 			method: "POST",
 			body: JSON.stringify({
 				order: {

@@ -12,7 +12,6 @@
 	import { checkoutEvent } from "$lib/utils/googleTagManager";
 	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
-	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import CheckoutInformation from "$lib/components/checkout/+CheckoutInformation.svelte";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import Accordion from "$lib/components/+Accordion.svelte";
@@ -52,6 +51,17 @@
 			emailInputDisabled = true;
 		}
 	}
+
+	const getShippingPrices = async () => {
+		const response = await fetch("/api/prodigi/quote", {
+			method: "POST",
+			body: JSON.stringify({
+				country,
+				currency: "eur",
+				items: $cart?.cartItems
+			})
+		});
+	};
 
 	const trackContinueToPayment = () => {
 		const step = { step: 2, option: "continueToPayment" };
@@ -146,7 +156,14 @@
 
 	<!-- COUNTRY/REGION -->
 	<div class="input-group">
-		<select id="country" name="country" bind:value={country} placeholder="" required>
+		<select
+			id="country"
+			name="country"
+			bind:value={country}
+			placeholder=""
+			required
+			on:change={getShippingPrices}
+		>
 			<option value={null} disabled selected>
 				{trans("form.checkout.country.placeholder")}
 			</option>
