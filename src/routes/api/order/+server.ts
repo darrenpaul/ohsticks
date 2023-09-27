@@ -1,7 +1,7 @@
 import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import type { CartItem } from "$lib/types/cart";
-import type { Order } from "$lib/types/order";
+import type { Order, NewSbOrder } from "$lib/types/order";
 import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
 import { createClient } from "@supabase/supabase-js";
 
@@ -19,16 +19,15 @@ export const POST = async ({ request }) => {
 		}
 	});
 
-	const subtotal = sumArrayNumbers(
-		items.map(
-			(item: CartItem) =>
-				calculateDiscountPrice(Number(item.price), item.discount) * Number(item.quantity)
-		)
-	).toFixed(2);
+	const pricesAfterDiscount = items.map((item: CartItem) =>
+		calculateDiscountPrice(item.price, item.discount, item.quantity)
+	);
+
+	const subtotal = sumArrayNumbers(pricesAfterDiscount).toFixed(2);
 
 	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
 
-	const createPayload = {
+	const newOrderPayload: NewSbOrder = {
 		email: customer.email,
 		customer,
 		shipping_address: shippingAddress,
@@ -37,26 +36,27 @@ export const POST = async ({ request }) => {
 		subtotal,
 		shipping_method: shippingMethod,
 		currency: "eur",
-		total,
-		updated_at: new Date()
+		total
 	};
 
-	const { data: createdData } = await supabaseAdmin
+	const { data: newOrder } = await supabaseAdmin
 		.from("order")
-		.insert(createPayload)
+		.insert(newOrderPayload)
 		.select()
 		.single();
 
-	const payload = {
-		id: createdData.id,
-		customer: createdData.customer,
-		shippingAddress: createdData.shipping_address,
-		paymentMethod: createdData.payment_method,
-		items: createdData.items,
-		subtotal: createdData.subtotal,
-		shippingMethod: createdData.shipping_method,
-		total: createdData.total,
-		status: createdData.status
+	const payload: Order = {
+		id: newOrder.id,
+		customer: newOrder.customer,
+		shippingAddress: newOrder.shipping_address,
+		paymentMethod: newOrder.payment_method,
+		items: newOrder.items,
+		subtotal: newOrder.subtotal,
+		shippingMethod: newOrder.shipping_method,
+		total: newOrder.total,
+		status: newOrder.status,
+		created_at: newOrder.created_at,
+		updated_at: newOrder.updated_at
 	};
 
 	return new Response(JSON.stringify(payload), {

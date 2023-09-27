@@ -6,7 +6,6 @@
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 
 	export let data;
-	console.log("data:", data);
 	let orders: Order[] = data.orders;
 </script>
 

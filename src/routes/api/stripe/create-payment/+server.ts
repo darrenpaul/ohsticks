@@ -25,7 +25,8 @@ export const POST = async ({ request }) => {
 		return {
 			price_data: {
 				currency: "eur",
-				unit_amount: calculateDiscountPrice(Number(product.price), product.discount) * 100,
+				unit_amount:
+					Number(calculateDiscountPrice(product.price, product.discount, product.quantity)) * 100,
 				product_data: {
 					name: product.name,
 					description: product.description,

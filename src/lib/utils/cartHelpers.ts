@@ -1,5 +1,6 @@
 import { cartActionRemove, cartGuestLocalStorageKey } from "$lib/constants/cart";
 import type { CartItem } from "$lib/types/cart";
+import { sumArrayNumbers } from "$lib/utils/maths";
 
 export const addToCartGuest = async (cartItem: CartItem) => {
 	const cartKey = localStorage.getItem(cartGuestLocalStorageKey);
@@ -70,4 +71,12 @@ export const removeFromCartUser = async (cartItem: CartItem) => {
 	if (cartData) {
 		return cartData;
 	}
+};
+
+export const cartItemQuantity = (cartItems: CartItem[]) => {
+	if (cartItems.length > 0) {
+		const itemQuantities = cartItems.map((item: CartItem) => Number(item.quantity));
+		return sumArrayNumbers(itemQuantities, 0);
+	}
+	return "0";
 };

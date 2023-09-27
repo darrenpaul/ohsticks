@@ -8,7 +8,7 @@
 	let price = cartItem.price;
 
 	$: {
-		price = calculateDiscountPrice(Number(cartItem.price), cartItem.discount);
+		price = calculateDiscountPrice(cartItem.price, cartItem.discount, cartItem.quantity);
 	}
 </script>
 

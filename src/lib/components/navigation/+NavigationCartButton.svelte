@@ -3,20 +3,18 @@
 	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
 	import { cart } from "$lib/stores/cartStore";
 	import type { CartItem } from "$lib/types/cart";
-	import { browser } from "$app/environment";
 	import { sumArrayNumbers } from "$lib/utils/maths";
 	import type { Writable } from "svelte/store";
 	import { viewCartEvent } from "$lib/utils/googleTagManager";
+	import { cartItemQuantity } from "$lib/utils/cartHelpers";
 
 	const cartState: Writable<boolean> = getContext("cartState");
-	let cartQuantity: number;
+	let cartQuantity: string;
 
 	$: {
-		cartQuantity = 0;
-		if (browser && $cart) {
+		if ($cart) {
 			if ($cart?.cartItems) {
-				cartQuantity =
-					sumArrayNumbers($cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity)) || 0;
+				cartQuantity = cartItemQuantity($cart?.cartItems);
 			}
 		}
 	}

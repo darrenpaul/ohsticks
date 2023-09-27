@@ -1,6 +1,4 @@
-// CREATE
-
-import { created } from "$lib/constants/orderUpdate";
+import type { NewOrder } from "$lib/types/order";
 
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ fetch, request }) => {
@@ -19,7 +17,7 @@ export const POST = async ({ fetch, request }) => {
 		cart
 	} = await request.json();
 
-	const payload = {
+	const orderPayload: NewOrder = {
 		customer: {
 			firstName,
 			lastName,
@@ -33,7 +31,6 @@ export const POST = async ({ fetch, request }) => {
 			postalCode,
 			country
 		},
-		status: created,
 		paymentMethod,
 		shippingMethod,
 		items: cart.cartItems
@@ -41,7 +38,7 @@ export const POST = async ({ fetch, request }) => {
 
 	const orderResponse = await fetch("/api/order", {
 		method: "POST",
-		body: JSON.stringify(payload)
+		body: JSON.stringify(orderPayload)
 	});
 
 	const order = await orderResponse.json();

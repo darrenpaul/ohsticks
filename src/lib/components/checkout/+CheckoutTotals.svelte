@@ -24,12 +24,11 @@
 	$: {
 		if (browser && $cart && $cart?.cartItems?.length > 0) {
 			cartItemsTotal = sumArrayNumbers(
-				$cart.cartItems.map(
-					(item: CartItem) =>
-						Number(calculateDiscountPrice(Number(item.price), item.discount)) * item.quantity
+				$cart.cartItems.map((item: CartItem) =>
+					calculateDiscountPrice(item.price, item.discount, item.quantity)
 				)
-			).toFixed(2);
-			total = (Number(cartItemsTotal) + Number(shippingPrice)).toFixed(2);
+			);
+			total = Number(cartItemsTotal) + Number(shippingPrice);
 		}
 	}
 </script>

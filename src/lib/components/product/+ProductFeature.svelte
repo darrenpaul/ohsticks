@@ -16,11 +16,11 @@
 	export let product: Product;
 	export let session;
 
-	let discountPrice = 0;
+	let discountPrice: string;
 	let onSale = false;
 
 	$: {
-		discountPrice = calculateDiscountPrice(Number(product.price), product.discount);
+		discountPrice = calculateDiscountPrice(product.price, product.discount, 1);
 		onSale = product.discount > 0;
 	}
 

@@ -16,7 +16,7 @@
 	let price = Number(cartItem.price);
 
 	$: {
-		price = calculateDiscountPrice(Number(cartItem.price), cartItem.discount);
+		price = calculateDiscountPrice(cartItem.price, cartItem.discount, cartItem.quantity);
 		totalPrice = (Number(price) * cartItem.quantity).toFixed(2);
 	}
 
