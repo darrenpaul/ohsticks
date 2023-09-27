@@ -23,16 +23,8 @@
 		}
 	}
 
-	const getTotalQuantity = () => {
-		if ($cart && $cart?.cartItems.length > 0) {
-			const itemQuantities = $cart?.cartItems.map((item: CartItem) => Number(item.quantity));
-			return sumArrayNumbers(itemQuantities, 0);
-		}
-		return "0";
-	};
-
 	const getTotalPrice = () => {
-		if ($cart && $cart?.cartItems.length > 0) {
+		if ($cart && $cart?.cartItems?.length > 0) {
 			const pricesAfterDiscount: number[] = $cart?.cartItems.map((item: CartItem) =>
 				Number(calculateDiscountPrice(item.price, item.discount, item.quantity))
 			);

@@ -4,9 +4,6 @@ import type { OrderItem } from "$lib/types/order";
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request }) => {
 	const { country, currency, items } = await request.json();
-	console.log("POST ~ items:", items);
-	console.log("POST ~ currency:", currency);
-	console.log("POST ~ country:", country);
 
 	const payload = {
 		shippingMethod: "express",

@@ -24,9 +24,8 @@ export const POST = async ({ request }) => {
 	const lineItems = order.items.map((product: OrderItem) => {
 		return {
 			price_data: {
-				currency: "eur",
-				unit_amount:
-					Number(calculateDiscountPrice(product.price, product.discount, product.quantity)) * 100,
+				currency: order.currency,
+				unit_amount: Number(calculateDiscountPrice(product.price, product.discount, 1)) * 100,
 				product_data: {
 					name: product.name,
 					description: product.description,

@@ -18,14 +18,11 @@ export const POST = async ({ request }) => {
 			persistSession: false
 		}
 	});
-
 	const pricesAfterDiscount = items.map((item: CartItem) =>
 		calculateDiscountPrice(item.price, item.discount, item.quantity)
 	);
-
-	const subtotal = sumArrayNumbers(pricesAfterDiscount).toFixed(2);
-
-	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
+	const subtotal = sumArrayNumbers(pricesAfterDiscount);
+	const total = sumArrayNumbers([Number(subtotal), Number(shippingMethod.price)]);
 
 	const newOrderPayload: NewSbOrder = {
 		email: customer.email,
@@ -55,6 +52,7 @@ export const POST = async ({ request }) => {
 		shippingMethod: newOrder.shipping_method,
 		total: newOrder.total,
 		status: newOrder.status,
+		currency: newOrder.currency,
 		created_at: newOrder.created_at,
 		updated_at: newOrder.updated_at
 	};

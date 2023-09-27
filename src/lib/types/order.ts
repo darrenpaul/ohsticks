@@ -30,6 +30,7 @@ export interface Order {
 	shippingMethod: ShippingMethod;
 	subtotal: number;
 	total: number;
+	currency: string;
 	status: string;
 	created_at: Date;
 	updated_at: Date;

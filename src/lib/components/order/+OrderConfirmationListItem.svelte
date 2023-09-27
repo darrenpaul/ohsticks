@@ -8,9 +8,7 @@
 	export let item: CartItem;
 
 	$: {
-		totalPrice = (
-			calculateDiscountPrice(Number(item.price), item.discount) * item.quantity
-		).toFixed(2);
+		totalPrice = calculateDiscountPrice(Number(item.price), item.discount, item.quantity);
 	}
 </script>
 

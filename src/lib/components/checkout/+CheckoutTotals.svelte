@@ -8,11 +8,12 @@
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";
 	import type { ShippingMethod } from "$lib/types/order";
+	import { cartSubtotalPrice } from "$lib/utils/cartHelpers";
 
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
 
 	let shippingPrice: string;
-	let cartItemsTotal: string;
+	let subtotal: string;
 	let total: string;
 
 	if (browser) {
@@ -23,12 +24,8 @@
 
 	$: {
 		if (browser && $cart && $cart?.cartItems?.length > 0) {
-			cartItemsTotal = sumArrayNumbers(
-				$cart.cartItems.map((item: CartItem) =>
-					calculateDiscountPrice(item.price, item.discount, item.quantity)
-				)
-			);
-			total = Number(cartItemsTotal) + Number(shippingPrice);
+			subtotal = cartSubtotalPrice($cart?.cartItems);
+			total = sumArrayNumbers([Number(subtotal), Number(shippingPrice)]);
 		}
 	}
 </script>
@@ -37,7 +34,7 @@
 	<!-- SUBTOTAL -->
 	<div class="--group">
 		<p>{trans("page.checkout.subtotal.label")}</p>
-		<p>{addCurrencySymbol(cartItemsTotal)}</p>
+		<p>{addCurrencySymbol(subtotal)}</p>
 	</div>
 
 	<!-- SHIPPING -->

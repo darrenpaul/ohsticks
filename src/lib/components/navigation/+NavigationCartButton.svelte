@@ -2,8 +2,6 @@
 	import { getContext } from "svelte";
 	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
 	import { cart } from "$lib/stores/cartStore";
-	import type { CartItem } from "$lib/types/cart";
-	import { sumArrayNumbers } from "$lib/utils/maths";
 	import type { Writable } from "svelte/store";
 	import { viewCartEvent } from "$lib/utils/googleTagManager";
 	import { cartItemQuantity } from "$lib/utils/cartHelpers";
@@ -12,11 +10,7 @@
 	let cartQuantity: string;
 
 	$: {
-		if ($cart) {
-			if ($cart?.cartItems) {
-				cartQuantity = cartItemQuantity($cart?.cartItems);
-			}
-		}
+		cartQuantity = cartItemQuantity($cart?.cartItems || []);
 	}
 
 	const openCart = () => {
@@ -28,12 +22,14 @@
 	};
 
 	const track = () => {
-		viewCartEvent($cart?.cartItems);
+		if ($cart && $cart?.cartItems?.length > 0) {
+			viewCartEvent($cart?.cartItems);
+		}
 	};
 </script>
 
 <button class="navigation-cart-button" on:click={openCart} aria-label="Open Cart Button">
-	{#if cartQuantity > 0}
+	{#if Number(cartQuantity) > 0}
 		<p class="--quantity">{cartQuantity}</p>
 	{/if}
 	<CartIcon />
