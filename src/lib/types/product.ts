@@ -70,24 +70,6 @@ export type ContentSection = {
 	content: string;
 };
 
-export type ProductCreate = {
-	name: string;
-	slug: string;
-	categories: string[];
-	description: string;
-	contentSections: ContentSection[];
-	purchasePrice: number;
-	markupPercentage: number;
-	price: number;
-	quantity: number;
-	visible: boolean;
-	featureImage: string;
-	images: Image[];
-	meta: meta;
-	brand: string;
-	currencyPrice: CurrencyPrice;
-};
-
 export type CurrencyPrice = {
 	[key: string]: Price;
 };
