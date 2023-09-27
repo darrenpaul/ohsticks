@@ -15,7 +15,7 @@
 	{/each}
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.crumbs {
 		/* SIZE */
 		/* MARGINS AND PADDING */

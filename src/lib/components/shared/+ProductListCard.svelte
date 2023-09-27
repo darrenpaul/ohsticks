@@ -14,7 +14,7 @@
 	let onSale = false;
 
 	$: {
-		price = calculateDiscountPrice(Number(product.price), product.discount);
+		price = calculateDiscountPrice(product.price, product.discount, 1);
 		onSale = product.discount > 0;
 	}
 

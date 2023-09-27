@@ -1,9 +1,12 @@
 import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import type { CartItem } from "$lib/types/cart";
-import type { Order } from "$lib/types/order";
+import type { Order, NewSbOrder } from "$lib/types/order";
 import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
+import randomString from "$lib/utils/randomString";
 import { createClient } from "@supabase/supabase-js";
+import { createHash } from "crypto";
+import { getUnixTime } from "date-fns";
 
 const table = "order";
 
@@ -18,17 +21,17 @@ export const POST = async ({ request }) => {
 			persistSession: false
 		}
 	});
+	const pricesAfterDiscount = items.map((item: CartItem) =>
+		calculateDiscountPrice(item.price, item.discount, item.quantity)
+	);
+	const subtotal = sumArrayNumbers(pricesAfterDiscount);
+	const total = sumArrayNumbers([Number(subtotal), Number(shippingMethod.price)]);
 
-	const subtotal = sumArrayNumbers(
-		items.map(
-			(item: CartItem) =>
-				calculateDiscountPrice(Number(item.price), item.discount) * Number(item.quantity)
-		)
-	).toFixed(2);
+	const orderIdString = `OhSticks-${customer.email}-${getUnixTime(new Date())}-${randomString(10)}`;
+	const hash = createHash("md5").update(orderIdString).digest("hex");
 
-	const total = (Number(subtotal) + Number(shippingMethod.price)).toFixed(2);
-
-	const createPayload = {
+	const newOrderPayload: NewSbOrder = {
+		id: hash,
 		email: customer.email,
 		customer,
 		shipping_address: shippingAddress,
@@ -36,26 +39,29 @@ export const POST = async ({ request }) => {
 		items,
 		subtotal,
 		shipping_method: shippingMethod,
-		total,
-		updated_at: new Date()
+		currency: "eur",
+		total
 	};
 
-	const { data: createdData } = await supabaseAdmin
+	const { data: newOrder } = await supabaseAdmin
 		.from("order")
-		.insert(createPayload)
+		.insert(newOrderPayload)
 		.select()
 		.single();
 
-	const payload = {
-		id: createdData.id,
-		customer: createdData.customer,
-		shippingAddress: createdData.shipping_address,
-		paymentMethod: createdData.payment_method,
-		items: createdData.items,
-		subtotal: createdData.subtotal,
-		shippingMethod: createdData.shipping_method,
-		total: createdData.total,
-		status: createdData.status
+	const payload: Order = {
+		id: newOrder.id,
+		customer: newOrder.customer,
+		shippingAddress: newOrder.shipping_address,
+		paymentMethod: newOrder.payment_method,
+		items: newOrder.items,
+		subtotal: newOrder.subtotal,
+		shippingMethod: newOrder.shipping_method,
+		total: newOrder.total,
+		status: newOrder.status,
+		currency: newOrder.currency,
+		created_at: newOrder.created_at,
+		updated_at: newOrder.updated_at
 	};
 
 	return new Response(JSON.stringify(payload), {

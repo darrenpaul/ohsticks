@@ -3,37 +3,35 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
 	import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
-	import { browser } from "$app/environment";
 	import CartMenuItem from "./+CartMenuItem.svelte";
 	import { getContext } from "svelte";
 	import { checkoutRoute } from "$lib/constants/routes/checkoutRoute";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import type { CartItem } from "$lib/types/cart";
 	import type { Writable } from "svelte/store";
+	import { cartItemQuantity } from "$lib/utils/cartHelpers";
 
 	const cartState: Writable<boolean> = getContext("cartState");
 
-	let totalQuantity = 0;
+	let cartQuantity: string;
 	let totalPrice = "0.00";
 
 	$: {
-		if (browser) {
-			if ($cart) {
-				if ($cart?.cartItems) {
-					totalQuantity = sumArrayNumbers($cart?.cartItems.map((item: CartItem) => item.quantity));
-					totalPrice = sumArrayNumbers(
-						$cart?.cartItems.map(
-							(item: CartItem) =>
-								Number(calculateDiscountPrice(Number(item.price), item.discount)) * item.quantity
-						)
-					).toFixed(2);
-				} else {
-					totalQuantity = 0;
-					totalPrice = "0.00";
-				}
-			}
+		if ($cart) {
+			cartQuantity = cartItemQuantity($cart?.cartItems);
+			totalPrice = getTotalPrice();
 		}
 	}
+
+	const getTotalPrice = () => {
+		if ($cart && $cart?.cartItems?.length > 0) {
+			const pricesAfterDiscount: number[] = $cart?.cartItems.map((item: CartItem) =>
+				Number(calculateDiscountPrice(item.price, item.discount, item.quantity))
+			);
+			return sumArrayNumbers(pricesAfterDiscount);
+		}
+		return "0.00";
+	};
 
 	const closeCart = () => {
 		cartState.set(false);
@@ -56,7 +54,7 @@
 			</div>
 
 			<div class="--container">
-				<p>{totalQuantity}</p>
+				<p>{cartQuantity}</p>
 			</div>
 		</div>
 

@@ -12,13 +12,13 @@
 	import { checkoutEvent } from "$lib/utils/googleTagManager";
 	import BrandPortraitIcon from "$lib/components/icons/+BrandPortraitIcon.svelte";
 	import { homeRoute } from "$lib/constants/routes/homeRoute";
-	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import CheckoutInformation from "$lib/components/checkout/+CheckoutInformation.svelte";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import Accordion from "$lib/components/+Accordion.svelte";
 	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
 	import CaretDownIcon from "$lib/components/icons/+CaretDownIcon.svelte";
 	import CaretUpIcon from "$lib/components/icons/+CaretUpIcon.svelte";
+	import type { CheckoutPayload } from "$lib/stores/checkout";
 
 	const sessionState: Writable<any> = getContext("sessionState");
 	const shippingMethodState: Writable<ShippingMethod> = getContext("shippingMethod");
@@ -54,18 +54,30 @@
 	}
 
 	const trackContinueToPayment = () => {
-		const step = { step: 2, option: "continueToPayment" };
-		checkoutEvent($cart.cartItems, step);
+		if ($cart && $cart?.cartItems?.length > 0) {
+			checkoutEvent($cart.cartItems);
+		}
 	};
 
 	const handleSubmit = async (event: Event) => {
+		if (!$cart || $cart?.cartItems?.length === 0) {
+			return;
+		}
+
 		const form = event.target as HTMLFormElement;
 
 		const formData = new FormData(form);
 		const values = Object.fromEntries(formData.entries());
 
-		const order = {
-			...values,
+		const checkoutPayload: CheckoutPayload = {
+			firstName: values.firstName.toString(),
+			lastName: values.lastName.toString(),
+			address1: values.address1.toString(),
+			address2: values.address2.toString(),
+			city: values.city.toString(),
+			province: values.province.toString(),
+			postalCode: values.postalCode.toString(),
+			country: values.country.toString(),
 			email,
 			paymentMethod,
 			shippingMethod: shippingMethod,
@@ -77,7 +89,7 @@
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify(order)
+			body: JSON.stringify(checkoutPayload)
 		});
 
 		const checkoutData = await checkoutResponse.json();

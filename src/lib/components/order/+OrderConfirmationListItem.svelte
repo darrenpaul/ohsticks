@@ -8,9 +8,7 @@
 	export let item: CartItem;
 
 	$: {
-		totalPrice = (
-			calculateDiscountPrice(Number(item.price), item.discount) * item.quantity
-		).toFixed(2);
+		totalPrice = calculateDiscountPrice(Number(item.price), item.discount, item.quantity);
 	}
 </script>
 
@@ -26,7 +24,7 @@
 
 		<div class="--product-details">
 			<p>{item.name}</p>
-			<p>{addCurrencySymbol(calculateDiscountPrice(Number(item.price), item.discount))}</p>
+			<p>{addCurrencySymbol(calculateDiscountPrice(item.price, item.discount, item.quantity))}</p>
 		</div>
 	</div>
 

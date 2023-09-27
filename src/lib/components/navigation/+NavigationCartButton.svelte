@@ -2,23 +2,15 @@
 	import { getContext } from "svelte";
 	import CartIcon from "$lib/components/icons/+CartIcon.svelte";
 	import { cart } from "$lib/stores/cartStore";
-	import type { CartItem } from "$lib/types/cart";
-	import { browser } from "$app/environment";
-	import { sumArrayNumbers } from "$lib/utils/maths";
 	import type { Writable } from "svelte/store";
 	import { viewCartEvent } from "$lib/utils/googleTagManager";
+	import { cartItemQuantity } from "$lib/utils/cartHelpers";
 
 	const cartState: Writable<boolean> = getContext("cartState");
-	let cartQuantity: number;
+	let cartQuantity: string;
 
 	$: {
-		cartQuantity = 0;
-		if (browser && $cart) {
-			if ($cart?.cartItems) {
-				cartQuantity =
-					sumArrayNumbers($cart?.cartItems.map((cartItem: CartItem) => cartItem.quantity)) || 0;
-			}
-		}
+		cartQuantity = cartItemQuantity($cart?.cartItems || []);
 	}
 
 	const openCart = () => {
@@ -30,12 +22,14 @@
 	};
 
 	const track = () => {
-		viewCartEvent($cart?.cartItems);
+		if ($cart && $cart?.cartItems?.length > 0) {
+			viewCartEvent($cart?.cartItems);
+		}
 	};
 </script>
 
 <button class="navigation-cart-button" on:click={openCart} aria-label="Open Cart Button">
-	{#if cartQuantity > 0}
+	{#if Number(cartQuantity) > 0}
 		<p class="--quantity">{cartQuantity}</p>
 	{/if}
 	<CartIcon />
