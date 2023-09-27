@@ -2,7 +2,7 @@ import { loginRoute } from "$lib/constants/routes/accountRoute";
 import { dashboardAccountRoute } from "$lib/constants/routes/dashboardRoute";
 import { redirect } from "@sveltejs/kit";
 
-export const load = async ({ locals: { supabase, getSession } }) => {
+export const load = async ({ fetch, locals: { supabase, getSession } }) => {
 	const session = await getSession();
 
 	if (!session) {
@@ -30,5 +30,14 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		}
 	};
 
-	return { session, account };
+	const response = await fetch("/api/order", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
+
+	const orders = await response.json();
+
+	return { session, account, orders };
 };

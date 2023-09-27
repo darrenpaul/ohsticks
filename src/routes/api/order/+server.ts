@@ -3,7 +3,10 @@ import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import type { CartItem } from "$lib/types/cart";
 import type { Order, NewSbOrder } from "$lib/types/order";
 import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
+import randomString from "$lib/utils/randomString";
 import { createClient } from "@supabase/supabase-js";
+import { createHash } from "crypto";
+import { getUnixTime } from "date-fns";
 
 const table = "order";
 
@@ -24,7 +27,11 @@ export const POST = async ({ request }) => {
 	const subtotal = sumArrayNumbers(pricesAfterDiscount);
 	const total = sumArrayNumbers([Number(subtotal), Number(shippingMethod.price)]);
 
+	const orderIdString = `OhSticks-${customer.email}-${getUnixTime(new Date())}-${randomString(10)}`;
+	const hash = createHash("md5").update(orderIdString).digest("hex");
+
 	const newOrderPayload: NewSbOrder = {
+		id: hash,
 		email: customer.email,
 		customer,
 		shipping_address: shippingAddress,

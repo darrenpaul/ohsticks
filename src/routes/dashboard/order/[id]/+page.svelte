@@ -8,7 +8,6 @@
 	import { collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import OrderConfirmationList from "$lib/components/order/+OrderConfirmationList.svelte";
 	import OrderConfirmationTotals from "$lib/components/order/+OrderConfirmationTotals.svelte";
-	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import DesktopOnly from "$lib/components/shared/+DesktopOnly.svelte";
 	import MobileOnly from "$lib/components/shared/+MobileOnly.svelte";
 	import Accordion from "$lib/components/+Accordion.svelte";

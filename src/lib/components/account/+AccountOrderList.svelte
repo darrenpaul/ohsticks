@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Order } from "$lib/types/order";
-	import AccountOrderCard from "./+AccountOrderCard.svelte";
-	import { trans } from "$lib/locales/translateCopy";
+	import AccountOrderCard from "$lib/components/account/+AccountOrderCard.svelte";
 
 	export let title: string;
 	export let orders: Order[] = [];
@@ -10,54 +9,32 @@
 <div class="account-order-list">
 	<h3>{title}</h3>
 
-	{#each orders as order}
-		<AccountOrderCard {order} />
-	{/each}
-
-	<!-- <table class="orders-table">
-		<thead class="">
-			<tr class="--header">
-				<th scope="col" class="text-left">{trans("page.order.orderId.label")}</th>
-				<th scope="col" class="">{trans("page.order.orderDate.label")}</th>
-				<th scope="col" class="">{trans("page.order.shippingAddress.label")}</th>
-				<th scope="col" class="">{trans("page.order.amount.label")}</th>
-				<th scope="col" class="">{trans("page.order.status.label")}</th>
-				<th scope="col" class="">{trans("page.order.action.label")}</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			{#each orders as order}
-				<AccountOrderCard {order} />
-			{/each}
-		</tbody>
-	</table> -->
+	<div class="--list">
+		{#each orders as order}
+			<AccountOrderCard {order} />
+		{/each}
+	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.account-order-list {
-		.orders-table {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+
+		.--list {
 			/* SIZE */
-			@apply w-full;
 			/* MARGINS AND PADDING */
 			/* LAYOUT */
+			@apply flex flex-col gap-4;
 			/* BORDERS */
-			@apply border-b-2 border-black;
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
-
-			.--header {
-				/* SIZE */
-				/* MARGINS AND PADDING */
-				/* LAYOUT */
-				/* BORDERS */
-				@apply border-b-2 border-black;
-				/* COLORS */
-				/* TEXT */
-				@apply font-bold;
-				/* ANIMATION AND EFFECTS */
-			}
 		}
 	}
 </style>

@@ -10,6 +10,7 @@ export interface NewOrder {
 }
 
 export interface NewSbOrder {
+	id: string;
 	email: string;
 	customer: Customer;
 	shipping_address: IngAddress;

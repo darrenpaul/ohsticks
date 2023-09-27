@@ -14,7 +14,7 @@
 	const reviewState: Writable<any> = getContext("reviewState");
 	const notificationState: Writable<Notification[]> = getContext("notificationState");
 
-	let rating: number = 5;
+	let rating = 5;
 	let title: string;
 	let content: string;
 

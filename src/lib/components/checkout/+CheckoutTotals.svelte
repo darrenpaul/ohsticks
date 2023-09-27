@@ -2,8 +2,7 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import { cart } from "$lib/stores/cartStore";
 	import { browser } from "$app/environment";
-	import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
-	import type { CartItem } from "$lib/types/cart";
+	import { sumArrayNumbers } from "$lib/utils/maths";
 	import addCurrencySymbol from "$lib/utils/addCurrencySymbol";
 	import { getContext } from "svelte";
 	import type { Writable } from "svelte/store";

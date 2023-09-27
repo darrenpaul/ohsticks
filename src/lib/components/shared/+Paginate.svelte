@@ -3,10 +3,10 @@
 
 	export let items: any[];
 	export let paginatedList: any[];
-	export let itemsPerPage: number = 5;
+	export let itemsPerPage = 5;
 
 	let pages: number;
-	let currentPage: number = 0;
+	let currentPage = 0;
 	let pageNumbers: number[] = [];
 
 	onMount(() => {
