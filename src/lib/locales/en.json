@@ -172,12 +172,13 @@
 				"label": "Postal Code",
 				"placeholder": "Enter postal code"
 			},
-			"currentPassword": {
-				"label": "Current Password"
+			"changePassword": {
+				"label": "Change Password"
 			},
 			"newPassword": {
 				"label": "New Password"
-			}
+			},
+			"label": "Account"
 		},
 		"admin": {
 			"readyToProcess": { "label": "Orders To Process" },
@@ -636,6 +637,29 @@
 			"customerSatisfaction": {
 				"label": "Customer Satisfaction",
 				"description": "We are dedicated to ensuring your complete satisfaction with every purchase."
+			}
+		},
+		"accountOrderList": {
+			"customerName": {
+				"label": "Customer Name"
+			},
+			"orderNumber": {
+				"label": "Order Number"
+			},
+			"amount": {
+				"label": "Amount"
+			},
+			"date": {
+				"label": "Date"
+			},
+			"address": {
+				"label": "Address"
+			},
+			"status": {
+				"label": "Status"
+			},
+			"view": {
+				"label": "View"
 			}
 		}
 	},
