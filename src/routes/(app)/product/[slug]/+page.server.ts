@@ -53,5 +53,3 @@ export async function load({ params, fetch, locals: { getSession } }) {
 		canReview
 	};
 }
-
-export const prerender = false;

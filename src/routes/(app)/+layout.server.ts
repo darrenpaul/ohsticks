@@ -24,5 +24,3 @@ export async function load({ fetch, locals: { getSession } }) {
 		pageData
 	};
 }
-
-export const prerender = true;

@@ -13,5 +13,3 @@ export async function load({ fetch }) {
 		pageData
 	};
 }
-
-export const prerender = true;
