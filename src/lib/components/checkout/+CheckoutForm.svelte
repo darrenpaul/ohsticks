@@ -285,20 +285,22 @@
 	<!-- SHIPPING METHOD -->
 	<CheckoutShippingMethod />
 
-	<button class="submit-button w-full">
-		{trans("form.checkout.continueToPayment.label")}
-	</button>
+	<div>
+		<button class="submit-button w-full">
+			{trans("form.checkout.continueToPayment.label")}
+		</button>
 
-	<a class="link-button" href={`${collectionRoute.path}/all`}>
-		<ArrowLeftIcon />
-		{trans("form.checkout.continueShopping.label")}
-	</a>
+		<a class="link-button" href={`${collectionRoute.path}/all`}>
+			<ArrowLeftIcon />
+			{trans("form.checkout.continueShopping.label")}
+		</a>
+	</div>
 </form>
 
 <style lang="postcss">
 	.checkout-form {
 		/* SIZE */
-		@apply h-fit;
+		@apply h-[100dvh];
 		/* MARGINS AND PADDING */
 		@apply p-2 md:p-8;
 		/* LAYOUT */
