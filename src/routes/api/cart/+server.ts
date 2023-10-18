@@ -1,12 +1,12 @@
 import { addDays, isAfter } from "date-fns";
 import type { CartItem } from "$lib/types/cart";
 import { error } from "@sveltejs/kit";
-import { mergeCartItems } from "$lib/server/cartHelpers";
+import { generateCartHashId, mergeCartItems } from "$lib/server/cartHelpers";
 import { cartActionRemove } from "$lib/constants/cart";
 
 const table = "cart";
 
-// ADD ITEM TO CART
+// ADD/REMOVE ITEM TO CART
 /** @type {import('./$types').RequestHandler} */
 export const POST = async ({ request, locals: { supabase, getSession } }) => {
 	const session = await getSession();
@@ -25,7 +25,9 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		let cartItems = data.cart_items as CartItem[];
 
 		if (action === cartActionRemove) {
-			cartItems = cartItems.filter((item) => item.id !== cartItem.id);
+			cartItems = cartItems.filter(
+				(item) => generateCartHashId(item) !== generateCartHashId(cartItem)
+			);
 		} else {
 			cartItems.push(cartItem);
 		}

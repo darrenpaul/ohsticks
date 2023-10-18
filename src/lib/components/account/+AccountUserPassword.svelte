@@ -40,8 +40,8 @@
 	};
 </script>
 
-<form class="account-update-user-password" on:submit|preventDefault={handleFormSubmit}>
-	<h4>{trans("page.account.userInformation.label")}</h4>
+<form class="account-user-password" on:submit|preventDefault={handleFormSubmit}>
+	<h4>{trans("page.account.changePassword.label")}</h4>
 
 	<div class="input-group">
 		<input
@@ -64,7 +64,7 @@
 </form>
 
 <style lang="scss">
-	.account-update-user-password {
+	.account-user-password {
 		/* SIZE */
 		/* MARGINS AND PADDING */
 		@apply mb-8;

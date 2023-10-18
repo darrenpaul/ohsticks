@@ -85,7 +85,7 @@
 <style lang="postcss">
 	.collection-page {
 		/* SIZE */
-		@apply w-fit max-w-[1495px];
+		@apply w-fit max-w-[1495px] min-h-[100dvh];
 		/* MARGINS AND PADDING */
 		@apply mx-auto pt-1 px-0 sm:px-4 mt-20;
 		/* LAYOUT */

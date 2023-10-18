@@ -13,10 +13,10 @@
 	export let index: number;
 
 	let totalPrice: string;
-	let price = Number(cartItem.price);
+	let price = cartItem.price;
 
 	$: {
-		price = calculateDiscountPrice(cartItem.price, cartItem.discount, cartItem.quantity);
+		price = calculateDiscountPrice(cartItem.price, cartItem.discount, 1);
 		totalPrice = (Number(price) * cartItem.quantity).toFixed(2);
 	}
 
@@ -37,6 +37,10 @@
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>
+
+			{#if cartItem?.attributes?.size}
+				<p>{cartItem.attributes.size}</p>
+			{/if}
 		</div>
 	</div>
 

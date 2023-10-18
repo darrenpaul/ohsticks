@@ -33,8 +33,8 @@ export interface Order {
 	total: number;
 	currency: string;
 	status: string;
-	created_at: Date;
-	updated_at: Date;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export type OrderItem = {

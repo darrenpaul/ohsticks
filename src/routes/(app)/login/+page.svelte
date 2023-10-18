@@ -116,7 +116,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
 	.login-page {
 		/* SIZE */
 		@apply max-w-[400px];

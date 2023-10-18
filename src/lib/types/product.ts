@@ -1,39 +1,63 @@
-export type Product = {
-	id: string;
+interface Base {
 	name: string;
 	slug: string;
 	categories: string[];
 	description: string;
+	attributes: Attribute[];
 	contentSections: ContentSection[];
-	price: number;
 	discount: number;
 	quantity: number;
 	visible: boolean;
 	featureImage: Image;
 	images: Image[];
-	meta: meta;
+	meta: Meta;
 	brand: string;
-	currency: string;
-};
+}
 
-export type ProductResponse = {
+export interface Product extends Base {
 	id: string;
+	price: string;
+	currency: string;
+}
+
+export interface NewProduct extends Base {
+	currencyPrice: CurrencyPrice;
+}
+
+export interface UpdateProduct extends NewProduct {
+	id: string;
+}
+
+interface SbBase {
 	name: string;
 	slug: string;
 	categories: string[];
 	description: string;
-	contentSections: ContentSection[];
-	price: number;
+	attributes: Attribute[];
+	content_sections: ContentSection[];
+	discount: number;
 	quantity: number;
 	visible: boolean;
-	featureImage: Image;
+	feature_image: Image;
 	images: Image[];
-	meta: meta;
+	print_image: Image;
+	meta: Meta;
 	brand: string;
-	currencyPrice: CurrencyPrice;
-	updatedAt: number;
-	createdAt: number;
-};
+}
+
+export interface SbNewProduct extends SbBase {
+	currency_price: CurrencyPrice;
+}
+
+export interface SbUpdateProduct extends SbNewProduct {
+	updated_at: Date;
+}
+
+export interface SbProduct extends SbNewProduct {
+	id: string;
+	updated_at: Date;
+	created_at: Date;
+}
 
 export type Image = {
 	alt: string;
@@ -42,7 +66,7 @@ export type Image = {
 	height: number;
 };
 
-export type meta = {
+export type Meta = {
 	twitter: Twitter;
 	keywords: string;
 	description: string;
@@ -58,7 +82,7 @@ export type OpenGraph = {
 };
 
 export type Twitter = {
-	image: string;
+	image: Image;
 	site: string;
 	description: string;
 	title: string;
@@ -70,76 +94,18 @@ export type ContentSection = {
 	content: string;
 };
 
-export type ProductCreate = {
-	name: string;
-	slug: string;
-	categories: string[];
-	description: string;
-	contentSections: ContentSection[];
-	purchasePrice: number;
-	markupPercentage: number;
-	price: number;
-	quantity: number;
-	visible: boolean;
-	featureImage: string;
-	images: Image[];
-	meta: meta;
-	brand: string;
-	currencyPrice: CurrencyPrice;
-};
-
 export type CurrencyPrice = {
 	[key: string]: Price;
 };
 
 export type Price = {
 	currency: string;
-	purchasePrice: number;
+	costOfGoods: number;
 	markupPercentage: number;
 	price: number;
 };
 
-export const createProducts = (products: ProductResponse[], currency = "eur") => {
-	const cleanProducts = products.map((product) => {
-		const {
-			id,
-			name,
-			slug,
-			categories,
-			description,
-			content_sections: contentSections,
-			quantity,
-			discount,
-			visible,
-			feature_image: featureImage,
-			images,
-			meta,
-			brand,
-			currency_price: currencyPrice
-		} = product;
-
-		const currencyPriceData = currencyPrice;
-		const productPrice = currencyPriceData[currency].price;
-
-		const newProduct: Product = {
-			id,
-			name,
-			slug,
-			categories,
-			description,
-			contentSections: contentSections,
-			quantity,
-			discount,
-			visible,
-			featureImage: featureImage,
-			images: images,
-			meta: meta,
-			brand,
-			price: productPrice,
-			currency: currencyPriceData[currency].currency
-		};
-		return newProduct;
-	});
-
-	return cleanProducts;
+export type Attribute = {
+	name: string;
+	options: string;
 };

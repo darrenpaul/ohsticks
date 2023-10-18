@@ -1,14 +1,11 @@
 import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
+import { orderTable } from "$lib/constants/databaseTables";
 import type { CartItem } from "$lib/types/cart";
 import type { Order, NewSbOrder } from "$lib/types/order";
 import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
-import randomString from "$lib/utils/randomString";
+import { generateOrderId } from "$lib/utils/order.js";
 import { createClient } from "@supabase/supabase-js";
-import { createHash } from "crypto";
-import { getUnixTime } from "date-fns";
-
-const table = "order";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
@@ -21,17 +18,19 @@ export const POST = async ({ request }) => {
 			persistSession: false
 		}
 	});
+
 	const pricesAfterDiscount = items.map((item: CartItem) =>
 		calculateDiscountPrice(item.price, item.discount, item.quantity)
 	);
+
 	const subtotal = sumArrayNumbers(pricesAfterDiscount);
+
 	const total = sumArrayNumbers([Number(subtotal), Number(shippingMethod.price)]);
 
-	const orderIdString = `OhSticks-${customer.email}-${getUnixTime(new Date())}-${randomString(10)}`;
-	const hash = createHash("md5").update(orderIdString).digest("hex");
+	const orderId = generateOrderId(customer.email);
 
 	const newOrderPayload: NewSbOrder = {
-		id: hash,
+		id: orderId,
 		email: customer.email,
 		customer,
 		shipping_address: shippingAddress,
@@ -77,7 +76,7 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 
 	const { data } = await supabase
-		.from(table)
+		.from(orderTable)
 		.select()
 		.eq("email", session?.user.email);
 
@@ -104,6 +103,8 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 
 // UPDATE
 /** @type {import('./$types').RequestHandler} */
+// TODO: might be a security issue here, as anyone can update an order if they know the order id
+
 export const PUT = async ({ url, fetch, locals: { getSession } }) => {
 	const supabaseSession = await getSession();
 	const sessionId = url.searchParams.get("session_id");
@@ -147,7 +148,7 @@ export const PUT = async ({ url, fetch, locals: { getSession } }) => {
 	});
 
 	const { data: updatedData } = await supabaseAdmin
-		.from(table)
+		.from(orderTable)
 		.update({ status, stripe_payment_id: paymentIntentId, updated_at: timestamp, user_id: userId })
 		.eq("id", orderId)
 		.eq("email", stripeCustomerEmail)

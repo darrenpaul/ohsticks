@@ -1,6 +1,7 @@
 <script lang="ts">
-	import AccountUpdateShippingInformation from "$lib/components/account/+AccountUpdateShippingInformation.svelte";
-	import AccountUpdateUserPassword from "$lib/components/account/+AccountUpdateUserPassword.svelte";
+	import AccountUserInformation from "$lib/components/account/+AccountUserInformation.svelte";
+	import AccountUserPassword from "$lib/components/account/+AccountUserPassword.svelte";
+	import { trans } from "$lib/locales/translateCopy";
 
 	export let data;
 	let session = data.session;
@@ -10,16 +11,14 @@
 </script>
 
 <div class="account-page">
-	<h1>Account</h1>
+	<h1>{trans("page.account.label")}</h1>
 
-	<AccountUpdateShippingInformation {session} {account} />
+	<AccountUserInformation {session} {account} />
 
-	<AccountUpdateUserPassword />
+	<AccountUserPassword />
 </div>
 
-<p>Delete account</p>
-
-<style lang="scss">
+<style lang="postcss">
 	.account-page {
 		/* SIZE */
 		@apply max-w-[500px];

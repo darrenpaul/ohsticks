@@ -10,6 +10,8 @@
 	import type { Writable } from "svelte/store";
 	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
 	import { calculateDiscountPrice } from "$lib/utils/maths";
+	import ProductAttributeSelect from "./+ProductAttributeSelect.svelte";
+	import type { KeyValueString } from "$lib/types/keyValue";
 
 	const cartState: Writable<boolean> = getContext("cartState");
 
@@ -18,6 +20,7 @@
 
 	let discountPrice: string;
 	let onSale = false;
+	let selectedAttributes: KeyValueString = {};
 
 	$: {
 		discountPrice = calculateDiscountPrice(product.price, product.discount, 1);
@@ -25,7 +28,11 @@
 	}
 
 	const handleAddToCart = async () => {
-		addToCart(product, session);
+		const productWithAttributes = {
+			...product,
+			attributes: selectedAttributes
+		};
+		addToCart(productWithAttributes, session);
 		cartState.set(true);
 	};
 </script>
@@ -51,7 +58,9 @@
 			{/if}
 		</div>
 
-		<p class="--description">{product.description}</p>
+		{#if product?.attributes}
+			<ProductAttributeSelect attributes={product.attributes} bind:selectedAttributes />
+		{/if}
 
 		<div>
 			<button on:click={handleAddToCart} aria-label="Add product to cart">
@@ -62,6 +71,8 @@
 		</div>
 
 		<ProductFeatureCategories {product} />
+
+		<p class="--description">{product.description}</p>
 	</div>
 </section>
 
