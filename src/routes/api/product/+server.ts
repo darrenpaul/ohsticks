@@ -3,7 +3,7 @@ import type { Product } from "$lib/types/product";
 
 // GET ALL PRODUCTS
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ url, locals: { supabase } }) => {
+export const GET = async ({ locals: { supabase } }) => {
 	const currency = "eur";
 
 	const { data } = await supabase.from(productTable).select().eq("visible", true);
@@ -18,6 +18,7 @@ export const GET = async ({ url, locals: { supabase } }) => {
 			slug: product.slug,
 			categories: product.categories,
 			description: product.description,
+			attributes: product.attributes,
 			contentSections: product.content_sections,
 			quantity: product.quantity,
 			visible: product.visible,

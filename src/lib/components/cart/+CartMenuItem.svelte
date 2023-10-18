@@ -37,6 +37,10 @@
 
 		<div class="--product-details">
 			<p>{cartItem.name}</p>
+
+			{#if cartItem?.attributes?.size}
+				<p>{cartItem.attributes.size}</p>
+			{/if}
 		</div>
 	</div>
 

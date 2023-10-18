@@ -1,14 +1,27 @@
 import type { CartItem } from "$lib/types/cart";
-import type { Product, ProductResponse } from "$lib/types/product";
+import type { Product } from "$lib/types/product";
+
+export const generateCartHashId = (cartItem: CartItem) => {
+	const itemAttributeKeys = Object.keys(cartItem.attributes);
+	itemAttributeKeys.sort();
+	const cartItemAttributes = itemAttributeKeys.map(
+		(key) => `${key}:${cartItem.attributes[key].trim()}`
+	);
+
+	const stringToHash = `${cartItem.id}:${cartItemAttributes.join("-")}`;
+	const cleanedStringToHash = stringToHash.replaceAll("-", "").replaceAll(":", "").toLowerCase();
+	return cleanedStringToHash;
+};
 
 export const mergeCartItems = (cartItems: CartItem[]) => {
 	const mergedCartItems: { [prop: string]: CartItem } = {};
 
 	cartItems.forEach((item) => {
-		if (mergedCartItems[item.id]) {
-			mergedCartItems[item.id].quantity = item.quantity + mergedCartItems[item.id].quantity;
+		const cartHashId = generateCartHashId(item);
+		if (mergedCartItems[cartHashId]) {
+			mergedCartItems[cartHashId].quantity = item.quantity + mergedCartItems[cartHashId].quantity;
 		} else {
-			mergedCartItems[item.id] = item;
+			mergedCartItems[cartHashId] = item;
 		}
 	});
 
@@ -38,9 +51,7 @@ export const syncCartItemsAndProducts = async (cartItems: CartItem[], supabase) 
 	const products = data;
 
 	const syncedWithProducts = cartItems.map((cartItem) => {
-		const product: ProductResponse = products.find(
-			(product: Product) => product.id === cartItem.id
-		) as ProductResponse;
+		const product = products.find((product: Product) => product.id === cartItem.id);
 
 		if (!product) return undefined;
 		return {

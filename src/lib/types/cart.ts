@@ -1,9 +1,10 @@
-import type { Image, Product } from "$lib/types/product";
+import type { Attribute, Image, Product } from "$lib/types/product";
 
 export type CartItem = {
 	id: string;
 	name: string;
 	description: string;
+	attributes: Attribute[];
 	slug: string;
 	brand: string;
 	price: string;
@@ -45,6 +46,7 @@ export const createCartItem = (product: Product) => {
 		id: product.id,
 		name: product.name,
 		description: product.description,
+		attributes: product.attributes,
 		brand: product.brand,
 		slug: product.slug,
 		quantity: 1,

@@ -3,6 +3,7 @@ interface Base {
 	slug: string;
 	categories: string[];
 	description: string;
+	attributes: Attribute[];
 	contentSections: ContentSection[];
 	discount: number;
 	quantity: number;
@@ -32,6 +33,7 @@ interface SbBase {
 	slug: string;
 	categories: string[];
 	description: string;
+	attributes: Attribute[];
 	content_sections: ContentSection[];
 	discount: number;
 	quantity: number;
@@ -101,4 +103,9 @@ export type Price = {
 	costOfGoods: number;
 	markupPercentage: number;
 	price: number;
+};
+
+export type Attribute = {
+	name: string;
+	options: string;
 };

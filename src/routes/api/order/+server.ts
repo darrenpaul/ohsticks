@@ -5,10 +5,7 @@ import type { CartItem } from "$lib/types/cart";
 import type { Order, NewSbOrder } from "$lib/types/order";
 import { calculateDiscountPrice, sumArrayNumbers } from "$lib/utils/maths";
 import { generateOrderId } from "$lib/utils/order.js";
-import randomString from "$lib/utils/randomString";
 import { createClient } from "@supabase/supabase-js";
-import { createHash } from "crypto";
-import { getUnixTime } from "date-fns";
 
 // CREATE
 /** @type {import('./$types').RequestHandler} */
@@ -21,10 +18,13 @@ export const POST = async ({ request }) => {
 			persistSession: false
 		}
 	});
+
 	const pricesAfterDiscount = items.map((item: CartItem) =>
 		calculateDiscountPrice(item.price, item.discount, item.quantity)
 	);
+
 	const subtotal = sumArrayNumbers(pricesAfterDiscount);
+
 	const total = sumArrayNumbers([Number(subtotal), Number(shippingMethod.price)]);
 
 	const orderId = generateOrderId(customer.email);
