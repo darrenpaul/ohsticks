@@ -9,6 +9,7 @@
 	import { onMount } from "svelte";
 	import { fetchGuestCart, fetchUserCart } from "$lib/stores/cartStore";
 	import Toaster from "$lib/components/notification/+Toaster.svelte";
+	import AnnouncementBar from "$lib/components/+AnnouncementBar.svelte";
 
 	const cartState = writable(false);
 	const supabaseState = writable();
@@ -52,6 +53,8 @@
 </script>
 
 {#if data}
+	<AnnouncementBar />
+
 	<Navigation />
 
 	<div class="page">

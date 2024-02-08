@@ -27,10 +27,12 @@
 		</h2>
 
 		<div class="--button-wrapper">
-			<a href={collectionAllRoute.path} aria-label={`Go to ${collectionAllRoute.label} page`}>
-				<ButtonIcon>
-					{trans("component.productList.collection")}
-				</ButtonIcon>
+			<a
+				class="submit-button"
+				href={collectionAllRoute.path}
+				aria-label={`Go to ${collectionAllRoute.label} page`}
+			>
+				{trans("component.productList.collection")}
 			</a>
 		</div>
 	</div>
@@ -40,6 +42,7 @@
 	.feature {
 		/* SIZE */
 		@apply w-full h-screen;
+		height: calc(100vh - (5rem + 2.5rem));
 		/* MARGINS AND PADDING */
 		/* LAYOUT */
 		@apply relative overflow-hidden;
@@ -67,7 +70,7 @@
 			/* MARGINS AND PADDING */
 			@apply p-8 mb-8;
 			/* LAYOUT */
-			@apply absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center justify-center;
+			@apply absolute left-1/2 bottom-0 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center;
 			/* BORDERS */
 			/* COLORS */
 			@apply text-white;

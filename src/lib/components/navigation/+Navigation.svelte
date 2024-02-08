@@ -120,12 +120,10 @@
 		/* MARGINS AND PADDING */
 		@apply px-4;
 		/* LAYOUT */
-		@apply fixed top-4 left-0 z-navigation;
 		/* BORDERS */
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
-		@apply drop-shadow;
 
 		.--inner {
 			/* SIZE */
@@ -135,7 +133,6 @@
 			/* LAYOUT */
 			@apply flex justify-between items-center lg:grid grid-cols-3 place-items-center;
 			/* BORDERS */
-			@apply rounded-3xl;
 			/* COLORS */
 			@apply bg-white;
 			/* TEXT */

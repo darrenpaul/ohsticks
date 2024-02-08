@@ -1,5 +1,5 @@
 <script lang="ts">
-	// import Rating from "$lib/components/shared/+Rating.svelte";
+	import Rating from "$lib/components/shared/+Rating.svelte";
 	import { trans } from "$lib/locales/translateCopy";
 	import { productRoute } from "$lib/constants/routes/productRoute";
 	import type { Product } from "$lib/types/product";
@@ -40,11 +40,17 @@
 		</div>
 
 		<div class="--content">
-			<p class="--title">{product.name}</p>
-
 			<p class="--price">{addCurrencySymbol(price, product.currency)}</p>
 
-			<!-- <Rating /> -->
+			<p class="--title">{product.name}</p>
+
+			<Rating />
+
+			<p class="--description">{product.name}</p>
+
+			<button class="outline-button-stretch">
+				{trans("component.productFeature.addToCart.label")}
+			</button>
 		</div>
 	</a>
 </div>
@@ -54,9 +60,11 @@
 		/* SIZE */
 		@apply w-fit h-full;
 		/* MARGINS AND PADDING */
+		@apply p-4;
 		/* LAYOUT */
 		@apply grid items-center justify-center overflow-hidden;
 		/* BORDERS */
+		@apply border rounded-md;
 		/* COLORS */
 		/* TEXT */
 		/* ANIMATION AND EFFECTS */
@@ -94,22 +102,23 @@
 		.--content {
 			/* SIZE */
 			/* MARGINS AND PADDING */
+			@apply m-0 p-0;
 			/* LAYOUT */
-			@apply flex flex-col items-center justify-center;
+			@apply flex flex-col items-start justify-center;
 			/* BORDERS */
 			/* COLORS */
 			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 
 			.--title {
-				@apply w-3/4;
+				@apply w-full;
 				/* SIZE */
 				/* MARGINS AND PADDING */
 				/* LAYOUT */
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
-				@apply text-center truncate text-ellipsis break-words;
+				@apply text-left truncate text-ellipsis break-words font-bold;
 				/* ANIMATION AND EFFECTS */
 			}
 
@@ -120,7 +129,6 @@
 				/* BORDERS */
 				/* COLORS */
 				/* TEXT */
-				@apply font-bold;
 				/* ANIMATION AND EFFECTS */
 			}
 		}

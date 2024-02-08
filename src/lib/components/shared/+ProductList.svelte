@@ -3,7 +3,8 @@
 	import { trans } from "$lib/locales/translateCopy";
 	import type { Product } from "$lib/types/product";
 	import { collectionAllRoute } from "$lib/constants/routes/collectionRoute";
-	import ButtonIcon from "$lib/components/icons/+ButtonIcon.svelte";
+	import Carousel from "svelte-carousel";
+	import { browser } from "$app/environment";
 
 	export let title: string;
 	export let products: Product[];
@@ -12,17 +13,28 @@
 <div class="product-list">
 	<h2 class="--heading">{title}</h2>
 
-	<div class="--list">
-		{#each products as product, index}
-			<ProductListCard {product} {index} />
-		{/each}
-	</div>
+	{#if browser}
+		<Carousel
+			particlesToShow={3}
+			particlesToScroll={1}
+			arrows={false}
+			autoplay
+			autoplayDuration={3000}
+			pauseOnFocus
+		>
+			{#each products as product, index}
+				<ProductListCard {product} {index} />
+			{/each}
+		</Carousel>
+	{/if}
 
 	<div class="--button-wrapper">
-		<a href={collectionAllRoute.path} aria-label={`Go to ${collectionAllRoute.label} page`}>
-			<ButtonIcon>
-				{trans("component.productList.collection")}
-			</ButtonIcon>
+		<a
+			class="submit-button"
+			href={collectionAllRoute.path}
+			aria-label={`Go to ${collectionAllRoute.label} page`}
+		>
+			{trans("component.productList.collection")}
 		</a>
 	</div>
 </div>
@@ -48,18 +60,6 @@
 			/* COLORS */
 			/* TEXT */
 			@apply text-3xl text-center font-bold;
-			/* ANIMATION AND EFFECTS */
-		}
-
-		.--list {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mb-16;
-			/* LAYOUT */
-			@apply flex flex-wrap justify-center gap-8;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
 			/* ANIMATION AND EFFECTS */
 		}
 

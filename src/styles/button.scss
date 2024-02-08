@@ -1,17 +1,28 @@
 .submit-button {
 	/* SIZE */
 	/* MARGINS AND PADDING */
-	@apply py-4 px-8;
+	@apply py-2 px-8;
 	/* LAYOUT */
 	@apply block;
 	/* BORDERS */
-	@apply border rounded-md;
+	@apply border rounded-full;
 	/* COLORS */
 	@apply bg-black text-white;
 	/* TEXT */
 	@apply text-center;
 	/* ANIMATION AND EFFECTS */
-	@apply drop-shadow;
+}
+
+.submit-button-stretch {
+	@extend .submit-button;
+	/* SIZE */
+	@apply w-full;
+	/* MARGINS AND PADDING */
+	/* LAYOUT */
+	/* BORDERS */
+	/* COLORS */
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
 }
 
 .outline-button {
@@ -23,6 +34,18 @@
 	@apply border;
 	/* COLORS */
 	@apply bg-white text-black border-black;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+}
+
+.outline-button-stretch {
+	@extend .outline-button;
+	/* SIZE */
+	@apply w-full;
+	/* MARGINS AND PADDING */
+	/* LAYOUT */
+	/* BORDERS */
+	/* COLORS */
 	/* TEXT */
 	/* ANIMATION AND EFFECTS */
 }
