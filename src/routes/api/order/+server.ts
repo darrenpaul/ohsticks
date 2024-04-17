@@ -72,8 +72,8 @@ export const POST = async ({ request }) => {
 
 // LIST
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ locals: { supabase, getSession } }) => {
-	const session = await getSession();
+export const GET = async ({ locals: { supabase, safeGetSession } }) => {
+	const session = await safeGetSession();
 
 	const { data } = await supabase
 		.from(orderTable)
@@ -105,8 +105,8 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 /** @type {import('./$types').RequestHandler} */
 // TODO: might be a security issue here, as anyone can update an order if they know the order id
 
-export const PUT = async ({ url, fetch, locals: { getSession } }) => {
-	const supabaseSession = await getSession();
+export const PUT = async ({ url, fetch, locals: { safeGetSession } }) => {
+	const supabaseSession = await safeGetSession();
 	const sessionId = url.searchParams.get("session_id");
 	const orderId = url.searchParams.get("order_id");
 

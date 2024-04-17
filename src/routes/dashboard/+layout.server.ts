@@ -2,8 +2,8 @@ import { loginRoute } from "$lib/constants/routes/accountRoute";
 import { dashboardAccountRoute } from "$lib/constants/routes/dashboardRoute";
 import { redirect } from "@sveltejs/kit";
 
-export const load = async ({ fetch, locals: { supabase, getSession } }) => {
-	const session = await getSession();
+export const load = async ({ fetch, locals: { supabase, safeGetSession } }) => {
+	const session = await safeGetSession();
 
 	if (!session) {
 		redirect(303, `${loginRoute.path}?page=${dashboardAccountRoute.name}`);

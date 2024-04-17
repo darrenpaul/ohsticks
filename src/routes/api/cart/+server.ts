@@ -8,8 +8,8 @@ const table = "cart";
 
 // ADD/REMOVE ITEM TO CART
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request, locals: { supabase, getSession } }) => {
-	const session = await getSession();
+export const POST = async ({ request, locals: { supabase, safeGetSession } }) => {
+	const session = await safeGetSession();
 
 	if (!session) {
 		throw error(401, {
@@ -94,8 +94,8 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 
 // GET CART
 /** @type {import('./$types').RequestHandler} */
-export const GET = async ({ locals: { supabase, getSession } }) => {
-	const session = await getSession();
+export const GET = async ({ locals: { supabase, safeGetSession } }) => {
+	const session = await safeGetSession();
 	if (!session) {
 		error(401, {
         			message: "unauthorized"
@@ -147,8 +147,8 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 
 // DELETE ITEM FROM CART
 /** @type {import('./$types').RequestHandler} */
-export const DELETE = async ({ locals: { supabase, getSession } }) => {
-	const session = await getSession();
+export const DELETE = async ({ locals: { supabase, safeGetSession } }) => {
+	const session = await safeGetSession();
 	if (!session) {
 		error(401, {
         			message: "unauthorized"

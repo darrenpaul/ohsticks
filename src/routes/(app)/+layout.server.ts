@@ -1,5 +1,5 @@
 /** @type {import('./$types').PageLoad} */
-export async function load({ fetch, locals: { getSession } }) {
+export async function load({ fetch, locals: { safeGetSession } }) {
 	const fetchConfig = {
 		method: "GET",
 		headers: {
@@ -19,7 +19,7 @@ export async function load({ fetch, locals: { getSession } }) {
 	const pageData = await pageResponse.json();
 
 	return {
-		session: await getSession(),
+		session: await safeGetSession(),
 		products,
 		pageData
 	};
