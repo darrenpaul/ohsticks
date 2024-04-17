@@ -2,6 +2,9 @@
 	"name": "svelte-kit-ecommerce",
 	"version": "0.0.1",
 	"private": true,
+	"engines": {
+		"node": ">=21.7.0 < 22.0.0"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
