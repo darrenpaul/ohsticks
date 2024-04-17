@@ -97,9 +97,9 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 export const GET = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 	if (!session) {
-		throw error(401, {
-			message: "unauthorized"
-		});
+		error(401, {
+        			message: "unauthorized"
+        		});
 	}
 
 	const { data } = await supabase.from(table).select().eq("user_id", session.user.id).single();
@@ -150,9 +150,9 @@ export const GET = async ({ locals: { supabase, getSession } }) => {
 export const DELETE = async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
 	if (!session) {
-		throw error(401, {
-			message: "unauthorized"
-		});
+		error(401, {
+        			message: "unauthorized"
+        		});
 	}
 
 	await supabase.from(table).delete().eq("user_id", session.user.id).single();

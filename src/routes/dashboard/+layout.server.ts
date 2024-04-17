@@ -6,7 +6,7 @@ export const load = async ({ fetch, locals: { supabase, getSession } }) => {
 	const session = await getSession();
 
 	if (!session) {
-		throw redirect(303, `${loginRoute.path}?page=${dashboardAccountRoute.name}`);
+		redirect(303, `${loginRoute.path}?page=${dashboardAccountRoute.name}`);
 	}
 
 	const { data } = await supabase
