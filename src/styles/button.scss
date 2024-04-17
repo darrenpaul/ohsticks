@@ -1,3 +1,19 @@
+.button {
+	/* SIZE */
+	@apply w-fit;
+	/* MARGINS AND PADDING */
+	@apply px-8 py-2;
+	/* LAYOUT */
+	@apply block;
+	/* BORDERS */
+	/* COLORS */
+	@apply bg-black text-white;
+	/* TEXT */
+	/* ANIMATION AND EFFECTS */
+}
+
+
+
 .submit-button {
 	/* SIZE */
 	/* MARGINS AND PADDING */

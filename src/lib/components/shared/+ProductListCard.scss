@@ -1,0 +1,74 @@
+.product-list-card {
+    /* SIZE */
+    @apply w-fit h-full;
+    /* MARGINS AND PADDING */
+    /* LAYOUT */
+    @apply grid items-center justify-center overflow-hidden;
+    /* BORDERS */
+    /* COLORS */
+    /* TEXT */
+    /* ANIMATION AND EFFECTS */
+
+    img {
+        /* SIZE */
+        @apply max-w-[250px] max-h-[250px];
+        /* MARGINS AND PADDING */
+        @apply mb-4;
+        /* LAYOUT */
+        @apply object-cover;
+        /* BORDERS */
+        @apply rounded-md;
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+        @apply drop-shadow;
+    }
+
+    .sale-tag {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        @apply px-4 py-1;
+        /* LAYOUT */
+        @apply absolute bottom-5 left-1/2 -translate-x-1/2;
+        /* BORDERS */
+        @apply rounded-full border-2;
+        /* COLORS */
+        @apply bg-red-500 text-white border-white;
+        /* TEXT */
+        @apply font-bold tracking-wide;
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .content {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply flex flex-col items-center justify-center;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+
+        .title {
+            @apply w-3/4;
+            /* SIZE */
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            /* BORDERS */
+            /* COLORS */
+            /* TEXT */
+            @apply text-center truncate text-ellipsis break-words font-medium;
+            /* ANIMATION AND EFFECTS */
+        }
+
+        .price {
+            /* SIZE */
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            /* BORDERS */
+            /* COLORS */
+            /* TEXT */
+            /* ANIMATION AND EFFECTS */
+        }
+    }
+}

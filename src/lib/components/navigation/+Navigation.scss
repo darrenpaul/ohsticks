@@ -1,0 +1,186 @@
+header {
+    /* SIZE */
+    @apply w-full h-20;
+    /* MARGINS AND PADDING */
+    @apply px-4;
+    /* LAYOUT */
+    @apply fixed top-0 left-0 z-navigation;
+    /* BORDERS */
+    /* COLORS */
+    /* TEXT */
+    /* ANIMATION AND EFFECTS */
+
+    .inner {
+        /* SIZE */
+        @apply max-w-screen-2xl h-full;
+        /* MARGINS AND PADDING */
+        @apply mx-auto px-4 lg:px-0;
+        /* LAYOUT */
+        @apply flex gap-8;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .branding {
+        /* SIZE */
+        @apply h-full;
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply flex gap-6 self-center place-self-start items-center;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .links {
+        /* SIZE */
+        @apply h-full;
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply flex-grow flex gap-6 self-center place-self-center items-center;
+        /* BORDERS */
+        @apply rounded-3xl;
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+
+        .active {
+            /* SIZE */
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            /* BORDERS */
+            /* COLORS */
+            /* TEXT */
+            @apply font-bold;
+            /* ANIMATION AND EFFECTS */
+        }
+    }
+
+    .menu-button-wrapper {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply flex gap-6 self-center place-self-start;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .cart-account {
+        /* SIZE */
+        @apply h-full;
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply flex gap-6 self-center place-self-end items-center;
+        /* BORDERS */
+        @apply rounded-3xl;
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .mobile-menu {
+        /* SIZE */
+        @apply w-screen h-screen;
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply fixed -top-4 left-0 z-mobile-menu;
+        /* BORDERS */
+        /* COLORS */
+        @apply bg-white;
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+
+        .header {
+            /* SIZE */
+            @apply w-full h-[58px];
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            @apply flex;
+            /* BORDERS */
+            /* COLORS */
+            /* TEXT */
+            /* ANIMATION AND EFFECTS */
+
+            .menu-button {
+                /* SIZE */
+                @apply w-full;
+                /* MARGINS AND PADDING */
+                /* LAYOUT */
+                @apply flex items-center justify-center gap-4;
+                /* BORDERS */
+                @apply border-b border-black;
+                /* COLORS */
+                @apply bg-black text-white;
+                /* TEXT */
+                /* ANIMATION AND EFFECTS */
+            }
+
+            .account-button {
+                /* SIZE */
+                @apply w-full;
+                /* MARGINS AND PADDING */
+                /* LAYOUT */
+                /* BORDERS */
+                @apply border-b border-gray-200;
+                /* COLORS */
+                @apply bg-white text-black;
+                /* TEXT */
+                /* ANIMATION AND EFFECTS */
+            }
+        }
+
+        .links-mobile {
+            /* SIZE */
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            @apply flex flex-col gap-0;
+            /* BORDERS */
+            /* COLORS */
+            /* TEXT */
+            /* ANIMATION AND EFFECTS */
+
+            .link-mobile {
+                /* SIZE */
+                /* MARGINS AND PADDING */
+                /* LAYOUT */
+                /* BORDERS */
+                @apply border-b border-gray-200;
+                /* COLORS */
+                /* TEXT */
+                /* ANIMATION AND EFFECTS */
+
+                .link-mobile-inner {
+                    /* SIZE */
+                    @apply h-[58px];
+                    /* MARGINS AND PADDING */
+                    @apply pl-4;
+                    /* LAYOUT */
+                    @apply flex flex-row items-center justify-between;
+                    /* BORDERS */
+                    /* COLORS */
+                    /* TEXT */
+                    /* ANIMATION AND EFFECTS */
+
+                    .icon {
+                        /* SIZE */
+                        @apply w-12 h-full;
+                        /* MARGINS AND PADDING */
+                        @apply py-4;
+                        /* LAYOUT */
+                        @apply grid place-items-center;
+                        /* BORDERS */
+                        @apply border-l border-gray-300;
+                        /* COLORS */
+                        /* TEXT */
+                        /* ANIMATION AND EFFECTS */
+                    }
+                }
+            }
+        }
+    }
+}

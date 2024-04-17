@@ -1,33 +1,36 @@
 h1 {
 	/* SIZE */
 	/* MARGINS AND PADDING */
+	@apply mb-2;
 	/* LAYOUT */
 	/* BORDERS */
 	/* COLORS */
 	/* TEXT */
-	@apply text-3xl;
+	@apply text-5xl font-bold;
 	/* ANIMATION AND EFFECTS */
 }
 
 h2 {
 	/* SIZE */
 	/* MARGINS AND PADDING */
+	@apply mb-2;
 	/* LAYOUT */
 	/* BORDERS */
 	/* COLORS */
 	/* TEXT */
-	@apply text-2xl;
+	@apply text-2xl font-bold;
 	/* ANIMATION AND EFFECTS */
 }
 
 h3 {
 	/* SIZE */
 	/* MARGINS AND PADDING */
+	@apply mb-2;
 	/* LAYOUT */
 	/* BORDERS */
 	/* COLORS */
 	/* TEXT */
-	@apply text-xl;
+	@apply text-xl font-bold;
 	/* ANIMATION AND EFFECTS */
 }
 

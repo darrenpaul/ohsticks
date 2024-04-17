@@ -1,0 +1,35 @@
+.product-list {
+    /* SIZE */
+    @apply w-full;
+    /* MARGINS AND PADDING */
+    @apply px-2 mx-auto;
+    /* LAYOUT */
+    /* BORDERS */
+    /* COLORS */
+    /* TEXT */
+    /* ANIMATION AND EFFECTS */
+
+    .heading {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        @apply my-16;
+        /* LAYOUT */
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        @apply text-3xl text-left font-bold;
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .list {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        @apply mb-16;
+        /* LAYOUT */
+        @apply flex flex-wrap justify-between gap-8;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+}

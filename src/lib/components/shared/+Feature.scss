@@ -1,0 +1,48 @@
+	.feature {
+		/* SIZE */
+		@apply max-w-screen-2xl h-[50vh];
+		/* MARGINS AND PADDING */
+        @apply mt-20 mx-auto;
+		/* LAYOUT */
+		@apply grid grid-cols-2 gap-0;
+		/* BORDERS */
+        @apply border-2 border-black;
+		/* COLORS */
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+
+        .image-container{
+            img {
+                /* SIZE */
+                @apply w-full h-full;
+                /* MARGINS AND PADDING */
+                /* LAYOUT */
+                @apply object-cover;
+                /* BORDERS */
+                /* COLORS */
+                /* TEXT */
+                /* ANIMATION AND EFFECTS */
+                @apply brightness-[0.5];
+            }
+        }
+
+		.content-container {
+			/* SIZE */
+			/* MARGINS AND PADDING */
+			@apply p-8 mb-8;
+			/* LAYOUT */
+            @apply self-center flex flex-col gap-8 items-center justify-center;
+			/* BORDERS */
+			/* COLORS */
+			@apply text-black;
+			/* TEXT */
+			@apply text-center tracking-wide leading-loose;
+			/* ANIMATION AND EFFECTS */
+
+			h1, p {
+				/* SIZE */
+				/* MARGINS AND PADDING */
+				@apply mb-0;
+			}
+		}
+	}

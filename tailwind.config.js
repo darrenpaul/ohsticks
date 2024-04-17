@@ -12,7 +12,7 @@ export default {
 				"cart-menu": "300",
 				"gdpr-consent": "400",
 				notification: "500"
-			}
+			},
 		}
 	},
 	plugins: []

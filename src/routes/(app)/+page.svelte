@@ -13,6 +13,7 @@
 	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
 	export /** @type {import('./$types').PageData} */
+
 	let data;
 
 	let products: Product[] = data.products || [];
@@ -41,25 +42,25 @@
 	<Feature />
 
 	<ContainWidth background="bg-transparent">
-		<div class="--component-wrapper">
+		<div class="component-wrapper">
 			<ProductList title={trans("page.home.featuredProducts")} products={products.slice(0, 4)} />
 		</div>
 
-		<div class="--component-wrapper">
+		<div class="component-wrapper">
 			<GeneralInformation />
 		</div>
 
 		<SideBySideImage title={trans("page.home.browserOurPopulateCategories.label")}>
-			<div class="--collection-card">
+			<div class="collection-card">
 				<img
-					class="--side-by-side-image"
+					class="side-by-side-image"
 					width="auto"
 					src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-bag.webp"
 					alt="Preview"
 					loading="lazy"
 				/>
 				<a
-					class="--collection-link"
+					class="collection-link"
 					href={`${collectionRoute.path}/cute`}
 					aria-label={`Go to cute collection page`}
 				>
@@ -67,9 +68,9 @@
 				</a>
 			</div>
 
-			<div class="--collection-card">
+			<div class="collection-card">
 				<img
-					class="--side-by-side-image"
+					class="side-by-side-image"
 					width="auto"
 					src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
 					alt="Preview"
@@ -77,7 +78,7 @@
 				/>
 
 				<a
-					class="--collection-link"
+					class="collection-link"
 					href={`${collectionRoute.path}/monster`}
 					aria-label={`Go to monster collection page`}
 				>
@@ -85,9 +86,9 @@
 				</a>
 			</div>
 
-			<div class="--collection-card">
+			<div class="collection-card">
 				<img
-					class="--side-by-side-image"
+					class="side-by-side-image"
 					width="auto"
 					src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
 					alt="Preview"
@@ -95,7 +96,7 @@
 				/>
 
 				<a
-					class="--collection-link"
+					class="collection-link"
 					href={`${collectionRoute.path}/cat`}
 					aria-label={`Go to cat collection page`}
 				>
@@ -149,59 +150,5 @@
 />
 
 <style lang="postcss">
-	.home-page {
-		/* SIZE */
-		/* MARGINS AND PADDING */
-		/* LAYOUT */
-		/* BORDERS */
-		/* COLORS */
-		/* TEXT */
-		/* ANIMATION AND EFFECTS */
-
-		.--component-wrapper {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			@apply mb-24;
-			/* LAYOUT */
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
-
-		.--collection-card {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			/* LAYOUT */
-			@apply relative;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-
-			.--side-by-side-image {
-				/* SIZE */
-				@apply w-full h-full max-h-[50vh];
-				/* MARGINS AND PADDING */
-				/* LAYOUT */
-				@apply object-cover;
-				/* BORDERS */
-				@apply rounded-xl;
-				/* COLORS */
-				/* TEXT */
-				/* ANIMATION AND EFFECTS */
-			}
-
-			.--collection-link {
-				/* SIZE */
-				/* MARGINS AND PADDING */
-				/* LAYOUT */
-				@apply absolute bottom-5 left-1/2 -translate-x-1/2;
-				/* BORDERS */
-				/* COLORS */
-				/* TEXT */
-				/* ANIMATION AND EFFECTS */
-			}
-		}
-	}
+	@import "./+page.scss";
 </style>

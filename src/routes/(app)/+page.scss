@@ -1,0 +1,55 @@
+.home-page {
+    /* SIZE */
+    /* MARGINS AND PADDING */
+    /* LAYOUT */
+    /* BORDERS */
+    /* COLORS */
+    /* TEXT */
+    /* ANIMATION AND EFFECTS */
+
+    .component-wrapper {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        @apply mb-24;
+        /* LAYOUT */
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+
+    .collection-card {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply relative;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+
+        .side-by-side-image {
+            /* SIZE */
+            @apply w-full h-full max-h-[50vh];
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            @apply object-cover;
+            /* BORDERS */
+            @apply rounded-xl;
+            /* COLORS */
+            /* TEXT */
+            /* ANIMATION AND EFFECTS */
+        }
+
+        .collection-link {
+            /* SIZE */
+            /* MARGINS AND PADDING */
+            /* LAYOUT */
+            @apply absolute bottom-5 left-1/2 -translate-x-1/2;
+            /* BORDERS */
+            /* COLORS */
+            /* TEXT */
+            /* ANIMATION AND EFFECTS */
+        }
+    }
+}
