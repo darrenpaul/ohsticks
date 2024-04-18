@@ -2,6 +2,7 @@
 	import Feature from "$lib/components/shared/+Feature.svelte";
 	import ProductList from "$lib/components/shared/+ProductList.svelte";
 	import SideBySideImage from "$lib/components/shared/+SideBySideImage.svelte";
+	import CollectionCard from "$lib/components/shared/+CollectionCard.svelte";
 	import ContainWidth from "$lib/components/shared/+ContainWidth.svelte";
 	import type { Product } from "$lib/types/product";
 	import { page } from "$app/stores";
@@ -10,7 +11,6 @@
 	import { collectionAllRoute, collectionRoute } from "$lib/constants/routes/collectionRoute";
 	import { trans } from "$lib/locales/translateCopy";
 	import GeneralInformation from "$lib/components/shared/+GeneralInformation.svelte";
-	import Button2Icon from "$lib/components/icons/+Button2Icon.svelte";
 
 	export /** @type {import('./$types').PageData} */
 
@@ -51,58 +51,29 @@
 		</div>
 
 		<SideBySideImage title={trans("page.home.browserOurPopulateCategories.label")}>
-			<div class="collection-card">
-				<img
-					class="side-by-side-image"
-					width="auto"
-					src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-bag.webp"
-					alt="Preview"
-					loading="lazy"
-				/>
-				<a
-					class="collection-link"
-					href={`${collectionRoute.path}/cute`}
-					aria-label={`Go to cute collection page`}
-				>
-					<Button2Icon>Cute</Button2Icon>
-				</a>
-			</div>
+			<CollectionCard
+				image="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-bag.webp"
+				url={`${collectionRoute.path}/cute`}
+				ariaLabel={`Go to cute collection page`}
+			>
+				Cute
+			</CollectionCard>
 
-			<div class="collection-card">
-				<img
-					class="side-by-side-image"
-					width="auto"
-					src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
-					alt="Preview"
-					loading="lazy"
-				/>
+			<CollectionCard
+				image="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
+				url={`${collectionRoute.path}/monster`}
+				ariaLabel={`Go to monster collection page`}
+			>
+				Monster
+			</CollectionCard>
 
-				<a
-					class="collection-link"
-					href={`${collectionRoute.path}/monster`}
-					aria-label={`Go to monster collection page`}
-				>
-					<Button2Icon>Monster</Button2Icon>
-				</a>
-			</div>
-
-			<div class="collection-card">
-				<img
-					class="side-by-side-image"
-					width="auto"
-					src="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
-					alt="Preview"
-					loading="lazy"
-				/>
-
-				<a
-					class="collection-link"
-					href={`${collectionRoute.path}/cat`}
-					aria-label={`Go to cat collection page`}
-				>
-					<Button2Icon>Cat</Button2Icon>
-				</a>
-			</div>
+			<CollectionCard
+				image="https://pziocbmxbpurobqznrjs.supabase.co/storage/v1/object/public/page/home/ohsticks-sticker-on-laptop.webp"
+				url={`${collectionRoute.path}/cat`}
+				ariaLabel={`Go to cat collection page`}
+			>
+				Cat
+			</CollectionCard>
 		</SideBySideImage>
 	</ContainWidth>
 </div>

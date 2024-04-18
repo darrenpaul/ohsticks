@@ -28,7 +28,7 @@
 <form on:submit|preventDefault={handleNewsletterSubmit}>
 	<div class="input-group">
 		<input
-			class="peer"
+			class="peer dark"
 			type="email"
 			id="email"
 			name="email"
@@ -36,7 +36,7 @@
 			placeholder=""
 		/>
 
-		<label class="floating-label" for="email">
+		<label class="floating-label dark" for="email">
 			{trans("component.footer.newsletter.label")}
 		</label>
 
@@ -51,15 +51,5 @@
 </small>
 
 <style lang="scss">
-	small {
-		/* SIZE */
-		/* MARGINS AND PADDING */
-		/* LAYOUT */
-		/* BORDERS */
-		/* COLORS */
-		@apply text-gray-500;
-		/* TEXT */
-		@apply text-xs;
-		/* ANIMATION AND EFFECTS */
-	}
+	@import "./+FooterNewsletter.scss";
 </style>

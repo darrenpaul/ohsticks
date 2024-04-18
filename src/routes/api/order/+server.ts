@@ -75,6 +75,7 @@ export const POST = async ({ request }) => {
 export const GET = async ({ locals: { supabase, safeGetSession } }) => {
 	const session = await safeGetSession();
 
+
 	const { data } = await supabase
 		.from(orderTable)
 		.select()

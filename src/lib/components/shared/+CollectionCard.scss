@@ -1,0 +1,35 @@
+.collection-card {
+    /* SIZE */
+    /* MARGINS AND PADDING */
+    /* LAYOUT */
+    @apply relative;
+    /* BORDERS */
+    /* COLORS */
+    /* TEXT */
+    /* ANIMATION AND EFFECTS */
+
+    .side-by-side-image {
+        /* SIZE */
+        @apply w-full h-full;
+        /* MARGINS AND PADDING */
+        /* LAYOUT */
+        @apply object-cover;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        /* ANIMATION AND EFFECTS */
+    }
+
+    p {
+        /* SIZE */
+        /* MARGINS AND PADDING */
+        @apply py-3;
+        /* LAYOUT */
+        @apply block;
+        /* BORDERS */
+        /* COLORS */
+        /* TEXT */
+        @apply text-center font-semibold;
+        /* ANIMATION AND EFFECTS */
+    }
+}

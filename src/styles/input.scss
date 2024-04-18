@@ -8,12 +8,23 @@ input {
 	/* LAYOUT */
 	@apply block;
 	/* BORDERS */
-	@apply rounded-lg border;
+	@apply border;
 	/* COLORS */
 	@apply text-gray-900 bg-transparent border-gray-300;
 	/* TEXT */
 	/* ANIMATION AND EFFECTS */
 	@apply focus:outline-none focus:ring-0 focus:border-blue-600;
+
+	&.dark {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		@apply text-white;
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+	}
 }
 
 textarea {
@@ -62,6 +73,17 @@ select {
 	/* ANIMATION AND EFFECTS */
 	@apply duration-300;
 	@apply peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4;
+
+	&.dark {
+		/* SIZE */
+		/* MARGINS AND PADDING */
+		/* LAYOUT */
+		/* BORDERS */
+		/* COLORS */
+		@apply bg-black text-white;
+		/* TEXT */
+		/* ANIMATION AND EFFECTS */
+	}
 }
 
 .input-group {

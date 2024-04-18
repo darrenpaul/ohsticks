@@ -17,14 +17,14 @@
 </script>
 
 <footer>
-	<div class="--top-section">
+	<div class="top-section">
 		<!-- BRAND -->
-		<div class="--row">
+		<div class="row">
 			<a href={homeRoute.path} aria-label={`Go to ${homeRoute.label} page`}>
 				<BrandPortraitIcon />
 			</a>
 
-			<p class="--company-description">
+			<p class="company-description">
 				{trans("component.footer.companyDescription.label")}
 			</p>
 
@@ -32,7 +32,7 @@
 		</div>
 
 		<!-- SHOP -->
-		<div class="--row">
+		<div class="row">
 			<h3>{trans("component.footer.shop.label")}</h3>
 
 			{#each shopLinks as link}
@@ -41,7 +41,7 @@
 		</div>
 
 		<!-- HELP -->
-		<div class="--row">
+		<div class="row">
 			<h3>Help</h3>
 
 			{#each helpLinks as link}
@@ -50,12 +50,12 @@
 		</div>
 
 		<!-- NEWSLETTER -->
-		<div class="--row">
+		<div class="row">
 			<FooterNewsletter />
 		</div>
 	</div>
 
-	<div class="--copyright-wrapper">
+	<div class="copyright-wrapper">
 		<p>{trans("site.copyright")}</p>
 
 		<div>
@@ -66,67 +66,5 @@
 </footer>
 
 <style lang="postcss">
-	footer {
-		/* SIZE */
-		/* MARGINS AND PADDING */
-		@apply pt-8 md:pt-24 px-4;
-		/* LAYOUT */
-		@apply grid;
-		/* BORDERS */
-		/* COLORS */
-		@apply bg-white;
-		/* TEXT */
-		/* ANIMATION AND EFFECTS */
-		@apply drop-shadow;
-
-		.--top-section {
-			/* SIZE */
-			@apply max-w-[1170px];
-			/* MARGINS AND PADDING */
-			@apply mx-auto pb-10;
-			/* LAYOUT */
-			@apply flex flex-col-reverse md:grid grid-cols-4 gap-4;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
-
-		.--row {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			/* LAYOUT */
-			@apply flex flex-col gap-4;
-			/* BORDERS */
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
-
-		.--company-description {
-			/* SIZE */
-			/* MARGINS AND PADDING */
-			/* LAYOUT */
-			/* BORDERS */
-			/* COLORS */
-			@apply text-gray-500;
-			/* TEXT */
-			@apply text-sm;
-			/* ANIMATION AND EFFECTS */
-		}
-
-		.--copyright-wrapper {
-			/* SIZE */
-			@apply max-w-[1170px] w-full h-fit;
-			/* MARGINS AND PADDING */
-			@apply mx-auto py-4;
-			/* LAYOUT */
-			@apply flex flex-col-reverse md:flex-row items-center justify-between;
-			/* BORDERS */
-			@apply border-t border-gray-200;
-			/* COLORS */
-			/* TEXT */
-			/* ANIMATION AND EFFECTS */
-		}
-	}
+	@import "./+Footer.scss";
 </style>

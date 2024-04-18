@@ -5,7 +5,7 @@ import type { Product } from "$lib/types/product";
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch, locals: { safeGetSession } }) {
 	const productSlug = params.slug;
-	const session = await safeGetSession();
+	const {session} = await safeGetSession();
 
 	const fetchConfig = {
 		method: "GET",
